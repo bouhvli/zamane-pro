@@ -179,8 +179,14 @@ test("the nav bar: tabs, the current one, focus on arrival (seeded Sara)", async
   await nav.getByRole("link", { name: "Home" }).click();
   await expect(p).toHaveURL(/\/$/);
 
-  // A goal's sub-page still belongs to Goals.
-  await p.goto("/goals/new");
+  // A goal's own page still belongs to Goals.
+  await nav.getByRole("link", { name: "Goals" }).click();
+  await p.locator(".tile-title a, .done-title a").first().click();
+  await expect(p).toHaveURL(/\/goals\/[0-9a-f-]{36}$/);
   await expect(nav.getByRole("link", { name: "Goals" })).toHaveAttribute("aria-current", "page");
+  // Creating a goal is a task page: no bottom nav on phones (goals.html, decision (a)).
+  await p.goto("/goals/new");
+  await expect(p.getByRole("heading", { level: 1, name: "New goal" })).toBeVisible();
+  await expect(nav).toBeHidden();
   await ctx.close();
 });
