@@ -1,0 +1,2829 @@
+[
+  {
+    "id": "create-account-email-taken",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 0.19257973251028807,
+    "heights": [
+      864,
+      864
+    ],
+    "image": "create-account-email-taken--360x780--dark.png"
+  },
+  {
+    "id": "create-account-email-taken",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 0.18775720164609055,
+    "heights": [
+      864,
+      864
+    ],
+    "image": "create-account-email-taken--360x780--light.png"
+  },
+  {
+    "id": "create-account-email-taken",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 0.09912155745489079,
+    "heights": [
+      864,
+      864
+    ],
+    "image": "create-account-email-taken--390x844--light.png"
+  },
+  {
+    "id": "setup-choose",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 0.07898894154818326,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "setup-choose--390x844--light.png"
+  },
+  {
+    "id": "setup-offline",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 0.07868513792684409,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "setup-offline--390x844--light.png"
+  },
+  {
+    "id": "setup-long-email",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 0.07746992344148743,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "setup-long-email--390x844--light.png"
+  },
+  {
+    "id": "setup-join-invalid",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 0.05235042735042735,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "setup-join-invalid--360x780--dark.png"
+  },
+  {
+    "id": "create-account-submitting",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 0.043466449334419996,
+    "heights": [
+      818,
+      818
+    ],
+    "image": "create-account-submitting--360x780--dark.png"
+  },
+  {
+    "id": "create-account-name-typed",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 0.03973105134474327,
+    "heights": [
+      818,
+      818
+    ],
+    "image": "create-account-name-typed--360x780--dark.png"
+  },
+  {
+    "id": "create-account-offline",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 0.03603104212860311,
+    "heights": [
+      902,
+      902
+    ],
+    "image": "create-account-offline--360x780--dark.png"
+  },
+  {
+    "id": "create-account-offline",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 0.03269088634942294,
+    "heights": [
+      902,
+      902
+    ],
+    "image": "create-account-offline--390x844--light.png"
+  },
+  {
+    "id": "setup-start-network-error",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 0.030420353982300884,
+    "heights": [
+      904,
+      904
+    ],
+    "image": "setup-start-network-error--360x780--light.png"
+  },
+  {
+    "id": "create-account-idle",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 0.029468951269899138,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "create-account-idle--390x844--dark.png"
+  },
+  {
+    "id": "setup-start-other-currency",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 0.023466117216117216,
+    "heights": [
+      896,
+      896
+    ],
+    "image": "setup-start-other-currency--390x844--light.png"
+  },
+  {
+    "id": "setup-start-timezone-change",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 0.01839587932303164,
+    "heights": [
+      906,
+      906
+    ],
+    "image": "setup-start-timezone-change--360x780--dark.png"
+  },
+  {
+    "id": "setup-start-network-error",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 0.017152160009302864,
+    "heights": [
+      882,
+      882
+    ],
+    "image": "setup-start-network-error--390x844--dark.png"
+  },
+  {
+    "id": "setup-long-email",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 0.01579778830963665,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "setup-long-email--390x844--dark.png"
+  },
+  {
+    "id": "setup-start-other-currency",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 0.013919147906076009,
+    "heights": [
+      918,
+      918
+    ],
+    "image": "setup-start-other-currency--360x780--dark.png"
+  },
+  {
+    "id": "setup-start-submitting",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 0.013671162960262486,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "setup-start-submitting--390x844--dark.png"
+  },
+  {
+    "id": "setup-start-other-currency",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 0.013163919413919414,
+    "heights": [
+      896,
+      896
+    ],
+    "image": "setup-start-other-currency--390x844--dark.png"
+  },
+  {
+    "id": "setup-start-invalid",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 0.012919896640826873,
+    "heights": [
+      1032,
+      1032
+    ],
+    "image": "setup-start-invalid--360x780--light.png"
+  },
+  {
+    "id": "sign-in-rate-limited",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 0.011752136752136752,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "sign-in-rate-limited--360x780--light.png"
+  },
+  {
+    "id": "setup-choose",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 0.010683760683760684,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "setup-choose--360x780--light.png"
+  },
+  {
+    "id": "setup-offline",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 0.010683760683760684,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "setup-offline--360x780--dark.png"
+  },
+  {
+    "id": "sign-in-wrong",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 0.010327635327635327,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "sign-in-wrong--360x780--light.png"
+  },
+  {
+    "id": "sign-in-submitting",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 0.010327635327635327,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "sign-in-submitting--360x780--light.png"
+  },
+  {
+    "id": "setup-offline",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 0.010327635327635327,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "setup-offline--360x780--light.png"
+  },
+  {
+    "id": "setup-join-network-error",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 0.009615384615384616,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "setup-join-network-error--360x780--dark.png"
+  },
+  {
+    "id": "setup-offline",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 0.00911410864017499,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "setup-offline--390x844--dark.png"
+  },
+  {
+    "id": "setup-choose",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 0.008903133903133903,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "setup-choose--360x780--dark.png"
+  },
+  {
+    "id": "sign-in-wrong",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 0.00820269777615749,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "sign-in-wrong--390x844--dark.png"
+  },
+  {
+    "id": "setup-join-prefilled",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 0.00820269777615749,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "setup-join-prefilled--390x844--dark.png"
+  },
+  {
+    "id": "reset-password-invalid",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 0.00819088319088319,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "reset-password-invalid--360x780--dark.png"
+  },
+  {
+    "id": "setup-choose",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 0.007595090533479159,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "setup-choose--390x844--dark.png"
+  },
+  {
+    "id": "setup-join-rate-limited",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 0.007122507122507122,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "setup-join-rate-limited--360x780--light.png"
+  },
+  {
+    "id": "forgot-password-prefilled",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 0.00641025641025641,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "forgot-password-prefilled--360x780--dark.png"
+  },
+  {
+    "id": "setup-start-invalid",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 0.005839045443005839,
+    "heights": [
+      1010,
+      1010
+    ],
+    "image": "setup-start-invalid--390x844--dark.png"
+  },
+  {
+    "id": "forgot-password-idle",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 0.005772268805444161,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "forgot-password-idle--390x844--light.png"
+  },
+  {
+    "id": "setup-join-offline",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 0.005698005698005697,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "setup-join-offline--360x780--light.png"
+  },
+  {
+    "id": "sign-in-focused",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 0.004985754985754986,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "sign-in-focused--360x780--light.png"
+  },
+  {
+    "id": "forgot-password-idle",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 0.004985754985754986,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "forgot-password-idle--360x780--dark.png"
+  },
+  {
+    "id": "launch-offline",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 0.003561253561253561,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "launch-offline--360x780--dark.png"
+  },
+  {
+    "id": "reset-password-signed-in",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 0.0014245014245014244,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "reset-password-signed-in--360x780--dark.png"
+  },
+  {
+    "id": "setup-join-switch",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 0.0014245014245014244,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "setup-join-switch--360x780--light.png"
+  },
+  {
+    "id": "reset-password-signed-in",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 0.0012152144853566655,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "reset-password-signed-in--390x844--dark.png"
+  },
+  {
+    "id": "setup-join-switch",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 0.0012152144853566655,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "setup-join-switch--390x844--light.png"
+  },
+  {
+    "id": "reset-password-signed-in",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 0.0010683760683760685,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "reset-password-signed-in--360x780--light.png"
+  },
+  {
+    "id": "reset-password-signed-in",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 0.0009114108640174991,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "reset-password-signed-in--390x844--light.png"
+  },
+  {
+    "id": "forgot-password-sent",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 0.0006076072426783327,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "forgot-password-sent--390x844--light.png"
+  },
+  {
+    "id": "forgot-password-sent",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 0.0006076072426783327,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "forgot-password-sent--390x844--dark.png"
+  },
+  {
+    "id": "forgot-password-resent",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 0.0006076072426783327,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "forgot-password-resent--390x844--light.png"
+  },
+  {
+    "id": "forgot-password-resent",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 0.0006076072426783327,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "forgot-password-resent--390x844--dark.png"
+  },
+  {
+    "id": "reset-password-submitting",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 0.0003561253561253561,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "reset-password-submitting--360x780--light.png"
+  },
+  {
+    "id": "create-account-email-taken",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 0.0002967711301044634,
+    "heights": [
+      864,
+      864
+    ],
+    "image": "create-account-email-taken--390x844--dark.png"
+  },
+  {
+    "id": "sign-in-idle",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "sign-in-idle--390x844--light.png"
+  },
+  {
+    "id": "sign-in-idle",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "sign-in-idle--390x844--dark.png"
+  },
+  {
+    "id": "sign-in-idle",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "sign-in-idle--360x780--light.png"
+  },
+  {
+    "id": "sign-in-idle",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "sign-in-idle--360x780--dark.png"
+  },
+  {
+    "id": "sign-in-focused",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "sign-in-focused--390x844--light.png"
+  },
+  {
+    "id": "sign-in-focused",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "sign-in-focused--390x844--dark.png"
+  },
+  {
+    "id": "sign-in-focused",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "sign-in-focused--360x780--dark.png"
+  },
+  {
+    "id": "sign-in-filled-shown",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "sign-in-filled-shown--390x844--light.png"
+  },
+  {
+    "id": "sign-in-filled-shown",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "sign-in-filled-shown--390x844--dark.png"
+  },
+  {
+    "id": "sign-in-filled-shown",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "sign-in-filled-shown--360x780--light.png"
+  },
+  {
+    "id": "sign-in-filled-shown",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "sign-in-filled-shown--360x780--dark.png"
+  },
+  {
+    "id": "sign-in-prefilled",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "sign-in-prefilled--390x844--light.png"
+  },
+  {
+    "id": "sign-in-prefilled",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "sign-in-prefilled--390x844--dark.png"
+  },
+  {
+    "id": "sign-in-prefilled",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "sign-in-prefilled--360x780--light.png"
+  },
+  {
+    "id": "sign-in-prefilled",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "sign-in-prefilled--360x780--dark.png"
+  },
+  {
+    "id": "sign-in-invalid",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "sign-in-invalid--390x844--light.png"
+  },
+  {
+    "id": "sign-in-invalid",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "sign-in-invalid--390x844--dark.png"
+  },
+  {
+    "id": "sign-in-invalid",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "sign-in-invalid--360x780--light.png"
+  },
+  {
+    "id": "sign-in-invalid",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "sign-in-invalid--360x780--dark.png"
+  },
+  {
+    "id": "sign-in-wrong",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "sign-in-wrong--390x844--light.png"
+  },
+  {
+    "id": "sign-in-wrong",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "sign-in-wrong--360x780--dark.png"
+  },
+  {
+    "id": "sign-in-submitting",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "sign-in-submitting--390x844--light.png"
+  },
+  {
+    "id": "sign-in-submitting",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "sign-in-submitting--390x844--dark.png"
+  },
+  {
+    "id": "sign-in-submitting",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "sign-in-submitting--360x780--dark.png"
+  },
+  {
+    "id": "sign-in-rate-limited",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "sign-in-rate-limited--390x844--light.png"
+  },
+  {
+    "id": "sign-in-rate-limited",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "sign-in-rate-limited--390x844--dark.png"
+  },
+  {
+    "id": "sign-in-rate-limited",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "sign-in-rate-limited--360x780--dark.png"
+  },
+  {
+    "id": "sign-in-network-error",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "sign-in-network-error--390x844--light.png"
+  },
+  {
+    "id": "sign-in-network-error",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "sign-in-network-error--390x844--dark.png"
+  },
+  {
+    "id": "sign-in-network-error",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "sign-in-network-error--360x780--light.png"
+  },
+  {
+    "id": "sign-in-network-error",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "sign-in-network-error--360x780--dark.png"
+  },
+  {
+    "id": "sign-in-server-error",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "sign-in-server-error--390x844--light.png"
+  },
+  {
+    "id": "sign-in-server-error",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "sign-in-server-error--390x844--dark.png"
+  },
+  {
+    "id": "sign-in-server-error",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "sign-in-server-error--360x780--light.png"
+  },
+  {
+    "id": "sign-in-server-error",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "sign-in-server-error--360x780--dark.png"
+  },
+  {
+    "id": "sign-in-offline",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "sign-in-offline--390x844--light.png"
+  },
+  {
+    "id": "sign-in-offline",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "sign-in-offline--390x844--dark.png"
+  },
+  {
+    "id": "sign-in-offline",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "sign-in-offline--360x780--light.png"
+  },
+  {
+    "id": "sign-in-offline",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "sign-in-offline--360x780--dark.png"
+  },
+  {
+    "id": "sign-in-signed-out",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "sign-in-signed-out--390x844--light.png"
+  },
+  {
+    "id": "sign-in-signed-out",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "sign-in-signed-out--390x844--dark.png"
+  },
+  {
+    "id": "sign-in-signed-out",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "sign-in-signed-out--360x780--light.png"
+  },
+  {
+    "id": "sign-in-signed-out",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "sign-in-signed-out--360x780--dark.png"
+  },
+  {
+    "id": "create-account-idle",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "create-account-idle--390x844--light.png"
+  },
+  {
+    "id": "create-account-idle",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      818,
+      818
+    ],
+    "image": "create-account-idle--360x780--light.png"
+  },
+  {
+    "id": "create-account-idle",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      818,
+      818
+    ],
+    "image": "create-account-idle--360x780--dark.png"
+  },
+  {
+    "id": "create-account-has-code",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "create-account-has-code--390x844--light.png"
+  },
+  {
+    "id": "create-account-has-code",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "create-account-has-code--390x844--dark.png"
+  },
+  {
+    "id": "create-account-has-code",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      836,
+      836
+    ],
+    "image": "create-account-has-code--360x780--light.png"
+  },
+  {
+    "id": "create-account-has-code",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      836,
+      836
+    ],
+    "image": "create-account-has-code--360x780--dark.png"
+  },
+  {
+    "id": "create-account-name-typed",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "create-account-name-typed--390x844--light.png"
+  },
+  {
+    "id": "create-account-name-typed",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "create-account-name-typed--390x844--dark.png"
+  },
+  {
+    "id": "create-account-name-typed",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      818,
+      818
+    ],
+    "image": "create-account-name-typed--360x780--light.png"
+  },
+  {
+    "id": "create-account-invalid",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      978,
+      978
+    ],
+    "image": "create-account-invalid--390x844--light.png"
+  },
+  {
+    "id": "create-account-invalid",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      978,
+      978
+    ],
+    "image": "create-account-invalid--390x844--dark.png"
+  },
+  {
+    "id": "create-account-invalid",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      978,
+      978
+    ],
+    "image": "create-account-invalid--360x780--light.png"
+  },
+  {
+    "id": "create-account-invalid",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      978,
+      978
+    ],
+    "image": "create-account-invalid--360x780--dark.png"
+  },
+  {
+    "id": "create-account-submitting",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "create-account-submitting--390x844--light.png"
+  },
+  {
+    "id": "create-account-submitting",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "create-account-submitting--390x844--dark.png"
+  },
+  {
+    "id": "create-account-submitting",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      818,
+      818
+    ],
+    "image": "create-account-submitting--360x780--light.png"
+  },
+  {
+    "id": "create-account-rate-limited",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      876,
+      876
+    ],
+    "image": "create-account-rate-limited--390x844--light.png"
+  },
+  {
+    "id": "create-account-rate-limited",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      876,
+      876
+    ],
+    "image": "create-account-rate-limited--390x844--dark.png"
+  },
+  {
+    "id": "create-account-rate-limited",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      876,
+      876
+    ],
+    "image": "create-account-rate-limited--360x780--light.png"
+  },
+  {
+    "id": "create-account-rate-limited",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      876,
+      876
+    ],
+    "image": "create-account-rate-limited--360x780--dark.png"
+  },
+  {
+    "id": "create-account-server-error",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      894,
+      894
+    ],
+    "image": "create-account-server-error--390x844--light.png"
+  },
+  {
+    "id": "create-account-server-error",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      894,
+      894
+    ],
+    "image": "create-account-server-error--390x844--dark.png"
+  },
+  {
+    "id": "create-account-server-error",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      894,
+      894
+    ],
+    "image": "create-account-server-error--360x780--light.png"
+  },
+  {
+    "id": "create-account-server-error",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      894,
+      894
+    ],
+    "image": "create-account-server-error--360x780--dark.png"
+  },
+  {
+    "id": "create-account-with-code",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "create-account-with-code--390x844--light.png"
+  },
+  {
+    "id": "create-account-with-code",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "create-account-with-code--390x844--dark.png"
+  },
+  {
+    "id": "create-account-with-code",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      842,
+      842
+    ],
+    "image": "create-account-with-code--360x780--light.png"
+  },
+  {
+    "id": "create-account-with-code",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      842,
+      842
+    ],
+    "image": "create-account-with-code--360x780--dark.png"
+  },
+  {
+    "id": "create-account-offline",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      902,
+      902
+    ],
+    "image": "create-account-offline--390x844--dark.png"
+  },
+  {
+    "id": "create-account-offline",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      902,
+      902
+    ],
+    "image": "create-account-offline--360x780--light.png"
+  },
+  {
+    "id": "forgot-password-idle",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "forgot-password-idle--390x844--dark.png"
+  },
+  {
+    "id": "forgot-password-idle",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "forgot-password-idle--360x780--light.png"
+  },
+  {
+    "id": "forgot-password-prefilled",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "forgot-password-prefilled--390x844--light.png"
+  },
+  {
+    "id": "forgot-password-prefilled",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "forgot-password-prefilled--390x844--dark.png"
+  },
+  {
+    "id": "forgot-password-prefilled",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "forgot-password-prefilled--360x780--light.png"
+  },
+  {
+    "id": "forgot-password-invalid",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "forgot-password-invalid--390x844--light.png"
+  },
+  {
+    "id": "forgot-password-invalid",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "forgot-password-invalid--390x844--dark.png"
+  },
+  {
+    "id": "forgot-password-invalid",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "forgot-password-invalid--360x780--light.png"
+  },
+  {
+    "id": "forgot-password-invalid",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "forgot-password-invalid--360x780--dark.png"
+  },
+  {
+    "id": "forgot-password-submitting",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "forgot-password-submitting--390x844--light.png"
+  },
+  {
+    "id": "forgot-password-submitting",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "forgot-password-submitting--390x844--dark.png"
+  },
+  {
+    "id": "forgot-password-submitting",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "forgot-password-submitting--360x780--light.png"
+  },
+  {
+    "id": "forgot-password-submitting",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "forgot-password-submitting--360x780--dark.png"
+  },
+  {
+    "id": "forgot-password-sent",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "forgot-password-sent--360x780--light.png"
+  },
+  {
+    "id": "forgot-password-sent",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "forgot-password-sent--360x780--dark.png"
+  },
+  {
+    "id": "forgot-password-resent",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "forgot-password-resent--360x780--light.png"
+  },
+  {
+    "id": "forgot-password-resent",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "forgot-password-resent--360x780--dark.png"
+  },
+  {
+    "id": "forgot-password-rate-limited",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "forgot-password-rate-limited--390x844--light.png"
+  },
+  {
+    "id": "forgot-password-rate-limited",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "forgot-password-rate-limited--390x844--dark.png"
+  },
+  {
+    "id": "forgot-password-rate-limited",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "forgot-password-rate-limited--360x780--light.png"
+  },
+  {
+    "id": "forgot-password-rate-limited",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "forgot-password-rate-limited--360x780--dark.png"
+  },
+  {
+    "id": "forgot-password-offline",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "forgot-password-offline--390x844--light.png"
+  },
+  {
+    "id": "forgot-password-offline",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "forgot-password-offline--390x844--dark.png"
+  },
+  {
+    "id": "forgot-password-offline",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "forgot-password-offline--360x780--light.png"
+  },
+  {
+    "id": "forgot-password-offline",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "forgot-password-offline--360x780--dark.png"
+  },
+  {
+    "id": "reset-password-valid",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "reset-password-valid--390x844--light.png"
+  },
+  {
+    "id": "reset-password-valid",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "reset-password-valid--390x844--dark.png"
+  },
+  {
+    "id": "reset-password-valid",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "reset-password-valid--360x780--light.png"
+  },
+  {
+    "id": "reset-password-valid",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "reset-password-valid--360x780--dark.png"
+  },
+  {
+    "id": "reset-password-invalid",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "reset-password-invalid--390x844--light.png"
+  },
+  {
+    "id": "reset-password-invalid",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "reset-password-invalid--390x844--dark.png"
+  },
+  {
+    "id": "reset-password-invalid",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "reset-password-invalid--360x780--light.png"
+  },
+  {
+    "id": "reset-password-submitting",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "reset-password-submitting--390x844--light.png"
+  },
+  {
+    "id": "reset-password-submitting",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "reset-password-submitting--390x844--dark.png"
+  },
+  {
+    "id": "reset-password-submitting",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "reset-password-submitting--360x780--dark.png"
+  },
+  {
+    "id": "reset-password-success",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "reset-password-success--390x844--light.png"
+  },
+  {
+    "id": "reset-password-success",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "reset-password-success--390x844--dark.png"
+  },
+  {
+    "id": "reset-password-success",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "reset-password-success--360x780--light.png"
+  },
+  {
+    "id": "reset-password-success",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "reset-password-success--360x780--dark.png"
+  },
+  {
+    "id": "reset-password-expired",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "reset-password-expired--390x844--light.png"
+  },
+  {
+    "id": "reset-password-expired",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "reset-password-expired--390x844--dark.png"
+  },
+  {
+    "id": "reset-password-expired",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "reset-password-expired--360x780--light.png"
+  },
+  {
+    "id": "reset-password-expired",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "reset-password-expired--360x780--dark.png"
+  },
+  {
+    "id": "reset-password-expired-on-submit",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "reset-password-expired-on-submit--390x844--light.png"
+  },
+  {
+    "id": "reset-password-expired-on-submit",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "reset-password-expired-on-submit--390x844--dark.png"
+  },
+  {
+    "id": "reset-password-expired-on-submit",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "reset-password-expired-on-submit--360x780--light.png"
+  },
+  {
+    "id": "reset-password-expired-on-submit",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "reset-password-expired-on-submit--360x780--dark.png"
+  },
+  {
+    "id": "reset-password-rate-limited",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "reset-password-rate-limited--390x844--light.png"
+  },
+  {
+    "id": "reset-password-rate-limited",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "reset-password-rate-limited--390x844--dark.png"
+  },
+  {
+    "id": "reset-password-rate-limited",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "reset-password-rate-limited--360x780--light.png"
+  },
+  {
+    "id": "reset-password-rate-limited",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "reset-password-rate-limited--360x780--dark.png"
+  },
+  {
+    "id": "setup-long-email",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "setup-long-email--360x780--light.png"
+  },
+  {
+    "id": "setup-long-email",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "setup-long-email--360x780--dark.png"
+  },
+  {
+    "id": "setup-start-idle",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "setup-start-idle--390x844--light.png"
+  },
+  {
+    "id": "setup-start-idle",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "setup-start-idle--390x844--dark.png"
+  },
+  {
+    "id": "setup-start-idle",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      828,
+      828
+    ],
+    "image": "setup-start-idle--360x780--light.png"
+  },
+  {
+    "id": "setup-start-idle",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      828,
+      828
+    ],
+    "image": "setup-start-idle--360x780--dark.png"
+  },
+  {
+    "id": "setup-start-invalid",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      1010,
+      1010
+    ],
+    "image": "setup-start-invalid--390x844--light.png"
+  },
+  {
+    "id": "setup-start-invalid",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      1032,
+      1032
+    ],
+    "image": "setup-start-invalid--360x780--dark.png"
+  },
+  {
+    "id": "setup-start-other-currency",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      918,
+      918
+    ],
+    "image": "setup-start-other-currency--360x780--light.png"
+  },
+  {
+    "id": "setup-start-timezone-change",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      884,
+      884
+    ],
+    "image": "setup-start-timezone-change--390x844--light.png"
+  },
+  {
+    "id": "setup-start-timezone-change",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      884,
+      884
+    ],
+    "image": "setup-start-timezone-change--390x844--dark.png"
+  },
+  {
+    "id": "setup-start-timezone-change",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      906,
+      906
+    ],
+    "image": "setup-start-timezone-change--360x780--light.png"
+  },
+  {
+    "id": "setup-start-submitting",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "setup-start-submitting--390x844--light.png"
+  },
+  {
+    "id": "setup-start-submitting",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      828,
+      828
+    ],
+    "image": "setup-start-submitting--360x780--light.png"
+  },
+  {
+    "id": "setup-start-submitting",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      828,
+      828
+    ],
+    "image": "setup-start-submitting--360x780--dark.png"
+  },
+  {
+    "id": "setup-start-network-error",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      882,
+      882
+    ],
+    "image": "setup-start-network-error--390x844--light.png"
+  },
+  {
+    "id": "setup-start-network-error",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      904,
+      904
+    ],
+    "image": "setup-start-network-error--360x780--dark.png"
+  },
+  {
+    "id": "setup-start-offline",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      888,
+      888
+    ],
+    "image": "setup-start-offline--390x844--light.png"
+  },
+  {
+    "id": "setup-start-offline",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      888,
+      888
+    ],
+    "image": "setup-start-offline--390x844--dark.png"
+  },
+  {
+    "id": "setup-start-offline",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      928,
+      928
+    ],
+    "image": "setup-start-offline--360x780--light.png"
+  },
+  {
+    "id": "setup-start-offline",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      928,
+      928
+    ],
+    "image": "setup-start-offline--360x780--dark.png"
+  },
+  {
+    "id": "setup-join-idle",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "setup-join-idle--390x844--light.png"
+  },
+  {
+    "id": "setup-join-idle",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "setup-join-idle--390x844--dark.png"
+  },
+  {
+    "id": "setup-join-idle",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "setup-join-idle--360x780--light.png"
+  },
+  {
+    "id": "setup-join-idle",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "setup-join-idle--360x780--dark.png"
+  },
+  {
+    "id": "setup-join-prefilled",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "setup-join-prefilled--390x844--light.png"
+  },
+  {
+    "id": "setup-join-prefilled",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "setup-join-prefilled--360x780--light.png"
+  },
+  {
+    "id": "setup-join-prefilled",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "setup-join-prefilled--360x780--dark.png"
+  },
+  {
+    "id": "setup-join-restored",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "setup-join-restored--390x844--light.png"
+  },
+  {
+    "id": "setup-join-restored",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "setup-join-restored--390x844--dark.png"
+  },
+  {
+    "id": "setup-join-restored",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "setup-join-restored--360x780--light.png"
+  },
+  {
+    "id": "setup-join-restored",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "setup-join-restored--360x780--dark.png"
+  },
+  {
+    "id": "setup-join-invalid",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "setup-join-invalid--390x844--light.png"
+  },
+  {
+    "id": "setup-join-invalid",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "setup-join-invalid--390x844--dark.png"
+  },
+  {
+    "id": "setup-join-invalid",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "setup-join-invalid--360x780--light.png"
+  },
+  {
+    "id": "setup-join-invalid-letters",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "setup-join-invalid-letters--390x844--light.png"
+  },
+  {
+    "id": "setup-join-invalid-letters",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "setup-join-invalid-letters--390x844--dark.png"
+  },
+  {
+    "id": "setup-join-invalid-letters",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "setup-join-invalid-letters--360x780--light.png"
+  },
+  {
+    "id": "setup-join-invalid-letters",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "setup-join-invalid-letters--360x780--dark.png"
+  },
+  {
+    "id": "setup-join-invite-invalid",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "setup-join-invite-invalid--390x844--light.png"
+  },
+  {
+    "id": "setup-join-invite-invalid",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "setup-join-invite-invalid--390x844--dark.png"
+  },
+  {
+    "id": "setup-join-invite-invalid",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "setup-join-invite-invalid--360x780--light.png"
+  },
+  {
+    "id": "setup-join-invite-invalid",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "setup-join-invite-invalid--360x780--dark.png"
+  },
+  {
+    "id": "setup-join-submitting",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "setup-join-submitting--390x844--light.png"
+  },
+  {
+    "id": "setup-join-submitting",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "setup-join-submitting--390x844--dark.png"
+  },
+  {
+    "id": "setup-join-submitting",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "setup-join-submitting--360x780--light.png"
+  },
+  {
+    "id": "setup-join-submitting",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "setup-join-submitting--360x780--dark.png"
+  },
+  {
+    "id": "setup-join-rate-limited",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "setup-join-rate-limited--390x844--light.png"
+  },
+  {
+    "id": "setup-join-rate-limited",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "setup-join-rate-limited--390x844--dark.png"
+  },
+  {
+    "id": "setup-join-rate-limited",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "setup-join-rate-limited--360x780--dark.png"
+  },
+  {
+    "id": "setup-join-network-error",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "setup-join-network-error--390x844--light.png"
+  },
+  {
+    "id": "setup-join-network-error",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "setup-join-network-error--390x844--dark.png"
+  },
+  {
+    "id": "setup-join-network-error",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "setup-join-network-error--360x780--light.png"
+  },
+  {
+    "id": "setup-join-server-error",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "setup-join-server-error--390x844--light.png"
+  },
+  {
+    "id": "setup-join-server-error",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "setup-join-server-error--390x844--dark.png"
+  },
+  {
+    "id": "setup-join-server-error",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "setup-join-server-error--360x780--light.png"
+  },
+  {
+    "id": "setup-join-server-error",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "setup-join-server-error--360x780--dark.png"
+  },
+  {
+    "id": "setup-join-offline",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "setup-join-offline--390x844--light.png"
+  },
+  {
+    "id": "setup-join-offline",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "setup-join-offline--390x844--dark.png"
+  },
+  {
+    "id": "setup-join-offline",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "setup-join-offline--360x780--dark.png"
+  },
+  {
+    "id": "setup-join-switch",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "setup-join-switch--390x844--dark.png"
+  },
+  {
+    "id": "setup-join-switch",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "setup-join-switch--360x780--dark.png"
+  },
+  {
+    "id": "setup-join-switch-confirm",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "setup-join-switch-confirm--390x844--light.png"
+  },
+  {
+    "id": "setup-join-switch-confirm",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "setup-join-switch-confirm--390x844--dark.png"
+  },
+  {
+    "id": "setup-join-switch-confirm",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "setup-join-switch-confirm--360x780--light.png"
+  },
+  {
+    "id": "setup-join-switch-confirm",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "setup-join-switch-confirm--360x780--dark.png"
+  },
+  {
+    "id": "launch-loading",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "launch-loading--390x844--light.png"
+  },
+  {
+    "id": "launch-loading",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "launch-loading--390x844--dark.png"
+  },
+  {
+    "id": "launch-loading",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "launch-loading--360x780--light.png"
+  },
+  {
+    "id": "launch-loading",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "launch-loading--360x780--dark.png"
+  },
+  {
+    "id": "launch-offline",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "launch-offline--390x844--light.png"
+  },
+  {
+    "id": "launch-offline",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "launch-offline--390x844--dark.png"
+  },
+  {
+    "id": "launch-offline",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "launch-offline--360x780--light.png"
+  },
+  {
+    "id": "launch-error",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "launch-error--390x844--light.png"
+  },
+  {
+    "id": "launch-error",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "launch-error--390x844--dark.png"
+  },
+  {
+    "id": "launch-error",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "launch-error--360x780--light.png"
+  },
+  {
+    "id": "launch-error",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "launch-error--360x780--dark.png"
+  },
+  {
+    "id": "email-reset",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "email-reset--390x844--light.png"
+  }
+]
