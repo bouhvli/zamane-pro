@@ -1,0 +1,200 @@
+[
+  {
+    "id": "composer-uploading",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 22.06620282521611,
+    "heights": [
+      1581,
+      1581
+    ],
+    "image": "composer-uploading--390x844--light.png"
+  },
+  {
+    "id": "composer-uploading",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 22.00376262994859,
+    "heights": [
+      1581,
+      1581
+    ],
+    "image": "composer-uploading--390x844--dark.png"
+  },
+  {
+    "id": "composer-failed",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 21.703238781037644,
+    "heights": [
+      1581,
+      1581
+    ],
+    "image": "composer-failed--390x844--light.png"
+  },
+  {
+    "id": "composer-failed",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 21.620039248122737,
+    "heights": [
+      1581,
+      1581
+    ],
+    "image": "composer-failed--390x844--dark.png"
+  },
+  {
+    "id": "composer-uploading",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 19.645188460728573,
+    "heights": [
+      1583,
+      1583
+    ],
+    "image": "composer-uploading--360x780--light.png"
+  },
+  {
+    "id": "composer-uploading",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 19.59465150558012,
+    "heights": [
+      1583,
+      1583
+    ],
+    "image": "composer-uploading--360x780--dark.png"
+  },
+  {
+    "id": "composer-failed",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 19.268793430195828,
+    "heights": [
+      1583,
+      1583
+    ],
+    "image": "composer-failed--360x780--light.png"
+  },
+  {
+    "id": "composer-failed",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 19.18035375868604,
+    "heights": [
+      1583,
+      1583
+    ],
+    "image": "composer-failed--360x780--dark.png"
+  },
+  {
+    "id": "composer-edit",
+    "size": "1440x900",
+    "scheme": "light",
+    "diffPercent": 13.346684804514307,
+    "heights": [
+      1654,
+      1654
+    ],
+    "image": "composer-edit--1440x900--light.png"
+  },
+  {
+    "id": "composer-edit",
+    "size": "1440x900",
+    "scheme": "dark",
+    "diffPercent": 13.326195754400109,
+    "heights": [
+      1654,
+      1654
+    ],
+    "image": "composer-edit--1440x900--dark.png"
+  },
+  {
+    "id": "composer-conflict",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 0.032638450200042114,
+    "heights": [
+      1583,
+      1583
+    ],
+    "image": "composer-conflict--360x780--light.png"
+  },
+  {
+    "id": "composer-edit",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 0.02983084158068365,
+    "heights": [
+      1583,
+      1583
+    ],
+    "image": "composer-edit--360x780--light.png"
+  },
+  {
+    "id": "composer-conflict",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 0.027570995312930797,
+    "heights": [
+      1581,
+      1581
+    ],
+    "image": "composer-conflict--390x844--light.png"
+  },
+  {
+    "id": "composer-edit",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 0.023354254853306087,
+    "heights": [
+      1581,
+      1581
+    ],
+    "image": "composer-edit--390x844--light.png"
+  },
+  {
+    "id": "composer-conflict",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 0.021232540183898363,
+    "heights": [
+      1583,
+      1583
+    ],
+    "image": "composer-conflict--360x780--dark.png"
+  },
+  {
+    "id": "composer-edit",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 0.02059715532201301,
+    "heights": [
+      1581,
+      1581
+    ],
+    "image": "composer-edit--390x844--dark.png"
+  },
+  {
+    "id": "composer-edit",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 0.018424931564539903,
+    "heights": [
+      1583,
+      1583
+    ],
+    "image": "composer-edit--360x780--dark.png"
+  },
+  {
+    "id": "composer-conflict",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 0.017029144163869022,
+    "heights": [
+      1581,
+      1581
+    ],
+    "image": "composer-conflict--390x844--dark.png"
+  }
+]
