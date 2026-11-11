@@ -4,6 +4,7 @@ export const ERROR_CODES = [
   "no_space",
   "validation_failed",
   "not_found",
+  "forbidden",
   "conflict",
   "id_conflict",
   "invite_invalid",

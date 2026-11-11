@@ -30,9 +30,10 @@ export default defineConfig({
                 DATABASE_URL: process.env.DATABASE_URL ?? "",
                 BETTER_AUTH_SECRET: process.env.BETTER_AUTH_SECRET || "test-secret-test-secret-test-secret-0123",
                 RESEND_API_KEY: "",
-                CLOUDINARY_CLOUD_NAME: "",
-                CLOUDINARY_API_KEY: "",
-                CLOUDINARY_API_SECRET: "",
+                // Fake credentials: signing is checked offline; cleanup calls fail and are only logged.
+                CLOUDINARY_CLOUD_NAME: "zamane-test",
+                CLOUDINARY_API_KEY: "000000000000000",
+                CLOUDINARY_API_SECRET: "test-cloudinary-secret",
               },
             },
           }),

@@ -24,6 +24,7 @@ export const CAPS = {
   notes: 4000,
   noteText: 10000,
   url: 2048,
+  alt: 250,
 } as const;
 
 export const PASSWORD_MIN = 10;

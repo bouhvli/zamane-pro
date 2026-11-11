@@ -8,6 +8,13 @@
       "when": 1794398728573,
       "tag": "0000_init",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1794414877557,
+      "tag": "0001_note_block_alt",
+      "breakpoints": true
     }
   ]
 }

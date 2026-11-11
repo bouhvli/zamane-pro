@@ -283,6 +283,8 @@ export const goalNoteBlocks = pgTable(
     kind: text("kind").notNull().$type<(typeof NOTE_BLOCK_KINDS)[number]>(),
     text: text("text"),
     image: jsonb("image").$type<ImageAsset>(),
+    /** The photo's description, read aloud (image blocks only). */
+    alt: text("alt"),
     createdBy: uuid("created_by")
       .notNull()
       .references(() => user.id),
@@ -303,6 +305,7 @@ export const goalNoteBlocks = pgTable(
       sql`(${t.kind} = 'text' and ${t.text} is not null and ${t.image} is null) or (${t.kind} = 'image' and ${t.image} is not null)`,
     ),
     check("goal_note_blocks_text_len", maxLen(t.text, CAPS.noteText)),
+    check("goal_note_blocks_alt_len", maxLen(t.alt, CAPS.alt)),
   ],
 );
 

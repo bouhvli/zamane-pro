@@ -1,0 +1,2 @@
+ALTER TABLE "goal_note_blocks" ADD COLUMN "alt" text;--> statement-breakpoint
+ALTER TABLE "goal_note_blocks" ADD CONSTRAINT "goal_note_blocks_alt_len" CHECK (char_length("goal_note_blocks"."alt") <= 250);
