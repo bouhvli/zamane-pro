@@ -48,10 +48,15 @@ test("quick add to a money goal, then Undo", async ({ browser }) => {
   await expect(page.getByText("Sara added 1 · just now")).toBeVisible();
   await expect(page.locator("#primary")).toBeFocused();
 
+  // The removal is queued behind the add (which takes a moment to reach the server): wait for the server to
+  // confirm it, then check the server ends where it started. (Checking the total alone can pass before the add lands.)
+  const removed = page.waitForResponse((r) => r.request().method() === "DELETE" && r.url().includes("/entries/"), {
+    timeout: 20_000,
+  });
   await toast.getByRole("button", { name: "Undo: remove 1 EUR from Wedding fund" }).click();
   await expect(toast).toContainText("Removed 1 EUR from Wedding fund");
   await expect(total(page)).toHaveText(before);
-  // The removal is queued behind the add (which takes a moment to reach the server); the server ends where it started.
+  expect((await removed).status()).toBe(204);
   await expect.poll(() => serverTotal(page), { timeout: 15_000 }).toBe(beforeServer);
   await page.reload();
   await expect(total(page)).toHaveText(before);

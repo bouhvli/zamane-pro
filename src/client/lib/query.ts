@@ -37,6 +37,9 @@ export async function restoreQueryCache(): Promise<void> {
       buster: __APP_VERSION__,
     });
     await restored;
+    // What was saved on this phone shows at once, but it is never treated as fresh: every screen refetches on
+    // mount. Otherwise a write that settled just before a reload could leave an old total for the staleTime.
+    void queryClient.invalidateQueries({ refetchType: "none" });
     await queryClient.resumePausedMutations();
   } catch {
     /* private window or IndexedDB unavailable: run without persistence */
