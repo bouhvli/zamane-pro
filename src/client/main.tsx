@@ -15,6 +15,7 @@ import "./styles/base.css";
 import "./styles/auth.css";
 import "./styles/account.css";
 import "./styles/setup.css";
+import "./styles/nav.css";
 import "./styles/app.css";
 
 const router = createRouter({

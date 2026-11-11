@@ -1,0 +1,218 @@
+/* Ported from .ux-forge/nav-bar/nav-bar.html: the nav bar ("the ز dot").
+   Phones: a fixed bottom tab bar. ≥ 48rem: the same nav inside a sticky top bar, after the logo.
+   The tokens it uses (--nav-bar-h, --top-bar-h, --nav-icon, --nav-icon-inline, --nav-link-inline-h, --nav-mark,
+   --dur-press, --dur-mark, --ease-out) are in base.css. Page rules are scoped to html[data-chrome="app"]. */
+
+/* ===== Base for app pages: room for the bar and the safe area ===== */
+html[data-chrome="app"] {
+  scroll-padding-bottom: calc(var(--nav-bar-h) + env(safe-area-inset-bottom, 0px) + var(--space-4));
+}
+html[data-chrome="app"] body {
+  padding-bottom: calc(var(--nav-bar-h) + env(safe-area-inset-bottom, 0px));
+}
+html[data-chrome="app"] main {
+  padding-block: var(--space-5) var(--space-6);
+}
+
+/* ===== The nav bar: phones first (fixed bottom tab bar) ===== */
+.app-header .brand {
+  display: none;
+}
+.nav {
+  position: fixed;
+  inset-inline: 0;
+  bottom: 0;
+  z-index: 10;
+  background: var(--surface);
+  border-top: 1px solid var(--line);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  padding-inline: env(safe-area-inset-left, 0px) env(safe-area-inset-right, 0px);
+}
+.nav-list {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  height: var(--nav-bar-h);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.nav-link {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
+  height: 100%;
+  padding-inline: var(--space-1);
+  border-radius: var(--radius-md);
+  color: var(--ink-muted);
+  text-decoration: none;
+  font-size: 13px;
+  line-height: 18px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+.nav-link svg {
+  flex: none;
+  width: var(--nav-icon);
+  height: var(--nav-icon);
+  stroke-width: 1.75;
+}
+.nav-label {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.nav-link:focus-visible {
+  outline-offset: -2px;
+}
+/* 320–359px phones: 64px columns. "Shopping" must never truncate. */
+@media (max-width: 22.4375rem) {
+  .nav-link {
+    padding-inline: 0;
+    font-size: 12px;
+    line-height: 16px;
+    letter-spacing: 0;
+  }
+}
+
+/* Where you are: colour, a heavier icon stroke, and the ز dot riding the bar's hairline. */
+.nav-link[aria-current="page"] {
+  color: var(--majorelle);
+}
+.nav-link[aria-current="page"] svg {
+  stroke-width: 2.25;
+}
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: calc(-0.5px - var(--nav-mark) / 2);
+  width: var(--nav-mark);
+  height: var(--nav-mark);
+  margin-left: calc(var(--nav-mark) / -2);
+  background: var(--majorelle);
+  transform: rotate(45deg) scale(0);
+  pointer-events: none;
+}
+.nav-link[aria-current="page"]::after {
+  transform: rotate(45deg) scale(1);
+}
+
+@media (hover: hover) {
+  .nav-link:not([aria-current]):hover {
+    color: var(--ink);
+  }
+}
+
+/* Profile's icon is you: your initial on your partner tint. In the bar its ring is drawn in currentColor like the
+   other icons' strokes, so it follows the same states. (.zm-av and its sizes are in base.css.) */
+.nav .zm-av {
+  border: 0;
+  box-shadow: 0 0 0 1.75px currentColor;
+}
+.nav-link[aria-current="page"] .zm-av {
+  box-shadow: 0 0 0 2.25px currentColor;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .nav-link svg,
+  .nav-link .zm-av {
+    transition: transform var(--dur-press) ease;
+  }
+  .nav-link:active svg,
+  .nav-link:active .zm-av {
+    transform: scale(0.92);
+  }
+  .nav-link::after {
+    transition: transform var(--dur-mark) var(--ease-out);
+  }
+}
+@media (forced-colors: active) {
+  .nav-link::after {
+    background: Highlight;
+    forced-color-adjust: none;
+  }
+  .nav-link[aria-current="page"] .nav-label {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+}
+
+/* ===== ≥ 48rem: the same nav, moved into a sticky top bar ===== */
+@media (min-width: 48rem) {
+  html[data-chrome="app"] {
+    scroll-padding-bottom: 0;
+    scroll-padding-top: calc(var(--top-bar-h) + var(--space-4));
+  }
+  html[data-chrome="app"] body {
+    padding-bottom: 0;
+  }
+  .app-header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: var(--surface);
+    border-bottom: 1px solid var(--line);
+  }
+  .app-header .bar {
+    display: flex;
+    align-items: center;
+    gap: var(--space-6);
+    height: var(--top-bar-h);
+  }
+  .app-header .brand {
+    display: flex;
+    flex: none;
+    align-items: center;
+    border-radius: var(--radius-sm);
+  }
+  .brand img {
+    display: block;
+    height: 36px;
+    width: auto;
+  }
+  .nav {
+    position: static;
+    flex: 1;
+    min-width: 0;
+    height: 100%;
+    padding: 0;
+    border: 0;
+    background: none;
+  }
+  .nav-list {
+    display: flex;
+    gap: var(--space-1);
+    height: 100%;
+  }
+  .nav-list > li {
+    display: flex;
+    align-items: center;
+  }
+  .nav-list > li:last-child {
+    margin-inline-start: auto;
+  }
+  .nav-link {
+    flex-direction: row;
+    gap: var(--space-2);
+    height: var(--nav-link-inline-h);
+    padding-inline: var(--space-3);
+  }
+  .nav-link svg {
+    width: var(--nav-icon-inline);
+    height: var(--nav-icon-inline);
+  }
+  .nav-link:focus-visible {
+    outline-offset: 2px;
+  }
+  /* the dot sits on the header's bottom hairline, below the centred 44px item */
+  .nav-link::after {
+    top: auto;
+    bottom: calc((var(--top-bar-h) - var(--nav-link-inline-h)) / -2 - 0.5px - var(--nav-mark) / 2);
+  }
+}

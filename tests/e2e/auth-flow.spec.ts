@@ -103,7 +103,7 @@ test("two partners: sign up, start, join, sign out, reset, sign in", async ({ br
   // ---- The TEMP Profile page ----
   await s.getByLabel("First name").fill("Sarah");
   await s.getByRole("button", { name: "Save name" }).click();
-  await expect(s.getByText("Saved.")).toBeVisible();
+  await expect(s.getByText("Saved.", { exact: true })).toBeVisible();
   await expect(s.getByText(/Sarah · partner a/)).toBeVisible();
 
   await s.getByRole("button", { name: "Copy code" }).click();
@@ -147,5 +147,40 @@ test("guards: signed-in visitors skip the auth pages, the invite link carries th
     await p.goto(path);
     await expect(p.getByRole("heading", { level: 1, name: "Home" })).toBeVisible();
   }
+  await ctx.close();
+});
+
+test("the nav bar: tabs, the current one, focus on arrival (seeded Sara)", async ({ browser }) => {
+  const ctx = await browser.newContext({ viewport: { width: 390, height: 844 } });
+  const p = await ctx.newPage();
+  await p.goto("/sign-in");
+  await p.getByLabel("Email").fill("sara@example.com");
+  await p.getByLabel("Password", { exact: true }).fill("sara-dev-password");
+  await p.getByRole("button", { name: "Sign in" }).click();
+  const nav = p.getByRole("navigation", { name: "Main" });
+  await expect(nav.getByRole("link", { name: "Home" })).toHaveAttribute("aria-current", "page");
+  await expect(nav.getByRole("link", { name: "Profile" })).toContainText("S"); // your initial on your tint
+
+  for (const [name, path] of [
+    ["Goals", "/goals"],
+    ["Trips", "/trips"],
+    ["Shopping", "/shopping"],
+    ["Profile", "/profile"],
+    ["Home", "/"],
+  ] as const) {
+    await nav.getByRole("link", { name }).click();
+    await expect(p).toHaveURL(new RegExp(`${path === "/" ? "/$" : `${path}$`}`));
+    await expect(nav.getByRole("link", { name })).toHaveAttribute("aria-current", "page");
+    await expect(nav.locator("[aria-current=page]")).toHaveCount(1);
+    await expect(p.getByRole("heading", { level: 1 })).toBeFocused();
+  }
+
+  // Tapping the tab you're on keeps you there (and scrolls to the top).
+  await nav.getByRole("link", { name: "Home" }).click();
+  await expect(p).toHaveURL(/\/$/);
+
+  // A goal's sub-page still belongs to Goals.
+  await p.goto("/goals/new");
+  await expect(nav.getByRole("link", { name: "Goals" })).toHaveAttribute("aria-current", "page");
   await ctx.close();
 });

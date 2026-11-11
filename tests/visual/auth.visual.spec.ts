@@ -1,7 +1,7 @@
 /**
  * Visual comparison: every auth prototype state (.ux-forge/auth/auth.html?state=…#/route, over file://) next to the
  * React route in the same state (API mocked), at 390×844 and 360×780, light and dark. Pixel diff with a small
- * threshold for font anti-aliasing. Writes side-by-side images, diffs and an index to tests/visual/report/.
+ * threshold for font anti-aliasing. Writes side-by-side images, diffs and an index to tests/visual/report/auth/.
  *
  * Prototype-only elements are hidden on the prototype side: the "Example data" footnote and the labelled
  * "Prototype" controls. Run with `pnpm test:visual` (starts the dev server).
@@ -17,7 +17,7 @@ import { resetPasswordEmail } from "../../src/worker/services/reset-email.ts";
 
 const ROOT = join(import.meta.dirname, "..", "..");
 const PROTO = pathToFileURL(join(ROOT, ".ux-forge/auth/auth.html")).href;
-const REPORT = join(ROOT, "tests/visual/report");
+const REPORT = join(ROOT, "tests/visual/report/auth");
 const APP = "http://localhost:3000";
 const SIZES = [
   { w: 390, h: 844 },

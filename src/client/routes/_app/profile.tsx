@@ -2,7 +2,7 @@
 // existing components and tokens, so it can be replaced wholesale when the design lands.
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { formatInviteCode } from "../../../shared/invite-code.ts";
 import { changePasswordSchema, updateMeSchema } from "../../../shared/schemas/auth.ts";
 import type { MySpace } from "../../../shared/schemas/spaces.ts";
@@ -12,8 +12,8 @@ import { FormAlert, Notice } from "../../components/Notice.tsx";
 import { PartnerAvatar } from "../../components/PartnerAvatar.tsx";
 import { api, isApiError } from "../../lib/api.ts";
 import { say, setTitle } from "../../lib/announce.ts";
-import { useChrome } from "../../lib/nav.ts";
 import { meKey } from "../../lib/session.ts";
+import { focusHeading, useArrival } from "../../lib/nav.ts";
 import { getTheme, setTheme, type Theme } from "../../lib/theme.ts";
 import { useAuthForm } from "../../lib/use-auth-form.ts";
 import { useSignOut } from "../../lib/use-sign-out.ts";
@@ -23,8 +23,10 @@ export const Route = createFileRoute("/_app/profile")({ component: Profile });
 const spaceKey = ["space", "mine"] as const;
 
 function Profile() {
-  useChrome("app", "profile");
-  useEffect(() => setTitle("Profile"), []);
+  useArrival((first) => {
+    setTitle("Profile");
+    if (!first) focusHeading();
+  });
   const { me } = Route.useRouteContext();
   const { signOut, offline } = useSignOut();
   // Always fresh on open: until realtime (Phase 5), nothing else tells this page that the partner joined.
@@ -36,7 +38,7 @@ function Profile() {
   });
 
   return (
-    <main id="main" className="wrap temp-page" tabIndex={-1}>
+    <div className="temp-page">
       <h1 className="title-lg">Profile</h1>
       <NameForm displayName={me.user.displayName} />
       <PasswordForm />
@@ -65,7 +67,7 @@ function Profile() {
           </p>
         )}
       </section>
-    </main>
+    </div>
   );
 }
 

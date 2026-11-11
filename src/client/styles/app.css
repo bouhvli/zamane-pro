@@ -4,9 +4,6 @@
 .temp-page {
   max-width: calc(24rem + var(--space-4) * 2);
 }
-.placeholder-links {
-  margin: var(--space-4) 0 0;
-}
 .temp-section {
   display: grid;
   gap: var(--space-3);
