@@ -1,0 +1,1212 @@
+[
+  {
+    "id": "journal",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 30.0135873220868,
+    "heights": [
+      1906,
+      1906
+    ],
+    "image": "journal--390x844--light.png"
+  },
+  {
+    "id": "journal",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 30.010896763257726,
+    "heights": [
+      1906,
+      1906
+    ],
+    "image": "journal--390x844--dark.png"
+  },
+  {
+    "id": "offline",
+    "size": "1440x900",
+    "scheme": "light",
+    "diffPercent": 29.731785714285714,
+    "heights": [
+      1414,
+      1750
+    ],
+    "image": "offline--1440x900--light.png"
+  },
+  {
+    "id": "offline",
+    "size": "1440x900",
+    "scheme": "dark",
+    "diffPercent": 29.730317460317462,
+    "heights": [
+      1414,
+      1750
+    ],
+    "image": "offline--1440x900--dark.png"
+  },
+  {
+    "id": "journal",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 27.50983154311205,
+    "heights": [
+      1893,
+      1893
+    ],
+    "image": "journal--360x780--light.png"
+  },
+  {
+    "id": "journal",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 27.47182602570875,
+    "heights": [
+      1893,
+      1893
+    ],
+    "image": "journal--360x780--dark.png"
+  },
+  {
+    "id": "partial",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 16.71234647705236,
+    "heights": [
+      1190,
+      1190
+    ],
+    "image": "partial--390x844--dark.png"
+  },
+  {
+    "id": "partial",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 16.711484593837536,
+    "heights": [
+      1190,
+      1190
+    ],
+    "image": "partial--390x844--light.png"
+  },
+  {
+    "id": "journal",
+    "size": "1440x900",
+    "scheme": "light",
+    "diffPercent": 15.53032211473868,
+    "heights": [
+      1654,
+      1654
+    ],
+    "image": "journal--1440x900--light.png"
+  },
+  {
+    "id": "stats-open",
+    "size": "1440x900",
+    "scheme": "dark",
+    "diffPercent": 15.524360137041516,
+    "heights": [
+      1654,
+      1654
+    ],
+    "image": "stats-open--1440x900--dark.png"
+  },
+  {
+    "id": "wedding",
+    "size": "1440x900",
+    "scheme": "light",
+    "diffPercent": 15.515333198978906,
+    "heights": [
+      1654,
+      1654
+    ],
+    "image": "wedding--1440x900--light.png"
+  },
+  {
+    "id": "stats-open",
+    "size": "1440x900",
+    "scheme": "light",
+    "diffPercent": 15.515333198978906,
+    "heights": [
+      1654,
+      1654
+    ],
+    "image": "stats-open--1440x900--light.png"
+  },
+  {
+    "id": "solo",
+    "size": "1440x900",
+    "scheme": "light",
+    "diffPercent": 15.512310224371891,
+    "heights": [
+      1654,
+      1654
+    ],
+    "image": "solo--1440x900--light.png"
+  },
+  {
+    "id": "wedding",
+    "size": "1440x900",
+    "scheme": "dark",
+    "diffPercent": 15.512100295579739,
+    "heights": [
+      1654,
+      1654
+    ],
+    "image": "wedding--1440x900--dark.png"
+  },
+  {
+    "id": "journal",
+    "size": "1440x900",
+    "scheme": "dark",
+    "diffPercent": 15.512100295579739,
+    "heights": [
+      1654,
+      1654
+    ],
+    "image": "journal--1440x900--dark.png"
+  },
+  {
+    "id": "solo",
+    "size": "1440x900",
+    "scheme": "dark",
+    "diffPercent": 15.511428523444849,
+    "heights": [
+      1654,
+      1654
+    ],
+    "image": "solo--1440x900--dark.png"
+  },
+  {
+    "id": "partial",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 15.154968307233407,
+    "heights": [
+      1192,
+      1192
+    ],
+    "image": "partial--360x780--light.png"
+  },
+  {
+    "id": "partial",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 15.154269202087994,
+    "heights": [
+      1192,
+      1192
+    ],
+    "image": "partial--360x780--dark.png"
+  },
+  {
+    "id": "quick-add",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 14.93212669683258,
+    "heights": [
+      1581,
+      1581
+    ],
+    "image": "quick-add--390x844--light.png"
+  },
+  {
+    "id": "quick-add",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 14.813409234661606,
+    "heights": [
+      1581,
+      1581
+    ],
+    "image": "quick-add--390x844--dark.png"
+  },
+  {
+    "id": "quick-add",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 13.710605741559625,
+    "heights": [
+      1583,
+      1583
+    ],
+    "image": "quick-add--360x780--light.png"
+  },
+  {
+    "id": "quick-add",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 13.703060293395101,
+    "heights": [
+      1583,
+      1583
+    ],
+    "image": "quick-add--360x780--dark.png"
+  },
+  {
+    "id": "toast-deleted",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 13.119995946082902,
+    "heights": [
+      1518,
+      1518
+    ],
+    "image": "toast-deleted--390x844--light.png"
+  },
+  {
+    "id": "toast-deleted",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 13.110874632613765,
+    "heights": [
+      1518,
+      1518
+    ],
+    "image": "toast-deleted--390x844--dark.png"
+  },
+  {
+    "id": "wedding",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 12.60610778637344,
+    "heights": [
+      1581,
+      1581
+    ],
+    "image": "wedding--390x844--light.png"
+  },
+  {
+    "id": "entry-sheet",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 12.602053228239187,
+    "heights": [
+      1581,
+      1581
+    ],
+    "image": "entry-sheet--390x844--dark.png"
+  },
+  {
+    "id": "entry-sheet",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 12.597998670104932,
+    "heights": [
+      1581,
+      1581
+    ],
+    "image": "entry-sheet--390x844--light.png"
+  },
+  {
+    "id": "wedding",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 12.59621466452586,
+    "heights": [
+      1581,
+      1581
+    ],
+    "image": "wedding--390x844--dark.png"
+  },
+  {
+    "id": "confirm-delete",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 12.540261762273147,
+    "heights": [
+      1581,
+      1581
+    ],
+    "image": "confirm-delete--390x844--dark.png"
+  },
+  {
+    "id": "solo",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 12.341192347384297,
+    "heights": [
+      1615,
+      1615
+    ],
+    "image": "solo--390x844--dark.png"
+  },
+  {
+    "id": "solo",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 12.331189965864889,
+    "heights": [
+      1615,
+      1615
+    ],
+    "image": "solo--390x844--light.png"
+  },
+  {
+    "id": "toast-added",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 12.192166807551423,
+    "heights": [
+      1638,
+      1638
+    ],
+    "image": "toast-added--390x844--dark.png"
+  },
+  {
+    "id": "toast-added",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 12.176043329889485,
+    "heights": [
+      1638,
+      1638
+    ],
+    "image": "toast-added--390x844--light.png"
+  },
+  {
+    "id": "toast-deleted",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 11.905701754385966,
+    "heights": [
+      1520,
+      1520
+    ],
+    "image": "toast-deleted--360x780--light.png"
+  },
+  {
+    "id": "toast-deleted",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 11.894554093567251,
+    "heights": [
+      1520,
+      1520
+    ],
+    "image": "toast-deleted--360x780--dark.png"
+  },
+  {
+    "id": "offline",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 11.621140763997907,
+    "heights": [
+      1715,
+      1715
+    ],
+    "image": "offline--390x844--light.png"
+  },
+  {
+    "id": "offline",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 11.612020632428797,
+    "heights": [
+      1715,
+      1715
+    ],
+    "image": "offline--390x844--dark.png"
+  },
+  {
+    "id": "wedding",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 11.44153155050186,
+    "heights": [
+      1583,
+      1583
+    ],
+    "image": "wedding--360x780--light.png"
+  },
+  {
+    "id": "entry-sheet",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 11.433810626798625,
+    "heights": [
+      1583,
+      1583
+    ],
+    "image": "entry-sheet--360x780--light.png"
+  },
+  {
+    "id": "wedding",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 11.429599213869587,
+    "heights": [
+      1583,
+      1583
+    ],
+    "image": "wedding--360x780--dark.png"
+  },
+  {
+    "id": "stats-open",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 11.40945100967945,
+    "heights": [
+      1751,
+      1751
+    ],
+    "image": "stats-open--390x844--dark.png"
+  },
+  {
+    "id": "entry-sheet",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 11.405734540605039,
+    "heights": [
+      1583,
+      1583
+    ],
+    "image": "entry-sheet--360x780--dark.png"
+  },
+  {
+    "id": "stats-open",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 11.382213826531359,
+    "heights": [
+      1751,
+      1751
+    ],
+    "image": "stats-open--390x844--light.png"
+  },
+  {
+    "id": "toast-queued",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 11.376943266707046,
+    "heights": [
+      1778,
+      1778
+    ],
+    "image": "toast-queued--390x844--dark.png"
+  },
+  {
+    "id": "confirm-delete",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 11.369060153014669,
+    "heights": [
+      1583,
+      1583
+    ],
+    "image": "confirm-delete--360x780--dark.png"
+  },
+  {
+    "id": "toast-queued",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 11.217299760606847,
+    "heights": [
+      1778,
+      1778
+    ],
+    "image": "toast-queued--390x844--light.png"
+  },
+  {
+    "id": "solo",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 11.190647976362262,
+    "heights": [
+      1617,
+      1617
+    ],
+    "image": "solo--360x780--light.png"
+  },
+  {
+    "id": "solo",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 11.187727616299044,
+    "heights": [
+      1617,
+      1617
+    ],
+    "image": "solo--360x780--dark.png"
+  },
+  {
+    "id": "toast-completed",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 11.054266398684451,
+    "heights": [
+      1684,
+      1684
+    ],
+    "image": "toast-completed--390x844--light.png"
+  },
+  {
+    "id": "toast-added",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 11.053184281842817,
+    "heights": [
+      1640,
+      1640
+    ],
+    "image": "toast-added--360x780--light.png"
+  },
+  {
+    "id": "toast-added",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 11.040481029810298,
+    "heights": [
+      1640,
+      1640
+    ],
+    "image": "toast-added--360x780--dark.png"
+  },
+  {
+    "id": "toast-completed",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 11.010719288629026,
+    "heights": [
+      1684,
+      1684
+    ],
+    "image": "toast-completed--390x844--dark.png"
+  },
+  {
+    "id": "offline",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 10.548598977544813,
+    "heights": [
+      1717,
+      1717
+    ],
+    "image": "offline--360x780--light.png"
+  },
+  {
+    "id": "offline",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 10.537597877434802,
+    "heights": [
+      1717,
+      1717
+    ],
+    "image": "offline--360x780--dark.png"
+  },
+  {
+    "id": "photo-viewer",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 10.51860521430301,
+    "heights": [
+      1906,
+      1906
+    ],
+    "image": "photo-viewer--390x844--dark.png"
+  },
+  {
+    "id": "photo-viewer",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 10.493313961309763,
+    "heights": [
+      1906,
+      1906
+    ],
+    "image": "photo-viewer--390x844--light.png"
+  },
+  {
+    "id": "stats-open",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 10.340685808455346,
+    "heights": [
+      1753,
+      1753
+    ],
+    "image": "stats-open--360x780--dark.png"
+  },
+  {
+    "id": "stats-open",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 10.331970590099512,
+    "heights": [
+      1753,
+      1753
+    ],
+    "image": "stats-open--360x780--light.png"
+  },
+  {
+    "id": "toast-queued",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 10.206460674157302,
+    "heights": [
+      1780,
+      1780
+    ],
+    "image": "toast-queued--360x780--light.png"
+  },
+  {
+    "id": "toast-queued",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 10.194132334581772,
+    "heights": [
+      1780,
+      1780
+    ],
+    "image": "toast-queued--360x780--dark.png"
+  },
+  {
+    "id": "partial",
+    "size": "1440x900",
+    "scheme": "dark",
+    "diffPercent": 9.828447794528197,
+    "heights": [
+      995,
+      995
+    ],
+    "image": "partial--1440x900--dark.png"
+  },
+  {
+    "id": "partial",
+    "size": "1440x900",
+    "scheme": "light",
+    "diffPercent": 9.827889447236181,
+    "heights": [
+      995,
+      995
+    ],
+    "image": "partial--1440x900--light.png"
+  },
+  {
+    "id": "toast-completed",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 9.781213535589265,
+    "heights": [
+      1714,
+      1714
+    ],
+    "image": "toast-completed--360x780--light.png"
+  },
+  {
+    "id": "toast-completed",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 9.779430831064436,
+    "heights": [
+      1714,
+      1714
+    ],
+    "image": "toast-completed--360x780--dark.png"
+  },
+  {
+    "id": "photo-viewer",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 9.628602453483595,
+    "heights": [
+      1893,
+      1893
+    ],
+    "image": "photo-viewer--360x780--light.png"
+  },
+  {
+    "id": "photo-viewer",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 9.611874156248165,
+    "heights": [
+      1893,
+      1893
+    ],
+    "image": "photo-viewer--360x780--dark.png"
+  },
+  {
+    "id": "loading",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 5.808325266214908,
+    "heights": [
+      1033,
+      973
+    ],
+    "image": "loading--390x844--light.png"
+  },
+  {
+    "id": "loading",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 5.808325266214908,
+    "heights": [
+      1033,
+      973
+    ],
+    "image": "loading--390x844--dark.png"
+  },
+  {
+    "id": "loading",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 5.433256553690907,
+    "heights": [
+      1013,
+      958
+    ],
+    "image": "loading--360x780--dark.png"
+  },
+  {
+    "id": "loading",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 5.429417571569595,
+    "heights": [
+      1013,
+      958
+    ],
+    "image": "loading--360x780--light.png"
+  },
+  {
+    "id": "confirm-delete",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 0.07685828595493788,
+    "heights": [
+      1583,
+      1583
+    ],
+    "image": "confirm-delete--360x780--light.png"
+  },
+  {
+    "id": "confirm-delete",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 0.07103585851213935,
+    "heights": [
+      1581,
+      1581
+    ],
+    "image": "confirm-delete--390x844--light.png"
+  },
+  {
+    "id": "guest-room",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 0.03822412155745489,
+    "heights": [
+      1170,
+      1170
+    ],
+    "image": "guest-room--360x780--dark.png"
+  },
+  {
+    "id": "sofa-done",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 0.0378442919879384,
+    "heights": [
+      1267,
+      1267
+    ],
+    "image": "sofa-done--390x844--light.png"
+  },
+  {
+    "id": "uploads-off",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 0.0314499709133217,
+    "heights": [
+      1528,
+      1528
+    ],
+    "image": "uploads-off--360x780--light.png"
+  },
+  {
+    "id": "uploads-off",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 0.020724258289703316,
+    "heights": [
+      1528,
+      1528
+    ],
+    "image": "uploads-off--360x780--dark.png"
+  },
+  {
+    "id": "uploads-off",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 0.019892445927948886,
+    "heights": [
+      1521,
+      1521
+    ],
+    "image": "uploads-off--390x844--light.png"
+  },
+  {
+    "id": "guest-room",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 0.016619183285849954,
+    "heights": [
+      1170,
+      1170
+    ],
+    "image": "guest-room--360x780--light.png"
+  },
+  {
+    "id": "error",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 0.014957264957264958,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "error--360x780--dark.png"
+  },
+  {
+    "id": "sofa-done",
+    "size": "1440x900",
+    "scheme": "dark",
+    "diffPercent": 0.013569604086845466,
+    "heights": [
+      1044,
+      1044
+    ],
+    "image": "sofa-done--1440x900--dark.png"
+  },
+  {
+    "id": "uploads-off",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 0.011126283315632427,
+    "heights": [
+      1521,
+      1521
+    ],
+    "image": "uploads-off--390x844--dark.png"
+  },
+  {
+    "id": "guest-room",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 0.01103537812398572,
+    "heights": [
+      1185,
+      1185
+    ],
+    "image": "guest-room--390x844--light.png"
+  },
+  {
+    "id": "uploads-off",
+    "size": "1440x900",
+    "scheme": "light",
+    "diffPercent": 0.009703340046995636,
+    "heights": [
+      1324,
+      1324
+    ],
+    "image": "uploads-off--1440x900--light.png"
+  },
+  {
+    "id": "guest-room",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 0.009087958455047063,
+    "heights": [
+      1185,
+      1185
+    ],
+    "image": "guest-room--390x844--dark.png"
+  },
+  {
+    "id": "sofa-done",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 0.008874689385871494,
+    "heights": [
+      1252,
+      1252
+    ],
+    "image": "sofa-done--360x780--light.png"
+  },
+  {
+    "id": "not-found",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 0.007122507122507122,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "not-found--360x780--light.png"
+  },
+  {
+    "id": "uploads-off",
+    "size": "1440x900",
+    "scheme": "dark",
+    "diffPercent": 0.006346508895602552,
+    "heights": [
+      1324,
+      1324
+    ],
+    "image": "uploads-off--1440x900--dark.png"
+  },
+  {
+    "id": "guest-room",
+    "size": "1440x900",
+    "scheme": "light",
+    "diffPercent": 0.00484174413457282,
+    "heights": [
+      1004,
+      1004
+    ],
+    "image": "guest-room--1440x900--light.png"
+  },
+  {
+    "id": "guest-room",
+    "size": "1440x900",
+    "scheme": "dark",
+    "diffPercent": 0.004011730854360336,
+    "heights": [
+      1004,
+      1004
+    ],
+    "image": "guest-room--1440x900--dark.png"
+  },
+  {
+    "id": "sofa-done",
+    "size": "1440x900",
+    "scheme": "light",
+    "diffPercent": 0.0026607066836951895,
+    "heights": [
+      1044,
+      1044
+    ],
+    "image": "sofa-done--1440x900--light.png"
+  },
+  {
+    "id": "sofa-done",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 0.0013312034078807242,
+    "heights": [
+      1252,
+      1252
+    ],
+    "image": "sofa-done--360x780--dark.png"
+  },
+  {
+    "id": "sofa-done",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 0.0012142553579017668,
+    "heights": [
+      1267,
+      1267
+    ],
+    "image": "sofa-done--390x844--dark.png"
+  },
+  {
+    "id": "honeymoon-empty",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "honeymoon-empty--390x844--light.png"
+  },
+  {
+    "id": "honeymoon-empty",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "honeymoon-empty--390x844--dark.png"
+  },
+  {
+    "id": "honeymoon-empty",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "honeymoon-empty--360x780--light.png"
+  },
+  {
+    "id": "honeymoon-empty",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "honeymoon-empty--360x780--dark.png"
+  },
+  {
+    "id": "honeymoon-empty",
+    "size": "1440x900",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      900,
+      900
+    ],
+    "image": "honeymoon-empty--1440x900--light.png"
+  },
+  {
+    "id": "honeymoon-empty",
+    "size": "1440x900",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      900,
+      900
+    ],
+    "image": "honeymoon-empty--1440x900--dark.png"
+  },
+  {
+    "id": "loading",
+    "size": "1440x900",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      959,
+      959
+    ],
+    "image": "loading--1440x900--light.png"
+  },
+  {
+    "id": "loading",
+    "size": "1440x900",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      959,
+      959
+    ],
+    "image": "loading--1440x900--dark.png"
+  },
+  {
+    "id": "error",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "error--390x844--light.png"
+  },
+  {
+    "id": "error",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "error--390x844--dark.png"
+  },
+  {
+    "id": "error",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "error--360x780--light.png"
+  },
+  {
+    "id": "error",
+    "size": "1440x900",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      900,
+      900
+    ],
+    "image": "error--1440x900--light.png"
+  },
+  {
+    "id": "error",
+    "size": "1440x900",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      900,
+      900
+    ],
+    "image": "error--1440x900--dark.png"
+  },
+  {
+    "id": "not-found",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "not-found--390x844--light.png"
+  },
+  {
+    "id": "not-found",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "not-found--390x844--dark.png"
+  },
+  {
+    "id": "not-found",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "not-found--360x780--dark.png"
+  },
+  {
+    "id": "not-found",
+    "size": "1440x900",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      900,
+      900
+    ],
+    "image": "not-found--1440x900--light.png"
+  },
+  {
+    "id": "not-found",
+    "size": "1440x900",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      900,
+      900
+    ],
+    "image": "not-found--1440x900--dark.png"
+  }
+]
