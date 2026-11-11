@@ -80,7 +80,8 @@ test("two partners: sign up, start, join, sign out, reset, sign in", async ({ br
     })
     .toContain("/reset-password?token=");
   await y.goto(link);
-  await expect(y.getByRole("heading", { level: 1, name: "Set a new password" })).toBeVisible();
+  // A fresh dev server compiles this route on first visit, so allow it longer.
+  await expect(y.getByRole("heading", { level: 1, name: "Set a new password" })).toBeVisible({ timeout: 30_000 });
   await y.getByLabel("New password").fill(NEW_PASSWORD);
   await y.getByRole("button", { name: "Set new password" }).click();
   await expect(y.getByRole("heading", { level: 1, name: "Password changed" })).toBeVisible();
