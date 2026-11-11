@@ -77,7 +77,7 @@ function toGoal(g: Record<string, unknown>): GoalView {
   };
 }
 
-export async function listGoals(c: DbContext, spaceId: string): Promise<GoalsResponse> {
+export async function listGoals(c: DbContext, spaceId: string): Promise<Omit<GoalsResponse, "images">> {
   const d = db(c);
   const [goals, meta] = await Promise.all([
     d.execute<{ goal: Record<string, unknown> }>(goalJson(sql`g.space_id = ${spaceId}`)),

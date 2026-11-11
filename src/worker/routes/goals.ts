@@ -41,7 +41,9 @@ export const goalRoutes = new Hono<AppEnv>()
   .use("*", session, requireSpace)
   .get("/", async (c) => {
     c.header("Cache-Control", "no-store");
-    return c.json(await listGoals(c, c.get("space").spaceId));
+    const config = c.get("config");
+    const images = config.uploadsEnabled ? { cloudName: config.CLOUDINARY_CLOUD_NAME } : null;
+    return c.json({ ...(await listGoals(c, c.get("space").spaceId)), images });
   })
   .post("/", validate("json", createGoalSchema), async (c) => {
     const { spaceId, userId } = c.get("space");

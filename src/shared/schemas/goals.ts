@@ -137,6 +137,8 @@ export interface GoalView {
 
 export interface GoalsResponse {
   currency: string;
+  /** Photos (§8): the Cloudinary cloud to build delivery URLs from, or null when uploads are off. */
+  images: { cloudName: string } | null;
   goals: GoalView[];
   members: { userId: string; displayName: string; slot: Slot }[];
 }
