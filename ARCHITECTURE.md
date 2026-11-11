@@ -503,7 +503,7 @@ Runtime: Node 22 (you have 22.18), pnpm 10. Worker `compatibility_date` is `2026
 
 ## 14. Follow-ups (open after Phases 1–3)
 
-- **Needs your action:** `NEON_API_KEY` in `.env` (the guard refuses `db:seed` without it, so the seed is unverified against the database); a GitHub remote, with `NEON_API_KEY`, `BETTER_AUTH_SECRET` secrets and the `NEON_PROJECT_ID` variable, so CI can run; the Workers Paid plan before any deploy (D3, measured below); the production `APP_URL` in `wrangler.jsonc`, with its domain verified in Resend (D45).
+- **Needs your action:** a GitHub remote, with `NEON_API_KEY`, `BETTER_AUTH_SECRET` secrets and the `NEON_PROJECT_ID` variable, so CI can run; the Workers Paid plan before any deploy (D3, measured below); the production `APP_URL` in `wrangler.jsonc`, with its domain verified in Resend (D45). Local work uses the Neon `dev` branch (migrated and seeded on 2026-11-11); the default branch `production` holds the schema only.
 - **Email verification** is not built: the auth designs have no "verify your email" or "check your inbox" screen for it, and nothing gates on `email_verified`.
 - **Screens awaiting design:** Profile/Settings (a TEMP page holds name, password, space, members, invite code, theme and sign-out) and Shopping. The privacy page linked from Create account is a TEMP placeholder. Home, Goals and Trips are designed and come in their phases; until Home is built, the invite code after Start shows on the TEMP Profile page instead of Home's first-run card (D44).
 - **Nav bar** (`.ux-forge/nav-bar`) is designed but not built; the placeholders link to Profile until it is.
