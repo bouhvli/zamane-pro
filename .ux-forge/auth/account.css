@@ -1,0 +1,70 @@
+/* Zamane auth prototype: the signed-out account screens (Sign in, Create account, Forgot, Reset).
+   Direction C · Two seats: no seats here except the 32 px one beside "First name" on Create account.
+   Loaded after ../goals/zamane.css and auth.css; tokens only. The one addition is layout (build-notes/account.md). */
+
+:root{--btn-h-lg:52px;--btn-h:44px}
+
+/* ----- Heading rhythm: h1, then notices and the form ----- */
+.view .page-head{margin-bottom:var(--space-5)}
+.view .page-head.has-lede{margin-bottom:var(--space-2)}
+
+/* Full-width buttons wrap, never truncate (F12: allow 40% expansion) */
+.view .btn-block{height:auto;min-height:var(--btn-h);padding-block:var(--space-2);white-space:normal;text-align:center;font-size:15px;line-height:22px}
+.view .btn-primary.btn-block{min-height:var(--btn-h-lg);padding-block:var(--space-3)}
+.view .auth-form .btn-primary{height:auto}
+/* Pending and offline primaries keep their text; the label is the progress (no spinner) */
+.view .btn-primary[aria-disabled="true"]:active,.view .btn-sec[aria-disabled="true"]:active{transform:none}
+
+/* ----- Sign in ----- */
+.forgot-row{display:flex;justify-content:flex-end;margin:var(--space-1) 0 0}
+.forgot-row .link-btn{margin-inline:0 calc(var(--space-2) * -1)}
+/* "New to Zamane? Create an account": one string. On phones the link is a secondary button (copy.md). */
+.new-here-wrap{margin-top:var(--space-6)}
+.alt-links .new-here{display:grid;gap:var(--space-2);color:var(--ink-muted)}
+.alt-links .new-here .new-here-link{margin:0;padding-inline:var(--space-4);color:var(--ink)}
+@media (min-width:48rem){
+  .new-here-wrap{margin-top:var(--space-5)}
+  .alt-links .new-here{display:flex;flex-wrap:wrap;align-items:center;column-gap:var(--space-1)}
+  .alt-links .new-here .new-here-link{width:auto;min-height:var(--btn-h);padding:0 var(--space-1);border-color:transparent;background:none;color:var(--majorelle)}
+}
+.guard{margin:0;color:var(--ink-muted)}
+/* A link-button that starts its line lines its text up with the column edge */
+.view .alt-links p>.link-btn:first-child{margin-inline-start:calc(var(--space-1) * -1)}
+
+/* ----- Create account: your seat beside the First name label ----- */
+.fgroup[data-for="ca-name"] .field-label{display:flex;align-items:center;justify-content:space-between;gap:var(--space-2)}
+.label-seat{display:inline-flex;flex:none;line-height:0}
+/* A5 toggle: the visible text is the name; pressed shows a check and "Undo" */
+.intent{gap:var(--space-2)}
+.intent .ic{display:inline-block;width:18px;height:18px;vertical-align:-4px;margin-inline-end:var(--space-1);color:var(--majorelle)}
+.intent.is-on{background:var(--surface-sunken)}
+.intent-undo{color:var(--majorelle);text-decoration:underline;text-underline-offset:3px;white-space:nowrap}
+.fine a{text-underline-offset:2px}
+
+/* ----- Check your email ----- */
+.sent-body{margin-bottom:var(--space-5);text-wrap:pretty}
+.sent-body p{margin:0 0 var(--space-3)}
+.sent-body p:last-child{margin-bottom:0;color:var(--ink-muted)}
+.email-addr{font-weight:600;color:var(--ink);overflow-wrap:anywhere;unicode-bidi:isolate}
+.sent-actions{gap:var(--space-3)}
+.resent{display:flex;align-items:center;justify-content:center;gap:var(--space-1);margin:0;font-size:13px;line-height:18px;font-weight:600;color:var(--ink-muted)}
+.resent .ic{width:16px;height:16px}
+
+/* ----- Link doesn't work · Password changed ----- */
+.result .lede{margin-bottom:var(--space-5)}
+.result-note{margin:var(--space-4) 0 0;text-wrap:pretty}
+.result-note+.result-note{margin-top:var(--space-2);font-size:13px;line-height:18px}
+
+/* Links: hover underline where hover exists; never colour alone inside running text */
+.fine a,.form-alert a,.fgroup .err a{text-decoration:underline;text-underline-offset:2px}
+@media (hover:hover){
+  .view a.link-btn:hover,.alt-links .new-here .new-here-link:hover{text-decoration:underline;text-underline-offset:3px}
+  .view .btn-primary:not([aria-disabled="true"]):hover{background:var(--majorelle-ink);border-color:var(--majorelle-ink)}
+}
+.fgroup .err a{color:inherit}
+.view a.btn-primary:focus-visible,.view a.btn-sec:focus-visible{outline-offset:2px}
+
+@media (forced-colors:active){
+  .intent.is-on{border:2px solid CanvasText}
+  .view .btn-primary[aria-disabled="true"]{border-color:GrayText;color:GrayText}
+}

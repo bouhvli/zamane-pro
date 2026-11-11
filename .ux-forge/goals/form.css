@@ -1,0 +1,133 @@
+/* Create and edit goal (form view), direction B · Doorway. Owned by the form builder.
+   Uses zamane.css tokens. The few layout values it needs are declared here as tokens (proposed for the
+   shared layer, see build-notes/form.md); no new colours. */
+:root{--task-head-h:56px;--form-col:36rem;--field-col:20rem;--radio-size:20px}
+
+/* ----- Page column: one centred column ≈ 36rem from 48rem (ia.md §5.5) ----- */
+.form-page{max-width:var(--form-col);margin-inline:auto}
+
+/* ----- Task header: ✕ Cancel + title on phones (D7); the h1 alone from 48rem ----- */
+.task-head{display:flex;align-items:center;gap:var(--space-2);min-height:var(--task-head-h)}
+.task-title{margin:0;min-width:0;font-size:18px;line-height:24px;font-weight:600;overflow-wrap:anywhere}
+.task-cancel{gap:var(--space-1)}
+@media (max-width:47.99rem){
+  .task-head{position:sticky;top:0;z-index:5;margin-inline:calc(var(--space-4) * -1);margin-block-end:var(--space-4);
+    padding:env(safe-area-inset-top,0px) var(--space-4) 0;background:var(--surface);border-block-end:1px solid var(--line)}
+  html:has(#view .task-head){scroll-padding-top:calc(var(--task-head-h) + env(safe-area-inset-top,0px) + var(--space-3))} /* WCAG 2.4.11 */
+  .form-cancel{display:none}
+}
+@media (min-width:48rem){
+  .task-cancel{display:none}
+  .task-head{min-height:0;margin-block-end:var(--space-5)}
+  .task-title{font-family:var(--font-serif);font-weight:400;font-size:28px;line-height:34px;text-wrap:balance}
+}
+
+/* ----- The form: one column of groups ----- */
+.goal-form{display:flex;flex-direction:column;gap:var(--space-5);container:goal-form / inline-size}
+.form-slot:empty{display:none}
+.fg{min-width:0;margin:0}
+.fg>p.field-label{margin-block-start:0}
+fieldset.fg{border:0;padding:0}
+fieldset.fg legend{padding:0}
+.err{display:flex;align-items:flex-start;gap:var(--space-1)}
+.err .ic,.preview .ic,.mark .ic{width:16px;height:16px;margin-top:1px}
+
+/* Title: Young Serif 28/34 inside the field. What you type is how the doorway will read. */
+.field-title textarea{min-height:0;height:auto;padding-block:var(--space-3);resize:none;overflow:hidden;overflow-wrap:anywhere;
+  font-family:var(--font-serif);font-weight:400;font-size:28px;line-height:34px;field-sizing:content} /* JS sizes it where field-sizing isn't supported */
+
+/* Type: two equal radio cells, no icon tiles. The whole cell selects (stretched label). */
+.type-cells{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-2)}
+.type-cell{position:relative;display:grid;grid-template-columns:var(--radio-size) minmax(0,1fr);align-items:center;column-gap:var(--space-2);row-gap:var(--space-1);
+  min-height:44px;padding:var(--space-3);border:1px solid var(--line-strong);border-radius:var(--radius-md);background:var(--surface)}
+.type-cell input{margin:0;width:var(--radio-size);height:var(--radio-size);accent-color:var(--majorelle)}
+.type-cell label{font-weight:600;cursor:pointer}
+.type-cell label::after{content:"";position:absolute;inset:0;border-radius:inherit}
+.type-help{grid-column:1 / -1;font-size:12px;line-height:16px;color:var(--ink-muted);text-wrap:pretty}
+.type-cell:has(input:checked){border-color:var(--majorelle);box-shadow:inset 0 0 0 1px var(--majorelle);background:var(--majorelle-soft)}
+.type-cell:has(input:focus-visible){outline:2px solid var(--focus-ring);outline-offset:2px}
+@supports selector(:has(*)){.type-cell input:focus-visible{outline:none}}
+@media (hover:hover){.type-cell:not(:has(input:checked)):hover{border-color:var(--ink-muted)}}
+@container goal-form (min-width:26rem){.type-help{grid-column:2}}
+@container goal-form (max-width:15rem){.type-cells{grid-template-columns:minmax(0,1fr)}}
+
+.ro-value{margin:0}
+
+/* Target and date don't need the full column once it is wide */
+@container goal-form (min-width:30rem){.field-target,.field-date{max-width:var(--field-col)}}
+.field-area{align-items:stretch}
+.help-row{display:flex;justify-content:space-between;gap:var(--space-3)}
+.count{flex:none}
+.count.is-over{color:var(--danger);font-weight:600}
+
+/* Completion preview under Target (edit) */
+.preview{display:flex;align-items:flex-start;gap:var(--space-2);margin:var(--space-2) 0 0;font-size:13px;line-height:18px;color:var(--ink)}
+.preview:empty{margin:0}
+.preview.is-done .ic{color:var(--zellige-ink)}
+
+/* ----- Optional details (create): a disclosure row between hairlines ----- */
+.details-toggle{display:flex;align-items:center;justify-content:space-between;gap:var(--space-3);width:100%;min-height:48px;padding:var(--space-2) 0;
+  border:0;border-block:1px solid var(--line);background:none;color:var(--ink);font:inherit;font-weight:600;text-align:start;cursor:pointer}
+.details-toggle .ic{color:var(--ink-muted)}
+.details-toggle[aria-expanded="true"] .ic{transform:rotate(180deg)}
+@media (hover:hover){.details-toggle:hover span{text-decoration:underline;text-underline-offset:3px}}
+@media (prefers-reduced-motion:no-preference){.details-toggle .ic{transition:transform var(--dur-mark) var(--ease-out)}}
+.details{display:flex;flex-direction:column;gap:var(--space-5)}
+
+/* ----- Cover: the doorway preview; the upload pill is solid surface-raised, never text on the photo ----- */
+.cover-stage{position:relative;margin-block-start:var(--space-3)}
+/* A done preview is inset by its 3 + 4 px surround, so the tiling frames the arch inside the column (critic F6) */
+.cover-stage .door--form.is-done{--inset:calc(var(--surround-gap) + var(--surround));margin:var(--inset) auto;width:min(calc(100% - 2 * var(--inset)),calc(var(--doorway-max) * 2))}
+.cover-stage .door--form.is-done.has-photo{width:min(calc(100% - 2 * var(--inset)),calc(var(--doorway-max) * 1.5))}
+.cover-pill{position:absolute;inset-inline:0;bottom:var(--space-3);width:fit-content;max-width:calc(100% - var(--space-6));margin:0 auto;
+  display:flex;align-items:center;gap:var(--space-2);padding:var(--space-1) var(--space-3);border-radius:var(--radius-pill);
+  background:var(--surface-raised);color:var(--ink);box-shadow:var(--shadow-card);font-size:13px;line-height:18px;font-weight:600}
+.cover-group>.err{margin-top:var(--space-3)}
+.cover-actions{display:flex;flex-wrap:wrap;gap:var(--space-2);margin-block-start:var(--space-3)}
+
+/* ----- Merge marks (§6.7) ----- */
+.mark-slot:empty{display:none}
+.mark{display:flex;align-items:center;gap:var(--space-2);margin:var(--space-2) 0 0;font-size:12px;line-height:16px;color:var(--ink-muted)}
+.mark .zm-av{border-color:var(--surface)}
+.mark-conflict{flex-wrap:wrap;row-gap:0;padding:var(--space-1) var(--space-1) var(--space-1) var(--space-3);border-radius:var(--radius-md);background:var(--surface-sunken);color:var(--ink);font-size:13px;line-height:18px}
+.mark-conflict .mark-text{flex:1 1 10rem;min-width:0;padding-block:var(--space-2);overflow-wrap:anywhere}
+.mark-conflict .link-btn{margin-inline:auto 0}
+.mark-conflict .zm-av{border-color:var(--surface-sunken)}
+.notice-merge:focus{outline:none}
+.notice-draft{align-items:center;padding-block:0;padding-inline-end:var(--space-2)}
+.notice-draft>span{flex:1;min-width:0}
+.notice-draft .link-btn{margin-inline:0}
+
+/* ----- Actions: the floating primary on phones; primary then Cancel from 48rem ----- */
+.form-actions{display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-3)}
+.submit-reason[hidden]{display:none}
+@media (max-width:47.99rem){
+  .form-actions{display:contents}
+  .submit-reason{order:-1} /* the reason can't sit beside the bar's button, so it leads the form */
+  /* Phones: the primary sits bottom-end in a solid footer bar, like the composer's, so it never covers a field,
+     an error or the disclosure (critic F4). It rides the keyboard (form.js placeDock). The body's task-chrome
+     padding (fab-zone + safe area) is taller than the bar, so the last control always clears it. */
+  #view .form-page .dock{position:fixed;inset-inline:0;bottom:0;z-index:9;display:flex;justify-content:flex-end;
+    padding:var(--space-3) max(var(--space-4),env(safe-area-inset-right,0px)) calc(var(--space-3) + env(safe-area-inset-bottom,0px)) max(var(--space-4),env(safe-area-inset-left,0px));
+    background:var(--surface);border-block-start:1px solid var(--line)}
+  #view .form-page .dock .btn-primary{box-shadow:none}
+  html:has(#view .form-page) .toast{bottom:calc(env(safe-area-inset-bottom,0px) + var(--fab-h) + var(--space-3) * 2 + var(--space-2))}
+}
+
+/* ----- Delete goal: last, set apart ----- */
+.delete-zone{margin-block-start:var(--space-6);padding-block-start:var(--space-5);border-block-start:1px solid var(--line)}
+@media (hover:hover){.btn-danger:not([aria-disabled="true"]):hover{background:var(--danger-soft)}}
+
+/* The example-data footnote sits in the form's column, not at the page edge (critic polish) */
+html:has(#view .form-page) #footnote{max-width:var(--form-col);margin-inline:auto}
+
+/* ----- Goal gone (404 / deleted while editing) ----- */
+.gone{display:flex;flex-direction:column;align-items:flex-start;gap:var(--space-4);padding-block:var(--space-5)}
+.gone p{margin:0}
+
+/* ----- Windows High Contrast ----- */
+@media (forced-colors:active){
+  .type-cell:has(input:checked){border:2px solid Highlight}
+  .cover-pill,.mark-conflict{border:1px solid CanvasText}
+  .task-head,#view .form-page .dock{border-color:CanvasText}
+}

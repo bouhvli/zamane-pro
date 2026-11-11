@@ -1,0 +1,121 @@
+# CI (§11). Pull requests: checks, a schema-only Neon branch pr-N (D31) migrated and seeded, API tests, build,
+# check:secrets, E2E. Push to main: the same checks, then migrate main and deploy (gated until the Workers Paid
+# plan and Cloudflare credentials are set, D3). Closing a PR deletes its Neon branch.
+name: CI
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, closed]
+  push:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+env:
+  NEON_PROJECT_ID: ${{ vars.NEON_PROJECT_ID }}
+  APP_ENV: development
+
+jobs:
+  checks:
+    if: github.event.action != 'closed'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm tokens:check
+      - run: pnpm lint
+      - run: pnpm typecheck
+      - run: pnpm test
+
+  integration:
+    if: github.event_name == 'pull_request' && github.event.action != 'closed'
+    needs: checks
+    runs-on: ubuntu-latest
+    env:
+      NEON_API_KEY: ${{ secrets.NEON_API_KEY }}
+      BETTER_AUTH_SECRET: ${{ secrets.BETTER_AUTH_SECRET }}
+      APP_URL: http://localhost:3000
+      # No .env in CI: the Cloudflare plugin passes these process env values to the Worker (filtered by secrets.required).
+      CLOUDFLARE_INCLUDE_PROCESS_ENV: "true"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+
+      # D31: schema-only from main, through the Neon API (the branch action doesn't expose schema-only).
+      - name: Create Neon branch pr-${{ github.event.pull_request.number }} (schema-only)
+        id: branch
+        run: |
+          set -euo pipefail
+          api="https://console.neon.tech/api/v2/projects/$NEON_PROJECT_ID"
+          auth="Authorization: Bearer $NEON_API_KEY"
+          name="pr-${{ github.event.pull_request.number }}"
+          main_id=$(curl -fsS -H "$auth" "$api/branches" | jq -r '.branches[] | select(.name=="main") | .id')
+          existing=$(curl -fsS -H "$auth" "$api/branches" | jq -r --arg n "$name" '.branches[] | select(.name==$n) | .id')
+          if [ -z "$existing" ]; then
+            curl -fsS -X POST -H "$auth" -H "Content-Type: application/json" "$api/branches" \
+              -d "{\"branch\":{\"name\":\"$name\",\"parent_id\":\"$main_id\",\"init_source\":\"schema-only\"},\"endpoints\":[{\"type\":\"read_write\"}]}" > /dev/null
+            existing=$(curl -fsS -H "$auth" "$api/branches" | jq -r --arg n "$name" '.branches[] | select(.name==$n) | .id')
+          fi
+          uri=$(curl -fsS -H "$auth" "$api/connection_uri?branch_id=$existing&database_name=${{ vars.NEON_DATABASE || 'neondb' }}&role_name=${{ vars.NEON_ROLE || 'neondb_owner' }}&pooled=false" | jq -r '.uri')
+          echo "::add-mask::$uri"
+          echo "DATABASE_URL=$uri" >> "$GITHUB_ENV"
+
+      - run: pnpm db:migrate
+      - run: pnpm db:seed
+      - run: pnpm test:api
+      - run: pnpm build
+      - run: pnpm check:secrets
+      - run: pnpm exec playwright install --with-deps chromium
+      - run: pnpm test:e2e
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: playwright-report
+          path: playwright-report
+
+  delete-branch:
+    if: github.event_name == 'pull_request' && github.event.action == 'closed'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Delete Neon branch pr-${{ github.event.pull_request.number }}
+        env:
+          NEON_API_KEY: ${{ secrets.NEON_API_KEY }}
+        run: |
+          set -euo pipefail
+          api="https://console.neon.tech/api/v2/projects/$NEON_PROJECT_ID"
+          id=$(curl -fsS -H "Authorization: Bearer $NEON_API_KEY" "$api/branches" | jq -r '.branches[] | select(.name=="pr-${{ github.event.pull_request.number }}") | .id')
+          if [ -n "$id" ]; then curl -fsS -X DELETE -H "Authorization: Bearer $NEON_API_KEY" "$api/branches/$id" > /dev/null; fi
+
+  deploy:
+    # Gated: needs the Workers Paid plan (D3) and CLOUDFLARE_API_TOKEN / CLOUDFLARE_ACCOUNT_ID.
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && vars.DEPLOY_ENABLED == 'true'
+    needs: checks
+    runs-on: ubuntu-latest
+    env:
+      DATABASE_URL: ${{ secrets.DATABASE_URL_MAIN }}
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm exec drizzle-kit migrate
+      - run: pnpm build
+      - run: pnpm check:secrets
+      - run: pnpm exec wrangler deploy --env production

@@ -1,0 +1,191 @@
+/* Note composer (dialog over the goal detail). Direction B · Doorway. Owned by the composer builder.
+   Built on the shared .sheet: full screen below 48rem, a centred ~40rem dialog from 48rem with a fixed footer.
+   Tokens added here are proposed for the system and recorded in build-notes/composer.md. */
+:root{
+  --composer-w:40rem;
+  --photo-ratio:4 / 5; --photo-max:28rem;           /* journal photos: 4:5 arches, text width, capped at 28rem (as the detail's journal) */
+  --photo-off-ratio:2 / 1;                           /* "Photo unavailable" costs less height (as the detail) */
+  --target:44px;                                      /* the system's minimum target (ia.md 6.2) */
+  --thumb-w:40px; --thumb-h:50px;                     /* reorder thumbnail, 4:5 */
+  --pill-bar:var(--space-1);
+  --dur-move:160ms;                                   /* reorder slide (ia.md 6.12) */
+  --text-line:1.5em;                                  /* 24px at the 16px field size */
+}
+
+/* ----- The dialog ----- */
+.sheet.composer{inset:0;width:100%;max-width:none;height:100%;max-height:none;padding:0;border-radius:0;overflow:hidden}
+.composer[open]{display:flex;flex-direction:column}
+/* the live regions are absolutely placed p's: no margins, so they never extend the scroll area */
+.composer>.vh{margin:0;inset-block-start:0}
+@media (min-width:48rem){
+  .sheet.composer{inset:0;margin:auto;width:min(var(--composer-w),calc(100% - 2 * var(--space-4)));height:fit-content;max-height:90dvh;padding:0;border-radius:var(--radius-lg)}
+}
+
+/* ----- Head: ✕ first on phones (wireframe), at the end from 48rem ----- */
+.cmp-head{flex:none;display:flex;align-items:center;gap:var(--space-2);
+  padding-block:calc(var(--space-2) + env(safe-area-inset-top,0px)) var(--space-2);
+  padding-inline:max(var(--space-1),env(safe-area-inset-left,0px)) max(var(--space-4),env(safe-area-inset-right,0px));
+  border-block-end:1px solid var(--line)}
+.cmp-titles{flex:1;min-width:0}
+.cmp-titles h2{margin:0;font-size:18px;line-height:24px;font-weight:600;overflow-wrap:anywhere}
+.cmp-titles h2:focus{outline:none}
+.cmp-titles .caption{overflow-wrap:anywhere}
+@media (min-width:48rem){
+  .cmp-head{padding:var(--space-4) var(--space-3) var(--space-3) var(--space-5)}
+  .cmp-x{order:2}
+}
+
+/* ----- Body: the only part that scrolls ----- */
+.cmp-body{flex:1 1 auto;min-height:0;overflow-y:auto;overscroll-behavior:contain;display:flex;flex-direction:column;
+  padding:var(--space-4) max(var(--space-4),env(safe-area-inset-right,0px)) var(--space-5) max(var(--space-4),env(safe-area-inset-left,0px));
+  scroll-padding-block:var(--space-4);container:cmp / inline-size}
+@media (min-width:48rem){.cmp-body{padding:var(--space-5)}}
+.cmp-blocks{flex:1 0 auto;display:flex;flex-direction:column;gap:var(--space-3)}
+
+/* Text blocks: written straight on the sheet, no box (B: "text on the sand, no containers") */
+.cmp-tb{display:flex;flex-direction:column}
+.cmp-tb.is-alone{flex:1 0 auto}
+.cmp-text{display:block;width:calc(100% + 2 * var(--space-2));margin-inline:calc(var(--space-2) * -1);padding:var(--space-2);
+  border:0;border-radius:var(--radius-sm);background:transparent;color:var(--ink);
+  font:inherit;font-size:16px;line-height:var(--text-line);resize:none;field-sizing:content;
+  min-height:calc(2 * var(--text-line) + 2 * var(--space-2))}
+.cmp-tb.is-alone .cmp-text{flex:1 0 auto;min-height:calc(6 * var(--text-line) + 2 * var(--space-2))}
+.cmp-text::placeholder{color:var(--ink-muted);opacity:1}
+.cmp-text:focus-visible{outline:2px solid var(--focus-ring);outline-offset:0}
+.cmp-count{margin:var(--space-1) 0 0;text-align:end;font-size:12px;line-height:16px;color:var(--ink-muted)}
+
+/* Photo blocks: a 4:5 arch, full text width, capped at 28rem */
+.cmp-photo{position:relative;max-width:var(--photo-max)}
+.cmp-arch{position:relative;width:100%;aspect-ratio:var(--photo-ratio);overflow:hidden;background:var(--surface-sunken);
+  border-radius:50% 50% var(--radius-sm) var(--radius-sm) / 40% 40% var(--radius-sm) var(--radius-sm)}
+.cmp-photo.is-off .cmp-arch{aspect-ratio:var(--photo-off-ratio)}
+.cmp-arch img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.cmp-arch .photo-example{position:absolute;inset:0}
+.cmp-arch .photo-example .ic{width:24px;height:24px;stroke-width:1.5}
+/* Remove sits in the corner the arch leaves free, on its own solid surface */
+.cmp-remove{position:absolute;z-index:1;inset-block-start:0;inset-inline-end:0;height:var(--target);padding-inline:var(--space-3) var(--space-4);border-radius:var(--radius-pill);box-shadow:var(--shadow-card)}
+.cmp-remove .ic{width:16px;height:16px}
+.cmp-describe{margin-block-start:var(--space-1)}
+.cmp-desc{margin-block-start:var(--space-2)}
+.composer .field input{font-size:16px;line-height:24px;font-weight:400;font-variant-numeric:normal}
+
+/* Upload state: never text straight on the photo, always on a solid surface-raised pill (directions.md shared fix 1) */
+.cmp-pill{position:absolute;inset-inline:0;inset-block-end:var(--space-4);margin-inline:auto;width:max-content;max-width:calc(100% - 2 * var(--space-3));
+  display:flex;align-items:center;gap:var(--space-2);padding:var(--space-1) var(--space-1) var(--space-1) var(--space-4);
+  background:var(--surface-raised);color:var(--ink);border-radius:var(--radius-pill);box-shadow:var(--shadow-pop);overflow:hidden;
+  font-size:13px;line-height:18px;font-weight:600}
+.cmp-pill .ic{width:16px;height:16px}
+.cmp-pill.is-failed{padding-inline-start:var(--space-3)}
+.cmp-pill-text{white-space:nowrap}
+.cmp-pill-btn{flex:none;min-height:var(--target);padding:0 var(--space-4);border:0;border-radius:var(--radius-pill);background:transparent;color:var(--majorelle);
+  font:inherit;font-weight:600;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.cmp-pill-btn:focus-visible{outline-offset:-2px}
+@media (hover:hover){.cmp-pill-btn:hover{background:var(--majorelle-soft)}}
+.cmp-pill-btn:active{background:var(--majorelle-soft)}
+.cmp-pill-bar{position:absolute;inset-inline:0;inset-block-end:0;height:var(--pill-bar);background:var(--majorelle-soft)}
+.cmp-pill-bar>span{display:block;height:100%;background:var(--majorelle)}
+@media (prefers-reduced-motion:no-preference){.cmp-pill-bar>span{transition:width var(--dur-mark) linear}}
+
+/* Removed in a draft: an inline Undo row in place, no timer (ia.md 6.9) */
+.cmp-removed{display:flex;align-items:center;justify-content:space-between;gap:var(--space-3);min-height:calc(var(--target) + var(--space-2));
+  padding-inline:var(--space-4) var(--space-2);border:1px dashed var(--line-strong);border-radius:var(--radius-md);
+  color:var(--ink-muted);font-size:13px;line-height:18px;font-weight:600}
+.cmp-removed .link-btn{margin:0;padding-inline:var(--space-3)}
+
+/* ----- Reorder mode: compact rows, Move up / Move down / Remove, no drag ----- */
+.cmp-help{margin:0 0 var(--space-3)}
+.cmp-rows{list-style:none;margin:0;padding:0}
+.cmp-row{display:grid;grid-template-columns:var(--space-5) minmax(0,1fr);grid-template-areas:"pos what" "btns btns";align-items:center;
+  gap:var(--space-2) var(--space-3);padding-block:var(--space-3);border-block-end:1px solid var(--line);background:var(--surface-raised)}
+.cmp-row:first-child{border-block-start:1px solid var(--line)}
+.cmp-row.is-removed{display:block}
+.cmp-pos{grid-area:pos;font-weight:600;color:var(--ink-muted);text-align:center}
+.cmp-what{grid-area:what;min-width:0;display:flex;align-items:center;gap:var(--space-3);font-weight:600}
+.cmp-snip{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:400}
+.cmp-thumb{flex:none;position:relative;display:flex;align-items:center;justify-content:center;width:var(--thumb-w);height:var(--thumb-h);overflow:hidden;
+  background:var(--surface-sunken);color:var(--ink-muted);border-radius:50% 50% var(--radius-sm) var(--radius-sm) / 40% 40% var(--radius-sm) var(--radius-sm)}
+.cmp-thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.cmp-thumb .ic{width:16px;height:16px}
+.cmp-row-btns{grid-area:btns;display:flex;justify-content:flex-end;gap:var(--space-2)}
+.cmp-sq{width:var(--target);padding:0}
+.cmp-row-why{grid-column:1 / -1;text-align:end}
+@container cmp (min-width:21rem){
+  .cmp-row{grid-template-columns:var(--space-5) minmax(0,1fr) auto;grid-template-areas:"pos what btns"}
+}
+
+/* ----- Notices inside the body ----- */
+.cmp-restored{display:flex;align-items:center;justify-content:space-between;gap:var(--space-3);margin:0 0 var(--space-3);
+  padding-inline:var(--space-4) var(--space-2);background:var(--surface-sunken);border-radius:var(--radius-md);font-size:13px;line-height:18px}
+.cmp-restored p{margin:0}
+.cmp-restored .link-btn{margin:0;padding-inline:var(--space-3)}
+.cmp-banner{margin:0 0 var(--space-4);padding:var(--space-4);background:var(--surface-sunken);border-radius:var(--radius-md)}
+.cmp-banner-h{margin:0;font-size:15px;line-height:22px;font-weight:600;text-wrap:pretty}
+.cmp-banner-h:focus{outline:none} /* a programmatic focus target (tabindex -1), like the shell's h1 */
+.cmp-banner>p{margin:var(--space-1) 0 0;font-size:13px;line-height:18px}
+.cmp-banner-actions{display:flex;flex-wrap:wrap;gap:var(--space-2);margin-block-start:var(--space-3)}
+.cmp-banner-actions .btn-sec{padding-inline:var(--space-4)}
+.cmp-copied:empty{display:none}
+.cmp-see{margin-block-start:var(--space-2);gap:var(--space-1)}
+.cmp-chev{width:16px;height:16px}
+@media (prefers-reduced-motion:no-preference){.cmp-chev{transition:transform var(--dur-mark) var(--ease-out)}}
+.cmp-see[aria-expanded="true"] .cmp-chev{transform:rotate(180deg)}
+.cmp-latest{margin-block-start:var(--space-2);padding-inline-start:var(--space-3);border-inline-start:2px solid var(--line-strong);font-size:13px;line-height:18px}
+.cmp-latest p{margin:0 0 var(--space-2);white-space:pre-wrap}
+.cmp-latest-photo{display:flex;align-items:center;gap:var(--space-2);margin-block-end:var(--space-2)}
+
+/* Delete note: at the end of the note, danger style (F7) */
+.cmp-end{margin-block-start:var(--space-6);padding-block-start:var(--space-4);border-block-start:1px solid var(--line)}
+.cmp-end .btn-danger{padding-inline:var(--space-4)}
+.cmp-end .btn-danger .ic{width:16px;height:16px}
+.cmp-example{margin-block-start:var(--space-5)}
+
+/* ----- Tool bar: rides the on-screen keyboard on phones; fixed footer on wide screens ----- */
+.cmp-bar{flex:none;border-block-start:1px solid var(--line);background:var(--surface-raised);
+  padding:var(--space-3) max(var(--space-4),env(safe-area-inset-right,0px)) calc(var(--space-3) + env(safe-area-inset-bottom,0px)) max(var(--space-4),env(safe-area-inset-left,0px));
+  container:cmpbar / inline-size}
+@media (min-width:48rem){.cmp-bar{padding:var(--space-3) var(--space-5) var(--space-4)}}
+.cmp-line{display:flex;gap:var(--space-2);align-items:flex-start;margin:0 0 var(--space-2);font-size:12px;line-height:16px;color:var(--ink-muted);text-wrap:pretty}
+.cmp-line .ic{flex:none;width:16px;height:16px}
+.cmp-err{font-size:13px;line-height:18px;font-weight:600;color:var(--ink)}
+.cmp-tools{display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-2)}
+.cmp-tool{padding-inline:var(--space-3) var(--space-4)}
+.cmp-tool .ic{width:20px;height:20px}
+.cmp-ro.is-on{padding-inline:var(--space-4)}
+.cmp-ro.is-on .ic{display:none}
+.cmp-save{margin-inline-start:auto;height:auto;min-height:var(--target);padding:var(--space-1) var(--space-4);text-align:center;text-wrap:balance}
+/* Narrow bars: Reorder keeps its name but shows only its icon, so the three controls stay on one line at 320px */
+@container cmpbar (max-width:21rem){
+  .cmp-ro:not(.is-on){width:var(--target);padding:0}
+  .cmp-ro:not(.is-on) .cmp-lbl{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+}
+
+/* ----- Short viewports (400% zoom is 320x256, landscape phones): the head scrolls away with the note
+   and the dialog is one scroller, so the writing area isn't squeezed between two fixed bars (a11y M5).
+   The bar stays sticky at the bottom: Save is never scrolled out of reach and still rides the keyboard. ----- */
+@media (max-height:32rem){
+  .composer[open]{display:block;overflow-y:auto;overscroll-behavior:contain}
+  .cmp-body{overflow:visible;min-height:0;padding-block-end:var(--space-3)}
+  .cmp-head{padding-block:calc(var(--space-1) + env(safe-area-inset-top,0px)) var(--space-1)}
+  /* Only the tool row is pinned; the reason lines scroll with the note, just above it. */
+  .cmp-bar{display:contents}
+  .cmp-line{margin:0;padding:var(--space-1) max(var(--space-4),env(safe-area-inset-right,0px)) var(--space-1) max(var(--space-4),env(safe-area-inset-left,0px))}
+  .cmp-tools{position:sticky;inset-block-end:0;z-index:2;background:var(--surface-raised);border-block-start:1px solid var(--line);
+    padding:var(--space-2) max(var(--space-4),env(safe-area-inset-right,0px)) calc(var(--space-2) + env(safe-area-inset-bottom,0px)) max(var(--space-4),env(safe-area-inset-left,0px))}
+  .cmp-tb.is-alone .cmp-text{min-height:calc(4 * var(--text-line) + 2 * var(--space-2))}
+}
+/* The bar's container query has no box under display:contents, so short and narrow repeats it. */
+@media (max-height:32rem) and (max-width:22rem){
+  .cmp-ro:not(.is-on){width:var(--target);padding:0}
+  .cmp-ro:not(.is-on) .cmp-lbl{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+}
+@media (max-height:32rem) and (min-width:48rem){
+  .cmp-line{padding-inline:var(--space-5)}
+  .cmp-tools{padding-inline:var(--space-5)}
+}
+
+/* ----- Windows High Contrast ----- */
+@media (forced-colors:active){
+  .cmp-text{border:1px solid CanvasText}
+  .cmp-arch,.cmp-thumb,.cmp-pill,.cmp-removed,.cmp-restored,.cmp-banner{border:1px solid CanvasText}
+  .cmp-pill-bar>span{forced-color-adjust:none;background:Highlight}
+}

@@ -1,0 +1,381 @@
+/* Zamane prototype layer for the Trips screens (copied from .ux-forge/goals/zamane.css, plus the Trips
+   additions at the end: direction B · Saffron light with C's ink-and-pencil budget bar).
+   Taken from .ux-forge/home/home.html (direction B with the floating primary) and .ux-forge/nav-bar/.
+   Design-system tokens are verbatim; everything after "Tokens added" is proposed for the system. */
+
+/* ===== Design-system tokens, verbatim from "Zamane Design System.html" ===== */
+:root{--surface:#f8f3ea;--surface-raised:#fffdf8;--surface-sunken:#efe6d6;--line:#e3d8c5;--line-strong:#8f8576;--ink:#1d2230;--ink-muted:#5a5f6d;--majorelle:#1d4e89;--on-majorelle:#ffffff;--majorelle-soft:#dfe8f5;--majorelle-ink:#163d6b;--saffron:#e3a72f;--on-saffron:#2a1d05;--saffron-soft:#faedcf;--saffron-ink:#7a5200;--terracotta:#b5532f;--on-terracotta:#ffffff;--terracotta-soft:#f6e0d6;--terracotta-ink:#8a3a1d;--zellige:#1e7a5f;--on-zellige:#ffffff;--zellige-soft:#d9efe6;--zellige-ink:#145a45;--danger:#b42318;--danger-soft:#fbe4e1;--danger-ink:#8f1d14;--partner-a:var(--majorelle);--partner-b:var(--terracotta);--focus-ring:var(--majorelle);--shadow-card:0 1px 2px rgba(29,34,48,0.06), 0 4px 14px rgba(29,34,48,0.06);--shadow-pop:0 8px 28px rgba(29,34,48,0.16);color-scheme:light}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--surface:#12161d;--surface-raised:#1b2029;--surface-sunken:#0d1015;--line:#2b323e;--line-strong:#6b7586;--ink:#f1ebdf;--ink-muted:#a8adb9;--majorelle:#8fb4ea;--on-majorelle:#0e1a2b;--majorelle-soft:#1b2b44;--majorelle-ink:#b9d0f3;--saffron:#f2bb4e;--on-saffron:#2a1d05;--saffron-soft:#3b2e12;--saffron-ink:#f5cd7c;--terracotta:#e98f6c;--on-terracotta:#2b120a;--terracotta-soft:#3e2219;--terracotta-ink:#f3b49b;--zellige:#63c9a3;--on-zellige:#0b241b;--zellige-soft:#15332a;--zellige-ink:#94dcc0;--danger:#ff8a7a;--danger-soft:#3d1a17;--danger-ink:#ffb4a8;--partner-a:var(--majorelle);--partner-b:var(--terracotta);--focus-ring:var(--majorelle);--shadow-card:0 1px 2px rgba(0,0,0,0.5);--shadow-pop:0 8px 28px rgba(0,0,0,0.6);color-scheme:dark}}
+:root[data-theme="dark"]{--surface:#12161d;--surface-raised:#1b2029;--surface-sunken:#0d1015;--line:#2b323e;--line-strong:#6b7586;--ink:#f1ebdf;--ink-muted:#a8adb9;--majorelle:#8fb4ea;--on-majorelle:#0e1a2b;--majorelle-soft:#1b2b44;--majorelle-ink:#b9d0f3;--saffron:#f2bb4e;--on-saffron:#2a1d05;--saffron-soft:#3b2e12;--saffron-ink:#f5cd7c;--terracotta:#e98f6c;--on-terracotta:#2b120a;--terracotta-soft:#3e2219;--terracotta-ink:#f3b49b;--zellige:#63c9a3;--on-zellige:#0b241b;--zellige-soft:#15332a;--zellige-ink:#94dcc0;--danger:#ff8a7a;--danger-soft:#3d1a17;--danger-ink:#ffb4a8;--partner-a:var(--majorelle);--partner-b:var(--terracotta);--focus-ring:var(--majorelle);--shadow-card:0 1px 2px rgba(0,0,0,0.5);--shadow-pop:0 8px 28px rgba(0,0,0,0.6);color-scheme:dark}
+:root{--font-serif:"Young Serif",Georgia,"Times New Roman",serif;--font-sans:Figtree,"Segoe UI",system-ui,sans-serif;--space-1:4px;--space-2:8px;--space-3:12px;--space-4:16px;--space-5:24px;--space-6:32px;--space-7:48px;--radius-sm:6px;--radius-md:12px;--radius-lg:20px;--radius-pill:999px}
+
+/* ===== Tokens added (nav-bar + Home work) ===== */
+:root{
+  --nav-bar-h:64px; --top-bar-h:60px; --nav-icon:24px; --nav-icon-inline:20px; --nav-link-inline-h:44px; --nav-mark:8px;
+  --fab-h:56px; --fab-gap:16px; --fab-zone:calc(var(--fab-h) + var(--fab-gap) * 2);
+  --dur-press:120ms; --dur-mark:180ms; --dur-sheet:240ms; --dur-toast:160ms; --dur-fill:400ms;
+  --ease-out:cubic-bezier(.2,.8,.2,1);
+}
+
+/* ===== Base ===== */
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-padding-bottom:calc(var(--nav-bar-h) + var(--fab-zone) + env(safe-area-inset-bottom,0px))}
+body{margin:0;background:var(--surface);color:var(--ink);font-family:var(--font-sans);font-size:15px;line-height:22px;-webkit-font-smoothing:antialiased;
+  padding-bottom:calc(var(--nav-bar-h) + var(--fab-zone) + env(safe-area-inset-bottom,0px))}
+body.no-fab{padding-bottom:calc(var(--nav-bar-h) + var(--space-5) + env(safe-area-inset-bottom,0px))}
+.wrap{max-width:1080px;margin-inline:auto;padding-inline:max(var(--space-4),env(safe-area-inset-left,0px)) max(var(--space-4),env(safe-area-inset-right,0px))}
+main{padding-block:var(--space-5) var(--space-6)}
+:focus-visible{outline:2px solid var(--focus-ring);outline-offset:2px}
+main:focus,h1[tabindex="-1"]:focus{outline:none}
+[hidden]{display:none!important}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.num{font-variant-numeric:tabular-nums}
+.nowrap{white-space:nowrap}
+.ic{flex:none;width:20px;height:20px}
+.skip{position:absolute;inset-inline-start:var(--space-4);top:-100px;z-index:100;background:var(--majorelle);color:var(--on-majorelle);padding:var(--space-2) var(--space-4);border-radius:var(--radius-md);font-weight:600;text-decoration:none}
+.skip:focus{top:var(--space-2)}
+
+/* type roles from the design system */
+.display{margin:0;font-family:var(--font-serif);font-weight:400;font-size:40px;line-height:44px;text-wrap:balance}
+.title-lg{margin:0;font-family:var(--font-serif);font-weight:400;font-size:28px;line-height:34px;text-wrap:balance}
+.title{margin:0;font-size:18px;line-height:24px;font-weight:600}
+.numeral{font-size:32px;line-height:36px;font-weight:600;font-variant-numeric:tabular-nums}
+.lbl{margin:0;font-size:13px;line-height:18px;font-weight:600;color:var(--ink-muted)}
+.caption{margin:0;font-size:12px;line-height:16px;color:var(--ink-muted)}
+.muted{color:var(--ink-muted)}
+.footnote{margin-top:var(--space-6)}
+
+/* ===== Nav bar (from .ux-forge/nav-bar) ===== */
+.app-header .brand{display:none}
+.nav{position:fixed;inset-inline:0;bottom:0;z-index:10;background:var(--surface);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px);padding-inline:env(safe-area-inset-left,0px) env(safe-area-inset-right,0px)}
+.nav-list{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));height:var(--nav-bar-h);margin:0;padding:0;list-style:none}
+.nav-link{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:var(--space-1);height:100%;padding-inline:var(--space-1);border-radius:var(--radius-md);color:var(--ink-muted);text-decoration:none;font-size:13px;line-height:18px;font-weight:600;letter-spacing:.01em;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+.nav-link svg{flex:none;width:var(--nav-icon);height:var(--nav-icon);stroke-width:1.75}
+.nav-label{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.nav-link:focus-visible{outline-offset:-2px}
+@media (max-width:22.4375rem){.nav-link{padding-inline:0;font-size:12px;line-height:16px;letter-spacing:0}}
+.nav-link[aria-current]{color:var(--majorelle)}
+.nav-link[aria-current] svg{stroke-width:2.25}
+.nav-link::after{content:"";position:absolute;left:50%;top:calc(-0.5px - var(--nav-mark) / 2);width:var(--nav-mark);height:var(--nav-mark);margin-left:calc(var(--nav-mark) / -2);background:var(--majorelle);transform:rotate(45deg) scale(0);pointer-events:none}
+.nav-link[aria-current]::after{transform:rotate(45deg) scale(1)}
+@media (hover:hover){.nav-link:not([aria-current]):hover{color:var(--ink)}}
+@media (forced-colors:active){.nav-link::after{background:Highlight;forced-color-adjust:none}.nav-link[aria-current] .nav-label{text-decoration:underline;text-underline-offset:3px}}
+.logo-dark{display:none!important}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .logo-light{display:none!important}:root:not([data-theme="light"]) .logo-dark{display:block!important}}
+:root[data-theme="dark"] .logo-light{display:none!important}
+:root[data-theme="dark"] .logo-dark{display:block!important}
+
+/* ===== PartnerAvatar ===== */
+.zm-av{display:inline-flex;align-items:center;justify-content:center;flex:none;border-radius:var(--radius-pill);font-weight:600;border:2px solid var(--surface-raised)}
+.zm-av-a{background:var(--majorelle-soft);color:var(--majorelle-ink);box-shadow:0 0 0 2px var(--partner-a)}
+.zm-av-b{background:var(--terracotta-soft);color:var(--terracotta-ink);box-shadow:0 0 0 2px var(--partner-b)}
+.zm-av-sm{width:24px;height:24px;font-size:11px;line-height:1}
+.zm-av-md{width:32px;height:32px;font-size:13px}
+.zm-av-lg{width:48px;height:48px;font-size:18px}
+.zm-pair{display:inline-flex}.zm-pair>.zm-av+.zm-av{margin-left:-8px}
+.nav .zm-av{border:0;box-shadow:0 0 0 1.75px currentColor}
+.nav-link[aria-current] .zm-av{box-shadow:0 0 0 2.25px currentColor}
+
+/* ===== Buttons (design system Button) ===== */
+.btn-primary,.btn-sec,.btn-danger,.btn-ghost{font:inherit;font-size:13px;line-height:18px;font-weight:600;letter-spacing:.01em;display:inline-flex;align-items:center;justify-content:center;gap:var(--space-2);height:44px;padding:0 var(--space-5);border-radius:var(--radius-md);cursor:pointer;text-decoration:none;-webkit-tap-highlight-color:transparent}
+.btn-primary{border:1px solid var(--majorelle);background:var(--majorelle);color:var(--on-majorelle)}
+.btn-sec{border:1px solid var(--line-strong);background:var(--surface-raised);color:var(--ink)}
+.btn-danger{border:1px solid var(--danger);background:transparent;color:var(--danger)}
+.btn-ghost{border:1px solid transparent;background:transparent;color:var(--majorelle)}
+.btn-sm{position:relative;height:32px;padding:0 var(--space-3);border-radius:var(--radius-sm)}
+.btn-sm::before{content:"";position:absolute;inset:-6px 0}
+.btn-block{width:100%}
+/* Disabled: solid sunken, not opacity (ink-muted on sunken 5.15 / 8.48; a11y moderate 4) */
+.btn-primary:disabled,.btn-primary[aria-disabled="true"],.btn-sec:disabled,.btn-sec[aria-disabled="true"],.btn-danger:disabled,.btn-danger[aria-disabled="true"]{background:var(--surface-sunken);border-color:var(--line-strong);color:var(--ink-muted);box-shadow:none;cursor:not-allowed}
+@media (hover:hover){.btn-sec:hover{border-color:var(--ink-muted)}}
+@media (prefers-reduced-motion:no-preference){.btn-primary,.btn-sec,.btn-danger{transition:transform var(--dur-press) ease}.btn-primary:active,.btn-sec:active,.btn-danger:active{transform:scale(.98)}}
+.icon-btn{flex:none;display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border:0;border-radius:var(--radius-md);background:transparent;color:var(--ink-muted);cursor:pointer;text-decoration:none}
+@media (hover:hover){.icon-btn:hover{color:var(--ink)}}
+.link-btn{display:inline-flex;align-items:center;min-height:44px;padding:0 var(--space-2);margin-inline-start:calc(var(--space-2) * -1);border:0;background:none;color:var(--majorelle);font:inherit;font-size:13px;line-height:18px;font-weight:600;cursor:pointer;border-radius:var(--radius-sm);text-decoration:none}
+
+/* ===== The floating primary (phones) / in-page primary (≥ 48rem) ===== */
+.dock{position:fixed;z-index:9;inset-inline-end:max(var(--fab-gap),env(safe-area-inset-right,0px));bottom:calc(var(--nav-bar-h) + env(safe-area-inset-bottom,0px) + var(--fab-gap))}
+.dock .btn-primary{width:auto;height:var(--fab-h);padding:0 var(--space-5) 0 var(--space-4);border-radius:var(--radius-lg);box-shadow:var(--shadow-pop)}
+.dock .btn-primary .ic{width:20px;height:20px;stroke-width:2.25}
+
+/* ===== Section heads, notices, light rows ===== */
+.sec-head{display:flex;justify-content:space-between;align-items:center;gap:var(--space-3);min-height:44px}
+.sec-head h2,.sec-title{margin:0;font-size:13px;line-height:18px;font-weight:600}
+.see-all{display:inline-flex;align-items:center;min-height:44px;padding-inline:var(--space-2);margin-inline-end:calc(var(--space-2) * -1);border-radius:var(--radius-sm);color:var(--majorelle);font-size:13px;line-height:18px;font-weight:600;text-decoration:none}
+@media (hover:hover){.see-all:hover{text-decoration:underline}}
+.notice{display:flex;gap:var(--space-2);align-items:flex-start;margin:0;padding:var(--space-3) var(--space-4);background:var(--surface-sunken);border-radius:var(--radius-md);font-size:13px;line-height:18px;color:var(--ink)}
+.notice .ic{width:16px;height:16px;margin-top:1px}
+.notice-danger{background:var(--danger-soft);color:var(--danger-ink)}
+.row-link,.prompt{display:flex;align-items:center;gap:var(--space-3);padding:var(--space-3) var(--space-4);border:1px solid var(--line);border-radius:var(--radius-md);background:var(--surface);color:var(--ink);text-decoration:none}
+.prompt{border-radius:var(--radius-lg)}
+.prompt>.ic{color:var(--ink-muted)}
+.prompt>p{margin:0;flex:1;min-width:0;text-wrap:pretty}
+
+/* ===== GoalCard (design system); the whole card is one link via a stretched title ===== */
+.goals{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:var(--space-3)}
+.goal{position:relative;display:flex;gap:var(--space-4);padding:var(--space-4);background:var(--surface-raised);border:1px solid var(--line);border-radius:var(--radius-lg);box-shadow:var(--shadow-card)}
+@media (hover:hover){.goal:hover{border-color:var(--line-strong)}}
+.goal-cover{flex:none;width:64px;height:80px;background:var(--majorelle-soft);color:var(--majorelle-ink);display:flex;align-items:flex-end;justify-content:center;padding-bottom:var(--space-2);font-family:var(--font-serif);font-size:28px;line-height:1}
+.goal-cover img{width:100%;height:100%;object-fit:cover;display:block}
+.goal-cover.has-img{padding:0}
+.arch{border-radius:50% 50% var(--radius-sm) var(--radius-sm) / 40% 40% var(--radius-sm) var(--radius-sm);overflow:hidden}
+.goal-body{flex:1;min-width:0;display:flex;flex-direction:column;gap:var(--space-2)}
+.goal-top{display:flex;justify-content:space-between;align-items:flex-start;gap:var(--space-2)}
+.goal-title{margin:0;font-size:18px;line-height:24px;font-weight:600}
+.goal-title a{color:inherit;text-decoration:none}
+.goal-title a::after{content:"";position:absolute;inset:0;border-radius:var(--radius-lg)}
+.goal-title a:focus-visible{outline:none}
+.goal-title a:focus-visible::after{outline:2px solid var(--focus-ring);outline-offset:2px}
+.goal-amt span{color:var(--ink-muted)}
+.goal-foot{display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-2);font-size:12px;line-height:16px;color:var(--ink-muted)}
+.goal-foot .ic{width:16px;height:16px}
+
+/* ===== Progress (design system) ===== */
+.track{height:8px;border-radius:var(--radius-sm);background:var(--majorelle-soft);overflow:hidden}
+.fill{height:100%;border-radius:var(--radius-sm);background:var(--majorelle)}
+.is-done .track{background:var(--zellige-soft)}.is-done .fill{background:var(--zellige)}
+@media (prefers-reduced-motion:no-preference){.fill{transition:width var(--dur-fill) var(--ease-out)}}
+
+/* ===== Badges ===== */
+.badge{display:inline-flex;align-items:center;gap:var(--space-1);flex:none;font-size:12px;line-height:20px;font-weight:600;padding:0 var(--space-2);border-radius:var(--radius-pill)}
+.badge .ic{width:14px;height:14px;stroke-width:2.25}
+.badge-done{background:var(--zellige-soft);color:var(--zellige-ink)}
+.badge-neutral{background:var(--surface-sunken);color:var(--ink-muted)}
+.badge-saffron{background:var(--saffron-soft);color:var(--saffron-ink)}
+
+/* ===== Skeletons: static, no shimmer ===== */
+.sk{display:block;background:var(--surface-sunken);border-radius:var(--radius-sm)}
+
+/* ===== Form fields ===== */
+.field-label{display:block;margin-bottom:var(--space-2);font-size:13px;line-height:18px;font-weight:600}
+.field{display:flex;align-items:center;gap:var(--space-2);min-height:52px;padding-inline:var(--space-4);border:1px solid var(--line-strong);border-radius:var(--radius-md);background:var(--surface)}
+.field:focus-within{outline:2px solid var(--focus-ring);outline-offset:2px}
+.field input,.field textarea{flex:1;min-width:0;border:0;background:transparent;color:var(--ink);font:inherit;font-size:16px;line-height:24px;outline:none}
+.field input{height:50px}
+.field textarea{padding-block:var(--space-3);resize:vertical;min-height:96px;field-sizing:content}
+.field-num input{font-size:20px;line-height:28px;font-weight:600;font-variant-numeric:tabular-nums}
+.suffix{color:var(--ink-muted);font-weight:600}
+.field.is-invalid{border-color:var(--danger);border-width:2px;padding-inline:calc(var(--space-4) - 1px)}
+.help{margin:var(--space-2) 0 0;font-size:12px;line-height:16px;color:var(--ink-muted)}
+.err{margin:var(--space-2) 0 0;font-size:13px;line-height:18px;font-weight:600;color:var(--danger)}
+
+/* ===== Toast ===== */
+.toast{position:fixed;z-index:20;inset-inline:var(--space-4);bottom:calc(var(--nav-bar-h) + env(safe-area-inset-bottom,0px) + var(--fab-gap) + var(--fab-h) + var(--space-2));
+  display:flex;align-items:center;gap:var(--space-3);padding:var(--space-3) var(--space-3) var(--space-3) var(--space-4);border-radius:var(--radius-md);
+  background:var(--ink);color:var(--surface);box-shadow:var(--shadow-pop);font-size:13px;line-height:18px;font-weight:600}
+body.no-fab .toast{bottom:calc(var(--nav-bar-h) + env(safe-area-inset-bottom,0px) + var(--space-4))}
+.toast-text{flex:1;min-width:0;display:flex;flex-direction:column}
+.toast-title{font-size:15px;line-height:22px}
+.toast-title:empty{display:none}
+.toast.is-done{background:var(--saffron);color:var(--on-saffron)}
+.toast-undo{flex:none;position:relative;font:inherit;font-weight:600;height:36px;padding:0 var(--space-3);border:1px solid currentColor;border-radius:var(--radius-sm);background:transparent;color:inherit;cursor:pointer}
+.toast-undo::before{content:"";position:absolute;inset:-4px -2px}
+.toast-undo{min-width:44px}
+.toast :focus-visible{outline-color:currentColor}
+@media (prefers-reduced-motion:no-preference){.toast{transition:opacity var(--dur-toast) ease,transform var(--dur-toast) var(--ease-out)}.toast.is-entering{opacity:0;transform:translateY(8px)}}
+@media (prefers-reduced-motion:reduce){.toast{transition:opacity var(--dur-toast) ease}.toast.is-entering{opacity:0}}
+html.toast-open{scroll-padding-bottom:calc(var(--nav-bar-h) + var(--fab-zone) + env(safe-area-inset-bottom,0px) + 5.5rem)}
+
+/* ===== Sheet / dialog ===== */
+.sheet{position:fixed;inset:auto 0 0 0;margin:0;width:100%;max-width:none;max-height:min(calc(100dvh - var(--space-2)),40rem);overflow:auto;
+  padding:var(--space-5) max(var(--space-4),env(safe-area-inset-right,0px)) calc(var(--space-5) + env(safe-area-inset-bottom,0px)) max(var(--space-4),env(safe-area-inset-left,0px));
+  border:0;border-radius:var(--radius-lg) var(--radius-lg) 0 0;background:var(--surface-raised);color:var(--ink);box-shadow:var(--shadow-pop);clip-path:inset(0)}
+.sheet::backdrop{background:rgba(29,34,48,.4)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .sheet::backdrop{background:rgba(0,0,0,.6)}}
+:root[data-theme="dark"] .sheet::backdrop{background:rgba(0,0,0,.6)}
+@media (prefers-reduced-motion:no-preference) and (max-width:47.99rem){
+  .sheet{transition:clip-path var(--dur-sheet) var(--ease-out),display var(--dur-sheet) allow-discrete,overlay var(--dur-sheet) allow-discrete}
+  .sheet:not([open]){clip-path:inset(calc(100% - var(--fab-zone) - var(--nav-bar-h)) 0 0 0)}
+  @starting-style{.sheet[open]{clip-path:inset(calc(100% - var(--fab-zone) - var(--nav-bar-h)) 0 0 0)}}
+}
+@media (prefers-reduced-motion:reduce){
+  .sheet{transition:opacity var(--dur-toast) ease,display var(--dur-toast) allow-discrete,overlay var(--dur-toast) allow-discrete}
+  .sheet:not([open]){opacity:0}
+  @starting-style{.sheet[open]{opacity:0}}
+}
+.sheet-head{display:flex;align-items:flex-start;justify-content:space-between;gap:var(--space-3);margin-bottom:var(--space-4)}
+.sheet-head h2{margin:0;font-size:18px;line-height:24px;font-weight:600}
+.sheet-head .icon-btn{margin:-10px -10px 0 0}
+.sheet-actions{display:flex;flex-direction:column;align-items:stretch;gap:var(--space-2);margin-top:var(--space-5)}
+html:has(.sheet[open]){overflow:hidden}
+
+/* ===== Windows High Contrast ===== */
+@media (forced-colors:active){
+  .track{border:1px solid CanvasText}
+  .fill{forced-color-adjust:none;background:Highlight}
+  .toast,.sheet{border:1px solid CanvasText}
+}
+
+/* ===== ≥ 48rem: the top bar; the primary leaves the corner ===== */
+@media (min-width:48rem){
+  html{scroll-padding-bottom:0;scroll-padding-top:calc(var(--top-bar-h) + var(--space-4))}
+  body,body.no-fab{padding-bottom:0}
+  html.toast-open{scroll-padding-bottom:6rem}
+  .app-header{position:sticky;top:0;z-index:10;background:var(--surface);border-bottom:1px solid var(--line)}
+  .app-header .bar{display:flex;align-items:center;gap:var(--space-6);height:var(--top-bar-h)}
+  .app-header .brand{display:flex;flex:none;align-items:center;border-radius:var(--radius-sm)}
+  .brand img{display:block;height:36px;width:auto}
+  .nav{position:static;flex:1;min-width:0;height:100%;padding:0;border:0;background:none}
+  .nav-list{display:flex;gap:var(--space-1);height:100%}
+  .nav-list>li{display:flex;align-items:center}
+  .nav-list>li:last-child{margin-inline-start:auto}
+  .nav-link{flex-direction:row;gap:var(--space-2);height:var(--nav-link-inline-h);padding-inline:var(--space-3)}
+  .nav-link svg{width:var(--nav-icon-inline);height:var(--nav-icon-inline)}
+  .nav-link:focus-visible{outline-offset:2px}
+  .nav-link::after{top:auto;bottom:calc((var(--top-bar-h) - var(--nav-link-inline-h)) / -2 - 0.5px - var(--nav-mark) / 2)}
+  main{padding-block:var(--space-6) var(--space-7)}
+  .dock{position:static}
+  .dock .btn-primary{height:44px;padding:0 var(--space-5) 0 var(--space-4);border-radius:var(--radius-md);box-shadow:none}
+  .toast,body.no-fab .toast{inset-inline:auto;left:50%;bottom:var(--space-5);width:min(30rem,calc(100% - 2 * var(--space-4)));translate:-50% 0}
+  .sheet{inset:0;margin:auto;width:min(30rem,calc(100% - 2 * var(--space-4)));height:fit-content;border-radius:var(--radius-lg);padding:var(--space-5)}
+  @media (prefers-reduced-motion:no-preference){
+    .sheet{transition:opacity var(--dur-sheet) ease,transform var(--dur-sheet) var(--ease-out),display var(--dur-sheet) allow-discrete,overlay var(--dur-sheet) allow-discrete}
+    .sheet:not([open]){opacity:0;transform:translateY(8px)}
+    @starting-style{.sheet[open]{opacity:0;transform:translateY(8px)}}
+  }
+}
+
+/* =====================================================================
+   Goals area additions (direction B · Doorway). Proposed for the system;
+   recorded in build-notes.md. No new colours: zellige + surface only.
+   ===================================================================== */
+:root{
+  --doorway-ratio:3 / 2; --doorway-ratio-bare:2 / 1; --doorway-max:15rem;
+  --arch-initial-xl:96px; --arch-initial-tile:40px;
+  --surround:4px; --surround-gap:3px; --surround-sm:2px;
+  --dur-surround:320ms;
+}
+
+/* ----- Doorway: the arch holding a cover, or the title's initial ----- */
+.door{position:relative;display:flex;align-items:flex-end;justify-content:center;overflow:hidden;
+  background:var(--majorelle-soft);color:var(--majorelle-ink);font-family:var(--font-serif);font-weight:400;line-height:1;
+  border-radius:50% 50% var(--radius-sm) var(--radius-sm) / 40% 40% var(--radius-sm) var(--radius-sm);
+  --ring-gap:var(--surround-gap); --ring:var(--surround)}
+.door-initial{display:block;padding-bottom:.16em;user-select:none}
+.door--detail{width:min(100%,calc(var(--doorway-max) * 2));margin-inline:auto;aspect-ratio:var(--doorway-ratio-bare);font-size:var(--arch-initial-xl)}
+.door--detail.has-photo{width:min(100%,calc(var(--doorway-max) * 1.5));aspect-ratio:var(--doorway-ratio)}
+.door--tile{width:100%;aspect-ratio:5 / 4;font-size:var(--arch-initial-tile);--ring-gap:var(--surround-sm);--ring:var(--surround-sm)}
+.door--row{flex:none;width:32px;height:40px;font-size:24px;--ring-gap:var(--surround-sm);--ring:var(--surround-sm)}
+.door--row .door-initial{padding-bottom:3px}
+.door--form{width:min(100%,calc(var(--doorway-max) * 2));margin-inline:auto;aspect-ratio:var(--doorway-ratio-bare);font-size:var(--arch-initial-xl)}
+.door--form.has-photo{width:min(100%,calc(var(--doorway-max) * 1.5));aspect-ratio:var(--doorway-ratio)}
+/* With no cover anywhere on the list, tiles use the bare 2:1 doorway (critic minor: sameness costs less height) */
+.tiles.no-covers .door--tile{aspect-ratio:2 / 1;font-size:32px}
+/* A real cover fills the arch; example covers are a sunken arch with a label, never stock images. */
+.door img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.door-example{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:var(--space-1);
+  background:var(--surface-sunken);color:var(--ink-muted);font-family:var(--font-sans);font-size:12px;line-height:16px;font-weight:600}
+.door-example .ic{width:24px;height:24px;stroke-width:1.5}
+.door--tile .door-example .ic,.door--row .door-example .ic{width:16px;height:16px}
+.door--row .door-example span{display:none}
+/* Wide screens: the detail doorway stands upright in its column (set by the detail view). */
+
+/* ----- Example photo placeholder outside the doorway (journal, composer) ----- */
+.photo-example{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:var(--space-1);width:100%;
+  background:var(--surface-sunken);color:var(--ink-muted);font-size:12px;line-height:16px;font-weight:600}
+
+/* ----- Confirm (alertdialog): a sheet on phones, centred from 48rem ----- */
+.confirm h2{margin:0;font-size:18px;line-height:24px;font-weight:600}
+.confirm-body{margin:var(--space-2) 0 0;text-wrap:pretty}
+.confirm-body p{margin:0 0 var(--space-2)}
+.confirm .sheet-actions{margin-top:var(--space-5)}
+
+/* ----- Task pages (create and edit): no bottom nav on phones (decision (a)) ----- */
+@media (max-width:47.99rem){
+  html[data-chrome="task"] .nav{display:none}
+  html[data-chrome="task"] body{padding-bottom:calc(var(--fab-zone) + env(safe-area-inset-bottom,0px))}
+  html[data-chrome="task"] body.no-fab{padding-bottom:calc(var(--space-5) + env(safe-area-inset-bottom,0px))}
+  html[data-chrome="task"]{scroll-padding-bottom:calc(var(--fab-zone) + env(safe-area-inset-bottom,0px))}
+  html[data-chrome="task"] .dock{bottom:calc(env(safe-area-inset-bottom,0px) + var(--fab-gap))}
+  html[data-chrome="task"] .toast{bottom:calc(env(safe-area-inset-bottom,0px) + var(--fab-gap) + var(--fab-h) + var(--space-2))}
+  html[data-chrome="task"] main{padding-top:0}
+}
+
+/* ----- Prototype footnote ----- */
+#footnote:empty{display:none}
+
+
+/* =====================================================================
+   Trips additions (direction B · Saffron light + C's budget bar).
+   Proposed for the system; recorded in build-notes.md. No new colours.
+   ===================================================================== */
+:root{
+  --light-band-h:4rem; --now-cell:3.5rem;
+  --arch-thumb-w:2rem; --arch-thumb-h:2.5rem;
+  --tally:8px; --tally-gap:2px;
+  --bbar-h:12px; --budget-mark-w:2px; --budget-mark-h:20px; --bbar-pencil-min:12px;
+  --dur-light:240ms;
+  --light:var(--saffron); --on-light:var(--on-saffron); --light-soft:var(--saffron-soft);
+  --budget-fill:var(--terracotta); --budget-track:var(--surface-sunken); --budget-mark:var(--ink);
+}
+
+/* ----- The doorway thumb: the trip's arch at the end of the h1 row during the trip ----- */
+.door--thumb{flex:none;width:var(--arch-thumb-w);height:var(--arch-thumb-h);font-size:24px}
+.door--thumb .door-initial{padding-bottom:3px}
+.door--thumb .door-example span,.door--row .door-example span{display:none}
+.door--thumb .door-example .ic{width:16px;height:16px}
+
+/* ----- The light: TripCountdown laid flat, the one saffron block on a screen -----
+   Count (numeral) at the start, kicker at the end. on-saffron on saffron 7.71 / 9.40. */
+.light{display:flex;align-items:center;flex-wrap:wrap;gap:0 var(--space-2);min-height:var(--light-band-h);margin:0;
+  padding:var(--space-2) var(--space-4);border-radius:var(--radius-md);background:var(--light);color:var(--on-light)}
+.light-count{font-size:32px;line-height:36px;font-weight:600;letter-spacing:-0.01em}
+.light-words{font-size:15px;line-height:22px;font-weight:600}
+.light-sep{display:none}
+.light-kicker{margin-inline-start:auto;font-size:13px;line-height:18px;font-weight:600}
+.light--past{background:var(--surface-sunken);color:var(--ink-muted)}
+.light--past .light-words{font-weight:600}
+@media (max-width:22.4375rem){.light{padding-inline:var(--space-3)}.light-kicker{margin-inline-start:0;flex-basis:100%}}
+@media (forced-colors:active){.light{border:2px solid CanvasText}}
+
+/* ----- Budget: the ink-and-pencil bar (C). Solid terracotta = plan costs (commitments);
+   dashed terracotta outline = estimates of ideas not in the plan; an ink mark at the budget.
+   Over budget: every segment is danger on danger-soft (danger is never next to terracotta). ----- */
+.bbar{position:relative;display:flex;align-items:stretch;height:var(--bbar-h);border-radius:var(--radius-sm);background:var(--budget-track);margin-block:calc((var(--budget-mark-h) - var(--bbar-h)) / 2)}
+.bbar-ink{display:block;flex:none;background:var(--budget-fill);border-radius:var(--radius-sm) 0 0 var(--radius-sm)}
+.bbar-pencil{display:block;flex:none;box-sizing:border-box;border:2px dashed var(--budget-fill);border-inline-start:0;border-radius:0 var(--radius-sm) var(--radius-sm) 0}
+.bbar-ink:last-child{border-radius:var(--radius-sm)}
+.bbar-mark{position:absolute;top:50%;width:var(--budget-mark-w);height:var(--budget-mark-h);margin-inline-start:calc(var(--budget-mark-w) / -2);translate:0 -50%;background:var(--budget-mark);border-radius:1px}
+.bbar.is-over{background:var(--danger-soft)}
+.bbar.is-over .bbar-ink{background:var(--danger)}
+.bbar.is-over .bbar-pencil{border-color:var(--danger)}
+.bbar.no-budget .bbar-ink,.bbar.no-budget .bbar-pencil{opacity:1}
+.budget-over{color:var(--danger);font-weight:600}
+@media (forced-colors:active){
+  .bbar{border:1px solid CanvasText;background:Canvas}
+  .bbar-ink{forced-color-adjust:none;background:Highlight}
+  .bbar-pencil{forced-color-adjust:none;background:Canvas;border-color:Highlight}
+  .bbar-mark{forced-color-adjust:none;background:CanvasText}
+}
+
+/* ----- Prep tally: one zellige tile per ticked item; the text "2 of 5" carries the meaning ----- */
+.tally{display:inline-flex;flex-wrap:wrap;gap:var(--tally-gap);vertical-align:middle}
+.tally i{display:block;width:var(--tally);height:var(--tally);border-radius:1px;box-shadow:inset 0 0 0 1px var(--line-strong)}
+.tally i.on{background:var(--zellige);box-shadow:none}
+@media (forced-colors:active){.tally{display:none}}
+
+/* ----- Ideas look lighter than commitments (design system) ----- */
+.commit{background:var(--surface-raised);border:1px solid var(--line);border-radius:var(--radius-md);box-shadow:var(--shadow-card)}
+.idea{background:transparent;border:2px dashed var(--line-strong);border-radius:var(--radius-md)}
+@media (forced-colors:active){.commit{border:1px solid CanvasText}.idea{border:2px dashed CanvasText}}
+
+/* ----- Tick: the design system's ShoppingItem checkbox. 24 px visual, 44 px target. ----- */
+.tick{position:relative;flex:none;width:24px;height:24px;margin:10px;padding:0;border-radius:var(--radius-sm);border:2px solid var(--line-strong);background:var(--surface-raised);
+  display:inline-flex;align-items:center;justify-content:center;color:var(--on-zellige);cursor:pointer}
+.tick::before{content:"";position:absolute;inset:-12px}
+.tick .ic{width:16px;height:16px;stroke-width:3}
+.tick[aria-checked="true"]{background:var(--zellige);border-color:var(--zellige)}
+.tick[aria-checked="false"] .ic{display:none}
+.tick[aria-disabled="true"]{cursor:not-allowed}
+@media (forced-colors:active){.tick{border-color:CanvasText}.tick[aria-checked="true"]{forced-color-adjust:none;background:Highlight;color:HighlightText;border-color:Highlight}}
+
+/* Type icon chip used in rows and sheets */
+.type-ic{flex:none;display:inline-flex;color:var(--ink-muted)}
+.type-ic .ic{width:20px;height:20px}
+.must{display:inline-flex;align-items:center;gap:var(--space-1);font-size:12px;line-height:20px;font-weight:600;padding:0 var(--space-2);border-radius:var(--radius-pill);background:var(--surface-sunken);color:var(--ink)}
+.must .ic{width:14px;height:14px}
+.queued{display:inline-flex;align-items:center;gap:var(--space-1);font-size:12px;line-height:16px;color:var(--ink-muted)}
+.queued .ic{width:14px;height:14px}
+
+/* Review round: a sheet steps back while a confirmation sits on top of it (critique F7) */
+html.confirm-open dialog[open]:not(#confirm){visibility:hidden}

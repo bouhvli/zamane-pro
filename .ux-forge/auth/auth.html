@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">
+<title>Sign in – Zamane</title>
+<meta name="theme-color" content="#f8f3ea" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#12161d" media="(prefers-color-scheme: dark)">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;600&family=Young+Serif&display=swap">
+<!-- Shared layer from Goals (tokens, base, buttons, fields, notices, confirm), then the auth shell, then one stylesheet per area. -->
+<link rel="stylesheet" href="../goals/zamane.css">
+<link rel="stylesheet" href="auth.css">
+<link rel="stylesheet" href="account.css">
+<link rel="stylesheet" href="setup.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to main content</a>
+
+<div class="auth-wrap auth-head-wrap"><header id="auth-head" class="auth-head"></header></div>
+
+<main id="main" class="auth-wrap" tabindex="-1">
+  <div id="view" class="view"></div>
+  <p class="caption footnote" id="footnote"></p>
+</main>
+
+<div id="live" class="vh" role="status" aria-live="polite"></div>
+
+<!-- Shared confirmation for destructive acts (F9): the safe button first and focused; Esc keeps; no backdrop close -->
+<dialog id="confirm" class="sheet confirm" role="alertdialog" aria-modal="true" aria-labelledby="confirm-h" aria-describedby="confirm-body">
+  <h2 id="confirm-h"></h2>
+  <div id="confirm-body" class="confirm-body"></div>
+  <div class="sheet-actions">
+    <button id="confirm-cancel" class="btn-sec" type="button">Keep it</button>
+    <button id="confirm-ok" class="btn-danger" type="button"></button>
+  </div>
+</dialog>
+
+<script src="auth-shared.js"></script>
+<script src="account.js"></script>
+<script src="setup.js"></script>
+<script>A.start();</script>
+</body>
+</html>

@@ -43,3 +43,12 @@ blob-report/
 # OS files
 desktop.ini
 Thumbs.db
+
+# TanStack Router plugin cache
+.tanstack/
+
+# Design screenshots (71 MB, re-creatable from the prototypes; the visual tests render the HTML live)
+.ux-forge/**/screenshots/
+
+# Visual-test scratch (the report in tests/visual/report/ is committed)
+tests/visual/.cache/

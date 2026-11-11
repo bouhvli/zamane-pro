@@ -1,0 +1,92 @@
+/* Goals list (direction B · Doorway). Open goals are doorway tiles on subgrid rows, so figures and bars
+   line up across a row; done goals are flat rows whose arch wears the zellige surround. */
+
+/* ----- Masthead: h1, the demoted summary (D2), the primary ----- */
+.list-head{display:grid;gap:var(--space-1);margin-bottom:var(--space-5)}
+.list-summary{margin:0;font-size:15px;line-height:22px;color:var(--ink-muted);text-wrap:pretty}
+.sk-summary{width:min(18rem,80%);height:16px;margin-top:var(--space-2)}
+.list-notice{margin-bottom:var(--space-5)}
+.notice-stale{align-items:center;flex-wrap:wrap}
+.notice-stale>span{flex:1;min-width:12rem}
+.notice-stale .link-btn{margin:calc(var(--space-2) * -1) 0;min-height:44px}
+
+/* ----- Open goals: tiles ----- */
+.tiles{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-3)}
+.tile{position:relative;min-width:0;display:grid;grid-row:span 7;grid-template-rows:subgrid;row-gap:0;
+  padding:var(--space-3);background:var(--surface-raised);border:1px solid var(--line);border-radius:var(--radius-lg);box-shadow:var(--shadow-card)}
+@supports not (grid-template-rows:subgrid){.tile{display:flex;flex-direction:column}.tile-bar{margin-top:auto}}
+@media (hover:hover){.tile:hover{border-color:var(--line-strong)}}
+.tile>.door{margin-bottom:var(--space-3)}
+.tile.is-done>.door{margin:var(--space-1) var(--space-1) calc(var(--space-3) + var(--space-1));width:calc(100% - var(--space-2))}
+.tile-title{margin:0;font-size:15px;line-height:20px;font-weight:600;overflow-wrap:anywhere;text-wrap:pretty}
+.tile-title a{color:inherit;text-decoration:none}
+.tile-title a::after{content:"";position:absolute;inset:0;border-radius:var(--radius-lg)}
+.tile-title a:focus-visible{outline:none}
+.tile-title a:focus-visible::after{outline:2px solid var(--focus-ring);outline-offset:2px}
+.tile-fig{margin:var(--space-2) 0 0;font-size:18px;line-height:24px;font-weight:600;white-space:nowrap}
+.tile-of{margin:0;font-size:12px;line-height:16px;color:var(--ink-muted)}
+.tile-bar{margin-top:var(--space-2)}
+.tile-foot{margin:var(--space-3) 0 0;display:flex;gap:var(--space-2);align-items:flex-start;font-size:12px;line-height:16px;color:var(--ink-muted);overflow-wrap:anywhere}
+.tile-foot .zm-av{margin-top:-4px}
+.ic-pending{width:14px;height:14px;vertical-align:-2px;margin-inline-end:var(--space-1)}
+.tile-by{margin:var(--space-1) 0 0;font-size:12px;line-height:16px;color:var(--ink-muted)}
+.tile-by .badge{margin-top:var(--space-1)}
+
+/* Loading: static skeletons at the tile's shape (no shimmer) */
+.tile-sk{box-shadow:none}
+.tile-sk .sk-door{aspect-ratio:5 / 4;margin-bottom:var(--space-3);border-radius:50% 50% var(--radius-sm) var(--radius-sm) / 40% 40% var(--radius-sm) var(--radius-sm)}
+.tile-sk .sk-line{height:14px;width:80%;margin-top:var(--space-1)}
+.tile-sk .sk-fig{height:20px;width:70%;margin-top:var(--space-2)}
+.tile-sk .sk-of{height:12px;width:50%;margin-top:var(--space-1)}
+.tile-sk .sk-bar{height:8px;margin-top:var(--space-2)}
+
+/* ----- Done goals: flat rows ----- */
+.done-sec{margin-top:var(--space-6)}
+.done-sec .sec-title{margin-bottom:var(--space-3)}
+.done-rows{list-style:none;margin:0;padding:0;display:grid;gap:var(--space-2)}
+.done-row{position:relative;display:flex;align-items:center;gap:var(--space-3);min-height:64px;padding:var(--space-3) var(--space-4);border:1px solid var(--line);border-radius:var(--radius-md);background:var(--surface)}
+@media (hover:hover){.done-row:hover{border-color:var(--line-strong)}}
+.done-row>.door{margin:var(--space-1)}
+.done-body{flex:1;min-width:0}
+.done-title{margin:0;font-size:15px;line-height:22px;font-weight:600;overflow-wrap:anywhere}
+.done-title a{color:inherit;text-decoration:none}
+.done-title a::after{content:"";position:absolute;inset:0;border-radius:var(--radius-md)}
+.done-title a:focus-visible{outline:none}
+.done-title a:focus-visible::after{outline:2px solid var(--focus-ring);outline-offset:2px}
+.done-meta{margin:0;font-size:12px;line-height:16px;color:var(--ink-muted)}
+
+/* ----- Prompts and errors ----- */
+.list-empty,.list-alldone{align-items:flex-start;padding:var(--space-4)}
+.list-empty .title,.list-alldone .title{margin:0 0 var(--space-1)}
+.list-empty p,.list-alldone p{margin:0;text-wrap:pretty}
+.list-empty>.ic{margin-top:2px}
+.list-alldone{flex-wrap:wrap}
+.list-error{display:grid;justify-items:start;gap:var(--space-4)}
+.list-error .title{margin:0 0 var(--space-1)}
+.list-error p{margin:0}
+
+@media (forced-colors:active){.tile,.done-row{border:1px solid CanvasText}}
+
+/* Very narrow (below 320 px, or zoomed): one tile per row */
+@media (max-width:19.9375rem){.tiles{grid-template-columns:minmax(0,1fr)}}
+
+/* ----- 48 rem and up: summary and primary under the h1; three tiles ----- */
+@media (min-width:48rem){
+  .list-head{grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"h1 h1" "sum dock";align-items:center;row-gap:var(--space-2);margin-bottom:var(--space-6)}
+  .list-head h1{grid-area:h1}
+  .list-head .list-summary{grid-area:sum}
+  .list-head .dock{grid-area:dock}
+  .list-head .sk-summary{grid-area:sum}
+  .tiles{grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--space-4)}
+  .tile{padding:var(--space-4)}
+  .tile-title{font-size:18px;line-height:24px}
+  .tile-fig{font-size:20px;line-height:28px}
+  .tile-foot,.tile-by,.tile-of{font-size:13px;line-height:18px}
+}
+/* ----- 64 rem and up: one masthead line closed by a hairline; four tiles ----- */
+@media (min-width:64rem){
+  .list-head{grid-template-columns:auto minmax(0,1fr) auto;grid-template-areas:"h1 sum dock";column-gap:var(--space-5);padding-bottom:var(--space-5);border-bottom:1px solid var(--line)}
+  .list-head .list-summary{align-self:center;padding-top:4px}
+  .tiles{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .done-rows{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:var(--space-4)}
+}

@@ -1,0 +1,225 @@
+/* In-trip dialogs (read sheets and URL-backed forms). Direction B · Saffron light. Owned by the dialogs builder.
+   Built on the shared .sheet: read sheets are Home's bottom sheet on phones and a centred 28rem dialog from 48rem;
+   forms are full screen on phones and centred (~36rem, schedule ~32rem, ≤ 90dvh, fixed footer) from 48rem.
+   No new colours. Tokens added here are proposed for the system (build-notes/dialogs.md). Classes are dg-*. */
+:root{
+  --dg-sheet-w:28rem; --dg-form-w:36rem; --dg-schedule-w:32rem; --dg-form-max-h:90dvh;
+  --dg-target:44px;              /* the system's minimum target (ia §6.2) */
+  --dg-dt-w:7.5rem;              /* term column in the sheets' facts */
+  --dg-chip-ic:18px; --dg-ic-sm:16px; --dg-check:24px;
+}
+
+/* ===================== Read sheets ===================== */
+.sheet.dg-sheet{container:tdsh / inline-size}
+@media (min-width:48rem){
+  .sheet.dg-sheet{width:min(var(--dg-sheet-w),calc(100% - 2 * var(--space-4)));max-height:var(--dg-form-max-h)}
+}
+.dg-sheet>.vh,.dg-form>.vh{margin:0;inset-block-start:0}
+.dg-sh-head{display:flex;align-items:flex-start;justify-content:space-between;gap:var(--space-3);margin-block-end:var(--space-4)}
+.dg-sh-head .dg-x{margin:calc(var(--space-2) * -1) calc(var(--space-3) * -1) 0 0}
+.dg-title{margin:0;min-width:0;font-family:var(--font-serif);font-weight:400;font-size:28px;line-height:34px;text-wrap:balance;overflow-wrap:anywhere}
+.dg-h2{margin:0;min-width:0;font-size:18px;line-height:24px;font-weight:600}
+.dg-title:focus,.dg-h2:focus{outline:none} /* programmatic focus target, like the shell's h1 */
+
+/* The facts block: a solid card for a plan item (commitment), a dashed block for a place (idea). DS rule. */
+.dg-card{display:flex;flex-direction:column;gap:var(--space-3);padding:var(--space-4)}
+.dg-type{display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-2);margin:0;font-size:13px;line-height:18px;font-weight:600;color:var(--ink-muted)}
+.dg-type>.ic{width:var(--dg-chip-ic);height:var(--dg-chip-ic)}
+.dg-type .must{color:var(--ink)}
+.dg-dl{display:flex;flex-direction:column;gap:var(--space-2);margin:0}
+.dg-row{display:grid;grid-template-columns:var(--dg-dt-w) minmax(0,1fr);gap:var(--space-3);align-items:baseline}
+.dg-row dt{font-size:13px;line-height:18px;font-weight:600;color:var(--ink-muted)}
+.dg-row dd{margin:0;min-width:0;overflow-wrap:anywhere}
+.dg-strong{font-weight:600}
+.dg-cap{display:block;font-size:12px;line-height:16px;font-weight:400;color:var(--ink-muted)}
+@container tdsh (max-width:17rem){.dg-row{grid-template-columns:minmax(0,1fr);gap:0}}
+.dg-link{display:inline-flex;align-items:center;gap:var(--space-1);min-height:var(--dg-target);margin-block:calc((var(--dg-target) - 22px) / -2);
+  color:var(--majorelle);font-weight:600;text-decoration:underline;text-underline-offset:3px;border-radius:var(--radius-sm);overflow-wrap:anywhere}
+.dg-link .ic{width:var(--dg-ic-sm);height:var(--dg-ic-sm)}
+.dg-status{margin:0;font-weight:600}
+.dg-done{display:flex;align-items:flex-start;gap:var(--space-2);margin:0;font-size:13px;line-height:18px;font-weight:600;color:var(--zellige-ink)}
+.dg-done .ic{width:var(--dg-ic-sm);height:var(--dg-ic-sm);margin-top:1px;stroke-width:2.5}
+.dg-inplan{margin:0}
+.dg-inplan .link-btn{margin-block:calc(var(--space-2) * -1) 0}
+.dg-notes{margin-block-start:var(--space-4)}
+.dg-label{margin:0 0 var(--space-1);font-size:13px;line-height:18px;font-weight:600;color:var(--ink-muted)}
+.dg-notes p{margin:0;white-space:pre-wrap;overflow-wrap:anywhere}
+.dg-from{margin:var(--space-3) 0 0}
+.dg-by{display:flex;align-items:center;gap:var(--space-2);margin:var(--space-4) 0 0;font-size:12px;line-height:16px;color:var(--ink-muted)}
+.dg-by .zm-av{border-color:var(--surface-raised)}
+.dg-queued{margin-block-start:var(--space-2)}
+.dg-editnote{margin-block-start:var(--space-4)}
+.dg-gone{margin:0;font-size:15px;line-height:22px;font-weight:600}
+
+/* Actions: Edit / Schedule at the start, the destructive one set apart at the end */
+.dg-acts{display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-2);margin-block-start:var(--space-5)}
+.dg-acts>button{padding-inline:var(--space-4)}
+.dg-acts .ic{width:var(--dg-ic-sm);height:var(--dg-ic-sm)}
+.dg-acts .dg-del{margin-inline-start:auto}
+.dg-reasons{margin:var(--space-2) 0 0;font-size:12px;line-height:16px;color:var(--ink-muted);text-wrap:pretty}
+.dg-sh .notice{margin-block-end:var(--space-4)}
+
+/* Prep item sheet */
+.dg-fields{display:flex;flex-direction:column;gap:var(--space-5)}
+.dg-attr:empty{display:none}
+.dg-attr .dg-by{margin:0}
+.dg-attr{display:flex;flex-direction:column;gap:var(--space-2)}
+
+/* ===================== Form dialogs ===================== */
+.sheet.dg-form{inset:0;width:100%;max-width:none;height:100%;max-height:none;padding:0;border-radius:0;overflow:hidden}
+.dg-form[open]{display:flex;flex-direction:column}
+.dg-f{flex:1 1 auto;min-height:0;display:flex;flex-direction:column}
+@media (min-width:48rem){
+  .sheet.dg-form{inset:0;margin:auto;width:min(var(--dg-form-w),calc(100% - 2 * var(--space-4)));height:fit-content;max-height:var(--dg-form-max-h);padding:0;border-radius:var(--radius-lg)}
+  .sheet.dg-form.is-schedule{width:min(var(--dg-schedule-w),calc(100% - 2 * var(--space-4)))}
+}
+/* Head: ✕ first on phones (wireframe), at the end from 48rem */
+.dg-head{flex:none;display:flex;align-items:center;gap:var(--space-2);
+  padding-block:calc(var(--space-2) + env(safe-area-inset-top,0px)) var(--space-2);
+  padding-inline:max(var(--space-1),env(safe-area-inset-left,0px)) max(var(--space-4),env(safe-area-inset-right,0px));
+  border-block-end:1px solid var(--line)}
+.dg-titles{flex:1;min-width:0}
+.dg-titles h2{margin:0;font-size:18px;line-height:24px;font-weight:600;overflow-wrap:anywhere}
+.dg-titles h2:focus{outline:none}
+.dg-titles .caption{overflow-wrap:anywhere}
+@media (min-width:48rem){
+  .dg-head{padding:var(--space-4) var(--space-3) var(--space-3) var(--space-5)}
+  .dg-head .dg-x{order:2}
+}
+/* Body: the only part that scrolls */
+.dg-body{flex:1 1 auto;min-height:0;overflow-y:auto;overscroll-behavior:contain;display:flex;flex-direction:column;gap:var(--space-5);
+  padding:var(--space-4) max(var(--space-4),env(safe-area-inset-right,0px)) var(--space-6) max(var(--space-4),env(safe-area-inset-left,0px));
+  scroll-padding-block:var(--space-4);container:tdf / inline-size}
+@media (min-width:48rem){.dg-body{padding:var(--space-5)}}
+.dg-slot:empty{display:none}
+.dg-fg{margin:0;min-width:0;border:0;padding:0}
+.dg-fg>legend{padding:0}
+.dg-form .err,.dg-sheet .err{display:flex;align-items:flex-start;gap:var(--space-1)}
+.dg-form .err .ic,.dg-sheet .err .ic{width:var(--dg-ic-sm);height:var(--dg-ic-sm);margin-top:1px}
+.dg-form .field input,.dg-form .field select{font-size:16px;line-height:24px;font-weight:400}
+.dg-info{margin:0;padding:var(--space-2) var(--space-3);border-radius:var(--radius-md);background:var(--surface-sunken);font-size:13px;line-height:18px}
+
+/* Type and Group: native radios dressed as chips (one Tab stop, arrows move) */
+.dg-chips{display:flex;flex-wrap:wrap;gap:var(--space-2)}
+.dg-chips--grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+.dg-chip{position:relative;display:inline-flex;align-items:center;gap:var(--space-2);min-height:var(--dg-target);padding:0 var(--space-3) 0 var(--space-2);
+  border:1px solid var(--line-strong);border-radius:var(--radius-pill);background:var(--surface);color:var(--ink);
+  font-size:13px;line-height:18px;font-weight:600;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.dg-chips--grid .dg-chip{border-radius:var(--radius-md)}
+.dg-chip input{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:pointer}
+.dg-chip .ic{width:var(--dg-chip-ic);height:var(--dg-chip-ic);color:var(--ink-muted)}
+.dg-chip:has(input:checked){border-color:var(--majorelle);box-shadow:inset 0 0 0 1px var(--majorelle);background:var(--majorelle-soft);color:var(--majorelle-ink)}
+.dg-chip:has(input:checked) .ic{color:var(--majorelle-ink)}
+.dg-chip:has(input:focus-visible){outline:2px solid var(--focus-ring);outline-offset:2px}
+@media (hover:hover){.dg-chip:not(:has(input:checked)):hover{border-color:var(--ink-muted)}}
+@supports not selector(:has(*)){ /* fallback: the native radio is shown */
+  .dg-chip input{position:static;width:var(--space-4);height:var(--space-4);opacity:1}
+}
+
+/* Day: a native select in the field shell */
+.dg-select{position:relative;padding-inline-end:var(--space-3)}
+.dg-select select{flex:1;min-width:0;height:50px;border:0;background:transparent;color:var(--ink);font:inherit;appearance:none;outline:none;cursor:pointer;text-overflow:ellipsis}
+.dg-select>.ic{color:var(--ink-muted);pointer-events:none}
+.dg-another{margin-block-start:var(--space-3)}
+.dg-datefield input{color-scheme:inherit}
+
+/* Time: start – end, side by side; stacked in narrow containers */
+.dg-times{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:end;gap:var(--space-2)}
+.dg-t{min-width:0}
+.dg-sub{display:block;margin-block-end:var(--space-1);font-size:12px;line-height:16px;font-weight:600;color:var(--ink-muted)}
+.dg-tf{padding-inline:var(--space-3)}
+.dg-tf input{min-width:0;width:100%}
+.dg-dash{padding-block-end:var(--space-3);color:var(--ink-muted)}
+@container tdf (max-width:17rem){
+  .dg-times{grid-template-columns:minmax(0,1fr)}
+  .dg-dash{display:none}
+}
+
+/* Money: the amount reads as a figure */
+.dg-money input{font-variant-numeric:tabular-nums}
+
+/* Must-do */
+.dg-check{position:relative;display:flex;align-items:center;gap:var(--space-3);min-height:var(--dg-target)}
+.dg-check input{flex:none;width:var(--dg-check);height:var(--dg-check);margin:0;accent-color:var(--majorelle);cursor:pointer}
+.dg-check label{display:inline-flex;align-items:center;gap:var(--space-2);font-weight:600;cursor:pointer}
+.dg-check label::after{content:"";position:absolute;inset:0} /* the whole row toggles */
+.dg-check .ic{width:var(--dg-ic-sm);height:var(--dg-ic-sm);color:var(--ink-muted)}
+.dg-fg>.dg-check+.help{margin-block-start:0;padding-inline-start:calc(var(--dg-check) + var(--space-3))}
+
+/* Optional details: a disclosure row between hairlines (Goals) */
+.dg-toggle{display:flex;align-items:center;justify-content:space-between;gap:var(--space-3);width:100%;min-height:48px;padding:var(--space-2) 0;
+  border:0;border-block:1px solid var(--line);background:none;color:var(--ink);font:inherit;font-weight:600;text-align:start;cursor:pointer}
+.dg-toggle .ic{color:var(--ink-muted)}
+.dg-toggle[aria-expanded="true"] .ic{transform:rotate(180deg)}
+@media (hover:hover){.dg-toggle:hover span{text-decoration:underline;text-underline-offset:3px}}
+@media (prefers-reduced-motion:no-preference){.dg-toggle .ic{transition:transform var(--dur-mark) var(--ease-out)}}
+.dg-details{display:flex;flex-direction:column;gap:var(--space-5)}
+.dg-count{text-align:end}
+.dg-note{margin:0}
+
+/* Delete: last, set apart */
+.dg-end{margin-block-start:var(--space-2);padding-block-start:var(--space-4);border-block-start:1px solid var(--line)}
+.dg-end .btn-danger{padding-inline:var(--space-4)}
+.dg-end .ic{width:var(--dg-ic-sm);height:var(--dg-ic-sm)}
+
+/* Schedule: what's being scheduled is an idea, so it's drawn as one (dashed, no fill) */
+.dg-what{display:flex;align-items:flex-start;gap:var(--space-3);padding:var(--space-3) var(--space-4)}
+.dg-what>.ic{margin-top:2px;color:var(--ink-muted)}
+.dg-what p{margin:0;min-width:0}
+.dg-what b{display:block;font-weight:600;overflow-wrap:anywhere}
+.dg-what-meta{display:block;font-size:13px;line-height:18px;color:var(--ink-muted);font-variant-numeric:tabular-nums}
+.dg-swap{display:flex;flex-direction:column;gap:var(--space-4)}
+.dg-swap-msg{margin:0;font-size:15px;line-height:22px;font-weight:600;text-wrap:pretty}
+.dg-swap-acts{display:flex;flex-wrap:wrap;gap:var(--space-2)}
+
+/* Notices inside the body: draft restored, merge, banner */
+.dg-restored{align-items:center;justify-content:space-between;padding-block:0;padding-inline-end:var(--space-2)}
+.dg-restored>span{flex:1;min-width:0;padding-block:var(--space-3)}
+.dg-restored .link-btn{margin-inline:0}
+.dg-notice:focus{outline:none}
+.dg-banner{padding:var(--space-4);border-radius:var(--radius-md);background:var(--danger-soft);color:var(--danger-ink)}
+.dg-banner-h{display:flex;align-items:flex-start;gap:var(--space-2);margin:0;font-size:15px;line-height:22px;font-weight:600;text-wrap:pretty}
+.dg-banner-h .ic{width:var(--dg-ic-sm);height:var(--dg-ic-sm);margin-top:3px}
+.dg-banner-h:focus{outline:none}
+.dg-banner-acts{display:flex;flex-wrap:wrap;gap:var(--space-2);margin-block-start:var(--space-3)}
+.dg-banner-acts .btn-sec{padding-inline:var(--space-4)}
+.dg-copied:empty{display:none}
+.dg-copied{margin-block-start:var(--space-2);color:inherit}
+
+/* Merge marks (Goals §6.7) */
+.dg-mark-slot:empty{display:none}
+.dg-mark{display:flex;align-items:center;gap:var(--space-2);margin:var(--space-2) 0 0;font-size:12px;line-height:16px;color:var(--ink-muted)}
+.dg-mark .ic{width:var(--dg-ic-sm);height:var(--dg-ic-sm)}
+.dg-mark .zm-av{border-color:var(--surface-raised)}
+.dg-mark-conflict{flex-wrap:wrap;row-gap:0;padding:var(--space-1) var(--space-1) var(--space-1) var(--space-3);border-radius:var(--radius-md);background:var(--surface-sunken);color:var(--ink);font-size:13px;line-height:18px}
+.dg-mark-conflict .dg-mark-text{flex:1 1 10rem;min-width:0;padding-block:var(--space-2);overflow-wrap:anywhere}
+.dg-mark-conflict .link-btn{margin-inline:auto 0}
+.dg-mark-conflict .zm-av{border-color:var(--surface-sunken)}
+
+/* Footer: rides the on-screen keyboard on phones; fixed under the body on wide screens */
+.dg-bar{flex:none;border-block-start:1px solid var(--line);background:var(--surface-raised);
+  padding:var(--space-3) max(var(--space-4),env(safe-area-inset-right,0px)) calc(var(--space-3) + env(safe-area-inset-bottom,0px)) max(var(--space-4),env(safe-area-inset-left,0px))}
+@media (min-width:48rem){.dg-bar{padding:var(--space-3) var(--space-5) var(--space-4)}}
+.dg-why{display:flex;gap:var(--space-2);align-items:flex-start;margin:0 0 var(--space-2);font-size:12px;line-height:16px;color:var(--ink-muted);text-wrap:pretty}
+.dg-why .ic{flex:none;width:var(--dg-ic-sm);height:var(--dg-ic-sm)}
+.dg-bar-acts{display:flex;justify-content:flex-end;align-items:center;gap:var(--space-2)}
+.dg-submit{height:auto;min-height:var(--dg-target);padding:var(--space-1) var(--space-5);text-align:center;text-wrap:balance}
+.dg-cancel{display:none}
+@media (min-width:48rem){.dg-cancel{display:inline-flex}}
+
+/* Short viewports (400% zoom, landscape, keyboard open): one scroller; only the actions stay pinned */
+@media (max-height:32rem){
+  .dg-form[open]{display:block;overflow-y:auto;overscroll-behavior:contain}
+  .dg-f{display:block}
+  .dg-body{overflow:visible;padding-block-end:var(--space-3)}
+  .dg-head{padding-block:calc(var(--space-1) + env(safe-area-inset-top,0px)) var(--space-1)}
+  .dg-bar{position:sticky;inset-block-end:0;z-index:2;padding-block:var(--space-2) calc(var(--space-2) + env(safe-area-inset-bottom,0px))}
+}
+
+/* ===================== Windows High Contrast ===================== */
+@media (forced-colors:active){
+  .dg-chip:has(input:checked){outline:2px solid Highlight;outline-offset:-4px}
+  .dg-chip:has(input:focus-visible){outline:2px solid CanvasText;outline-offset:2px}
+  .dg-banner,.dg-info,.dg-mark-conflict,.dg-restored{border:1px solid CanvasText}
+  .dg-link{color:LinkText}
+}

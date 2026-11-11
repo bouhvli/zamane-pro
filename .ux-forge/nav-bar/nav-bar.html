@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Home · Zamane</title>
+<meta name="theme-color" content="#f8f3ea" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#12161d" media="(prefers-color-scheme: dark)">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;600&family=Young+Serif&display=swap">
+<style>
+/* ===== Design-system tokens, copied verbatim from "Zamane Design System.html" ===== */
+:root{--surface:#f8f3ea;--surface-raised:#fffdf8;--surface-sunken:#efe6d6;--line:#e3d8c5;--line-strong:#8f8576;--ink:#1d2230;--ink-muted:#5a5f6d;--majorelle:#1d4e89;--on-majorelle:#ffffff;--majorelle-soft:#dfe8f5;--majorelle-ink:#163d6b;--saffron:#e3a72f;--on-saffron:#2a1d05;--saffron-soft:#faedcf;--saffron-ink:#7a5200;--terracotta:#b5532f;--on-terracotta:#ffffff;--terracotta-soft:#f6e0d6;--terracotta-ink:#8a3a1d;--zellige:#1e7a5f;--on-zellige:#ffffff;--zellige-soft:#d9efe6;--zellige-ink:#145a45;--danger:#b42318;--danger-soft:#fbe4e1;--danger-ink:#8f1d14;--partner-a:var(--majorelle);--partner-b:var(--terracotta);--focus-ring:var(--majorelle);--shadow-card:0 1px 2px rgba(29,34,48,0.06), 0 4px 14px rgba(29,34,48,0.06);--shadow-pop:0 8px 28px rgba(29,34,48,0.16);color-scheme:light}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--surface:#12161d;--surface-raised:#1b2029;--surface-sunken:#0d1015;--line:#2b323e;--line-strong:#6b7586;--ink:#f1ebdf;--ink-muted:#a8adb9;--majorelle:#8fb4ea;--on-majorelle:#0e1a2b;--majorelle-soft:#1b2b44;--majorelle-ink:#b9d0f3;--saffron:#f2bb4e;--on-saffron:#2a1d05;--saffron-soft:#3b2e12;--saffron-ink:#f5cd7c;--terracotta:#e98f6c;--on-terracotta:#2b120a;--terracotta-soft:#3e2219;--terracotta-ink:#f3b49b;--zellige:#63c9a3;--on-zellige:#0b241b;--zellige-soft:#15332a;--zellige-ink:#94dcc0;--danger:#ff8a7a;--danger-soft:#3d1a17;--danger-ink:#ffb4a8;--partner-a:var(--majorelle);--partner-b:var(--terracotta);--focus-ring:var(--majorelle);--shadow-card:0 1px 2px rgba(0,0,0,0.5);--shadow-pop:0 8px 28px rgba(0,0,0,0.6);color-scheme:dark}}
+:root[data-theme="dark"]{--surface:#12161d;--surface-raised:#1b2029;--surface-sunken:#0d1015;--line:#2b323e;--line-strong:#6b7586;--ink:#f1ebdf;--ink-muted:#a8adb9;--majorelle:#8fb4ea;--on-majorelle:#0e1a2b;--majorelle-soft:#1b2b44;--majorelle-ink:#b9d0f3;--saffron:#f2bb4e;--on-saffron:#2a1d05;--saffron-soft:#3b2e12;--saffron-ink:#f5cd7c;--terracotta:#e98f6c;--on-terracotta:#2b120a;--terracotta-soft:#3e2219;--terracotta-ink:#f3b49b;--zellige:#63c9a3;--on-zellige:#0b241b;--zellige-soft:#15332a;--zellige-ink:#94dcc0;--danger:#ff8a7a;--danger-soft:#3d1a17;--danger-ink:#ffb4a8;--partner-a:var(--majorelle);--partner-b:var(--terracotta);--focus-ring:var(--majorelle);--shadow-card:0 1px 2px rgba(0,0,0,0.5);--shadow-pop:0 8px 28px rgba(0,0,0,0.6);color-scheme:dark}
+:root{--font-serif:"Young Serif",Georgia,"Times New Roman",serif;--font-sans:Figtree,"Segoe UI",system-ui,sans-serif;--space-1:4px;--space-2:8px;--space-3:12px;--space-4:16px;--space-5:24px;--space-6:32px;--space-7:48px;--radius-sm:6px;--radius-md:12px;--radius-lg:20px;--radius-pill:999px}
+
+/* ===== Nav tokens (new; proposed additions to the design system) ===== */
+:root{
+  --nav-bar-h: 64px;        /* bottom tab bar height, above the safe area */
+  --top-bar-h: 60px;        /* matches the design system's own sticky nav */
+  --nav-icon: 24px;         /* tab icons on phones */
+  --nav-icon-inline: 20px;  /* "20px in rows" */
+  --nav-link-inline-h: 44px;/* top-bar items: a 44px target centred in the 60px bar */
+  --nav-mark: 8px;          /* the ز dot: a square turned 45°, about 11px corner to corner */
+  --dur-press: 120ms;       /* same as the design system's button press */
+  --dur-mark: 180ms;
+  --ease-out: cubic-bezier(.2,.8,.2,1);
+}
+
+/* ===== Base ===== */
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-padding-bottom:calc(var(--nav-bar-h) + env(safe-area-inset-bottom,0px) + var(--space-4))}
+body{margin:0;background:var(--surface);color:var(--ink);font-family:var(--font-sans);font-size:15px;line-height:22px;-webkit-font-smoothing:antialiased;
+  padding-bottom:calc(var(--nav-bar-h) + env(safe-area-inset-bottom,0px))}
+.wrap{max-width:1080px;margin-inline:auto;padding-inline:max(var(--space-4),env(safe-area-inset-left,0px)) max(var(--space-4),env(safe-area-inset-right,0px))}
+:focus-visible{outline:2px solid var(--focus-ring);outline-offset:2px}
+h1[tabindex="-1"]:focus{outline:none} /* programmatic focus after navigation; not an interactive element */
+[hidden]{display:none!important}
+.skip{position:absolute;inset-inline-start:var(--space-4);top:-100px;z-index:100;background:var(--majorelle);color:var(--on-majorelle);
+  padding:var(--space-2) var(--space-4);border-radius:var(--radius-md);font-weight:600;text-decoration:none}
+.skip:focus{top:var(--space-2)}
+
+/* ===== The nav bar: phones first (fixed bottom tab bar) ===== */
+.app-header .brand{display:none}
+.nav{position:fixed;inset-inline:0;bottom:0;z-index:10;background:var(--surface);border-top:1px solid var(--line);
+  padding-bottom:env(safe-area-inset-bottom,0px);padding-inline:env(safe-area-inset-left,0px) env(safe-area-inset-right,0px)}
+.nav-list{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));height:var(--nav-bar-h);margin:0;padding:0;list-style:none}
+.nav-link{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:var(--space-1);
+  height:100%;padding-inline:var(--space-1);border-radius:var(--radius-md);
+  color:var(--ink-muted);text-decoration:none;font-size:13px;line-height:18px;font-weight:600;letter-spacing:.01em;
+  -webkit-tap-highlight-color:transparent;touch-action:manipulation}
+.nav-link svg{flex:none;width:var(--nav-icon);height:var(--nav-icon);stroke-width:1.75}
+.nav-label{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.nav-link:focus-visible{outline-offset:-2px}
+/* 320–359px phones: 64px columns. "Shopping" must never truncate. */
+@media (max-width:22.4375rem){.nav-link{padding-inline:0;font-size:12px;line-height:16px;letter-spacing:0}}
+
+/* Where you are: colour, a heavier icon stroke, and the ز dot riding the bar's hairline. */
+.nav-link[aria-current="page"]{color:var(--majorelle)}
+.nav-link[aria-current="page"] svg{stroke-width:2.25}
+.nav-link::after{content:"";position:absolute;left:50%;top:calc(-0.5px - var(--nav-mark) / 2);
+  width:var(--nav-mark);height:var(--nav-mark);margin-left:calc(var(--nav-mark) / -2);
+  background:var(--majorelle);transform:rotate(45deg) scale(0);pointer-events:none}
+.nav-link[aria-current="page"]::after{transform:rotate(45deg) scale(1)}
+
+@media (hover:hover){.nav-link:not([aria-current]):hover{color:var(--ink)}}
+
+/* Profile's icon is you: your initial on your partner tint. In the bar its ring is drawn in
+   currentColor like the other icons' strokes, so it follows the same states and never looks
+   "selected" just because Partner A's colour is majorelle. */
+.zm-av{display:inline-flex;align-items:center;justify-content:center;flex:none;border-radius:var(--radius-pill);font-weight:600;border:2px solid var(--surface-raised)}
+.zm-av-a{background:var(--majorelle-soft);color:var(--majorelle-ink);box-shadow:0 0 0 2px var(--partner-a)}
+.zm-av-b{background:var(--terracotta-soft);color:var(--terracotta-ink);box-shadow:0 0 0 2px var(--partner-b)}
+.zm-av-sm{width:24px;height:24px;font-size:11px;line-height:1}
+.zm-av-md{width:32px;height:32px;font-size:13px}
+.nav .zm-av{border:0;box-shadow:0 0 0 1.75px currentColor}
+.nav-link[aria-current="page"] .zm-av{box-shadow:0 0 0 2.25px currentColor}
+
+@media (prefers-reduced-motion:no-preference){
+  .nav-link svg,.nav-link .zm-av{transition:transform var(--dur-press) ease}
+  .nav-link:active svg,.nav-link:active .zm-av{transform:scale(.92)}
+  .nav-link::after{transition:transform var(--dur-mark) var(--ease-out)}
+}
+@media (forced-colors:active){
+  .nav-link::after{background:Highlight;forced-color-adjust:none}
+  .nav-link[aria-current="page"] .nav-label{text-decoration:underline;text-underline-offset:3px}
+}
+
+/* ===== ≥ 48rem: the same nav, moved into a sticky top bar (iPadOS 18 and desktop web convention) ===== */
+@media (min-width:48rem){
+  html{scroll-padding-bottom:0;scroll-padding-top:calc(var(--top-bar-h) + var(--space-4))}
+  body{padding-bottom:0}
+  .app-header{position:sticky;top:0;z-index:10;background:var(--surface);border-bottom:1px solid var(--line)}
+  .app-header .bar{display:flex;align-items:center;gap:var(--space-6);height:var(--top-bar-h)}
+  .app-header .brand{display:flex;flex:none;align-items:center;border-radius:var(--radius-sm)}
+  .brand img{display:block;height:36px;width:auto}
+  .nav{position:static;flex:1;min-width:0;height:100%;padding:0;border:0;background:none}
+  .nav-list{display:flex;gap:var(--space-1);height:100%}
+  .nav-list>li{display:flex;align-items:center}
+  .nav-list>li:last-child{margin-inline-start:auto}
+  .nav-link{flex-direction:row;gap:var(--space-2);height:var(--nav-link-inline-h);padding-inline:var(--space-3)}
+  .nav-link svg{width:var(--nav-icon-inline);height:var(--nav-icon-inline)}
+  .nav-link:focus-visible{outline-offset:2px}
+  /* the dot sits on the header's bottom hairline, below the centred 44px item */
+  .nav-link::after{top:auto;bottom:calc((var(--top-bar-h) - var(--nav-link-inline-h)) / -2 - 0.5px - var(--nav-mark) / 2)}
+}
+
+/* Logo: two files (read-only sources in /assets), shown per theme. */
+.logo-dark{display:none!important}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .logo-light{display:none!important}:root:not([data-theme="light"]) .logo-dark{display:block!important}}
+:root[data-theme="dark"] .logo-light{display:none!important}
+:root[data-theme="dark"] .logo-dark{display:block!important}
+
+/* ===== Screen content: the design system's Home mock, for context only ===== */
+main{padding-block:var(--space-5) var(--space-6)}
+.screen{max-width:36rem;display:flex;flex-direction:column;gap:var(--space-4)}
+.home-top{display:flex;justify-content:space-between;align-items:center;gap:var(--space-3)}
+.caption{margin:0;font-size:12px;line-height:16px;color:var(--ink-muted)}
+.title-lg{margin:0;font-family:var(--font-serif);font-weight:400;font-size:28px;line-height:34px;text-wrap:balance}
+.zm-pair{display:inline-flex}.zm-pair>.zm-av+.zm-av{margin-left:-8px}
+.num{font-variant-numeric:tabular-nums}
+.card{background:var(--surface-raised);border:1px solid var(--line);border-radius:var(--radius-lg);box-shadow:var(--shadow-card)}
+.total{padding:var(--space-4);display:flex;justify-content:space-between;align-items:flex-end;gap:var(--space-3)}
+.total .big{font-size:32px;line-height:36px;font-weight:600}
+.total .lbl{font-size:12px;line-height:16px;color:var(--ink-muted)}
+.trip{display:flex;overflow:hidden}
+.trip-count{flex:none;width:96px;background:var(--saffron);color:var(--on-saffron);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:var(--space-4) var(--space-2);text-align:center}
+.trip-count b{font-size:32px;line-height:36px;font-weight:600}
+.trip-count span{font-size:12px;line-height:16px;font-weight:600}
+.trip-body{flex:1;min-width:0;padding:var(--space-4);display:flex;flex-direction:column;gap:var(--space-1)}
+.trip-kicker{font-size:13px;line-height:18px;font-weight:600;color:var(--saffron-ink)}
+.trip-meta{font-size:13px;line-height:18px;color:var(--ink-muted)}
+.label-row{display:flex;justify-content:space-between;font-size:13px;line-height:18px;font-weight:600}
+.label-row span{color:var(--ink-muted);font-weight:400}
+.goal{display:flex;gap:var(--space-4);padding:var(--space-4)}
+.goal-cover{flex:none;width:64px;height:80px;background:var(--majorelle-soft);color:var(--majorelle-ink);display:flex;align-items:flex-end;justify-content:center;padding-bottom:var(--space-2);font-family:var(--font-serif);font-size:28px;line-height:1;
+  border-radius:50% 50% var(--radius-sm) var(--radius-sm) / 40% 40% var(--radius-sm) var(--radius-sm);overflow:hidden}
+.goal-body{flex:1;min-width:0;display:flex;flex-direction:column;gap:var(--space-2)}
+.goal-title{margin:0;font-size:18px;line-height:24px;font-weight:600}
+.goal-amt span{color:var(--ink-muted)}
+.track{height:8px;border-radius:var(--radius-sm);background:var(--majorelle-soft);overflow:hidden}
+.fill{height:100%;border-radius:var(--radius-sm);background:var(--majorelle)}
+.goal-foot{display:flex;align-items:center;gap:var(--space-2);font-size:12px;line-height:16px;color:var(--ink-muted)}
+.btn-primary{font:inherit;font-size:13px;line-height:18px;font-weight:600;letter-spacing:.01em;display:flex;align-items:center;justify-content:center;width:100%;height:44px;border-radius:var(--radius-md);border:1px solid var(--majorelle);background:var(--majorelle);color:var(--on-majorelle);cursor:pointer}
+.note{margin:0;color:var(--ink-muted)}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="app-header">
+  <div class="wrap bar">
+    <a class="brand" href="#/home">
+      <img class="logo-light" src="../../assets/zamane-logo.svg" alt="Zamane" width="125" height="36">
+      <img class="logo-dark" src="../../assets/zamane-logo-dark.svg" alt="Zamane" width="125" height="36">
+    </a>
+    <nav class="nav" aria-label="Main">
+      <ul class="nav-list">
+        <li><a class="nav-link" href="#/home" data-to="home" aria-current="page">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+          <span class="nav-label">Home</span></a></li>
+        <li><a class="nav-link" href="#/goals" data-to="goals">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 13V2l8 4-8 4"/><path d="M20.561 10.222a9 9 0 1 1-12.55-5.29"/><path d="M8.002 9.997a5 5 0 1 0 8.9 2.02"/></svg>
+          <span class="nav-label">Goals</span></a></li>
+        <li><a class="nav-link" href="#/trips" data-to="trips">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.106 5.553a2 2 0 0 0 1.788 0l3.659-1.83A1 1 0 0 1 21 4.619v12.764a1 1 0 0 1-.553.894l-4.553 2.277a2 2 0 0 1-1.788 0l-4.212-2.106a2 2 0 0 0-1.788 0l-3.659 1.83A1 1 0 0 1 3 19.381V6.618a1 1 0 0 1 .553-.894l4.553-2.277a2 2 0 0 1 1.788 0z"/><path d="M15 5.764v15"/><path d="M9 3.236v15"/></svg>
+          <span class="nav-label">Trips</span></a></li>
+        <li><a class="nav-link" href="#/shopping" data-to="shopping">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 11-1 9"/><path d="m19 11-4-7"/><path d="M2 11h20"/><path d="m3.5 11 1.6 7.4a2 2 0 0 0 2 1.6h9.8a2 2 0 0 0 2-1.6l1.7-7.4"/><path d="M4.5 15.5h15"/><path d="m5 11 4-7"/><path d="m9 11 1 9"/></svg>
+          <span class="nav-label">Shopping</span></a></li>
+        <li><a class="nav-link" href="#/profile" data-to="profile">
+          <span class="zm-av zm-av-a zm-av-sm" aria-hidden="true">S</span>
+          <span class="nav-label">Profile</span></a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="wrap" tabindex="-1">
+  <section class="screen" data-screen="home" aria-labelledby="h-home">
+    <div class="home-top">
+      <div><p class="caption">Monday 9 Nov</p><h1 class="title-lg" id="h-home" tabindex="-1">Hi, you two</h1></div>
+      <span class="zm-pair"><span class="zm-av zm-av-a zm-av-md" role="img" aria-label="Sara">S</span><span class="zm-av zm-av-b zm-av-md" role="img" aria-label="Youssef">Y</span></span>
+    </div>
+    <div class="card total">
+      <div><div class="lbl">Saved together</div><div class="big num">20,250 MAD</div></div>
+      <div class="lbl" style="text-align:right">3 goals open<br>1 done</div>
+    </div>
+    <article class="card trip">
+      <div class="trip-count"><b class="num">12</b><span>days to go</span></div>
+      <div class="trip-body"><span class="trip-kicker">Next trip</span><h2 class="title-lg">Chefchaouen</h2><span class="trip-meta">Rif mountains · Sat 21 Nov – Wed 25 Nov</span></div>
+    </article>
+    <div class="label-row">Closest to done <span>See all</span></div>
+    <article class="card goal">
+      <div class="goal-cover" aria-hidden="true">W</div>
+      <div class="goal-body">
+        <h2 class="goal-title">Wedding fund</h2>
+        <div class="num"><b>14,250 MAD</b><span class="goal-amt"><span> of 20,000 MAD</span></span></div>
+        <div class="track" role="progressbar" aria-label="Wedding fund" aria-valuemin="0" aria-valuemax="20000" aria-valuenow="14250"><div class="fill" style="width:71%"></div></div>
+        <div class="goal-foot"><span class="zm-av zm-av-a zm-av-sm" aria-hidden="true">S</span>Sara added 500 · 2 days ago</div>
+      </div>
+    </article>
+    <div class="label-row">Shopping <span>7 left to buy</span></div>
+    <button class="btn-primary" type="button">Add to a goal</button>
+    <p class="caption">Prototype of the nav bar. Example data from the design system.</p>
+  </section>
+
+  <section class="screen" data-screen="goals" aria-labelledby="h-goals" hidden>
+    <h1 class="title-lg" id="h-goals" tabindex="-1">Goals</h1>
+    <p class="note">Prototype: this screen isn't designed yet. The nav bar is what's being shown.</p>
+  </section>
+  <section class="screen" data-screen="trips" aria-labelledby="h-trips" hidden>
+    <h1 class="title-lg" id="h-trips" tabindex="-1">Trips</h1>
+    <p class="note">Prototype: this screen isn't designed yet. The nav bar is what's being shown.</p>
+  </section>
+  <section class="screen" data-screen="shopping" aria-labelledby="h-shopping" hidden>
+    <h1 class="title-lg" id="h-shopping" tabindex="-1">Shopping</h1>
+    <p class="note">Prototype: this screen isn't designed yet. The nav bar is what's being shown.</p>
+  </section>
+  <section class="screen" data-screen="profile" aria-labelledby="h-profile" hidden>
+    <h1 class="title-lg" id="h-profile" tabindex="-1">Profile</h1>
+    <p class="note">Prototype: this screen isn't designed yet. The nav bar is what's being shown.</p>
+  </section>
+</main>
+
+<script>
+(function () {
+  var SCREENS = { home: 'Home', goals: 'Goals', trips: 'Trips', shopping: 'Shopping', profile: 'Profile' };
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  function current() {
+    var m = location.hash.match(/^#\/(\w+)/);
+    return m && SCREENS[m[1]] ? m[1] : 'home';
+  }
+  function render(moveFocus) {
+    var id = current();
+    document.querySelectorAll('[data-screen]').forEach(function (s) { s.hidden = s.dataset.screen !== id; });
+    document.querySelectorAll('.nav-link').forEach(function (a) {
+      if (a.dataset.to === id) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
+    });
+    document.title = SCREENS[id] + ' · Zamane';
+    if (moveFocus) {
+      window.scrollTo(0, 0);
+      var h1 = document.querySelector('[data-screen="' + id + '"] h1');
+      if (h1) h1.focus({ preventScroll: true });
+    }
+  }
+  // Tapping the tab you're already on scrolls back to the top (iOS / Android convention).
+  document.querySelectorAll('.nav-link, .brand').forEach(function (a) {
+    a.addEventListener('click', function (e) {
+      var to = a.dataset.to || 'home';
+      if (to === current()) {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: reduceMotion.matches ? 'auto' : 'smooth' });
+      }
+    });
+  });
+  window.addEventListener('hashchange', function () { render(true); });
+  render(false);
+  // Screenshot helper: ?focus=<screen> puts keyboard focus on that nav item.
+  var f = new URLSearchParams(location.search).get('focus');
+  if (f) { var link = document.querySelector('.nav-link[data-to="' + f + '"]'); if (link) link.focus(); }
+})();
+</script>
+</body>
+</html>

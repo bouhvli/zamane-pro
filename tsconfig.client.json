@@ -1,0 +1,11 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.client.tsbuildinfo",
+    "lib": ["ES2023", "DOM", "DOM.Iterable", "WebWorker"],
+    "jsx": "react-jsx",
+    "types": ["vite/client", "vite-plugin-pwa/client"]
+  },
+  "include": ["src/client", "src/shared"],
+  "exclude": ["src/client/sw.ts"]
+}

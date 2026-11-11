@@ -1,0 +1,409 @@
+/* Trip detail (#/trips/:id), direction B · Saffron light. Owned by the detail builder.
+   Mobile first, one column. 48rem: the top bar, the primary ends the summary. 64rem: the summary becomes a
+   band (upright doorway | facts) and the tabs become columns, Plan 7 | Places + Prep 5. 80rem: 5 | 4 | 3,
+   the detail ~80rem wide. DOM order is the same at every width; grid placement never reorders content. */
+
+/* ===== Tokens added (detail). Proposed for the system; listed in build-notes/detail.md ===== */
+:root{
+  --td-target:44px;          /* the system's minimum target (ia 6.2) */
+  --td-row-min:56px;         /* plan and Prep rows are at least 56 px (ia 6.2) */
+  --td-tab-h:44px;           /* tabs: 44 px tall, a third of the width each; 44 keeps the fold (directions.md) */
+  --td-door-col:20rem;       /* ≥ 64rem: the upright doorway's column */
+  --td-door-ratio-wide:4 / 5;
+  --td-wide-max:80rem;       /* ≥ 80rem: the detail's content width (ia D4) */
+  --td-clamp-notes:2;        /* notes lines before "More" (ia D3) */
+  --td-now-air:var(--space-1); /* the 4 px gaps around the tabs during the trip (fold rule 4) */
+}
+
+/* ===== Summary: one flow on phones ===== */
+.td>*{min-width:0}
+.td-top{display:flex;align-items:center;justify-content:space-between;gap:var(--space-3);min-height:var(--td-target)}
+.td-back{display:inline-flex;align-items:center;gap:var(--space-1);min-height:var(--td-target);padding-inline:var(--space-1) var(--space-2);
+  margin-inline-start:calc(var(--space-2) * -1);border-radius:var(--radius-sm);color:var(--majorelle);font-size:13px;line-height:18px;font-weight:600;text-decoration:none}
+@media (hover:hover){.td-back:hover{text-decoration:underline}}
+[dir="rtl"] .td-back .ic{transform:scaleX(-1)}
+
+.td-door{margin-block-start:var(--space-2)}
+.td-door:empty,.td-when:empty,.td-notes:empty,.td-left:empty,.td-bud:empty,.td-notice:empty{display:none}
+.td-door .door--detail{margin-inline:0}
+/* Below 22.5rem a photo takes the bare 2:1 too, so the light band stays on the first screen (directions.md B). */
+@media (max-width:22.4375rem){.td-door .door--detail.has-photo{aspect-ratio:var(--doorway-ratio-bare)}}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .td-door .door-example{background:var(--surface-raised)}}
+:root[data-theme="dark"] .td-door .door-example{background:var(--surface-raised)}
+
+.td-id{margin-block-start:var(--space-4)}
+.td-titlerow{display:flex;align-items:flex-end;gap:var(--space-3)}
+.td-title{flex:1;min-width:0;overflow-wrap:anywhere}
+/* During the trip the doorway shrinks to the 32 × 40 thumb, hidden below 22.5rem (the fold hold). */
+.td-titlerow .door--thumb{display:none;margin-block-end:var(--space-1)}
+@media (min-width:22.5rem){.td-titlerow .door--thumb{display:flex}}
+.td-nowtext{margin:var(--space-1) 0 0;font-size:13px;line-height:18px;font-weight:600;color:var(--saffron-ink)}
+.td-meta{margin:var(--space-1) 0 0;color:var(--ink-muted);overflow-wrap:anywhere}
+.td--now .td-meta{margin:0;font-size:13px;line-height:18px}
+.td-adddates{height:var(--td-target);padding-inline:var(--space-2);margin-inline-start:var(--space-2);vertical-align:middle}
+.td-adddates .ic{width:16px;height:16px}
+.td-when{margin-block-start:var(--space-3)}
+
+.td-notes{margin-block-start:var(--space-3)}
+.td-notesrow{display:flex;align-items:flex-end;gap:var(--space-2)}
+.td-notes-text{flex:1;min-width:0;margin:0;overflow-wrap:anywhere;text-wrap:pretty;
+  display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:var(--td-clamp-notes);overflow:hidden}
+.td-notes-text.is-open{display:block;-webkit-line-clamp:none;overflow:visible}
+/* "More" takes one line of layout; its 44 px target overhangs the lines around it. */
+.td-more{position:relative;flex:none;padding:0 var(--space-1);border:0;border-radius:var(--radius-sm);background:none;color:var(--majorelle);font:inherit;font-weight:600;cursor:pointer}
+.td-more::before{content:"";position:absolute;inset:calc((var(--td-target) - 100%) / -2) calc(var(--space-2) * -1)}
+@media (hover:hover){.td-more:hover{text-decoration:underline}}
+
+.td-left{margin-block-start:var(--space-2)}
+.td-leftline{display:flex;flex-wrap:wrap;align-items:center;margin:0;color:var(--ink-muted)}
+.td-leftlink{display:inline-flex;align-items:center;min-height:var(--td-target);border-radius:var(--radius-sm);color:var(--majorelle);font-weight:600;
+  text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px}
+.td-leftsep{padding-inline:var(--space-2);color:var(--ink-muted)}
+
+/* ===== Budget: a disclosure inside the h2 "Budget" (phones and tablets) ===== */
+.td-bud{margin-block-start:var(--space-3)}
+.td-bud-h{margin:0;font-size:13px;line-height:18px;font-weight:600}
+.td-bud-k{display:block;color:var(--ink-muted)}
+.td-bud-btn{display:flex;align-items:center;justify-content:space-between;gap:var(--space-2);width:calc(100% + var(--space-2) * 2);min-height:var(--td-target);
+  margin-inline:calc(var(--space-2) * -1);padding-inline:var(--space-2);border:0;border-radius:var(--radius-sm);background:none;
+  color:var(--ink);font:inherit;font-size:15px;line-height:22px;font-weight:600;text-align:start;cursor:pointer}
+.td-bud-btn .ic{width:20px;height:20px;color:var(--ink-muted)}
+.td-bud-btn[aria-expanded="true"] .ic{transform:rotate(180deg)}
+@media (hover:hover){.td-bud-btn:hover .td-bud-fig{text-decoration:underline}}
+.td-bud-fig{margin:0;font-weight:600}
+.td-bud-state{margin:0;color:var(--ink)}
+.td-setbud{height:var(--td-target);padding-inline:var(--space-2);margin-inline-start:calc(var(--space-2) * -1)}
+/* During the trip on phones: one 44 px row, "Budget · 400 MAD left ▾" with the bar beside it (fold rule 3). */
+.td-bud-row{display:flex;align-items:center;gap:var(--space-3);min-height:var(--td-target)}
+.td-bud-row .td-bud-h{display:flex;align-items:center;flex:none;gap:var(--space-1)}
+.td-bud-row .td-bud-k{display:inline;color:var(--ink)}
+.td-bud-row .td-bud-k::after{content:" ·";color:var(--ink-muted)}
+.td-bud-row .td-bud-btn{width:auto;margin-inline:0;padding-inline:var(--space-1);font-size:13px;line-height:18px}
+.td-bud-row .td-bud-btn .ic{width:16px;height:16px}
+.td-bud-row .bbar{flex:1;min-width:3rem}
+/* The breakdown: numbers are earned (DS). On the sand, ideas dashed like a place. */
+.td-bd{margin-block-start:var(--space-2);padding-block:var(--space-3) var(--space-1);border-block-start:1px solid var(--line)}
+.td-bd-fig{margin:0 0 var(--space-1);font-weight:600}
+.td-bd-explain{max-width:60ch;text-wrap:pretty}
+.td-bd-list{list-style:none;margin:var(--space-2) 0 0;padding:0;display:flex;flex-direction:column;gap:var(--space-2);font-size:13px;line-height:18px}
+.td-bd-list li{display:flex;align-items:center;flex-wrap:wrap;gap:var(--space-2)}
+.td-bd-list .ic{width:16px;height:16px;color:var(--ink-muted)}
+.td-bd-ideas{align-self:flex-start;padding:var(--space-1) var(--space-2);border:2px dashed var(--line-strong);border-radius:var(--radius-sm)}
+.td-bd-change{margin-block-start:var(--space-1)}
+
+/* ===== The primary: floating on phones (zamane.css); it ends the summary from 48rem ===== */
+@media (min-width:48rem){.td-sum .dock{margin-block-start:var(--space-4)}}
+
+/* ===== Offline notice (Home's, plus one line), under the summary (ia F14) ===== */
+.td-notice{margin-block-start:var(--space-4)}
+.td-notice-line{display:block}
+.td-notice-line+.td-notice-line{margin-block-start:var(--space-1)}
+
+/* ===== Tabs below 64rem ===== */
+.td-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin-block-start:var(--space-5);border-block-end:1px solid var(--line)}
+.td-tab{position:relative;display:flex;align-items:center;justify-content:center;min-height:var(--td-tab-h);padding-inline:var(--space-1);
+  border:0;border-radius:var(--radius-md) var(--radius-md) 0 0;background:none;color:var(--ink-muted);font:inherit;font-size:13px;line-height:18px;font-weight:600;
+  cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation;overflow-wrap:anywhere;text-align:center}
+.td-tab:focus-visible{outline-offset:-2px}
+@media (hover:hover){.td-tab[aria-selected="false"]:hover{color:var(--ink)}}
+.td-tab[aria-selected="true"]{color:var(--majorelle)}
+/* The nav's own 8 px majorelle diamond on the hairline. No motion on switch (ia 6.12). */
+.td-tab::after{content:"";position:absolute;inset-inline-start:50%;bottom:calc(-0.5px - var(--nav-mark) / 2);width:var(--nav-mark);height:var(--nav-mark);
+  margin-inline-start:calc(var(--nav-mark) / -2);background:var(--majorelle);transform:rotate(45deg) scale(0);pointer-events:none}
+.td-tab[aria-selected="true"]::after{transform:rotate(45deg) scale(1)}
+.td-panel{padding-block-start:var(--space-4);container-type:inline-size}
+.td-panel:focus-visible{outline-offset:4px}
+.td-ph{margin:0}
+.td-pcap{margin:0;font-size:13px;line-height:18px;color:var(--ink-muted)}
+@media (max-width:63.99rem){
+  .td-panel:not(.is-selected){display:none}
+  .td-phead{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+}
+.td-intro{margin:0;font-size:13px;line-height:18px;color:var(--ink-muted);text-wrap:pretty}
+.td-empty{margin:var(--space-4) 0 0;color:var(--ink-muted);text-wrap:pretty}
+.td-paneladd{margin-block-start:var(--space-5)}
+.td-paneladd .ic,.pc-sched .ic{width:18px;height:18px}
+.td-why{margin:var(--space-1) 0 0}
+.td-secerr{display:flex;flex-direction:column;align-items:flex-start;gap:var(--space-2);margin-block-start:var(--space-2);padding:var(--space-3) var(--space-4);
+  background:var(--surface-sunken);border-radius:var(--radius-md)}
+.td-secerr p{margin:0}
+.td-retry .ic{width:18px;height:18px}
+
+/* ===== Plan: serif day chapters, commitments as solid cards, ticks on the sand ===== */
+.pl-day{margin-block-start:var(--space-5)}
+.pl>.pl-day:first-child,.pl>.pl-jump+.pl-day{margin-block-start:0}
+.pl-dayhead{display:flex;align-items:center;justify-content:space-between;gap:var(--space-2);min-height:var(--td-target)}
+.pl-dayh{display:flex;align-items:baseline;flex-wrap:wrap;column-gap:var(--space-2);margin:0;font-weight:400}
+.pl-dayh:focus{outline:none}
+.pl-dayh:focus-visible{outline:2px solid var(--focus-ring);outline-offset:2px}
+.pl-big{font-family:var(--font-serif);font-size:28px;line-height:34px}
+.pl-cap{font-size:12px;line-height:16px;color:var(--ink-muted)}
+.pl-dayadd{height:var(--td-target);padding-inline:var(--space-3);margin-inline-end:calc(var(--space-3) * -1)}
+.pl-dayadd .ic{width:18px;height:18px}
+.pl-anytime{margin:var(--space-1) 0 var(--space-2);font-size:12px;line-height:16px;font-weight:600;color:var(--ink-muted)}
+.pl-left{margin:0 0 var(--space-2);font-size:13px;line-height:18px;color:var(--ink-muted)}
+.pl-rows{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:var(--space-2)}
+.pl-rows+.pl-rows{margin-block-start:var(--space-2)}
+.pl-row{display:flex;align-items:flex-start;gap:var(--space-2)}
+.pl-card{flex:1;min-width:0;display:flex;align-items:stretch;min-height:var(--td-row-min);padding:0;overflow:hidden;
+  font:inherit;color:var(--ink);text-align:start;cursor:pointer;-webkit-tap-highlight-color:transparent}
+@media (hover:hover){.pl-card:hover{border-color:var(--line-strong)}}
+.pl-card:active{background:var(--surface-sunken)}
+.pl-body{flex:1;min-width:0;display:block;padding:var(--space-2) var(--space-3)}
+.pl-av{float:right;float:inline-end;margin-inline-start:var(--space-2);line-height:0}
+[dir="rtl"] .pl-av{float:left;float:inline-end}
+.pl-title{display:block;font-weight:600;overflow-wrap:anywhere}
+.pl-ic{display:inline-flex;vertical-align:-3px;margin-inline-end:6px;color:var(--ink-muted)}
+.pl-ic .ic{width:18px;height:18px}
+.pl-meta{display:block;margin-block-start:2px;font-size:13px;line-height:18px;color:var(--ink-muted);overflow-wrap:anywhere}
+.pl-loc{display:inline-block;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;vertical-align:bottom}
+.pl-next{font-weight:600;color:var(--ink)}
+.pl-sub{display:block;font-size:12px;line-height:16px;color:var(--ink-muted)}
+.pl-by{display:flex;align-items:center;gap:6px;margin-block-start:var(--space-1);font-size:13px;line-height:18px;font-weight:600;color:var(--zellige-ink)}
+.pl-queued{display:flex;margin-block-start:var(--space-1)}
+.pl-row .tick{margin-block-start:16px}
+/* The Now cell: the one saffron block during the trip (decision.md). on-saffron on saffron 7.71 / 9.40;
+   ink and ink-muted on saffron-soft 13.66 / 5.49 light, 11.16 / 5.89 dark. */
+.pl-card.is-now{background:var(--light-soft)}
+.pl-cell{flex:none;display:flex;flex-direction:column;align-items:center;inline-size:var(--now-cell);padding:var(--space-2) var(--space-1);
+  background:var(--light);color:var(--on-light);text-align:center;transform-origin:left center}
+[dir="rtl"] .pl-cell{transform-origin:right center}
+.pl-cell-k{font-size:13px;line-height:18px;font-weight:600}
+.pl-cell-t{font-size:15px;line-height:22px;font-weight:600}
+.pl-cell-e{font-size:12px;line-height:16px}
+.td .tick{background:var(--surface)}
+.td .tick[aria-checked="true"]{background:var(--zellige)}
+/* The one orchestrated moment: the light leaves the row when its Now entry is ticked (transform and opacity;
+   the tint fades). Reduced motion: the row is simply redrawn. */
+@media (prefers-reduced-motion:no-preference){
+  .td .tick{transition:background-color var(--dur-press) ease,border-color var(--dur-press) ease}
+  .pl-card.is-leaving{background:var(--surface-raised);transition:background-color var(--dur-light) var(--ease-out)}
+  .pl-card.is-leaving .pl-cell{transform:scaleX(0);opacity:0;transition:transform var(--dur-light) var(--ease-out),opacity var(--dur-light) var(--ease-out)}
+  .pl-card.is-leaving .pl-body{transform:translateX(calc(var(--now-cell) * -1));transition:transform var(--dur-light) var(--ease-out)}
+  [dir="rtl"] .pl-card.is-leaving .pl-body{transform:translateX(var(--now-cell))}
+}
+/* Empty days: sunken wells with their Add; runs of 3+ are single 48 px lines (ia D7). */
+.pl-well{display:flex;align-items:center;justify-content:space-between;gap:var(--space-2);min-height:var(--td-row-min);
+  padding:var(--space-1) var(--space-1) var(--space-1) var(--space-4);background:var(--surface-sunken);border-radius:var(--radius-md);color:var(--ink-muted)}
+.pl-well p{margin:0}
+.pl-well .pl-dayadd{margin:0}
+.pl-day.is-run{display:flex;align-items:center;gap:var(--space-3);min-height:48px;margin-block-start:var(--space-2);
+  padding-inline-start:var(--space-4);background:var(--surface-sunken);border-radius:var(--radius-md)}
+.pl-day.is-run .pl-dayhead{flex:1;min-height:0}
+.pl-day.is-run .pl-big{font-family:var(--font-sans);font-size:15px;line-height:22px;font-weight:600}
+.pl-day.is-run .pl-well{min-height:0;padding:0 var(--space-1) 0 0;background:none}
+.pl-day.is-run .pl-well p{display:none}
+.pl-day.is-run+.pl-day:not(.is-run){margin-block-start:var(--space-5)}
+/* Earlier days: folded during the trip */
+.pl-fold{display:flex;align-items:center;gap:var(--space-2);width:100%;min-height:var(--td-target);padding:var(--space-1) 0;border:0;border-radius:var(--radius-sm);
+  background:none;color:var(--ink);font:inherit;text-align:start;cursor:pointer}
+.pl-fold .ic{width:18px;height:18px;color:var(--ink-muted)}
+.pl-fold[aria-expanded="true"] .ic{transform:rotate(90deg)}
+[dir="rtl"] .pl-fold[aria-expanded="false"] .ic{transform:scaleX(-1)}
+.pl-fold-text{display:flex;flex-direction:column}
+.pl-fold-k{font-size:13px;line-height:18px;font-weight:600}
+.pl-fold-sum{font-size:12px;line-height:16px;color:var(--ink-muted)}
+@media (hover:hover){.pl-fold:hover .pl-fold-k{text-decoration:underline}}
+.pl-earlier-days{padding-block-end:var(--space-3)}
+.pl-earlier-days>.pl-day:first-child{margin-block-start:var(--space-2)}
+.pl-earlier+.pl-day{margin-block-start:0}
+/* Outside the trip dates, No date yet */
+.pl-group{margin-block-start:var(--space-6)}
+.pl-gh{margin:0;font-size:18px;line-height:24px;font-weight:600}
+.pl-intro{margin:var(--space-1) 0 var(--space-3);font-size:13px;line-height:18px;color:var(--ink-muted)}
+.pl-gh+.pl-rows{margin-block-start:var(--space-3)}
+.pl-jump{margin-block-end:var(--space-4)}
+.pl-jumprow{display:flex;gap:var(--space-2)}
+.pl-select{flex:1;min-width:0;height:var(--td-target);padding-inline:var(--space-3);border:1px solid var(--line-strong);border-radius:var(--radius-md);
+  background:var(--surface-raised);color:var(--ink);font:inherit;font-size:16px}
+
+/* During the trip on phones: the compaction rules that hold the fold (directions.md, shared ground) */
+@media (max-width:47.99rem){
+  .td--now{margin-block-start:calc(var(--space-2) - var(--space-5))}  /* main's 24 px top becomes 8 */
+  .td--now .td-id{margin-block-start:0}
+  .td--now .td-notes{display:none}
+  .td--now .td-bud{margin-block-start:var(--td-now-air)}
+  .td--now .td-notice{margin-block-start:var(--space-2)}
+  .td--now .td-tabs{margin-block-start:var(--td-now-air)}
+  .td--now .td-panel{padding-block-start:var(--td-now-air)}
+}
+
+/* ===== Places: ideas drawn as ideas (dashed, on the page, no fill) ===== */
+.td-panel--places .td-paneladd{margin-block-start:var(--space-3)}
+.pc-group{margin-block-start:var(--space-5)}
+.pc-gh{margin:0 0 var(--space-2);font-size:15px;line-height:22px;font-weight:600}
+.pc-list{list-style:none;margin:0;padding:0;display:grid;gap:var(--space-3);container-type:inline-size}
+.pc{display:grid;grid-template-columns:minmax(0,1fr)}
+.pc-main{display:flex;flex-direction:column;align-items:flex-start;gap:var(--space-1);min-height:var(--td-row-min);padding:var(--space-3);
+  border:0;border-radius:calc(var(--radius-md) - 2px);background:none;color:var(--ink);font:inherit;text-align:start;cursor:pointer}
+@media (hover:hover){.pc-main:hover{background:var(--surface-sunken)}}
+.pc-main:focus-visible{outline-offset:0}
+.pc-line{font-weight:600;overflow-wrap:anywhere}
+.pc-meta{font-size:13px;line-height:18px;color:var(--ink-muted);overflow-wrap:anywhere}
+.pc-tags{display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-2);margin-block-start:var(--space-1)}
+.pc-visited{display:flex;align-items:center;gap:var(--space-1);font-size:13px;line-height:18px;font-weight:600;color:var(--zellige-ink)}
+.pc-visited .ic{width:16px;height:16px;stroke-width:2.25}
+.pc-act{display:flex;flex-direction:column;align-items:flex-end;padding:0 var(--space-3) var(--space-3)}
+.pc-act .td-why{text-align:end}
+.pc-inplan{display:inline-flex;align-items:center;min-height:var(--td-target);padding-inline:var(--space-2);margin-inline-end:calc(var(--space-2) * -1);
+  border-radius:var(--radius-sm);color:var(--majorelle);font-size:13px;line-height:18px;font-weight:600;text-decoration:underline;text-underline-offset:3px}
+@container (min-width:20rem){
+  .pc{grid-template-columns:minmax(0,1fr) auto}
+  .pc-act{justify-content:flex-end;padding:var(--space-3)}
+  /* The long "In the plan · …" link stays under the card body, so the title keeps its width. */
+  .pc:has(.pc-inplan){grid-template-columns:minmax(0,1fr)}
+  .pc:has(.pc-inplan) .pc-act{padding:0 var(--space-3) var(--space-3)}
+}
+
+/* ===== Prep: groups with the zellige tally; ticks on the sand; nothing moves when ticked ===== */
+.pr-group{margin-block-start:var(--space-5)}
+.td-intro+.pr-group{margin-block-start:var(--space-4)}
+.pr-head{display:grid;grid-template-columns:minmax(0,auto) auto minmax(0,1fr) auto;align-items:center;column-gap:var(--space-3);min-height:var(--td-target)}
+.pr-head .tally{grid-column:2}
+.pr-h{grid-column:1;display:flex;align-items:center;min-width:0;overflow-wrap:anywhere;gap:var(--space-2);margin:0;font-size:15px;line-height:22px;font-weight:600}
+.pr-h .ic{width:20px;height:20px;color:var(--ink-muted)}
+.pr-reorder{grid-column:4;height:var(--td-target);padding-inline:var(--space-2);margin-inline-end:calc(var(--space-2) * -1)}
+.pr-reorder .ic{width:18px;height:18px}
+/* Narrow panels (320 phones, the 3/12 column): the tally drops under the heading so the count never breaks. */
+@container (max-width:22rem){
+  .pr-head{grid-template-columns:minmax(0,1fr) auto}
+  .pr-head .tally{grid-column:1;grid-row:2;margin-block-end:var(--space-1)}
+  .pr-reorder{grid-column:2;grid-row:1}
+}
+.pr-head .td-why{grid-column:1 / -1;margin:0 0 var(--space-1)}
+.pr-rows{list-style:none;margin:0;padding:0}
+.pr-row{display:flex;align-items:center;gap:var(--space-2);min-height:var(--td-row-min);border-block-end:1px solid var(--line)}
+.pr-btn{flex:1;min-width:0;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:2px;min-height:var(--td-row-min);
+  padding:var(--space-2);border:0;border-radius:var(--radius-sm);background:none;color:var(--ink);font:inherit;text-align:start;cursor:pointer}
+@media (hover:hover){.pr-btn:hover{background:var(--surface-sunken)}}
+.pr-btn:focus-visible{outline-offset:0}
+.pr-title{overflow-wrap:anywhere}
+.pr-by{display:flex;align-items:center;gap:6px;font-size:12px;line-height:16px;color:var(--ink-muted)}
+.pr-by .zm-av-sm{width:20px;height:20px;font-size:10px}
+.pr-by.is-done{color:var(--zellige-ink);font-weight:600}
+.pr-move{display:flex;gap:var(--space-2);flex:none}
+.pr-mv{width:var(--td-target);padding:0}
+.pr-mv .ic{width:18px;height:18px}
+.pr-mv-t{display:none}
+@container (min-width:30rem){.pr-mv{width:auto;padding-inline:var(--space-3)}.pr-mv-t{display:inline}}
+.pr-add{margin-block-start:var(--space-1)}
+.pr-add .ic{width:18px;height:18px;margin-inline-end:var(--space-1)}
+.pr-field{margin-block-start:var(--space-2)}
+.pr-fieldrow{display:flex;align-items:center;gap:var(--space-2)}
+.pr-fieldrow .btn-primary,.pr-fieldrow .btn-sec{flex:none;padding-inline:var(--space-4)}
+.pr-input{flex:1 1 auto;min-width:0;min-height:var(--td-target);padding-inline:var(--space-3)}
+.pr-input input{height:calc(var(--td-target) - 2px)}
+.pr-field .help{margin-block-start:var(--space-1)}
+
+/* ===== Loading and partial: static skeletons, no shimmer ===== */
+.td-door .td-sk-door{background:var(--surface-sunken)}
+.td-sk-title{height:44px;width:70%}
+.td-sk-line{height:16px;width:50%;margin-block-start:var(--space-2)}
+.td-sk-band{height:var(--light-band-h);border-radius:var(--radius-md)}
+.td-sk-bar{height:var(--bbar-h);width:100%;margin-block-start:var(--space-3)}
+.td-sk-rows{display:flex;flex-direction:column;gap:var(--space-3);margin-block-start:var(--space-4)}
+.td-sk-row{height:var(--td-row-min);border-radius:var(--radius-md)}
+
+/* ===== Error, not found, deleted ===== */
+.td--state{display:block}
+.td-state{display:flex;flex-direction:column;align-items:flex-start;gap:var(--space-3);max-width:36rem;padding-block-start:var(--space-5)}
+.td-state p{margin:0;color:var(--ink-muted);text-wrap:pretty}
+.td-state .btn-primary{margin-block-start:var(--space-2)}
+
+/* ===== Windows High Contrast ===== */
+@media (forced-colors:active){
+  .td-tab::after{background:Highlight;forced-color-adjust:none}
+  .td-tab[aria-selected="true"]{text-decoration:underline;text-underline-offset:3px}
+  .pl-cell{border-inline-end:2px solid CanvasText}
+  .pl-card.is-now{border:2px solid CanvasText}
+  .pl-well,.td-secerr,.pl-day.is-run{border:1px solid CanvasText}
+  .td-bd-ideas{border-color:CanvasText}
+}
+
+/* ===== ≥ 64rem: the summary becomes a band; tabs become columns ===== */
+@media (min-width:64rem){
+  .td-sum{display:grid;grid-template-columns:minmax(0,calc(var(--td-door-col) + var(--space-7))) minmax(0,1fr) auto auto;column-gap:var(--space-2);
+    grid-template-rows:repeat(6,auto) 1fr;
+    grid-template-areas:"back back back back" "door id edit dock" "door when when when" "door notes notes notes" "door left left left" "door bud bud bud" "door . . ."}
+  .td-top{display:contents}
+  .td-back{grid-area:back;justify-self:start}
+  .td-edit{grid-area:edit;align-self:start;height:var(--td-target);padding-inline:var(--space-5);border-radius:var(--radius-md)}
+  .td-edit::before{content:none}
+  .td-door{grid-area:door;margin:var(--space-2) var(--space-7) 0 0}
+  [dir="rtl"] .td-door{margin:var(--space-2) 0 0 var(--space-7)}
+  .td-door .door--detail,.td-door .door--detail.has-photo{width:100%;aspect-ratio:var(--td-door-ratio-wide);max-height:none}
+  .td-id{grid-area:id;margin-block-start:var(--space-2)}
+  .td-when{grid-area:when}
+  .td-notes{grid-area:notes}
+  .td-left{grid-area:left}
+  .td-bud{grid-area:bud;margin-block-start:var(--space-5);padding-block-start:var(--space-4);border-block-start:1px solid var(--line)}
+  .td-sum .dock{grid-area:dock;align-self:start;margin-block-start:var(--space-2)}
+  .td-edit{margin-block-start:var(--space-2)}
+  .td--now .td-sum{grid-template-columns:minmax(0,1fr) auto auto;grid-template-rows:auto;
+    grid-template-areas:"back back back" "id edit dock" "notes notes notes" "bud bud bud"}
+  .td-bud-k{font-size:13px}
+  .td-bud .td-bud-fig{margin-block-start:var(--space-1);font-size:15px;line-height:22px}
+  .td-bd{border:0;padding-block:var(--space-2) 0}
+  .td-bd-list{flex-direction:row;flex-wrap:wrap;column-gap:var(--space-5)}
+  .td-notice{margin-block-start:var(--space-5)}
+  .td-tabs{display:none}
+  .td-panels{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);grid-template-rows:auto 1fr;grid-template-areas:"plan places" "plan prep";
+    column-gap:var(--space-7);align-items:start;margin-block-start:var(--space-6);padding-block-start:var(--space-5);border-block-start:1px solid var(--line)}
+  .td-panel{padding:0}
+  .td-panel--plan{grid-area:plan}
+  .td-panel--places{grid-area:places}
+  .td-panel--prep{grid-area:prep;margin-block-start:var(--space-7)}
+  .td-phead{display:flex;align-items:baseline;flex-wrap:wrap;column-gap:var(--space-3);min-height:var(--td-target);margin-block-end:var(--space-2)}
+  .td-ph{font-family:var(--font-serif);font-weight:400;font-size:28px;line-height:34px}
+  .td-ph:focus{outline:none}
+  .pl-big{font-size:24px;line-height:30px} /* the column h2 leads; serif stays ≥ 24 px */
+  .td-ph:focus-visible{outline:2px solid var(--focus-ring);outline-offset:2px}
+}
+@media (min-width:80rem){
+  main.wrap:has(> #view > .td){max-width:var(--td-wide-max)}
+  .td-panels{grid-template-columns:minmax(0,5fr) minmax(0,4fr) minmax(0,3fr);grid-template-rows:auto;grid-template-areas:"plan places prep"}
+  .td-panel--prep{margin-block-start:0}
+}
+
+/* ===== Review round (critique + accessibility, Director) ===== */
+/* F1 blocker: offline during the trip. Phones get the one-line notice and the 4 px tab gaps go to 0. */
+.td-notice-short{display:none}
+@media (max-width:47.99rem){
+  .td--now .td-notice-short{display:block}
+  .td--now .td-notice-full{display:none}
+  .td--now .td-notice .notice{padding:6px var(--space-3);align-items:center}
+  .td--now:has(.td-notice:not(:empty)){--td-now-air:0px}
+  /* F2: today's done rows collapse to one 48 px line (tick, title, who · when) so the Now row keeps its place */
+  .td--now .pl-row.is-done .pl-body{display:flex;align-items:center;gap:var(--space-2);min-height:44px;padding-block:var(--space-1)}
+  .td--now .pl-row.is-done .pl-title{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .td--now .pl-row.is-done .pl-by{flex:none;margin:0;font-size:12px}
+  .td--now .pl-row.is-done .pl-by .zm-av{display:none}
+  .td--now .pl-row.is-done .tick{margin-block-start:10px}
+}
+.pl-leftnext{display:inline;min-height:0;padding:0;margin:0;font-size:inherit;text-decoration:underline;text-underline-offset:3px}
+.pl-leftnext::before{content:"";position:absolute;inset:-12px 0}
+.pl-leftnext{position:relative}
+/* F6: the thumb arch leads the title row */
+.td-titlerow{align-items:center}
+.td-titlerow .door--thumb{margin:0}
+/* F3: wide screens keep the plan in view */
+.td-bd-why{font-size:12px;line-height:16px}
+.td-bd-why summary{display:inline-flex;align-items:center;min-height:44px;color:var(--majorelle);font-weight:600;cursor:pointer}
+.td-bd-why .td-bd-explain{margin:0 0 var(--space-2)}
+@media (min-width:64rem){
+  :root{--td-door-col:15rem}
+  .td-bd{display:flex;flex-wrap:wrap;align-items:center;column-gap:var(--space-5)}
+  .td-bd-list{margin:0}
+  .td-bd-why{order:2}
+  /* During the trip: identity on the left, the budget on the right of the band (IA D4) */
+  /* The budget has a set width, so its long breakdown row can't grow the auto columns and starve the title */
+  .td--now .td-sum{grid-template-columns:minmax(0,1fr) auto auto;column-gap:var(--space-2);
+    grid-template-areas:"back edit dock" "id bud bud" "notes bud bud"}
+  .td--now .td-bud{width:min(30rem,48vw);min-width:0;margin-block-start:var(--space-2);margin-inline-start:var(--space-6);padding-block-start:0;border:0}
+  .td--now .td-bud .td-bd{flex-direction:column;align-items:flex-start}
+  .td--now .td-bud .td-bd-list{column-gap:var(--space-4)}
+  .td--now .td-edit{margin-block-start:0;justify-self:end}
+  .td--now .td-sum .dock{margin-block-start:0}
+}
+/* F9: at 80 rem the top bar aligns with the wider detail */
+@media (min-width:80rem){html:has(#view > .td) .app-header .wrap{max-width:var(--td-wide-max)}}

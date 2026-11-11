@@ -423,7 +423,7 @@ Each key has `queryClient.setMutationDefaults(key, { mutationFn, onMutate, onErr
 | `BETTER_AUTH_URL` | `.env` · `vars` | Optional; defaults to `APP_URL` (same origin) |
 | `APP_URL` | `.env` · `vars` | Public origin; `http://localhost:3000` locally |
 | `RESEND_API_KEY` | `.env` · Wrangler secret | Empty locally → dev email logger |
-| `EMAIL_FROM` | `.env` · `vars` | e.g. `Zamane <hello@your-domain>`; the domain must be verified in Resend |
+| `EMAIL_FROM` | `.env` · `vars` | e.g. `Zamane <hello@your-domain>`; the domain must be verified in Resend. Required once `RESEND_API_KEY` is set (D39) |
 | `CLOUDINARY_CLOUD_NAME` | `.env` · `vars` | All three Cloudinary keys or none |
 | `CLOUDINARY_API_KEY` | `.env` · Wrangler secret | |
 | `CLOUDINARY_API_SECRET` | `.env` · Wrangler secret | Server only |
@@ -471,7 +471,7 @@ pnpm wrangler secret list --env production     # names only, to check
 - **CI** (GitHub Actions) on each pull request:
   1. install, lint, typecheck, unit tests;
   2. create Neon branch `pr-N` (schema-only from `main`, D31; `neondatabase/create-branch-action@v6`), then migrate and seed;
-  3. API tests, build, then `check:secrets`, which fails if `dist/` contains the string `CLOUDINARY_API_SECRET` or `postgres://` / `postgresql://`;
+  3. API tests, build, then `check:secrets`, which fails if the client bundle (`dist/client`) contains the string `CLOUDINARY_API_SECRET` or `postgres://` / `postgresql://`, if any file in `dist/` contains a secret value, or if the Worker code contains the test-only route (D34);
   4. E2E against `vite preview`;
   5. deploy a Worker Preview (D25).
 
@@ -499,9 +499,9 @@ Exact versions go in `package.json`, and pnpm writes the lockfile.
 | Shared | `zod` 4.6.7 · `date-fns` 4.4.0 + `@date-fns/tz` 1.5.0 · `uuid` 14.0.3 |
 | Worker | `hono` 4.13.17 (D29) · `@hono/zod-validator` 0.9.1 · `better-auth` 1.7.18 · `drizzle-orm` 0.45.4 · `drizzle-kit` 0.31.11 (D6) · `@neondatabase/serverless` 1.2.0 |
 | PWA | `vite-plugin-pwa` 2.0.0 · `@vite-pwa/assets-generator` 2.0.0 · `workbox-*` 7.4.1 · `sharp` 0.35.5 |
-| Quality | `vitest` **4.1.12** (D5) · `@cloudflare/vitest-pool-workers` 0.23.0 · `@playwright/test` 1.65.0 · `eslint` 10.14.0 · `typescript-eslint` 8.72.1 · `eslint-plugin-react-hooks` 7.1.1 · `prettier` 3.9.10 |
+| Quality | `vitest` **4.1.12** (D5) · `@cloudflare/vitest-plugin` 1.7.0 (D35; replaces the deprecated `@cloudflare/vitest-pool-workers` 0.23.0) · `@playwright/test` 1.65.0 · `eslint` 10.14.0 · `typescript-eslint` 8.72.1 · `eslint-plugin-react-hooks` 7.1.1 · `prettier` 3.9.10 |
 
-Runtime: Node 22 (you have 22.18), pnpm 10. Worker `compatibility_date` is the current date at scaffold time, with `nodejs_compat`.
+Runtime: Node 22 (you have 22.18), pnpm 10. Worker `compatibility_date` is `2026-11-10`, the newest date the pinned workerd supports at scaffold time (D36), with `nodejs_compat`.
 
 ## 14. Decision log
 
@@ -539,3 +539,8 @@ Runtime: Node 22 (you have 22.18), pnpm 10. Worker `compatibility_date` is the c
 | D31 | **PR database branches are created schema-only from `main`**, then migrated and seeded with the demo data. | Real couples' data never reaches a preview, and migrations are tested against production's real schema history. If the Neon action doesn't expose schema-only, CI calls the Neon API directly. |
 | D32 | **One `DATABASE_URL`, on the direct endpoint, for everything.** | Neon says migrations should not run through the pooler. Two users never pressure direct connections, and the HTTP driver works the same against either endpoint. Your `.env` currently has the **pooled** host (`-pooler`), so please switch it (below). `env.ts` warns when it sees `-pooler`. |
 | D26 | **One rate limiter: the Workers Rate Limiting binding, applied in Hono middleware before the auth handler. Better Auth's built-in limiter is off.** | Better Auth's default `memory` store is a per-isolate `Map`, which means nothing on Workers. Its `database` store adds a write to every auth request and had a race advisory for Postgres (2026-09-30). The binding (GA 2025-09) is free, has no storage, and is simulated in local dev. Its counts are per location and approximate, which is fine for brute-force protection. |
+| D34 | **`check:secrets` looks for the secret *literals* in the client bundle only, and for secret *values* everywhere in `dist/`.** It also fails if the Worker's `.js` contains the test-only route. | The Worker bundle legitimately names its own bindings (`CLOUDINARY_API_SECRET` in `env.ts`) and validates `postgres://` URLs, so the literal check can only mean the code browsers download. Checking real values (when present in the environment) covers what the literal check was for. `dist/zamane/.dev.vars`, written by the Cloudflare plugin for local `vite preview`, is skipped: it's outside the served assets and never uploaded by `wrangler deploy`. |
+| D35 | **`@cloudflare/vitest-plugin` 1.7.0 instead of `@cloudflare/vitest-pool-workers` 0.23.0.** | 0.23.0 is deprecated ("renamed to `@cloudflare/vitest-plugin`; no future updates") and bundles Wrangler 4.124. The successor supports `vitest ^4.1.0`, so D5 holds. |
+| D36 | **`compatibility_date` is `2026-11-10`, not the scaffold date.** | The workerd bundled with `@cloudflare/vite-plugin` 1.68.0 refuses `2026-11-11` ("the newest date supported by this server binary is 2026-11-10"). Bump it with the toolchain. |
+| D39 | **`EMAIL_FROM` is required only when `RESEND_API_KEY` is set; `RESEND_API_KEY` is required outside development.** | Locally the dev logger prints the reset link, so neither is needed. In preview and production, a missing key fails at startup instead of silently not sending. |
+| D42 | **`secrets.required` in `wrangler.jsonc` lists every `.env` key the Worker reads.** | Checked in Phase 1: with the list present, `vite dev` passes only those keys to the Worker, so stray `.env` / `.env.local` keys (`VERCEL_OIDC_TOKEN`, AWS keys) never reach it. This closes D20's open point. The optional keys (`BETTER_AUTH_URL`, `EMAIL_FROM`) print a "missing" warning when unset; that's expected. |

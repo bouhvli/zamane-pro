@@ -1,0 +1,110 @@
+/* Zamane auth prototype: space setup (#/setup, #/setup/start, #/setup/join) and the resolvers (#/join, #/launch).
+   Direction C · Two seats. Loaded after ../goals/zamane.css and auth.css; tokens only, no colour of its own.
+   Tokens added here (layout only) are listed in build-notes/setup.md. */
+
+:root{
+  --choice-min:72px;          /* ia.md §6.2: choice cards are at least 72px tall */
+  --control-h:52px;           /* the field height from zamane.css .field, for radio rows */
+  --radio:20px;
+}
+
+/* ----- Start and Join: a 24rem form column, centred under the wide setup header ----- */
+html[data-route="setup/start"] main.auth-wrap,
+html[data-route="setup/join"] main.auth-wrap{max-width:calc(var(--auth-col) + var(--space-4) * 2)}
+
+/* ----- The account line and its offline reason (F5) ----- */
+.account .link-btn[aria-disabled="true"],.inline-btn[aria-disabled="true"]{color:var(--ink-muted);cursor:not-allowed}
+.signout-reason{margin:0;text-align:end;font-size:12px;line-height:16px;color:var(--ink-muted)}
+
+/* ----- The choice: two equal cards, each one stretched link (F6, directions.md C) ----- */
+.choices-wrap{container-type:inline-size}
+.choices{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:minmax(0,1fr);gap:var(--space-3)}
+.choice{position:relative;display:grid;grid-template-columns:auto minmax(0,1fr) auto;
+  grid-template-areas:"pair title chev" "desc desc desc";align-items:center;column-gap:var(--space-3);row-gap:var(--space-3);
+  min-height:var(--choice-min);padding:var(--space-4);background:var(--surface-raised);border:1px solid var(--line-strong);border-radius:var(--radius-lg)}
+.choice>.seat-pair{grid-area:pair}
+.choice-title{grid-area:title;margin:0;font-size:18px;line-height:24px;font-weight:600;text-wrap:balance}
+.choice-title a{color:var(--ink);text-decoration:none;-webkit-tap-highlight-color:transparent}
+.choice-title a::after{content:"";position:absolute;inset:0;border-radius:var(--radius-lg)}
+.choice-title a:focus-visible{outline:none}
+.choice-title a:focus-visible::after{outline:2px solid var(--focus-ring);outline-offset:2px}
+.choice .chev{grid-area:chev;color:var(--ink-muted)}
+.choice-desc{grid-area:desc;margin:0;color:var(--ink-muted);text-wrap:pretty}
+@media (hover:hover){.choice:hover{border-color:var(--ink-muted)}.choice:hover .chev{color:var(--ink)}}
+@media (prefers-reduced-motion:no-preference){
+  .choice{transition:transform var(--dur-press) ease}
+  .choice:has(a:active){transform:scale(.99)}
+}
+/* Side by side from 40rem of column: the pair leads, then the title row, then the description; equal height. */
+@container (min-width:40rem){
+  .choices{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .choice{grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"pair pair" "title chev" "desc desc";align-content:start}
+}
+.chev:dir(rtl){transform:scaleX(-1)}
+@media (forced-colors:active){.choice{border-color:CanvasText}}
+
+/* A7: the email shown back, never truncated */
+.signed-up{margin:var(--space-5) 0 0;font-size:13px;line-height:18px;color:var(--ink-muted);text-wrap:pretty}
+.signed-up b{color:var(--ink);font-weight:600}
+.email-addr{overflow-wrap:anywhere}
+/* a Sign out inside a sentence: inline (WCAG 2.5.8's inline exception), underlined so it reads as a control */
+.inline-btn{display:inline;min-height:0;padding:0;margin:0;font-size:inherit;line-height:inherit;text-decoration:underline;text-underline-offset:2px;vertical-align:baseline}
+
+/* ----- Start: currency radios, the revealed select, the time-zone disclosure ----- */
+.radio-group{margin:0;padding:0;border:0;min-width:0}
+.radio-group legend{padding:0}
+.radios{display:grid;gap:var(--space-2)}
+.radio{display:flex;align-items:center;gap:var(--space-3);min-height:var(--control-h);padding:var(--space-2) var(--space-4);
+  border:1px solid var(--line);border-radius:var(--radius-md);background:var(--surface);cursor:pointer;-webkit-tap-highlight-color:transparent}
+.radio input{flex:none;width:var(--radio);height:var(--radio);margin:0;accent-color:var(--majorelle);cursor:pointer}
+.radio span{min-width:0;overflow-wrap:anywhere}
+.radio:has(input:checked){border-color:var(--majorelle);box-shadow:inset 0 0 0 1px var(--majorelle)}
+@media (hover:hover){.radio:hover{border-color:var(--line-strong)}.radio:has(input:checked):hover{border-color:var(--majorelle)}}
+@supports selector(:has(*)){
+  .radio:has(input:focus-visible){outline:2px solid var(--focus-ring);outline-offset:2px}
+  .radio input:focus-visible{outline:none}
+}
+@media (forced-colors:active){.radio{border-color:CanvasText}.radio:has(input:checked){outline:2px solid Highlight;outline-offset:-3px;box-shadow:none}}
+.currency-pick{margin-top:var(--space-3)}
+.radio-group>.help{margin-top:var(--space-3)}
+.field-select{padding-inline:var(--space-4) var(--space-2)}
+.field select{flex:1;min-width:0;height:calc(var(--control-h) - 2px);border:0;background:transparent;color:var(--ink);font:inherit;font-size:16px;line-height:24px;outline:none;cursor:pointer}
+.field select option,.field select optgroup{background:var(--surface-raised);color:var(--ink)}
+.tz .field-label{margin-bottom:0}
+.tz-row{display:flex;align-items:center;justify-content:space-between;gap:var(--space-3);flex-wrap:wrap}
+.tz-value{margin:0;min-width:0}
+.disclosure{gap:var(--space-1);margin-inline:0 calc(var(--space-2) * -1)}
+.disclosure .ic{width:16px;height:16px}
+.disclosure[aria-expanded="true"] .ic{transform:rotate(180deg)}
+@media (prefers-reduced-motion:no-preference){.disclosure .ic{transition:transform var(--dur-mark) var(--ease-out)}}
+.tz-pick{margin-top:var(--space-2)}
+
+/* ----- Join: the seat pair carries to Home's masthead where cross-document view transitions exist ----- */
+.seat-pair--vt{view-transition-name:pair}
+
+/* ----- Splash, held redirects (prototype) and the launch messages ----- */
+.splash{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:var(--space-4);text-align:center;
+  min-height:calc(100vh - var(--space-7) * 2);min-height:calc(100dvh - var(--space-7) * 2);padding-block:var(--space-6)}
+.splash-mark{line-height:0}
+.splash .lockup{height:var(--lockup-hero);width:auto}
+.splash-status{margin:0;min-height:22px;color:var(--ink-muted)}
+.proto{width:100%;max-width:var(--auth-col);margin-top:var(--space-5);padding:var(--space-4);border:1px solid var(--line);border-radius:var(--radius-md);
+  background:var(--surface-sunken);text-align:start;font-size:13px;line-height:18px;display:grid;gap:var(--space-3)}
+.proto p{margin:0}
+.proto-label{font-size:12px;line-height:16px;font-weight:600;color:var(--ink-muted)}
+.proto .notice{background:var(--surface-raised)}
+.proto-links{display:grid;gap:var(--space-2)}
+.proto-ctl{margin:var(--space-2) 0 0}
+.proto-ctl .link-btn{font-size:12px;line-height:16px}
+.page-notice+.proto-ctl{margin-top:calc(var(--space-5) * -1 + var(--space-1));margin-bottom:var(--space-4)}
+
+html[data-route="launch"] .auth-head-row{justify-content:center}
+.launch-msg{text-align:center}
+.launch-msg .page-head{justify-content:center}
+.launch-msg .btn-primary{height:52px;font-size:15px;line-height:22px}
+.launch-msg .proto-ctl{display:flex;justify-content:center}
+
+/* ----- Phones under 22.5rem: the h1 row keeps its seats; long headings wrap beside them ----- */
+@media (max-width:22.4375rem){
+  .choice{padding:var(--space-3) var(--space-4)}
+}

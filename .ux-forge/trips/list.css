@@ -1,0 +1,104 @@
+/* Trips list (direction B · Saffron light). The lead trip spans the row with its doorway on the light band;
+   other trips are doorway tiles (Goals' list family); past trips are flat rows on the sand. */
+
+/* ----- Masthead ----- */
+.list-head{display:grid;gap:var(--space-1);margin-bottom:var(--space-4)}
+.list-notice{margin-bottom:var(--space-5)}
+.notice-stale{align-items:center;flex-wrap:wrap}
+.notice-stale>span{flex:1;min-width:12rem}
+.notice-stale .link-btn{margin:calc(var(--space-2) * -1) 0;min-height:44px}
+
+/* ----- Sections ----- */
+.trip-sec+.trip-sec{margin-top:var(--space-6)}
+.trip-sec>.sec-title{margin:0 0 var(--space-3);font-size:13px;line-height:18px;font-weight:600;color:var(--ink-muted)}
+
+/* ----- Cards: one link each; the name is the visible content ----- */
+.trip-card{display:block;color:inherit;text-decoration:none;border-radius:inherit;-webkit-tap-highlight-color:transparent}
+.trip-card:focus-visible{outline:2px solid var(--focus-ring);outline-offset:2px}
+.trip-card h3{margin:0;overflow-wrap:anywhere;text-wrap:pretty}
+.trip-card p{margin:0}
+
+.trip-tiles{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-3)}
+
+/* The lead: spans the row. Doorway (2:1) sits directly on the light band. */
+.trip-lead{grid-column:1 / -1;background:var(--surface-raised);border:1px solid var(--line);border-radius:var(--radius-lg);box-shadow:var(--shadow-card)}
+@media (hover:hover){.trip-lead:hover,.trip-tile:hover{border-color:var(--line-strong)}}
+.trip-lead .trip-card{padding:var(--space-3)}
+.door--lead{width:100%;aspect-ratio:2 / 1;max-height:15rem;font-size:var(--arch-initial-xl)}
+.lead-body{display:grid;gap:var(--space-1)}
+.lead-body .light{margin-bottom:var(--space-2)}
+.lead-title{font-family:var(--font-serif);font-weight:400;font-size:28px;line-height:34px}
+.lead-meta{font-size:13px;line-height:18px;color:var(--ink-muted)}
+
+/* Tiles: Goals' doorway tiles, 5:4 (2:1 when no other trip has a cover) */
+.trip-tile{min-width:0;background:var(--surface-raised);border:1px solid var(--line);border-radius:var(--radius-lg);box-shadow:var(--shadow-card)}
+.trip-tile .trip-card{height:100%;display:flex;flex-direction:column;padding:var(--space-3)}
+.trip-tile .door{margin-bottom:var(--space-3)}
+.trip-tiles.no-covers .door--tile{aspect-ratio:2 / 1;font-size:32px}
+.tile-title{font-size:15px;line-height:20px;font-weight:600}
+.tile-meta{margin-top:var(--space-1)!important;font-size:12px;line-height:16px;color:var(--ink-muted);overflow-wrap:anywhere}
+.tile-status{margin-top:auto!important;padding-top:var(--space-2);font-size:13px;line-height:18px;font-weight:600;color:var(--ink)}
+
+/* Past: flat rows, quieter (DS: the past countdown falls back to sunken) */
+.past-rows{list-style:none;margin:0;padding:0;display:grid;gap:var(--space-2)}
+.trip-past{border:1px solid var(--line);border-radius:var(--radius-md);background:var(--surface)}
+@media (hover:hover){.trip-past:hover{border-color:var(--line-strong)}}
+.trip-past .trip-card{display:flex;align-items:center;gap:var(--space-3);min-height:64px;padding:var(--space-3) var(--space-4)}
+.past-body{flex:1;min-width:0}
+.past-title{font-size:15px;line-height:22px;font-weight:600}
+.past-meta{font-size:12px;line-height:16px;color:var(--ink-muted)}
+.past-ago{flex:none;font-size:12px;line-height:20px;font-weight:600;padding:0 var(--space-2);border-radius:var(--radius-pill);background:var(--surface-sunken);color:var(--ink-muted)}
+/* Phones: the pill goes under the text so the dates never truncate */
+@media (max-width:47.99rem){.trip-past .trip-card{display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:var(--space-3);row-gap:var(--space-1)}.trip-past .door{grid-row:span 2;align-self:center}.past-ago{justify-self:start}}
+
+/* ----- Prompts and errors ----- */
+.list-empty{align-items:flex-start;padding:var(--space-4)}
+.list-empty .title{margin:0 0 var(--space-1)}
+.list-empty p{margin:0;text-wrap:pretty}
+.list-empty>.ic{margin-top:2px}
+.only-past{margin-bottom:var(--space-6)}
+.list-error{display:grid;justify-items:start;gap:var(--space-4)}
+.list-error .title{margin:0 0 var(--space-1)}
+.list-error p{margin:0}
+
+/* Loading: static skeletons (no shimmer) at the lead's and tiles' shapes */
+.list-sk{display:grid;gap:var(--space-3)}
+.sk-h2{width:6rem;height:14px}
+.sk-lead{display:grid;gap:var(--space-2);padding:var(--space-3);border:1px solid var(--line);border-radius:var(--radius-lg)}
+.sk-lead .sk-door{aspect-ratio:2 / 1;max-height:15rem;border-radius:50% 50% var(--radius-sm) var(--radius-sm) / 40% 40% var(--radius-sm) var(--radius-sm)}
+.sk-band{height:var(--light-band-h);border-radius:var(--radius-md)}
+.sk-line{height:18px;width:60%}.sk-line.short{width:40%}
+.sk-tiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-3)}
+.sk-tile{aspect-ratio:4 / 5;border-radius:var(--radius-lg)}
+
+@media (forced-colors:active){.trip-lead,.trip-tile,.trip-past{border:1px solid CanvasText}}
+@media (max-width:19.9375rem){.trip-tiles{grid-template-columns:minmax(0,1fr)}}
+
+/* ----- 48 rem: primary beside the h1; three tiles; the lead lies down (doorway beside the band) ----- */
+@media (min-width:48rem){
+  .list-head{grid-template-columns:minmax(0,1fr) auto;align-items:center;margin-bottom:var(--space-6)}
+  .trip-tiles{grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--space-4)}
+  .trip-lead .trip-card{display:grid;grid-template-columns:minmax(12rem,2fr) 3fr;gap:var(--space-5);align-items:center;padding:var(--space-4)}
+  .door--lead{aspect-ratio:4 / 3;max-height:none}
+  .lead-title{font-size:40px;line-height:44px}
+  .lead-meta{font-size:15px;line-height:22px}
+  .trip-tile .trip-card{padding:var(--space-4)}
+  .tile-title{font-size:18px;line-height:24px}
+  .tile-meta{font-size:13px;line-height:18px}
+}
+/* ----- 64 rem: one masthead line closed by a hairline; four tiles; past rows two-up ----- */
+@media (min-width:64rem){
+  .list-head{padding-bottom:var(--space-5);border-bottom:1px solid var(--line)}
+  .trip-tiles{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .trip-lead .trip-card{grid-template-columns:minmax(14rem,1fr) 2fr}
+  .past-rows{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:var(--space-4)}
+}
+
+/* Review round (critique F8): a section with one trip doesn't leave a lone half-width tile on phones;
+   the tile lies down (doorway beside the text) and spans the row. */
+@media (max-width:47.99rem){
+  .trip-tile:only-child{grid-column:1 / -1}
+  .trip-tile:only-child .trip-card{display:grid;grid-template-columns:7rem minmax(0,1fr);grid-template-rows:auto auto 1fr;column-gap:var(--space-3);align-items:start}
+  .trip-tile:only-child .door{grid-row:1 / 4;margin:0;aspect-ratio:5 / 4!important;font-size:32px}
+  .trip-tile:only-child .tile-status{align-self:end}
+}

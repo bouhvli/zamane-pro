@@ -1,0 +1,793 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">
+<title>Home – Zamane</title>
+<meta name="theme-color" content="#f8f3ea" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#12161d" media="(prefers-color-scheme: dark)">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;600&family=Young+Serif&display=swap">
+<style>
+/* ===== Design-system tokens, verbatim from "Zamane Design System.html" ===== */
+:root{--surface:#f8f3ea;--surface-raised:#fffdf8;--surface-sunken:#efe6d6;--line:#e3d8c5;--line-strong:#8f8576;--ink:#1d2230;--ink-muted:#5a5f6d;--majorelle:#1d4e89;--on-majorelle:#ffffff;--majorelle-soft:#dfe8f5;--majorelle-ink:#163d6b;--saffron:#e3a72f;--on-saffron:#2a1d05;--saffron-soft:#faedcf;--saffron-ink:#7a5200;--terracotta:#b5532f;--on-terracotta:#ffffff;--terracotta-soft:#f6e0d6;--terracotta-ink:#8a3a1d;--zellige:#1e7a5f;--on-zellige:#ffffff;--zellige-soft:#d9efe6;--zellige-ink:#145a45;--danger:#b42318;--danger-soft:#fbe4e1;--danger-ink:#8f1d14;--partner-a:var(--majorelle);--partner-b:var(--terracotta);--focus-ring:var(--majorelle);--shadow-card:0 1px 2px rgba(29,34,48,0.06), 0 4px 14px rgba(29,34,48,0.06);--shadow-pop:0 8px 28px rgba(29,34,48,0.16);color-scheme:light}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--surface:#12161d;--surface-raised:#1b2029;--surface-sunken:#0d1015;--line:#2b323e;--line-strong:#6b7586;--ink:#f1ebdf;--ink-muted:#a8adb9;--majorelle:#8fb4ea;--on-majorelle:#0e1a2b;--majorelle-soft:#1b2b44;--majorelle-ink:#b9d0f3;--saffron:#f2bb4e;--on-saffron:#2a1d05;--saffron-soft:#3b2e12;--saffron-ink:#f5cd7c;--terracotta:#e98f6c;--on-terracotta:#2b120a;--terracotta-soft:#3e2219;--terracotta-ink:#f3b49b;--zellige:#63c9a3;--on-zellige:#0b241b;--zellige-soft:#15332a;--zellige-ink:#94dcc0;--danger:#ff8a7a;--danger-soft:#3d1a17;--danger-ink:#ffb4a8;--partner-a:var(--majorelle);--partner-b:var(--terracotta);--focus-ring:var(--majorelle);--shadow-card:0 1px 2px rgba(0,0,0,0.5);--shadow-pop:0 8px 28px rgba(0,0,0,0.6);color-scheme:dark}}
+:root[data-theme="dark"]{--surface:#12161d;--surface-raised:#1b2029;--surface-sunken:#0d1015;--line:#2b323e;--line-strong:#6b7586;--ink:#f1ebdf;--ink-muted:#a8adb9;--majorelle:#8fb4ea;--on-majorelle:#0e1a2b;--majorelle-soft:#1b2b44;--majorelle-ink:#b9d0f3;--saffron:#f2bb4e;--on-saffron:#2a1d05;--saffron-soft:#3b2e12;--saffron-ink:#f5cd7c;--terracotta:#e98f6c;--on-terracotta:#2b120a;--terracotta-soft:#3e2219;--terracotta-ink:#f3b49b;--zellige:#63c9a3;--on-zellige:#0b241b;--zellige-soft:#15332a;--zellige-ink:#94dcc0;--danger:#ff8a7a;--danger-soft:#3d1a17;--danger-ink:#ffb4a8;--partner-a:var(--majorelle);--partner-b:var(--terracotta);--focus-ring:var(--majorelle);--shadow-card:0 1px 2px rgba(0,0,0,0.5);--shadow-pop:0 8px 28px rgba(0,0,0,0.6);color-scheme:dark}
+:root{--font-serif:"Young Serif",Georgia,"Times New Roman",serif;--font-sans:Figtree,"Segoe UI",system-ui,sans-serif;--space-1:4px;--space-2:8px;--space-3:12px;--space-4:16px;--space-5:24px;--space-6:32px;--space-7:48px;--radius-sm:6px;--radius-md:12px;--radius-lg:20px;--radius-pill:999px}
+
+/* ===== Tokens added by this work (proposed for the design system) ===== */
+:root{
+  --nav-bar-h:64px; --top-bar-h:60px; --nav-icon:24px; --nav-icon-inline:20px; --nav-link-inline-h:44px; --nav-mark:8px;
+  --fab-h:56px;                       /* the floating primary: taller than a 44px in-page button */
+  --fab-gap:16px;                     /* from the nav hairline and from the screen edge */
+  --fab-zone:calc(var(--fab-h) + var(--fab-gap) * 2); /* kept clear under the content on phones */
+  --dur-press:120ms; --dur-mark:180ms; --dur-sheet:240ms; --dur-toast:160ms; --dur-fill:400ms;
+  --ease-out:cubic-bezier(.2,.8,.2,1);
+  --backdrop:rgba(29,34,48,.4);
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--backdrop:rgba(0,0,0,.6)}}
+:root[data-theme="dark"]{--backdrop:rgba(0,0,0,.6)}
+
+/* ===== Base ===== */
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-padding-bottom:calc(var(--nav-bar-h) + var(--fab-zone) + env(safe-area-inset-bottom,0px))}
+body{margin:0;background:var(--surface);color:var(--ink);font-family:var(--font-sans);font-size:15px;line-height:22px;-webkit-font-smoothing:antialiased;
+  padding-bottom:calc(var(--nav-bar-h) + var(--fab-zone) + env(safe-area-inset-bottom,0px))}
+.wrap{max-width:1080px;margin-inline:auto;padding-inline:max(var(--space-4),env(safe-area-inset-left,0px)) max(var(--space-4),env(safe-area-inset-right,0px))}
+:focus-visible{outline:2px solid var(--focus-ring);outline-offset:2px}
+main:focus{outline:none}
+[hidden]{display:none!important}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.num{font-variant-numeric:tabular-nums}
+.ic{flex:none;width:20px;height:20px}
+.skip{position:absolute;inset-inline-start:var(--space-4);top:-100px;z-index:100;background:var(--majorelle);color:var(--on-majorelle);padding:var(--space-2) var(--space-4);border-radius:var(--radius-md);font-weight:600;text-decoration:none}
+.skip:focus{top:var(--space-2)}
+.caption{margin:0;font-size:12px;line-height:16px;color:var(--ink-muted)}
+.title-lg{margin:0;font-family:var(--font-serif);font-weight:400;font-size:28px;line-height:34px;text-wrap:balance}
+
+/* ===== Nav bar (from .ux-forge/nav-bar, unchanged) ===== */
+.app-header .brand{display:none}
+.nav{position:fixed;inset-inline:0;bottom:0;z-index:10;background:var(--surface);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px);padding-inline:env(safe-area-inset-left,0px) env(safe-area-inset-right,0px)}
+.nav-list{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));height:var(--nav-bar-h);margin:0;padding:0;list-style:none}
+.nav-link{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:var(--space-1);height:100%;padding-inline:var(--space-1);border-radius:var(--radius-md);color:var(--ink-muted);text-decoration:none;font-size:13px;line-height:18px;font-weight:600;letter-spacing:.01em;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+.nav-link svg{flex:none;width:var(--nav-icon);height:var(--nav-icon);stroke-width:1.75}
+.nav-label{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.nav-link:focus-visible{outline-offset:-2px}
+@media (max-width:22.4375rem){.nav-link{padding-inline:0;font-size:12px;line-height:16px;letter-spacing:0}}
+.nav-link[aria-current="page"]{color:var(--majorelle)}
+.nav-link[aria-current="page"] svg{stroke-width:2.25}
+.nav-link::after{content:"";position:absolute;left:50%;top:calc(-0.5px - var(--nav-mark) / 2);width:var(--nav-mark);height:var(--nav-mark);margin-left:calc(var(--nav-mark) / -2);background:var(--majorelle);transform:rotate(45deg) scale(0);pointer-events:none}
+.nav-link[aria-current="page"]::after{transform:rotate(45deg) scale(1)}
+@media (hover:hover){.nav-link:not([aria-current]):hover{color:var(--ink)}}
+.zm-av{display:inline-flex;align-items:center;justify-content:center;flex:none;border-radius:var(--radius-pill);font-weight:600;border:2px solid var(--surface-raised)}
+.zm-av-a{background:var(--majorelle-soft);color:var(--majorelle-ink);box-shadow:0 0 0 2px var(--partner-a)}
+.zm-av-b{background:var(--terracotta-soft);color:var(--terracotta-ink);box-shadow:0 0 0 2px var(--partner-b)}
+.zm-av-sm{width:24px;height:24px;font-size:11px;line-height:1}
+.zm-av-md{width:32px;height:32px;font-size:13px}
+.zm-pair{display:inline-flex}.zm-pair>.zm-av+.zm-av{margin-left:-8px}
+.nav .zm-av{border:0;box-shadow:0 0 0 1.75px currentColor}
+.nav-link[aria-current="page"] .zm-av{box-shadow:0 0 0 2.25px currentColor}
+@media (forced-colors:active){.nav-link::after{background:Highlight;forced-color-adjust:none}.nav-link[aria-current="page"] .nav-label{text-decoration:underline;text-underline-offset:3px}}
+.logo-dark{display:none!important}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .logo-light{display:none!important}:root:not([data-theme="light"]) .logo-dark{display:block!important}}
+:root[data-theme="dark"] .logo-light{display:none!important}
+:root[data-theme="dark"] .logo-dark{display:block!important}
+
+/* ===== Buttons (design system Button) ===== */
+.btn-primary,.btn-sec{font:inherit;font-size:13px;line-height:18px;font-weight:600;letter-spacing:.01em;display:inline-flex;align-items:center;justify-content:center;gap:var(--space-2);height:44px;padding:0 var(--space-5);border-radius:var(--radius-md);cursor:pointer;text-decoration:none;-webkit-tap-highlight-color:transparent}
+.btn-primary{width:100%;border:1px solid var(--majorelle);background:var(--majorelle);color:var(--on-majorelle)}
+.btn-sec{border:1px solid var(--line-strong);background:var(--surface-raised);color:var(--ink)}
+.btn-sm{position:relative;height:32px;padding:0 var(--space-3);border-radius:var(--radius-sm)}
+.btn-sm::before{content:"";position:absolute;inset:-6px 0}  /* 44px hit area around the 32px control */
+.btn-block{width:100%;justify-content:flex-start}
+.btn-primary:disabled{opacity:.6;cursor:progress}
+@media (hover:hover){.btn-sec:hover{border-color:var(--ink-muted)}}
+@media (prefers-reduced-motion:no-preference){.btn-primary,.btn-sec{transition:transform var(--dur-press) ease}.btn-primary:active,.btn-sec:active{transform:scale(.98)}}
+
+/* ===== Home ===== */
+main{padding-block:var(--space-5) var(--space-6)}
+.masthead{display:flex;flex-direction:column}
+.greet{display:flex;justify-content:space-between;align-items:center;gap:var(--space-3)}
+.notice{display:flex;gap:var(--space-2);align-items:flex-start;margin:var(--space-4) 0 0;padding:var(--space-3) var(--space-4);background:var(--surface-sunken);border-radius:var(--radius-md);font-size:13px;line-height:18px;color:var(--ink)}
+.notice .ic{width:16px;height:16px;margin-top:1px}
+.lead{margin-block:var(--space-5) var(--space-6)}
+
+/* the bare total: the only content on Home with no container */
+.total{display:block;color:var(--ink);text-decoration:none;border-radius:var(--radius-md)}
+.total:focus-visible{outline-offset:6px}
+.lbl{margin:0;font-size:13px;line-height:18px;font-weight:600;color:var(--ink-muted)}
+.total .big{display:block;margin-top:var(--space-1);font-size:32px;line-height:36px;font-weight:600}
+.total .counts{display:flex;align-items:center;gap:var(--space-1);margin-top:var(--space-1);font-size:13px;line-height:18px;color:var(--ink-muted)}
+.total .counts .ic{width:16px;height:16px}
+@media (hover:hover){.total:hover .counts{color:var(--ink)}}
+.lead-body{margin:var(--space-2) 0 0;color:var(--ink-muted)}
+
+/* invite (first-run) sits exactly where the total will */
+.code-row{display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-start;gap:var(--space-2) var(--space-4);margin-top:var(--space-1)}
+.code{font-size:32px;line-height:36px;font-weight:600;letter-spacing:.04em;white-space:nowrap}
+@media (max-width:22.5rem){.code{font-size:28px;line-height:34px}}
+.nowrap{white-space:nowrap}
+.lead-body,.prompt p{text-wrap:pretty}
+.lead-error h2{margin:0;font-size:18px;line-height:24px;font-weight:600}
+
+/* the floating primary (phones): the state's one primary, bottom-right under the thumb.
+   inset-inline-end, so it moves to the left in right-to-left languages. */
+.dock{position:fixed;z-index:9;inset-inline-end:max(var(--fab-gap),env(safe-area-inset-right,0px));bottom:calc(var(--nav-bar-h) + env(safe-area-inset-bottom,0px) + var(--fab-gap))}
+.dock .btn-primary{width:auto;height:var(--fab-h);padding:0 var(--space-5) 0 var(--space-4);border-radius:var(--radius-lg);box-shadow:var(--shadow-pop)}
+.dock .btn-primary .ic{width:20px;height:20px;stroke-width:2.25}
+.btn-inline{width:auto;margin-top:var(--space-4)}
+
+.rooms{display:flex;flex-direction:column;gap:var(--space-5)}
+.room{display:flex;flex-direction:column;gap:var(--space-3);min-width:0}
+.sec-head{display:flex;justify-content:space-between;align-items:center;min-height:44px;margin-block:calc(var(--space-3) * -1) calc(var(--space-2) * -1)}
+.sec-head h2,.sec-title{margin:0;font-size:13px;line-height:18px;font-weight:600}
+.see-all{display:inline-flex;align-items:center;min-height:44px;padding-inline:var(--space-2);margin-inline-end:calc(var(--space-2) * -1);border-radius:var(--radius-sm);color:var(--majorelle);font-size:13px;line-height:18px;font-weight:600;text-decoration:none}
+@media (hover:hover){.see-all:hover{text-decoration:underline}}
+
+/* TripCountdown (design system), as a link */
+.trip{display:flex;align-items:stretch;background:var(--surface-raised);border:1px solid var(--line);border-radius:var(--radius-lg);box-shadow:var(--shadow-card);overflow:hidden;color:var(--ink);text-decoration:none}
+@media (hover:hover){.trip:hover{border-color:var(--line-strong)}}
+.trip-count{flex:none;width:96px;background:var(--saffron);color:var(--on-saffron);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:var(--space-4) var(--space-2);text-align:center}
+.trip-count b{font-size:32px;line-height:36px;font-weight:600}
+.trip-count span{font-size:12px;line-height:16px;font-weight:600}
+.trip-body{flex:1;min-width:0;padding:var(--space-4);display:flex;flex-direction:column;gap:var(--space-1)}
+.trip-kicker{font-size:13px;line-height:18px;font-weight:600;color:var(--saffron-ink)}
+.trip-title{margin:0;font-family:var(--font-serif);font-weight:400;font-size:28px;line-height:34px;overflow-wrap:anywhere}
+.trip-meta{font-size:13px;line-height:18px;color:var(--ink-muted)}
+@media (max-width:22.5rem){.trip-count{width:80px}.trip-body{padding:var(--space-3)}}
+
+/* GoalCard (design system); whole card is one link via a stretched title */
+.goals{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:var(--space-3)}
+.goal{position:relative;display:flex;gap:var(--space-4);padding:var(--space-4);background:var(--surface-raised);border:1px solid var(--line);border-radius:var(--radius-lg);box-shadow:var(--shadow-card)}
+@media (hover:hover){.goal:hover{border-color:var(--line-strong)}}
+.goal-cover{flex:none;width:64px;height:80px;background:var(--majorelle-soft);color:var(--majorelle-ink);display:flex;align-items:flex-end;justify-content:center;padding-bottom:var(--space-2);font-family:var(--font-serif);font-size:28px;line-height:1}
+.arch{border-radius:50% 50% var(--radius-sm) var(--radius-sm) / 40% 40% var(--radius-sm) var(--radius-sm);overflow:hidden}
+.goal-body{flex:1;min-width:0;display:flex;flex-direction:column;gap:var(--space-2)}
+.goal-top{display:flex;justify-content:space-between;align-items:flex-start;gap:var(--space-2)}
+.goal-title{margin:0;font-size:18px;line-height:24px;font-weight:600}
+.goal-title a{color:inherit;text-decoration:none}
+.goal-title a::after{content:"";position:absolute;inset:0;border-radius:var(--radius-lg)}
+.goal-title a:focus-visible{outline:none}
+.goal-title a:focus-visible::after{outline:2px solid var(--focus-ring);outline-offset:2px}
+.goal-amt span{color:var(--ink-muted)}
+.track{height:8px;border-radius:var(--radius-sm);background:var(--majorelle-soft);overflow:hidden}
+.fill{height:100%;border-radius:var(--radius-sm);background:var(--majorelle)}
+.is-done .track{background:var(--zellige-soft)}.is-done .fill{background:var(--zellige)}
+.goal-foot{display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-2);font-size:12px;line-height:16px;color:var(--ink-muted)}
+.goal-foot .ic{width:16px;height:16px}
+.badge-done{display:inline-flex;align-items:center;gap:var(--space-1);flex:none;font-size:12px;line-height:20px;font-weight:600;padding:0 var(--space-2);border-radius:var(--radius-pill);background:var(--zellige-soft);color:var(--zellige-ink)}
+.badge-done .ic{width:14px;height:14px;stroke-width:2.25}
+@media (prefers-reduced-motion:no-preference){.fill{transition:width var(--dur-fill) var(--ease-out)}}
+
+/* light rows: prompts and the shopping link */
+.row-link,.prompt{display:flex;align-items:center;gap:var(--space-3);padding:var(--space-3) var(--space-4);border:1px solid var(--line);border-radius:var(--radius-md);background:var(--surface);color:var(--ink);text-decoration:none}
+.row-link{min-height:52px}
+.row-link .ic,.prompt>.ic{color:var(--ink-muted)}
+.row-title{margin:0;flex:1;font-size:15px;line-height:22px;font-weight:600}
+.row-meta{font-size:13px;line-height:18px;color:var(--ink-muted)}
+@media (hover:hover){.row-link:hover{border-color:var(--line-strong)}}
+.prompt{border-radius:var(--radius-lg)}
+.prompt-text{flex:1;min-width:0}
+.prompt-text p,.prompt>p{margin:0}
+.prompt>p{flex:1;min-width:0}
+.prompt-title{margin:0;font-size:15px;line-height:22px;font-weight:600}
+.starts{display:flex;flex-direction:column;gap:var(--space-2)}
+.starts .ic{color:var(--ink-muted)}
+
+/* skeletons: static, no shimmer */
+.sk{display:block;background:var(--surface-sunken);border-radius:var(--radius-sm)}
+.sk-lbl{width:7rem;height:18px}.sk-num{width:12rem;height:36px;margin-top:var(--space-1)}.sk-cap{width:10rem;height:18px;margin-top:var(--space-1)}
+.sk-h1{width:9rem;height:34px}.sk-trip{height:130px;border-radius:var(--radius-lg)}.sk-goal{height:136px;border-radius:var(--radius-lg)}.sk-row{height:52px;border-radius:var(--radius-md)}.sk-btn{height:44px;border-radius:var(--radius-md)}
+
+.footnote{margin-top:var(--space-6)}
+
+/* ===== Toast: just above the floating button on phones ===== */
+.toast{position:fixed;z-index:20;inset-inline:var(--space-4);bottom:calc(var(--nav-bar-h) + env(safe-area-inset-bottom,0px) + var(--fab-gap) + var(--fab-h) + var(--space-2));
+  display:flex;align-items:center;gap:var(--space-3);padding:var(--space-3) var(--space-3) var(--space-3) var(--space-4);border-radius:var(--radius-md);
+  background:var(--ink);color:var(--surface);box-shadow:var(--shadow-pop);font-size:13px;line-height:18px;font-weight:600}
+.toast-text{flex:1;min-width:0;display:flex;flex-direction:column}
+.toast-title{font-size:15px;line-height:22px}
+.toast-msg{font-weight:600}
+.toast-title:empty{display:none}
+.toast.is-done{background:var(--saffron);color:var(--on-saffron)}
+.toast-undo{flex:none;position:relative;font:inherit;font-weight:600;height:36px;padding:0 var(--space-3);border:1px solid currentColor;border-radius:var(--radius-sm);background:transparent;color:inherit;cursor:pointer}
+.toast-undo::before{content:"";position:absolute;inset:-4px 0}
+.toast :focus-visible{outline-color:currentColor}
+@media (prefers-reduced-motion:no-preference){.toast{transition:opacity var(--dur-toast) ease,transform var(--dur-toast) var(--ease-out)}.toast.is-entering{opacity:0;transform:translateY(8px)}}
+@media (prefers-reduced-motion:reduce){.toast{transition:opacity var(--dur-toast) ease}.toast.is-entering{opacity:0}}
+/* while a toast shows, focused content scrolls clear of it too (WCAG 2.4.11) */
+html.toast-open{scroll-padding-bottom:calc(var(--nav-bar-h) + var(--fab-zone) + env(safe-area-inset-bottom,0px) + 5.5rem)}
+@media (min-width:48rem){html.toast-open{scroll-padding-bottom:6rem}}
+
+/* ===== Quick-add sheet: rises from the bottom, behind the floating button ===== */
+.sheet{position:fixed;inset:auto 0 0 0;margin:0;width:100%;max-width:none;max-height:min(calc(100dvh - var(--space-2)),40rem);overflow:auto;
+  padding:var(--space-5) max(var(--space-4),env(safe-area-inset-right,0px)) calc(var(--space-5) + env(safe-area-inset-bottom,0px)) max(var(--space-4),env(safe-area-inset-left,0px));
+  border:0;border-radius:var(--radius-lg) var(--radius-lg) 0 0;background:var(--surface-raised);color:var(--ink);box-shadow:var(--shadow-pop);clip-path:inset(0)}
+.sheet::backdrop{background:rgba(29,34,48,.4)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .sheet::backdrop{background:rgba(0,0,0,.6)}}
+:root[data-theme="dark"] .sheet::backdrop{background:rgba(0,0,0,.6)}
+@media (prefers-reduced-motion:no-preference) and (max-width:47.99rem){
+  .sheet{transition:clip-path var(--dur-sheet) var(--ease-out),display var(--dur-sheet) allow-discrete,overlay var(--dur-sheet) allow-discrete}
+  .sheet:not([open]){clip-path:inset(calc(100% - var(--fab-zone) - var(--nav-bar-h)) 0 0 0)}
+  @starting-style{.sheet[open]{clip-path:inset(calc(100% - var(--fab-zone) - var(--nav-bar-h)) 0 0 0)}}
+}
+@media (prefers-reduced-motion:reduce){
+  .sheet{transition:opacity var(--dur-toast) ease,display var(--dur-toast) allow-discrete,overlay var(--dur-toast) allow-discrete}
+  .sheet:not([open]){opacity:0}
+  @starting-style{.sheet[open]{opacity:0}}
+}
+.sheet-head{display:flex;align-items:flex-start;justify-content:space-between;gap:var(--space-3);margin-bottom:var(--space-4)}
+.sheet-head h2{margin:0;font-size:18px;line-height:24px;font-weight:600}
+.icon-btn{flex:none;display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;margin:-10px -10px 0 0;border:0;border-radius:var(--radius-md);background:transparent;color:var(--ink-muted);cursor:pointer}
+@media (hover:hover){.icon-btn:hover{color:var(--ink)}}
+.pick-list{list-style:none;margin:var(--space-2) 0 0;padding:0;display:flex;flex-direction:column;gap:var(--space-2)}
+.pick-row{width:100%;display:flex;align-items:center;gap:var(--space-3);min-height:56px;padding:var(--space-3) var(--space-4);border:1px solid var(--line);border-radius:var(--radius-md);background:var(--surface);color:var(--ink);font:inherit;text-align:start;cursor:pointer}
+@media (hover:hover){.pick-row:hover{border-color:var(--line-strong)}}
+.pick-main{flex:1;min-width:0;display:flex;flex-direction:column}
+.pick-title{font-weight:600}
+.pick-meta{font-size:13px;line-height:18px;color:var(--ink-muted)}
+.pick-row .ic{color:var(--ink-muted)}
+.field-label{display:block;margin-bottom:var(--space-2);font-size:13px;line-height:18px;font-weight:600}
+.field{display:flex;align-items:center;gap:var(--space-2);height:52px;padding-inline:var(--space-4);border:1px solid var(--line-strong);border-radius:var(--radius-md);background:var(--surface)}
+.field:focus-within{outline:2px solid var(--focus-ring);outline-offset:2px}
+.field input{flex:1;min-width:0;height:100%;border:0;background:transparent;color:var(--ink);font:inherit;font-size:20px;line-height:28px;font-weight:600;font-variant-numeric:tabular-nums;outline:none}
+.field-text input{font-size:16px;font-weight:400}
+.suffix{color:var(--ink-muted);font-weight:600}
+.field.is-invalid{border-color:var(--danger);border-width:2px;padding-inline:calc(var(--space-4) - 1px)}
+.help{margin:var(--space-2) 0 0;font-size:12px;line-height:16px;color:var(--ink-muted)}
+.err{margin:var(--space-2) 0 0;font-size:13px;line-height:18px;font-weight:600;color:var(--danger)}
+.preview{margin:var(--space-3) 0 0;font-size:13px;line-height:18px;color:var(--ink-muted)}
+.link-btn{display:inline-flex;align-items:center;min-height:44px;padding:0 var(--space-2);margin-inline-start:calc(var(--space-2) * -1);border:0;background:none;color:var(--majorelle);font:inherit;font-size:13px;line-height:18px;font-weight:600;cursor:pointer;border-radius:var(--radius-sm)}
+.sheet-actions{display:flex;flex-direction:column;align-items:center;gap:var(--space-1);margin-top:var(--space-4)}
+.sheet-links{display:flex;flex-wrap:wrap;justify-content:center;gap:0 var(--space-5)}
+.note-wrap{margin-top:var(--space-2)}
+.stepper{display:flex;align-items:center;gap:var(--space-2)}
+.stepper .field{flex:1;min-width:0}
+.stepper .btn-sec{flex:none;width:56px;height:52px;padding:0}
+html:has(.sheet[open]){overflow:hidden}
+
+/* Windows High Contrast: keep bars and overlay edges visible */
+@media (forced-colors:active){
+  .track{border:1px solid CanvasText}
+  .fill{forced-color-adjust:none;background:Highlight}
+  .toast,.sheet{border:1px solid CanvasText}
+  .trip-count{border-inline-end:1px solid CanvasText}
+}
+
+/* ===== ≥ 48rem: top bar, masthead, columns ===== */
+@media (min-width:48rem){
+  html{scroll-padding-bottom:0;scroll-padding-top:calc(var(--top-bar-h) + var(--space-4))}
+  body{padding-bottom:0}
+  .app-header{position:sticky;top:0;z-index:10;background:var(--surface);border-bottom:1px solid var(--line)}
+  .app-header .bar{display:flex;align-items:center;gap:var(--space-6);height:var(--top-bar-h)}
+  .app-header .brand{display:flex;flex:none;align-items:center;border-radius:var(--radius-sm)}
+  .brand img{display:block;height:36px;width:auto}
+  .nav{position:static;flex:1;min-width:0;height:100%;padding:0;border:0;background:none}
+  .nav-list{display:flex;gap:var(--space-1);height:100%}
+  .nav-list>li{display:flex;align-items:center}
+  .nav-list>li:last-child{margin-inline-start:auto}
+  .nav-link{flex-direction:row;gap:var(--space-2);height:var(--nav-link-inline-h);padding-inline:var(--space-3)}
+  .nav-link svg{width:var(--nav-icon-inline);height:var(--nav-icon-inline)}
+  .nav-link:focus-visible{outline-offset:2px}
+  .nav-link::after{top:auto;bottom:calc((var(--top-bar-h) - var(--nav-link-inline-h)) / -2 - 0.5px - var(--nav-mark) / 2)}
+
+  main{padding-block:var(--space-6) var(--space-7)}
+  .masthead{display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"greet greet" "notice notice" "lead dock";align-items:end;column-gap:var(--space-5)}
+  .greet{grid-area:greet}.notice{grid-area:notice}.lead{grid-area:lead;margin-bottom:var(--space-6)}
+  /* wide screens: the primary sits in the masthead line, not floating in a far corner */
+  .dock{grid-area:dock;position:static;margin-bottom:var(--space-6)}
+  .dock .btn-primary{height:44px;padding:0 var(--space-5) 0 var(--space-4);border-radius:var(--radius-md);box-shadow:none}
+  .toast{inset-inline:auto;left:50%;bottom:var(--space-5);width:min(30rem,calc(100% - 2 * var(--space-4)));translate:-50% 0}
+  .sheet{inset:0;margin:auto;width:min(28rem,calc(100% - 2 * var(--space-4)));height:fit-content;border-radius:var(--radius-lg);padding:var(--space-5)}
+  @media (prefers-reduced-motion:no-preference){
+    .sheet{transition:opacity var(--dur-sheet) ease,transform var(--dur-sheet) var(--ease-out),display var(--dur-sheet) allow-discrete,overlay var(--dur-sheet) allow-discrete}
+    .sheet:not([open]){opacity:0;transform:translateY(8px)}
+    @starting-style{.sheet[open]{opacity:0;transform:translateY(8px)}}
+  }
+}
+@media (min-width:64rem){
+  .masthead{max-width:none;grid-template-columns:auto minmax(0,1fr) auto;grid-template-areas:"notice notice notice" "greet lead dock";column-gap:var(--space-7);
+    padding-bottom:var(--space-5);margin-bottom:var(--space-6);border-bottom:1px solid var(--line)}
+  .notice{margin:0 0 var(--space-5)}
+  .greet{justify-content:flex-start;gap:var(--space-4)}
+  .lead,.dock{margin:0}
+  .rooms{max-width:none;display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--space-6);row-gap:var(--space-5);align-items:start}
+  .room-trip{grid-column:1 / span 5;grid-row:1}
+  .room-shop{grid-column:1 / span 5;grid-row:2}
+  .room-goals{grid-column:6 / span 7;grid-row:1 / span 3}
+  .room-start{grid-column:1 / span 7}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to main content</a>
+
+<header class="app-header">
+  <div class="wrap bar">
+    <a class="brand" href="#/home">
+      <img class="logo-light" src="../../assets/zamane-logo.svg" alt="Zamane" width="125" height="36">
+      <img class="logo-dark" src="../../assets/zamane-logo-dark.svg" alt="Zamane" width="125" height="36">
+    </a>
+    <nav class="nav" aria-label="Main">
+      <ul class="nav-list" role="list">
+        <li><a class="nav-link" href="#/home" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span class="nav-label">Home</span></a></li>
+        <li><a class="nav-link" href="#/goals"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 13V2l8 4-8 4"/><path d="M20.561 10.222a9 9 0 1 1-12.55-5.29"/><path d="M8.002 9.997a5 5 0 1 0 8.9 2.02"/></svg><span class="nav-label">Goals</span></a></li>
+        <li><a class="nav-link" href="#/trips"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.106 5.553a2 2 0 0 0 1.788 0l3.659-1.83A1 1 0 0 1 21 4.619v12.764a1 1 0 0 1-.553.894l-4.553 2.277a2 2 0 0 1-1.788 0l-4.212-2.106a2 2 0 0 0-1.788 0l-3.659 1.83A1 1 0 0 1 3 19.381V6.618a1 1 0 0 1 .553-.894l4.553-2.277a2 2 0 0 1 1.788 0z"/><path d="M15 5.764v15"/><path d="M9 3.236v15"/></svg><span class="nav-label">Trips</span></a></li>
+        <li><a class="nav-link" href="#/shopping"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 11-1 9"/><path d="m19 11-4-7"/><path d="M2 11h20"/><path d="m3.5 11 1.6 7.4a2 2 0 0 0 2 1.6h9.8a2 2 0 0 0 2-1.6l1.7-7.4"/><path d="M4.5 15.5h15"/><path d="m5 11 4-7"/><path d="m9 11 1 9"/></svg><span class="nav-label">Shopping</span></a></li>
+        <li><a class="nav-link" href="#/profile"><span class="zm-av zm-av-a zm-av-sm" aria-hidden="true">S</span><span class="nav-label">Profile</span></a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="wrap" tabindex="-1">
+  <div id="masthead" class="masthead"></div>
+  <!-- fixed on screen, but placed right after the primary in the DOM so Undo is one Tab away -->
+  <div id="toast" class="toast" hidden>
+    <div class="toast-text"><span class="toast-title"></span><span class="toast-msg"></span></div>
+    <button class="toast-undo" type="button" hidden>Undo</button>
+  </div>
+  <div id="rooms" class="rooms"></div>
+  <p class="caption footnote" id="footnote"></p>
+</main>
+
+<div id="live" class="vh" role="status" aria-live="polite"></div>
+
+<dialog id="sheet" class="sheet" aria-labelledby="sheet-h">
+  <div class="sheet-head">
+    <div><h2 id="sheet-h">Add to a goal</h2><p id="sheet-sub" class="caption"></p></div>
+    <button class="icon-btn" type="button" id="sheet-close" aria-label="Close"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+  </div>
+  <div id="sheet-body"></div>
+  <!-- the page's live region is inert while the modal is open, so the sheet has its own -->
+  <p id="sheet-live" class="vh" role="status"></p>
+  <p id="sheet-alert" class="vh" role="alert"></p>
+</dialog>
+
+<script>
+(function () {
+  var P = new URLSearchParams(location.search);
+  var state = P.get('state') || (P.get('toast') === 'queued' ? 'offline' : 'populated');
+  var canShare = !P.has('noshare') && typeof navigator.share === 'function';
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+  function $(s) { return document.querySelector(s); }
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function fmt(n) { return n.toLocaleString('en-US', { maximumFractionDigits: 2 }); }
+
+  var ICON = {
+    chevron: '<path d="m9 18 6-6-6-6"/>',
+    copy: '<rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/>',
+    cloudOff: '<path d="M10.94 5.274A7 7 0 0 1 15.71 10h1.79a4.5 4.5 0 0 1 4.222 6.057"/><path d="M18.796 18.81A4.5 4.5 0 0 1 17.5 19H9A7 7 0 0 1 5.79 5.78"/><path d="m2 2 20 20"/>',
+    check: '<path d="M20 6 9 17l-5-5"/>',
+    plus: '<path d="M5 12h14"/><path d="M12 5v14"/>',
+    share: '<path d="M12 2v13"/><path d="m16 6-4-4-4 4"/><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/>',
+    map: '<path d="M14.106 5.553a2 2 0 0 0 1.788 0l3.659-1.83A1 1 0 0 1 21 4.619v12.764a1 1 0 0 1-.553.894l-4.553 2.277a2 2 0 0 1-1.788 0l-4.212-2.106a2 2 0 0 0-1.788 0l-3.659 1.83A1 1 0 0 1 3 19.381V6.618a1 1 0 0 1 .553-.894l4.553-2.277a2 2 0 0 1 1.788 0z"/><path d="M15 5.764v15"/><path d="M9 3.236v15"/>',
+    goal: '<path d="M12 13V2l8 4-8 4"/><path d="M20.561 10.222a9 9 0 1 1-12.55-5.29"/><path d="M8.002 9.997a5 5 0 1 0 8.9 2.02"/>',
+    basket: '<path d="m15 11-1 9"/><path d="m19 11-4-7"/><path d="M2 11h20"/><path d="m3.5 11 1.6 7.4a2 2 0 0 0 2 1.6h9.8a2 2 0 0 0 2-1.6l1.7-7.4"/><path d="M4.5 15.5h15"/><path d="m5 11 4-7"/><path d="m9 11 1 9"/>'
+  };
+  function svg(name) { return '<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + ICON[name] + '</svg>'; }
+
+  // ---- example data (design system values + two labelled placeholders) ----
+  function initialData(s) {
+    var d = {
+      total: 20250, done: 1, shopLeft: 7,
+      trip: { title: 'Chefchaouen', destination: 'Rif mountains', start: 'Sat 21 Nov', end: 'Wed 25 Nov', status: 'upcoming', days: 12 },
+      goals: [
+        { id: 'wedding', kind: 'money', title: 'Wedding fund', saved: 14250, target: 20000, last: { name: 'Sara', p: 'a', text: 'Sara added 500 · 2 days ago' } },
+        { id: 'guest-room', kind: 'general', title: 'Paint the guest room', percent: 60, last: { name: 'Youssef', p: 'b', text: 'Youssef moved it to 60% · yesterday' } },
+        { id: 'honeymoon', kind: 'money', title: 'Honeymoon', saved: 0, target: 30000, last: null }
+      ]
+    };
+    if (s === 'trip-now') d.trip = { title: 'Chefchaouen', destination: 'Rif mountains', start: 'Sun 8 Nov', end: 'Thu 12 Nov', status: 'now', day: 2, total: 5 };
+    if (s === 'no-trip') d.trip = null;
+    if (s === 'all-done') { d.goals = []; d.done = 4; d.total = 56000; } // Wedding fund 20,000 + New sofa 6,000 + Honeymoon 30,000 (+ the percent goal)
+    if (s === 'joined-empty') { d.total = 0; d.done = 0; d.goals = []; d.trip = null; d.shopLeft = 0; }
+    return d;
+  }
+  var data = initialData(state);
+  var animFrom = {};
+
+  function ratio(g) { return g.kind === 'money' ? (g.target ? g.saved / g.target : 0) : g.percent / 100; }
+  function isDone(g) { return ratio(g) >= 1; }
+  function openGoals() { return data.goals.filter(function (g) { return !isDone(g); }); }
+  function shownGoals() {
+    return data.goals.filter(function (g) { return !isDone(g) || g.justDone; })
+      .sort(function (a, b) { return ratio(b) - ratio(a); }).slice(0, 3);
+  }
+  function plural(n, one, other) { return n === 1 ? one : other; }
+
+  // ---- render ----
+  var TITLES = { 'first-run': 'Invite your partner – Zamane', offline: 'Home (offline) – Zamane', error: "Can't load Home – Zamane", loading: 'Loading – Zamane' };
+  // Re-rendering replaces nodes; keep keyboard focus on the equivalent control (WCAG 2.4.3).
+  // Scoped to the re-rendered region and keyed by position among matches, because the nav,
+  // the total and "See all" share hrefs (a11y round 2, R2-1).
+  function focusKey(el) {
+    var root = el && el.closest ? el.closest('#masthead, #rooms') : null;
+    if (!root) return null;
+    var h = el.getAttribute('href');
+    var sel = el.id ? '#' + el.id : (el.dataset && el.dataset.act) ? '[data-act="' + el.dataset.act + '"]' : h ? 'a[href="' + h + '"]' : null;
+    var idx = sel ? Array.prototype.indexOf.call(root.querySelectorAll(sel), el) : -1;
+    return { root: root.id, sel: sel, idx: idx };
+  }
+  function restoreFocus(key) {
+    if (!key) return;
+    var list = key.sel ? document.getElementById(key.root).querySelectorAll(key.sel) : [];
+    var n = list[key.idx] || list[0];
+    if (n) n.focus({ preventScroll: true }); else focusPrimary();
+  }
+  var lastPointer = false;
+  window.addEventListener('pointerdown', function () { lastPointer = true; }, true);
+  window.addEventListener('keydown', function () { lastPointer = false; }, true);
+  function focusPrimary() { var p = $('#primary'); if (p) p.focus({ preventScroll: true, focusVisible: !lastPointer }); }
+
+  function render() {
+    var key = focusKey(document.activeElement);
+    document.title = TITLES[state] || 'Home – Zamane';
+    $('#main').setAttribute('aria-busy', state === 'loading' ? 'true' : 'false');
+    $('#masthead').innerHTML = greetHTML() + noticeHTML() + leadHTML() + dockHTML();
+    $('#rooms').innerHTML = roomsHTML();
+    var hasPlaceholders = data.goals.some(function (g) { return g.id !== 'wedding'; }) && ['populated', 'offline', 'trip-now', 'no-trip'].indexOf(state) > -1;
+    $('#footnote').textContent = 'Prototype. Example data from the design system' + (hasPlaceholders ? '; "Paint the guest room" and "Honeymoon" are placeholders.' : '.');
+    restoreFocus(key);
+    requestAnimationFrame(function () { requestAnimationFrame(function () {
+      document.querySelectorAll('.fill[data-to]').forEach(function (f) { f.style.width = f.dataset.to + '%'; });
+      animFrom = {};
+    }); });
+  }
+
+  function greetHTML() {
+    if (state === 'loading') return '<div class="greet"><div><p class="caption">Mon 9 Nov</p><h1 class="vh">Home</h1><span class="sk sk-h1" aria-hidden="true"></span></div></div>';
+    // Nothing loaded: the members are unknown, so no greeting and no pair.
+    if (state === 'error') return '<div class="greet"><div><p class="caption">Mon 9 Nov</p><h1 class="title-lg" tabindex="-1">Home</h1></div></div>';
+    var solo = state === 'first-run';
+    var pair = solo
+      ? '<span class="zm-pair" role="img" aria-label="Sara. Your partner hasn\'t joined yet."><span class="zm-av zm-av-a zm-av-md" aria-hidden="true">S</span></span>'
+      : '<span class="zm-pair" role="img" aria-label="Sara and Youssef"><span class="zm-av zm-av-a zm-av-md" aria-hidden="true">S</span><span class="zm-av zm-av-b zm-av-md" aria-hidden="true">Y</span></span>';
+    return '<div class="greet"><div><p class="caption">Mon 9 Nov</p><h1 class="title-lg" tabindex="-1">' + (solo ? 'Hi, Sara' : 'Hi, you two') + '</h1></div>' + pair + '</div>';
+  }
+  function noticeHTML() {
+    if (state !== 'offline') return '';
+    return '<p class="notice">' + svg('cloudOff') + '<span>You\'re offline. Showing the latest data on this phone. Adding to goals still works and syncs when you\'re back online.</span></p>';
+  }
+  function countsText() {
+    var open = openGoals().length, done = data.done;
+    if (open === 0) return done + ' ' + plural(done, 'goal', 'goals') + ' done';
+    return open + ' ' + plural(open, 'goal', 'goals') + ' open · ' + done + ' done';
+  }
+  function leadHTML() {
+    if (state === 'loading') return '<div class="lead" aria-hidden="true"><span class="sk sk-lbl"></span><span class="sk sk-num"></span><span class="sk sk-cap"></span></div>';
+    if (state === 'error') return '<div class="lead lead-error"><div role="alert"><h2>Home didn\'t load</h2><p class="lead-body">Check your connection and try again.</p></div>' +
+      '<button class="btn-primary btn-inline" type="button" id="primary" data-act="retry">Try again</button></div>';
+    if (state === 'first-run') {
+      return '<div class="lead invite"><h2 class="lbl">Invite your partner</h2>' +
+        '<div class="code-row"><span class="code num" dir="ltr" aria-hidden="true">K7QM-4XPA</span><span class="vh">Invite code: K 7 Q M, 4 X P A</span>' +
+        (canShare ? '<button class="btn-sec btn-sm" type="button" data-act="copy">' + svg('copy') + 'Copy<span class="vh"> invite code</span></button>' : '') + '</div>' +
+        '<p class="lead-body">Share this code so they can join your space.</p><p class="caption" style="margin-top:var(--space-2)">Waiting for your partner to join.</p></div>';
+    }
+    if (state === 'joined-empty') {
+      return '<div class="lead"><h2 class="lbl">Saved together</h2><span class="total"><span class="big num">0 MAD</span></span><p class="lead-body">Nothing saved yet. Create a goal to start counting.</p></div>';
+    }
+    return '<div class="lead"><a class="total" href="#/goals"><h2 class="lbl">Saved together</h2><span class="big num" id="total-num">' + fmt(data.total) + ' MAD</span>' +
+      '<span class="counts"><span>' + countsText() + '</span>' + svg('chevron') + '</span></a></div>';
+  }
+  // The floating button holds the state's one primary. Loading has none yet; the error state
+  // puts "Try again" inline with its message instead, since a floating retry over an empty page reads oddly.
+  function dockHTML() {
+    if (state === 'loading' || state === 'error') return '';
+    if (state === 'first-run') return '<div class="dock"><button class="btn-primary" type="button" id="primary" data-act="' + (canShare ? 'share' : 'copy') + '">' + svg(canShare ? 'share' : 'copy') + (canShare ? 'Share code' : 'Copy code') + '</button></div>';
+    if (state === 'joined-empty') return '<div class="dock"><a class="btn-primary" id="primary" href="#/goals/new">' + svg('plus') + 'Create a goal</a></div>';
+    if (openGoals().length === 0) return '<div class="dock"><a class="btn-primary" id="primary" href="#/goals/new">' + svg('plus') + 'New goal</a></div>';
+    return '<div class="dock"><button class="btn-primary" type="button" id="primary" data-act="add">' + svg('plus') + 'Add to a goal</button></div>';
+  }
+
+  function roomsHTML() {
+    if (state === 'loading') {
+      return '<section class="room room-trip" aria-hidden="true"><span class="sk sk-trip"></span></section>' +
+        '<section class="room room-shop" aria-hidden="true"><span class="sk sk-row"></span></section>' +
+        '<section class="room room-goals" aria-hidden="true"><div class="sec-head"><span class="sk sk-lbl"></span></div><span class="sk sk-goal"></span><span class="sk sk-goal"></span></section>';
+    }
+    if (state === 'error') return '';
+    if (state === 'first-run') {
+      return '<section class="room room-start" aria-labelledby="h-start"><h2 class="sec-title" id="h-start">Start now, together later</h2><div class="starts">' +
+        '<a class="btn-sec btn-block" href="#/goals/new">' + svg('goal') + 'Create a goal</a>' +
+        '<a class="btn-sec btn-block" href="#/trips/new">' + svg('map') + 'Plan a trip</a>' +
+        '<a class="btn-sec btn-block" href="#/shopping">' + svg('basket') + 'Start a shopping list</a></div></section>';
+    }
+    // Shopping sits right after the trip: on phones it's then above the fold (one of the four glance answers),
+    // and on wide screens the DOM order now matches the visual columns (trip, shopping | goals).
+    return tripHTML() + shopHTML() + goalsHTML();
+  }
+  function tripHTML() {
+    var t = data.trip;
+    if (!t) {
+      return '<section class="room room-trip" aria-labelledby="h-trip"><h2 class="vh" id="h-trip">Next trip</h2><div class="prompt">' + svg('map') +
+        '<p>No trips yet. Plan your first one.</p><a class="btn-sec btn-sm" href="#/trips/new">Plan a trip</a></div></section>';
+    }
+    var now = t.status === 'now';
+    var big = now ? t.day : t.days;
+    var small = now ? 'of ' + t.total + ' days' : plural(t.days, 'day to go', 'days to go');
+    return '<section class="room room-trip"><a class="trip" href="#/trips/chefchaouen">' +
+      '<div class="trip-count"><b class="num">' + big + '</b><span>' + small + '</span></div>' +
+      '<div class="trip-body"><span class="trip-kicker">' + (now ? 'Happening now' : 'Next trip') + '</span><h2 class="trip-title">' + esc(t.title) + '</h2>' +
+      '<span class="trip-meta">' + esc(t.destination) + ' · <span class="nowrap">' + t.start + ' – ' + t.end + '</span></span></div></a></section>';
+  }
+  function goalHTML(g) {
+    var money = g.kind === 'money';
+    var r = Math.min(1, ratio(g)), pct = Math.round(r * 100), done = r >= 1;
+    var amount = money ? '<b>' + fmt(g.saved) + ' MAD</b><span> of ' + fmt(g.target) + ' MAD</span>' : '<b>' + g.percent + '%</b><span> complete</span>';
+    var valuetext = money ? fmt(g.saved) + ' MAD of ' + fmt(g.target) + ' MAD' : g.percent + '%';
+    var from = animFrom[g.id];
+    var foot = g.last
+      ? '<span class="zm-av zm-av-' + g.last.p + ' zm-av-sm" aria-hidden="true">' + g.last.name.charAt(0) + '</span>' + (g.pending ? svg('cloudOff') : '') + '<span>' + esc(g.last.text) + '</span>'
+      : '<span>No contributions yet</span>';
+    return '<li class="goal' + (done ? ' is-done' : '') + '">' +
+      '<div class="goal-cover arch" aria-hidden="true">' + esc(g.title.charAt(0)) + '</div>' +
+      '<div class="goal-body"><div class="goal-top"><h3 class="goal-title"><a href="#/goals/' + g.id + '">' + esc(g.title) + '</a></h3>' +
+      (done ? '<span class="badge-done">' + svg('check') + 'Done</span>' : '') + '</div>' +
+      '<div class="goal-amt num">' + amount + '</div>' +
+      '<div class="track" role="progressbar" aria-label="' + esc(g.title) + '" aria-valuemin="0" aria-valuemax="100" aria-valuenow="' + pct + '" aria-valuetext="' + valuetext + '">' +
+      '<div class="fill" style="width:' + (from != null ? from : pct) + '%"' + (from != null ? ' data-to="' + pct + '"' : '') + '></div></div>' +
+      '<div class="goal-foot">' + foot + '</div></div></li>';
+  }
+  function goalsHTML() {
+    if (state === 'joined-empty') return '';
+    var list = shownGoals();
+    if (list.length === 0) {
+      var n = data.done;
+      return '<section class="room room-goals" aria-labelledby="h-goals"><div class="sec-head"><h2 id="h-goals">All goals reached</h2><a class="see-all" href="#/goals">See all<span class="vh"> goals</span></a></div>' +
+        '<div class="prompt"><span class="badge-done">' + svg('check') + 'Done</span><p>You finished ' + n + ' ' + plural(n, 'goal', 'goals') + ' together.</p></div></section>';
+    }
+    return '<section class="room room-goals" aria-labelledby="h-goals"><div class="sec-head"><h2 id="h-goals">Closest to done</h2><a class="see-all" href="#/goals">See all<span class="vh"> goals</span></a></div>' +
+      '<ul class="goals" role="list">' + list.map(goalHTML).join('') + '</ul></section>';
+  }
+  function shopHTML() {
+    var n = data.shopLeft;
+    if (n === 0) {
+      return '<section class="room room-shop" aria-labelledby="h-shop"><div class="prompt">' + svg('basket') +
+        '<div class="prompt-text"><h2 class="prompt-title" id="h-shop">Shopping</h2><p class="row-meta">Nothing on the list yet.</p></div><a class="btn-sec btn-sm" href="#/shopping">Add an item</a></div></section>';
+    }
+    return '<section class="room room-shop"><a class="row-link" href="#/shopping">' + svg('basket') + '<h2 class="row-title">Shopping</h2><span class="row-meta">' + n + ' left to buy</span>' + svg('chevron') + '</a></section>';
+  }
+
+  // ---- live region + toast ----
+  function announce(msg) { var l = $('#live'); l.textContent = ''; setTimeout(function () { l.textContent = msg; }, 50); }
+  var toastTimer = null, toastPaused = false, toastUndo = null, TOAST_MS = 10000;
+  function toast(opts) {
+    var t = $('#toast');
+    t.classList.toggle('is-done', !!opts.done);
+    t.querySelector('.toast-title').textContent = opts.title || '';
+    t.querySelector('.toast-msg').textContent = opts.msg;
+    var u = t.querySelector('.toast-undo');
+    toastUndo = opts.undo || null;
+    u.hidden = !toastUndo;
+    if (toastUndo) u.setAttribute('aria-label', opts.undoLabel || 'Undo'); else u.removeAttribute('aria-label');
+    t.hidden = false; t.classList.add('is-entering'); document.documentElement.classList.add('toast-open');
+    requestAnimationFrame(function () { requestAnimationFrame(function () { t.classList.remove('is-entering'); }); });
+    announce((opts.title ? opts.title + ' ' : '') + opts.msg + (toastUndo ? ' Undo is the next button.' : ''));
+    schedule();
+  }
+  // 10 s, paused while hovered or focused, restarted by any key press (WCAG 2.2.1).
+  function schedule() { clearTimeout(toastTimer); toastTimer = setTimeout(function () { if (!toastPaused) hideToast(); else schedule(); }, TOAST_MS); }
+  function hideToast() { var t = $('#toast'); var had = t.contains(document.activeElement); t.hidden = true; toastUndo = null; document.documentElement.classList.remove('toast-open'); if (had) focusPrimary(); }
+  // Esc dismisses the toast from anywhere (the sheet handles its own Esc). Focus or hover inside it pauses the timer.
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Escape' || $('#toast').hidden || $('#sheet').open) return;
+    hideToast();
+  });
+  $('#toast').addEventListener('mouseenter', function () { toastPaused = true; });
+  $('#toast').addEventListener('mouseleave', function () { toastPaused = false; });
+  $('#toast').addEventListener('focusin', function () { toastPaused = true; });
+  $('#toast').addEventListener('focusout', function () { toastPaused = false; });
+  $('#toast .toast-undo').addEventListener('click', function () { if (toastUndo) toastUndo(); });
+
+  // ---- amount parsing (the real rules live in shared/money.ts) ----
+  function parseAmount(raw) {
+    var s = String(raw).replace(/[\s  ]/g, '');
+    if (s === '') return { error: 'Enter an amount, for example 500.' };
+    var n;
+    if (/^\d{1,3}(,\d{3})+(\.\d{1,2})?$/.test(s)) n = parseFloat(s.replace(/,/g, ''));
+    else if (/^\d+,\d{1,2}$/.test(s)) n = parseFloat(s.replace(',', '.'));
+    else if (/^\d+(\.\d{1,2})?$/.test(s)) n = parseFloat(s);
+    else return { error: 'Use numbers only, for example 500 or 500,50.' };
+    if (!(n > 0)) return { error: 'Enter an amount greater than 0.' };
+    return { value: n };
+  }
+  function parsePercent(raw) {
+    var s = String(raw).trim();
+    if (s === '') return { error: 'Enter a number from 0 to 100.' };
+    if (!/^\d+$/.test(s)) return { error: 'Use whole numbers, for example 40.' };
+    var n = parseInt(s, 10);
+    if (n > 100) return { error: 'Enter a number from 0 to 100.' };
+    return { value: n };
+  }
+
+  // ---- quick-add sheet ----
+  var sheet = $('#sheet'), sheetGoal = null;
+  function openSheet(step, goalId) {
+    var open = openGoals();
+    if (goalId) sheetGoal = data.goals.filter(function (g) { return g.id === goalId; })[0];
+    if (!step && open.length === 1) { sheetGoal = open[0]; step = 'amount'; }
+    renderSheet(step || 'pick');
+    if (!sheet.open) sheet.showModal();
+    placeSheet();
+    focusSheet();
+  }
+  function renderSheet(step) {
+    var sub = $('#sheet-sub'), body = $('#sheet-body');
+    if (step === 'pick') {
+      sub.textContent = '';
+      body.innerHTML = '<h3 class="lbl" id="pick-h">Which goal?</h3><ul class="pick-list" role="list" aria-labelledby="pick-h">' +
+        openGoals().sort(function (a, b) { return ratio(b) - ratio(a); }).map(function (g) {
+          var meta = g.kind === 'money' ? fmt(g.saved) + ' MAD of ' + fmt(g.target) + ' MAD' : g.percent + '%';
+          return '<li><button class="pick-row" type="button" data-goal="' + g.id + '"><span class="pick-main"><span class="pick-title">' + esc(g.title) + '</span><span class="pick-meta num">' + meta + '</span></span>' + svg('chevron') + '</button></li>';
+        }).join('') + '</ul>';
+      return;
+    }
+    var g = sheetGoal;
+    sub.textContent = 'Adding to ' + g.title;
+    var change = openGoals().length > 1 ? '<button class="link-btn" type="button" data-act="change">Change goal</button>' : '';
+    if (g.kind === 'money') {
+      body.innerHTML = '<form id="add-form" novalidate>' +
+        '<label class="field-label" for="amt">Amount<span class="vh"> in MAD</span></label>' +
+        '<div class="field" id="amt-field"><input id="amt" name="amount" inputmode="decimal" autocomplete="off" enterkeyhint="done" aria-describedby="sheet-sub amt-help amt-err"><span class="suffix" aria-hidden="true">MAD</span></div>' +
+        // one line: the example while empty, then a live preview once the amount parses
+        '<p class="help num" id="amt-help">For example 500 or 1 200</p><p class="err" id="amt-err" hidden></p>' +
+        // the submit sits right under the field so it stays above the on-screen keyboard; Enter in the note also submits
+        '<div class="sheet-actions"><button class="btn-primary" type="submit">Add contribution</button>' +
+        '<div class="sheet-links"><button class="link-btn" type="button" data-act="note" aria-expanded="false" aria-controls="note-wrap">Add a note</button>' + change + '</div></div>' +
+        '<div class="note-wrap" id="note-wrap" hidden><label class="field-label" for="note">Note</label><div class="field field-text"><input id="note" name="note" maxlength="120" autocomplete="off" enterkeyhint="done" aria-describedby="note-help"></div><p class="help" id="note-help">Optional. For example, bonus month</p></div></form>';
+      $('#amt').addEventListener('input', function () {
+        var v = parseAmount(this.value);
+        $('#amt-help').textContent = v.value ? g.title + ' will be at ' + fmt(g.saved + v.value) + ' MAD of ' + fmt(g.target) + ' MAD' : 'For example 500 or 1 200';
+        if (!$('#amt-err').hidden) clearError();
+      });
+    } else {
+      body.innerHTML = '<form id="add-form" novalidate>' +
+        '<label class="field-label" for="amt">Progress, from 0 to 100%</label>' +
+        '<p class="help" style="margin:0 0 var(--space-2)">Now at ' + g.percent + '%</p>' +
+        '<div class="stepper"><button class="btn-sec" type="button" data-step="-10">−10<span class="vh"> percentage points</span></button>' +
+        '<div class="field" id="amt-field"><input id="amt" name="percent" inputmode="numeric" autocomplete="off" enterkeyhint="done" value="' + g.percent + '" aria-describedby="sheet-sub amt-help amt-err"><span class="suffix" aria-hidden="true">%</span></div>' +
+        '<button class="btn-sec" type="button" data-step="10">+10<span class="vh"> percentage points</span></button></div>' +
+        '<p class="help" id="amt-help">Enter the new total, not the amount to add.</p><p class="err" id="amt-err" hidden></p>' +
+        '<div class="sheet-actions"><button class="btn-primary" type="submit">Update progress</button>' + change + '</div></form>';
+      $('#amt').addEventListener('input', function () { if (!$('#amt-err').hidden) clearError(); });
+    }
+    $('#add-form').addEventListener('submit', submit);
+  }
+  function focusSheet() {
+    var target = $('#amt') || $('.pick-row');
+    if (target) { target.focus(); if (target.select && target.id === 'amt' && sheetGoal && sheetGoal.kind !== 'money') target.select(); }
+  }
+  function sheetSay(msg, assertive) { var r = assertive ? $('#sheet-alert') : $('#sheet-live'); r.textContent = ''; setTimeout(function () { r.textContent = msg; }, 50); }
+  function showError(msg) {
+    var e = $('#amt-err'); e.textContent = msg; e.hidden = false;
+    $('#amt-field').classList.add('is-invalid'); $('#amt').setAttribute('aria-invalid', 'true'); $('#amt').focus();
+    sheetSay(msg, true); // a permanent role=alert node in the dialog, so the message is announced reliably
+  }
+  function clearError() { var e = $('#amt-err'); e.hidden = true; $('#amt-field').classList.remove('is-invalid'); $('#amt').removeAttribute('aria-invalid'); $('#sheet-alert').textContent = ''; }
+
+  // Backdrop dismissal only when the press both starts and ends outside the sheet's box (WCAG 2.5.2).
+  function outsideSheet(e) { var r = sheet.getBoundingClientRect(); return e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom; }
+  var pressedOutside = false;
+  sheet.addEventListener('pointerdown', function (e) { pressedOutside = e.target === sheet && outsideSheet(e); });
+
+  // Keep the sheet sitting on the on-screen keyboard (iOS ignores interactive-widget).
+  var phone = window.matchMedia('(max-width: 47.99rem)');
+  function placeSheet() {
+    // ignore pinch-zoom, where the visual viewport shrinks without a keyboard (a11y round 2, R2-2)
+    if (!window.visualViewport || !sheet.open || !phone.matches || visualViewport.scale > 1.01) { sheet.style.bottom = ''; sheet.style.maxHeight = ''; return; }
+    var kb = Math.max(0, window.innerHeight - visualViewport.height - visualViewport.offsetTop);
+    sheet.style.bottom = kb > 0 ? kb + 'px' : '';
+    sheet.style.maxHeight = (visualViewport.height - 8) + 'px'; // the whole sheet stays above the keyboard; it scrolls if taller
+  }
+  if (window.visualViewport) { visualViewport.addEventListener('resize', placeSheet); visualViewport.addEventListener('scroll', placeSheet); }
+
+  sheet.addEventListener('click', function (e) {
+    if (e.target === sheet) { if (pressedOutside && outsideSheet(e)) sheet.close(); pressedOutside = false; return; }
+    var row = e.target.closest('.pick-row');
+    if (row) { sheetGoal = data.goals.filter(function (g) { return g.id === row.dataset.goal; })[0]; renderSheet('amount'); focusSheet(); return; }
+    var act = e.target.closest('[data-act]');
+    if (act && act.dataset.act === 'change') { renderSheet('pick'); focusSheet(); return; }
+    if (act && act.dataset.act === 'note') {
+      var open = act.getAttribute('aria-expanded') === 'true';
+      act.setAttribute('aria-expanded', String(!open)); $('#note-wrap').hidden = open; if (!open) $('#note').focus(); return;
+    }
+    var step = e.target.closest('[data-step]');
+    if (step) { var i = $('#amt'); var v = parseInt(i.value, 10); if (isNaN(v)) v = sheetGoal.percent; i.value = Math.max(0, Math.min(100, v + parseInt(step.dataset.step, 10))); clearError(); sheetSay(i.value + '%'); }
+  });
+  $('#sheet-close').addEventListener('click', function () { sheet.close(); });
+  sheet.addEventListener('close', function () {
+    sheet.style.bottom = ''; sheet.style.maxHeight = '';
+    $('#sheet-live').textContent = ''; $('#sheet-alert').textContent = ''; // no stale announcements next time
+    focusPrimary();
+  });
+
+  function submit(e) {
+    e.preventDefault();
+    var g = sheetGoal, money = g.kind === 'money';
+    var v = money ? parseAmount($('#amt').value) : parsePercent($('#amt').value);
+    if (v.error) { showError(v.error); return; }
+    var note = money && $('#note') ? $('#note').value.trim() : '';
+    commit(g, v.value, note);
+  }
+
+  function snapshot() { return JSON.parse(JSON.stringify(data)); }
+  function commit(g, value, note) {
+    var before = snapshot(), wasDone = isDone(g), offline = state === 'offline';
+    animFrom[g.id] = Math.round(Math.min(1, ratio(g)) * 100);
+    var money = g.kind === 'money', amountText = fmt(value);
+    if (money) { g.saved += value; data.total += value; }
+    else g.percent = value;
+    var when = offline ? 'waiting to sync' : (note || 'just now');
+    g.last = { name: 'Sara', p: 'a', text: money ? 'Sara added ' + amountText + ' · ' + when : 'Sara moved it to ' + value + '% · ' + (offline ? 'waiting to sync' : 'just now') };
+    g.pending = offline;
+    var completed = isDone(g) && !wasDone;
+    if (completed) { data.done += 1; g.justDone = true; }
+    sheet.close();
+    render();
+    focusPrimary();
+    var undo = function () {
+      data = before; animFrom = {}; render(); focusPrimary();
+      toast({ msg: money ? 'Removed ' + amountText + ' MAD from ' + g.title : g.title + ' is back to ' + before.goals.filter(function (x) { return x.id === g.id; })[0].percent + '%' });
+    };
+    var undoLabel = money ? 'Undo: remove ' + amountText + ' MAD from ' + g.title : 'Undo';
+    if (completed) {
+      toast({ done: true, title: 'Goal reached.', msg: offline ? 'Goal reached once this syncs.' : (money ? g.title + ': ' + fmt(g.target) + ' MAD together.' : g.title + ' is at 100%.'), undo: undo, undoLabel: undoLabel });
+    } else if (money) {
+      toast({ msg: 'Added ' + amountText + ' MAD to ' + g.title + (offline ? '. Will sync when you\'re back online.' : ''), undo: undo, undoLabel: undoLabel });
+    } else {
+      toast({ msg: offline ? g.title + ' set to ' + value + '%. Will sync when you\'re back online.' : g.title + ' is now at ' + value + '%', undo: undo, undoLabel: undoLabel });
+    }
+  }
+
+  // ---- page actions ----
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest('#masthead [data-act]');
+    if (!a) return;
+    var act = a.dataset.act;
+    if (act === 'add') openSheet();
+    if (act === 'share') navigator.share({ text: 'Join me on Zamane. Use this code: K7QM-4XPA' }).catch(function () {});
+    if (act === 'copy') {
+      (navigator.clipboard ? navigator.clipboard.writeText('K7QM-4XPA') : Promise.reject())
+        .then(function () { toast({ msg: 'Code copied' }); }, function () { toast({ msg: 'Couldn\'t copy. Select the code and copy it by hand.' }); });
+    }
+    if (act === 'retry') {
+      if (a.getAttribute('aria-disabled') === 'true') return;
+      a.setAttribute('aria-disabled', 'true'); a.textContent = 'Trying again'; // stays focusable while pending
+      setTimeout(function () { state = 'populated'; data = initialData(state); render(); var h = $('#main h1'); if (h) h.focus({ preventScroll: true }); announce('Home loaded.'); }, 900);
+    }
+  });
+
+  // Realtime: the partner's change lands in place, with no toast (ia.md).
+  function partnerAdds() {
+    var g = data.goals.filter(function (x) { return x.id === 'wedding'; })[0];
+    if (!g) return;
+    animFrom[g.id] = Math.round(ratio(g) * 100);
+    g.saved += 200; data.total += 200;
+    g.last = { name: 'Youssef', p: 'b', text: 'Youssef added 200 · just now' };
+    render();
+    announce('Youssef added 200 MAD. Saved together: ' + fmt(data.total) + ' MAD.');
+  }
+
+  render();
+
+  // ---- prototype helpers for screenshots and review ----
+  // ?state=populated|first-run|joined-empty|trip-now|no-trip|all-done|loading|offline|error
+  // ?sheet=pick|money|percent|invalid   ?toast=added|queued|completed|percent   ?live=1   ?noshare=1
+  var sp = P.get('sheet');
+  if (sp === 'pick') openSheet('pick');
+  if (sp === 'money') openSheet('amount', 'wedding');
+  if (sp === 'percent') openSheet('amount', 'guest-room');
+  if (sp === 'invalid') { openSheet('amount', 'wedding'); $('#amt').value = '12x'; showError('Use numbers only, for example 500 or 500,50.'); }
+  // Toast fixtures run the real commit, so cards and the total change with them.
+  var tp = P.get('toast');
+  function byId(id) { return data.goals.filter(function (g) { return g.id === id; })[0]; }
+  if (tp === 'added' || tp === 'queued') commit(byId('wedding'), 500, '');
+  if (tp === 'completed') commit(byId('wedding'), 5750, '');
+  if (tp === 'percent') commit(byId('guest-room'), 70, '');
+  if (P.has('live')) setTimeout(partnerAdds, 300);
+})();
+</script>
+</body>
+</html>

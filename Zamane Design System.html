@@ -1,0 +1,606 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Zamane Design System</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Young+Serif&display=swap">
+<style>
+/* Layout: a single reading column (max 1080) with a sticky section nav; each section = label rail + content. */
+:root{--surface:#f8f3ea;--surface-raised:#fffdf8;--surface-sunken:#efe6d6;--line:#e3d8c5;--line-strong:#8f8576;--ink:#1d2230;--ink-muted:#5a5f6d;--majorelle:#1d4e89;--on-majorelle:#ffffff;--majorelle-soft:#dfe8f5;--majorelle-ink:#163d6b;--saffron:#e3a72f;--on-saffron:#2a1d05;--saffron-soft:#faedcf;--saffron-ink:#7a5200;--terracotta:#b5532f;--on-terracotta:#ffffff;--terracotta-soft:#f6e0d6;--terracotta-ink:#8a3a1d;--zellige:#1e7a5f;--on-zellige:#ffffff;--zellige-soft:#d9efe6;--zellige-ink:#145a45;--danger:#b42318;--danger-soft:#fbe4e1;--danger-ink:#8f1d14;--partner-a:var(--majorelle);--partner-b:var(--terracotta);--focus-ring:var(--majorelle);--shadow-card:0 1px 2px rgba(29,34,48,0.06), 0 4px 14px rgba(29,34,48,0.06);--shadow-pop:0 8px 28px rgba(29,34,48,0.16);}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--surface:#12161d;--surface-raised:#1b2029;--surface-sunken:#0d1015;--line:#2b323e;--line-strong:#6b7586;--ink:#f1ebdf;--ink-muted:#a8adb9;--majorelle:#8fb4ea;--on-majorelle:#0e1a2b;--majorelle-soft:#1b2b44;--majorelle-ink:#b9d0f3;--saffron:#f2bb4e;--on-saffron:#2a1d05;--saffron-soft:#3b2e12;--saffron-ink:#f5cd7c;--terracotta:#e98f6c;--on-terracotta:#2b120a;--terracotta-soft:#3e2219;--terracotta-ink:#f3b49b;--zellige:#63c9a3;--on-zellige:#0b241b;--zellige-soft:#15332a;--zellige-ink:#94dcc0;--danger:#ff8a7a;--danger-soft:#3d1a17;--danger-ink:#ffb4a8;--partner-a:var(--majorelle);--partner-b:var(--terracotta);--focus-ring:var(--majorelle);--shadow-card:0 1px 2px rgba(0,0,0,0.5);--shadow-pop:0 8px 28px rgba(0,0,0,0.6);color-scheme:dark}}
+:root[data-theme="dark"]{--surface:#12161d;--surface-raised:#1b2029;--surface-sunken:#0d1015;--line:#2b323e;--line-strong:#6b7586;--ink:#f1ebdf;--ink-muted:#a8adb9;--majorelle:#8fb4ea;--on-majorelle:#0e1a2b;--majorelle-soft:#1b2b44;--majorelle-ink:#b9d0f3;--saffron:#f2bb4e;--on-saffron:#2a1d05;--saffron-soft:#3b2e12;--saffron-ink:#f5cd7c;--terracotta:#e98f6c;--on-terracotta:#2b120a;--terracotta-soft:#3e2219;--terracotta-ink:#f3b49b;--zellige:#63c9a3;--on-zellige:#0b241b;--zellige-soft:#15332a;--zellige-ink:#94dcc0;--danger:#ff8a7a;--danger-soft:#3d1a17;--danger-ink:#ffb4a8;--partner-a:var(--majorelle);--partner-b:var(--terracotta);--focus-ring:var(--majorelle);--shadow-card:0 1px 2px rgba(0,0,0,0.5);--shadow-pop:0 8px 28px rgba(0,0,0,0.6);color-scheme:dark}
+:root { --font-serif: "Young Serif", Georgia, "Times New Roman", serif; --font-sans: Figtree, "Segoe UI", system-ui, sans-serif; --space-1:4px; --space-2:8px; --space-3:12px; --space-4:16px; --space-5:24px; --space-6:32px; --space-7:48px; --radius-sm:6px; --radius-md:12px; --radius-lg:20px; --radius-pill:999px; }
+
+.zm-body-unused { margin: 0; font-family: var(--font-sans); font-size: 15px; line-height: 22px; background: var(--surface); color: var(--ink); -webkit-font-smoothing: antialiased; }
+.zm-row { display: flex; flex-wrap: wrap; gap: var(--space-3); align-items: center; padding: var(--space-4); }
+.zm-stack { display: flex; flex-direction: column; gap: var(--space-3); padding: var(--space-4); max-width: 380px; }
+.zm-num { font-variant-numeric: tabular-nums; }
+
+/* Button */
+.zm-btn { font: inherit; font-size: 13px; line-height: 18px; font-weight: 600; letter-spacing: .01em; display: inline-flex; align-items: center; justify-content: center; gap: var(--space-2); height: 44px; padding: 0 var(--space-5); border-radius: var(--radius-md); border: 1px solid var(--line-strong); background: var(--surface-raised); color: var(--ink); cursor: pointer; transition: transform 120ms ease; }
+.zm-btn:active { transform: scale(.98); }
+.zm-btn:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
+.zm-btn:disabled { opacity: .5; cursor: default; }
+.zm-btn-sm { height: 32px; padding: 0 var(--space-3); border-radius: var(--radius-sm); }
+.zm-btn-primary { background: var(--majorelle); border-color: var(--majorelle); color: var(--on-majorelle); }
+.zm-btn-ghost { background: transparent; border-color: transparent; color: var(--majorelle); }
+.zm-btn-danger { background: transparent; border-color: var(--danger); color: var(--danger); }
+.zm-btn-block { width: 100%; }
+
+/* PartnerAvatar */
+.zm-av { display: inline-flex; align-items: center; justify-content: center; flex: none; border-radius: var(--radius-pill); font-weight: 600; box-sizing: border-box; border: 2px solid var(--surface-raised); }
+.zm-av-a { background: var(--majorelle-soft); color: var(--majorelle-ink); box-shadow: 0 0 0 2px var(--partner-a); }
+.zm-av-b { background: var(--terracotta-soft); color: var(--terracotta-ink); box-shadow: 0 0 0 2px var(--partner-b); }
+.zm-av-sm { width: 24px; height: 24px; font-size: 11px; }
+.zm-av-md { width: 32px; height: 32px; font-size: 13px; }
+.zm-av-lg { width: 48px; height: 48px; font-size: 18px; }
+.zm-pair { display: inline-flex; }
+.zm-pair > .zm-av + .zm-av { margin-left: calc(var(--space-1) * -2); }
+
+/* Progress */
+.zm-prog { display: flex; flex-direction: column; gap: var(--space-1); }
+.zm-prog-head { display: flex; justify-content: space-between; font-size: 12px; line-height: 16px; color: var(--ink-muted); }
+.zm-prog-track { height: 8px; border-radius: var(--radius-sm); background: var(--majorelle-soft); overflow: hidden; }
+.zm-prog-fill { height: 100%; border-radius: var(--radius-sm); background: var(--majorelle); }
+.zm-prog-done .zm-prog-track { background: var(--zellige-soft); }
+.zm-prog-done .zm-prog-fill { background: var(--zellige); }
+.zm-prog-over .zm-prog-track { background: var(--danger-soft); }
+.zm-prog-over .zm-prog-fill { background: var(--danger); }
+.zm-prog-over .zm-prog-head span:last-child { color: var(--danger); font-weight: 600; }
+
+/* Badge (internal) */
+.zm-badge { display: inline-flex; align-items: center; gap: var(--space-1); font-size: 12px; line-height: 20px; font-weight: 600; padding: 0 var(--space-2); border-radius: var(--radius-pill); }
+.zm-badge-done { background: var(--zellige-soft); color: var(--zellige-ink); }
+.zm-badge-saffron { background: var(--saffron-soft); color: var(--saffron-ink); }
+.zm-badge-neutral { background: var(--surface-sunken); color: var(--ink-muted); }
+
+/* The arch — imagery only */
+.zm-arch { border-radius: 50% 50% var(--radius-sm) var(--radius-sm) / 40% 40% var(--radius-sm) var(--radius-sm); overflow: hidden; }
+
+/* GoalCard */
+.zm-goal { display: flex; gap: var(--space-4); padding: var(--space-4); background: var(--surface-raised); border: 1px solid var(--line); border-radius: var(--radius-lg); box-shadow: var(--shadow-card); color: var(--ink); }
+.zm-goal-cover { flex: none; width: 64px; height: 80px; background: var(--majorelle-soft); color: var(--majorelle-ink); display: flex; align-items: flex-end; justify-content: center; padding-bottom: var(--space-2); box-sizing: border-box; font-family: var(--font-serif); font-size: 28px; line-height: 1; }
+.zm-goal-cover img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.zm-goal-cover.has-img { padding: 0; }
+.zm-goal-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: var(--space-2); }
+.zm-goal-top { display: flex; justify-content: space-between; align-items: flex-start; gap: var(--space-2); }
+.zm-goal-title { margin: 0; font-size: 18px; line-height: 24px; font-weight: 600; }
+.zm-goal-amt { font-size: 15px; line-height: 22px; }
+.zm-goal-amt b { font-weight: 600; }
+.zm-goal-amt span { color: var(--ink-muted); }
+.zm-goal-foot { display: flex; justify-content: space-between; align-items: center; font-size: 12px; line-height: 16px; color: var(--ink-muted); }
+
+/* TripCountdown */
+.zm-trip { display: flex; align-items: stretch; background: var(--surface-raised); border: 1px solid var(--line); border-radius: var(--radius-lg); box-shadow: var(--shadow-card); overflow: hidden; color: var(--ink); }
+.zm-trip-count { flex: none; width: 96px; background: var(--saffron); color: var(--on-saffron); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: var(--space-4) var(--space-2); text-align: center; }
+.zm-trip-count b { font-size: 32px; line-height: 36px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.zm-trip-count span { font-size: 12px; line-height: 16px; font-weight: 600; }
+.zm-trip-past .zm-trip-count { background: var(--surface-sunken); color: var(--ink-muted); }
+.zm-trip-body { flex: 1; min-width: 0; padding: var(--space-4); display: flex; flex-direction: column; gap: var(--space-1); }
+.zm-trip-kicker { font-size: 13px; line-height: 18px; font-weight: 600; color: var(--saffron-ink); }
+.zm-trip-past .zm-trip-kicker { color: var(--ink-muted); }
+.zm-trip-title { margin: 0; font-family: var(--font-serif); font-weight: 400; font-size: 28px; line-height: 34px; }
+.zm-trip-meta { font-size: 13px; line-height: 18px; color: var(--ink-muted); }
+
+/* ShoppingItem */
+.zm-item { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-3) var(--space-4); background: var(--surface-raised); border-bottom: 1px solid var(--line); color: var(--ink); }
+.zm-check { flex: none; width: 24px; height: 24px; margin: 0; border-radius: var(--radius-sm); border: 2px solid var(--line-strong); background: var(--surface-raised); display: inline-flex; align-items: center; justify-content: center; cursor: pointer; padding: 0; color: var(--on-zellige); }
+.zm-check:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
+.zm-check[aria-checked="true"] { background: var(--zellige); border-color: var(--zellige); }
+.zm-item-main { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.zm-item-name { font-size: 15px; line-height: 22px; font-weight: 600; }
+.zm-item-qty { color: var(--ink-muted); font-weight: 400; }
+.zm-item-sub { font-size: 12px; line-height: 16px; color: var(--ink-muted); display: flex; align-items: center; gap: var(--space-1); }
+.zm-item-price { font-size: 15px; line-height: 22px; font-variant-numeric: tabular-nums; }
+.zm-item-bought .zm-item-name, .zm-item-bought .zm-item-price { color: var(--ink-muted); text-decoration: line-through; font-weight: 400; }
+
+@media (prefers-reduced-motion: reduce) { .zm-btn { transition: none; } .zm-btn:active { transform: none; } }
+
+
+html { scroll-behavior: smooth; scroll-padding-top: 72px; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body { background: var(--surface); color: var(--ink); font-family: var(--font-sans); font-size: 15px; line-height: 22px; -webkit-font-smoothing: antialiased; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--surface); }
+.wrap { max-width: 1080px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+a { color: var(--majorelle); }
+:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
+
+/* nav */
+.nav { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--surface); border-bottom: 1px solid var(--line); }
+.nav .wrap { display: flex; align-items: center; gap: var(--space-5); height: 60px; }
+.brandmark { font-family: var(--font-serif); font-size: 22px; color: var(--ink); text-decoration: none; display: flex; align-items: baseline; gap: var(--space-2); flex: none; }
+.brandmark small { font-family: var(--font-sans); font-size: 12px; color: var(--ink-muted); }
+.links { display: flex; gap: var(--space-4); overflow-x: auto; flex: 1; min-width: 0; scrollbar-width: none; }
+.links a { font-size: 13px; font-weight: 600; color: var(--ink-muted); text-decoration: none; white-space: nowrap; padding: var(--space-2) 0; }
+.links a:hover { color: var(--ink); }
+.theme { display: inline-flex; border: 1px solid var(--line-strong); border-radius: var(--radius-pill); padding: 2px; flex: none; }
+.theme button { font: inherit; font-size: 12px; font-weight: 600; border: 0; background: transparent; color: var(--ink-muted); padding: 4px 10px; border-radius: var(--radius-pill); cursor: pointer; }
+.theme button[aria-pressed="true"] { background: var(--majorelle); color: var(--on-majorelle); }
+@media (max-width: 640px) { .links { display: none; } .nav .wrap { justify-content: space-between; } }
+
+/* hero */
+.hero { padding-block: var(--space-7) var(--space-6); display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: var(--space-6); align-items: end; }
+.hero h1 { font-family: var(--font-serif); font-weight: 400; font-size: clamp(64px, 11vw, 128px); line-height: .92; letter-spacing: -.01em; margin: 0; }
+.hero .ar { font-family: var(--font-serif); color: var(--ink-muted); font-size: 18px; margin: var(--space-3) 0 0; }
+.hero p.lede { font-size: 18px; line-height: 28px; max-width: 34em; margin: var(--space-4) 0 0; color: var(--ink); }
+.hero p.lede + p { color: var(--ink-muted); margin: var(--space-3) 0 0; max-width: 36em; }
+.hero svg { width: 100%; height: auto; display: block; max-width: 100%; }
+.c-brand{fill:var(--majorelle)} .c-brandcut{fill:var(--majorelle-soft)} .c-sun{fill:var(--saffron)} .c-clay{fill:var(--terracotta)} .c-claycut{fill:var(--terracotta-soft)} .c-done{fill:var(--zellige)}
+@media (max-width: 760px) { .hero { grid-template-columns: 1fr; } .hero .art { order: -1; max-width: 420px; } }
+
+/* sections */
+section.s { padding-block: var(--space-7); border-top: 1px solid var(--line); display: grid; grid-template-columns: 200px minmax(0,1fr); gap: var(--space-6); }
+.s-head h2 { font-family: var(--font-serif); font-weight: 400; font-size: 28px; line-height: 34px; margin: 0; text-wrap: balance; }
+.s-head p { color: var(--ink-muted); font-size: 14px; line-height: 20px; margin: var(--space-2) 0 0; }
+.s-body { min-width: 0; display: flex; flex-direction: column; gap: var(--space-6); }
+.s-body > p { margin: 0; max-width: 62ch; }
+h3.sub { font-size: 13px; line-height: 18px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; color: var(--ink-muted); margin: 0 0 var(--space-3); }
+@media (max-width: 760px) { section.s { grid-template-columns: 1fr; gap: var(--space-5); padding-block: var(--space-6); } }
+
+/* principles */
+.princ { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: var(--space-5) var(--space-6); }
+.princ li { display: flex; flex-direction: column; gap: var(--space-2); }
+.princ b { font-size: 18px; line-height: 24px; }
+.princ span { color: var(--ink-muted); }
+.princ code, .s-body code, td code { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 12.5px; background: var(--surface-sunken); padding: 1px 5px; border-radius: 4px; color: var(--ink); }
+
+/* colour */
+.fam { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: var(--space-3); }
+.sw { background: var(--surface-raised); border: 1px solid var(--line); border-radius: var(--radius-md); overflow: hidden; display: flex; flex-direction: column; text-align: left; font: inherit; color: inherit; padding: 0; cursor: pointer; }
+.sw:hover { border-color: var(--line-strong); }
+.chip { height: 72px; display: flex; align-items: flex-end; justify-content: flex-end; padding: var(--space-2); border-bottom: 1px solid var(--line); }
+.chip i { font-style: normal; font-size: 11px; font-weight: 600; padding: 0 6px; border-radius: var(--radius-pill); background: var(--surface-raised); color: var(--ink); }
+.sw-meta { padding: var(--space-3); display: flex; flex-direction: column; gap: 2px; }
+.sw-name { font-weight: 600; font-size: 14px; }
+.sw-vals { font-family: ui-monospace, Menlo, monospace; font-size: 11.5px; color: var(--ink-muted); font-variant-numeric: tabular-nums; }
+.sw-use { font-size: 12px; line-height: 16px; color: var(--ink-muted); margin-top: var(--space-1); }
+.toast { position: fixed; left: 50%; bottom: calc(var(--space-5) + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); background: var(--ink); color: var(--surface); padding: var(--space-2) var(--space-4); border-radius: var(--radius-pill); font-size: 13px; font-weight: 600; box-shadow: var(--shadow-pop); z-index: 20; }
+
+/* contrast table */
+.tbl { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--radius-md); background: var(--surface-raised); }
+table { border-collapse: collapse; width: 100%; font-size: 14px; }
+th, td { text-align: left; padding: var(--space-2) var(--space-3); border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-size: 12px; font-weight: 600; color: var(--ink-muted); }
+tr:last-child td { border-bottom: 0; }
+td.n { font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+/* type */
+.spec { display: grid; grid-template-columns: 140px minmax(0,1fr); gap: var(--space-2) var(--space-5); align-items: baseline; padding-block: var(--space-4); border-bottom: 1px solid var(--line); }
+.spec:first-of-type { padding-top: 0; }
+.spec-meta { font-size: 12px; line-height: 16px; color: var(--ink-muted); }
+.spec-meta b { display: block; color: var(--ink); font-size: 13px; }
+.spec-sample { min-width: 0; overflow-wrap: anywhere; }
+.spec-use { grid-column: 2; font-size: 12px; color: var(--ink-muted); }
+@media (max-width: 560px) { .spec { grid-template-columns: 1fr; } .spec-use { grid-column: 1; } }
+.fonts { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap: var(--space-4); }
+.font-card { background: var(--surface-raised); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: var(--space-5); }
+.font-card .big { font-size: 64px; line-height: 1; }
+.font-card .nm { font-weight: 600; margin-top: var(--space-3); }
+.font-card .rl { color: var(--ink-muted); font-size: 13px; }
+
+/* shape */
+.scale { display: flex; flex-direction: column; gap: var(--space-2); }
+.sp { display: grid; grid-template-columns: 80px 48px minmax(0,1fr); gap: var(--space-3); align-items: center; font-size: 13px; }
+.sp .bar { height: 12px; background: var(--majorelle); border-radius: 2px; }
+.sp .px { color: var(--ink-muted); font-variant-numeric: tabular-nums; }
+.radii { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: var(--space-4); }
+.rad { display: flex; flex-direction: column; gap: var(--space-2); align-items: flex-start; font-size: 13px; }
+.rad div { width: 96px; height: 72px; background: var(--majorelle-soft); border: 2px solid var(--majorelle); }
+.rad span { color: var(--ink-muted); font-size: 12px; }
+.arches { display: flex; flex-wrap: wrap; gap: var(--space-4); align-items: flex-end; }
+.arch-demo { width: 120px; height: 150px; background: var(--saffron-soft); display: flex; align-items: flex-end; justify-content: center; padding-bottom: var(--space-3); font-family: var(--font-serif); font-size: 32px; color: var(--saffron-ink); box-sizing: border-box; }
+.arch-demo.b { width: 180px; height: 210px; background: var(--majorelle-soft); color: var(--majorelle-ink); }
+.arch-demo.c { width: 80px; height: 100px; background: var(--terracotta-soft); color: var(--terracotta-ink); font-size: 24px; }
+.shadows { display: flex; flex-wrap: wrap; gap: var(--space-5); }
+.shd { width: 180px; height: 96px; border-radius: var(--radius-lg); background: var(--surface-raised); border: 1px solid var(--line); display: flex; align-items: flex-end; padding: var(--space-3); box-sizing: border-box; font-size: 13px; font-weight: 600; }
+
+/* ideas vs commitments */
+.ivc { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap: var(--space-4); }
+.idea, .commit { border-radius: var(--radius-md); padding: var(--space-4); display: flex; flex-direction: column; gap: var(--space-1); }
+.idea { border: 2px dashed var(--line-strong); background: var(--surface); }
+.commit { background: var(--surface-raised); border: 1px solid var(--line); box-shadow: var(--shadow-card); }
+.ivc .k { font-size: 12px; font-weight: 600; color: var(--ink-muted); text-transform: uppercase; letter-spacing: .04em; }
+.ivc .t { font-weight: 600; }
+.ivc .m { font-size: 13px; color: var(--ink-muted); }
+
+/* components */
+.comp { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: var(--space-5); padding-bottom: var(--space-6); border-bottom: 1px solid var(--line); }
+.comp:last-child { border-bottom: 0; padding-bottom: 0; }
+.comp-demo { background: var(--surface-sunken); border-radius: var(--radius-lg); padding: var(--space-5); min-width: 0; display: flex; flex-direction: column; gap: var(--space-3); }
+.comp-demo .zm-row, .comp-demo .zm-stack { padding: 0; }
+.comp-demo .card-flush { border-radius: var(--radius-lg); overflow: hidden; border: 1px solid var(--line); }
+.comp-doc { min-width: 0; display: flex; flex-direction: column; gap: var(--space-3); }
+.comp-doc h3 { margin: 0; font-size: 20px; line-height: 26px; }
+.comp-doc p { margin: 0; color: var(--ink-muted); }
+.comp-doc ul { margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: var(--space-1); font-size: 14px; }
+.props { font-size: 13px; }
+@media (max-width: 860px) { .comp { grid-template-columns: 1fr; } }
+
+/* phone */
+.phone-row { display: grid; grid-template-columns: minmax(0, 360px) minmax(0,1fr); gap: var(--space-6); align-items: start; }
+.phone { background: var(--surface); border: 1px solid var(--line-strong); border-radius: 36px; padding: var(--space-5) var(--space-4); box-shadow: var(--shadow-pop); display: flex; flex-direction: column; gap: var(--space-4); max-width: 100%; box-sizing: border-box; }
+.ph-top { display: flex; justify-content: space-between; align-items: center; }
+.ph-hello { font-family: var(--font-serif); font-size: 28px; line-height: 34px; }
+.ph-sub { font-size: 12px; color: var(--ink-muted); }
+.ph-total { background: var(--surface-raised); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: var(--space-4); display: flex; justify-content: space-between; align-items: flex-end; gap: var(--space-3); }
+.ph-total .num { font-size: 32px; line-height: 36px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.ph-total .lbl { font-size: 12px; color: var(--ink-muted); }
+.ph-label { font-size: 13px; font-weight: 600; display: flex; justify-content: space-between; }
+.ph-label span { color: var(--ink-muted); font-weight: 400; }
+.ph-tabs { display: flex; justify-content: space-around; border-top: 1px solid var(--line); padding-top: var(--space-3); font-size: 12px; font-weight: 600; color: var(--ink-muted); }
+.ph-tabs .on { color: var(--majorelle); }
+.notes { display: flex; flex-direction: column; gap: var(--space-4); }
+.notes div { display: flex; flex-direction: column; gap: var(--space-1); }
+.notes b { font-size: 15px; }
+.notes span { color: var(--ink-muted); font-size: 14px; }
+@media (max-width: 760px) { .phone-row { grid-template-columns: 1fr; } }
+
+/* voice */
+.dd { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); gap: var(--space-4); }
+.dd > div { background: var(--surface-raised); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: var(--space-4) var(--space-5); }
+.dd h4 { margin: 0 0 var(--space-3); font-size: 13px; display: flex; align-items: center; gap: var(--space-2); }
+.dd ul { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: var(--space-2); }
+.dd li { font-size: 15px; }
+.dd .no li { color: var(--ink-muted); text-decoration: line-through; text-decoration-color: var(--danger); }
+
+footer { border-top: 1px solid var(--line); padding-block: var(--space-6) var(--space-7); color: var(--ink-muted); font-size: 13px; }
+footer .wrap { display: flex; justify-content: space-between; gap: var(--space-4); flex-wrap: wrap; }
+</style>
+
+<nav class="nav" aria-label="Sections">
+  <div class="wrap">
+    <a class="brandmark" href="#top">Zamane <small>Design system</small></a>
+    <div class="links">
+      <a href="#principles">Principles</a><a href="#colour">Colour</a><a href="#type">Type</a><a href="#shape">Shape</a><a href="#components">Components</a><a href="#in-use">In use</a><a href="#voice">Voice</a><a href="#icons">Icons</a>
+    </div>
+    <div class="theme" role="group" aria-label="Theme">
+      <button type="button" id="th-light" data-t="light">Light</button><button type="button" id="th-system" data-t="system">Auto</button><button type="button" id="th-dark" data-t="dark">Dark</button>
+    </div>
+  </div>
+</nav>
+
+<main id="top">
+  <div class="wrap">
+    <header class="hero">
+      <div>
+        <h1>Zamane</h1>
+        <p class="ar" lang="ar" dir="rtl" style="text-align:left">زمان</p>
+        <p class="lede">The design language of a private space for two. Goals, trips and shopping, shared by a couple and drawn like a home in Morocco: sand walls, zellige blue, saffron light, arched doorways.</p>
+        <p>Warm and calm. Never a bank, never a toy. Everything below is the system the app is built from.</p>
+      </div>
+      <div class="art" aria-hidden="true">
+        <svg viewBox="0 0 480 288">
+          <path class="c-brand" d="M16 288 V88 A72 72 0 0 1 160 88 V288 Z"/>
+          <rect class="c-sun" x="176" y="152" width="112" height="112" rx="20"/>
+          <path class="c-clay" d="M304 264 V160 A80 80 0 0 1 464 160 V264 Z"/>
+          <circle class="c-done" cx="232" cy="112" r="16"/>
+          <path class="c-brandcut" d="M32 172 V148 A12 12 0 0 1 56 148 V172 Z"/><path class="c-brandcut" d="M76 172 V148 A12 12 0 0 1 100 148 V172 Z"/><path class="c-brandcut" d="M120 172 V148 A12 12 0 0 1 144 148 V172 Z"/>
+          <path class="c-brandcut" d="M32 228 V204 A12 12 0 0 1 56 204 V228 Z"/><path class="c-brandcut" d="M76 228 V204 A12 12 0 0 1 100 204 V228 Z"/><path class="c-brandcut" d="M120 228 V204 A12 12 0 0 1 144 204 V228 Z"/>
+          <path class="c-brandcut" d="M32 284 V260 A12 12 0 0 1 56 260 V284 Z"/><path class="c-brandcut" d="M76 284 V260 A12 12 0 0 1 100 260 V284 Z"/><path class="c-brandcut" d="M120 284 V260 A12 12 0 0 1 144 260 V284 Z"/>
+          <path class="c-claycut" d="M328 240 V200 A12 12 0 0 1 352 200 V240 Z"/><path class="c-claycut" d="M368 240 V200 A12 12 0 0 1 392 200 V240 Z"/><path class="c-claycut" d="M408 240 V200 A12 12 0 0 1 432 200 V240 Z"/>
+        </svg>
+      </div>
+    </header>
+
+    <section class="s" id="principles">
+      <div class="s-head"><h2>Principles</h2><p>Five rules every screen follows.</p></div>
+      <div class="s-body">
+        <ul class="princ">
+          <li><b>Ours, not mine</b><span>Speak to the couple as "you two". Show both partners side by side, with equal weight.</span></li>
+          <li><b>Who did what, always</b><span>Every contribution, note and item carries the partner's avatar and first name.</span></li>
+          <li><b>Ideas look lighter than commitments</b><span>A trip Place has a dashed outline. A plan entry is a solid card. Never style the two alike.</span></li>
+          <li><b>Numbers are earned, not typed</b><span>Totals come from history, so the history is one tap away. Figures use tabular numerals.</span></li>
+          <li><b>Quick capture</b><span>Every add form opens with the name field focused. Everything else is optional and folded below.</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="s" id="colour">
+      <div class="s-head"><h2>Colour</h2><p>Light and dark themes. Tap a swatch to copy its variable. Use the toggle above to switch themes.</p></div>
+      <div class="s-body" id="colour-body">
+        <div><h3 class="sub">Surfaces &amp; text</h3><div class="fam"><button type="button" class="sw" data-name="surface" id="sw-surface"><span class="chip" style="background:var(--surface)"></span><span class="sw-meta"><span class="sw-name">surface</span><span class="sw-vals">#f8f3ea · #12161d</span><span class="sw-use">Page background: warm sand by day, night-courtyard blue-black by night.</span></span></button><button type="button" class="sw" data-name="surface-raised" id="sw-surface-raised"><span class="chip" style="background:var(--surface-raised)"></span><span class="sw-meta"><span class="sw-name">surface-raised</span><span class="sw-vals">#fffdf8 · #1b2029</span><span class="sw-use">Cards, sheets, list rows and inputs sitting on <code>surface</code>.</span></span></button><button type="button" class="sw" data-name="surface-sunken" id="sw-surface-sunken"><span class="chip" style="background:var(--surface-sunken)"></span><span class="sw-meta"><span class="sw-name">surface-sunken</span><span class="sw-vals">#efe6d6 · #0d1015</span><span class="sw-use">Wells inside cards: progress tracks on raised grounds, empty plan days, the bought group in Shopping.</span></span></button><button type="button" class="sw" data-name="line" id="sw-line"><span class="chip" style="background:var(--line)"></span><span class="sw-meta"><span class="sw-name">line</span><span class="sw-vals">#e3d8c5 · #2b323e</span><span class="sw-use">Hairline dividers between rows and around cards.</span></span></button><button type="button" class="sw" data-name="line-strong" id="sw-line-strong"><span class="chip" style="background:var(--line-strong)"></span><span class="sw-meta"><span class="sw-name">line-strong</span><span class="sw-vals">#8f8576 · #6b7586</span><span class="sw-use">Control borders (inputs, checkboxes, secondary buttons) and the dashed outline of an idea (a trip Place).</span></span></button><button type="button" class="sw" data-name="ink" id="sw-ink"><span class="chip" style="background:var(--ink)"></span><span class="sw-meta"><span class="sw-name">ink</span><span class="sw-vals">#1d2230 · #f1ebdf</span><span class="sw-use">Primary text and numbers on <code>surface</code>, <code>surface-raised</code>, <code>surface-sunken</code> and every <code>-soft</code> fill.</span></span></button><button type="button" class="sw" data-name="ink-muted" id="sw-ink-muted"><span class="chip" style="background:var(--ink-muted)"></span><span class="sw-meta"><span class="sw-name">ink-muted</span><span class="sw-vals">#5a5f6d · #a8adb9</span><span class="sw-use">Secondary text: dates, notes, attribution lines, captions.</span></span></button></div></div><div><h3 class="sub">Majorelle · brand</h3><div class="fam"><button type="button" class="sw" data-name="majorelle" id="sw-majorelle"><span class="chip" style="background:var(--majorelle)"></span><span class="sw-meta"><span class="sw-name">majorelle</span><span class="sw-vals">#1d4e89 · #8fb4ea</span><span class="sw-use">The brand blue, after zellige tilework.</span></span></button><button type="button" class="sw" data-name="on-majorelle" id="sw-on-majorelle"><span class="chip" style="background:var(--on-majorelle)"></span><span class="sw-meta"><span class="sw-name">on-majorelle</span><span class="sw-vals">#ffffff · #0e1a2b</span><span class="sw-use">Text and icons on a <code>majorelle</code> fill (dark text in dark theme, where the blue lightens).</span></span></button><button type="button" class="sw" data-name="majorelle-soft" id="sw-majorelle-soft"><span class="chip" style="background:var(--majorelle-soft)"></span><span class="sw-meta"><span class="sw-name">majorelle-soft</span><span class="sw-vals">#dfe8f5 · #1b2b44</span><span class="sw-use">Tinted fill: progress track on majorelle bars, selected list rows, Partner A avatar ground, goal covers with no photo.</span></span></button><button type="button" class="sw" data-name="majorelle-ink" id="sw-majorelle-ink"><span class="chip" style="background:var(--majorelle-ink)"></span><span class="sw-meta"><span class="sw-name">majorelle-ink</span><span class="sw-vals">#163d6b · #b9d0f3</span><span class="sw-use">Text on <code>majorelle-soft</code> (8.8:1 light, 9:1 dark).</span></span></button></div></div><div><h3 class="sub">Saffron · time &amp; celebration</h3><div class="fam"><button type="button" class="sw" data-name="saffron" id="sw-saffron"><span class="chip" style="background:var(--saffron)"></span><span class="sw-meta"><span class="sw-name">saffron</span><span class="sw-vals">#e3a72f · #f2bb4e</span><span class="sw-use">Celebration and time: the trip countdown block, goal-completed moments, the nearest-to-done highlight on Home.</span></span></button><button type="button" class="sw" data-name="on-saffron" id="sw-on-saffron"><span class="chip" style="background:var(--on-saffron)"></span><span class="sw-meta"><span class="sw-name">on-saffron</span><span class="sw-vals">#2a1d05 · #2a1d05</span><span class="sw-use">Text on a <code>saffron</code> fill (7.7:1 light, 9.4:1 dark).</span></span></button><button type="button" class="sw" data-name="saffron-soft" id="sw-saffron-soft"><span class="chip" style="background:var(--saffron-soft)"></span><span class="sw-meta"><span class="sw-name">saffron-soft</span><span class="sw-vals">#faedcf · #3b2e12</span><span class="sw-use">Tinted fill for countdown chips and &#x27;happening now&#x27; trip rows.</span></span></button><button type="button" class="sw" data-name="saffron-ink" id="sw-saffron-ink"><span class="chip" style="background:var(--saffron-ink)"></span><span class="sw-meta"><span class="sw-name">saffron-ink</span><span class="sw-vals">#7a5200 · #f5cd7c</span><span class="sw-use">Text on <code>saffron-soft</code>, and saffron-coloured text anywhere on <code>surface</code>/<code>surface-raised</code>.</span></span></button></div></div><div><h3 class="sub">Terracotta · warmth, partner B</h3><div class="fam"><button type="button" class="sw" data-name="terracotta" id="sw-terracotta"><span class="chip" style="background:var(--terracotta)"></span><span class="sw-meta"><span class="sw-name">terracotta</span><span class="sw-vals">#b5532f · #e98f6c</span><span class="sw-use">Partner B, and warm secondary accents (trip budget bars).</span></span></button><button type="button" class="sw" data-name="on-terracotta" id="sw-on-terracotta"><span class="chip" style="background:var(--on-terracotta)"></span><span class="sw-meta"><span class="sw-name">on-terracotta</span><span class="sw-vals">#ffffff · #2b120a</span><span class="sw-use">Text on a <code>terracotta</code> fill.</span></span></button><button type="button" class="sw" data-name="terracotta-soft" id="sw-terracotta-soft"><span class="chip" style="background:var(--terracotta-soft)"></span><span class="sw-meta"><span class="sw-name">terracotta-soft</span><span class="sw-vals">#f6e0d6 · #3e2219</span><span class="sw-use">Partner B avatar ground and tinted fills tied to Partner B.</span></span></button><button type="button" class="sw" data-name="terracotta-ink" id="sw-terracotta-ink"><span class="chip" style="background:var(--terracotta-ink)"></span><span class="sw-meta"><span class="sw-name">terracotta-ink</span><span class="sw-vals">#8a3a1d · #f3b49b</span><span class="sw-use">Text on <code>terracotta-soft</code>.</span></span></button></div></div><div><h3 class="sub">Zellige · done</h3><div class="fam"><button type="button" class="sw" data-name="zellige" id="sw-zellige"><span class="chip" style="background:var(--zellige)"></span><span class="sw-meta"><span class="sw-name">zellige</span><span class="sw-vals">#1e7a5f · #63c9a3</span><span class="sw-use">Done: a completed goal, a ticked plan entry, a bought item, a packed checklist line.</span></span></button><button type="button" class="sw" data-name="on-zellige" id="sw-on-zellige"><span class="chip" style="background:var(--on-zellige)"></span><span class="sw-meta"><span class="sw-name">on-zellige</span><span class="sw-vals">#ffffff · #0b241b</span><span class="sw-use">Check marks and text on a <code>zellige</code> fill.</span></span></button><button type="button" class="sw" data-name="zellige-soft" id="sw-zellige-soft"><span class="chip" style="background:var(--zellige-soft)"></span><span class="sw-meta"><span class="sw-name">zellige-soft</span><span class="sw-vals">#d9efe6 · #15332a</span><span class="sw-use">Tinted fill behind a done badge.</span></span></button><button type="button" class="sw" data-name="zellige-ink" id="sw-zellige-ink"><span class="chip" style="background:var(--zellige-ink)"></span><span class="sw-meta"><span class="sw-name">zellige-ink</span><span class="sw-vals">#145a45 · #94dcc0</span><span class="sw-use">Text on <code>zellige-soft</code>.</span></span></button></div></div><div><h3 class="sub">Danger · over budget</h3><div class="fam"><button type="button" class="sw" data-name="danger" id="sw-danger"><span class="chip" style="background:var(--danger)"></span><span class="sw-meta"><span class="sw-name">danger</span><span class="sw-vals">#b42318 · #ff8a7a</span><span class="sw-use">Over budget, destructive actions (delete a contribution), form errors.</span></span></button><button type="button" class="sw" data-name="danger-soft" id="sw-danger-soft"><span class="chip" style="background:var(--danger-soft)"></span><span class="sw-meta"><span class="sw-name">danger-soft</span><span class="sw-vals">#fbe4e1 · #3d1a17</span><span class="sw-use">Ground for an over-budget banner or error message.</span></span></button><button type="button" class="sw" data-name="danger-ink" id="sw-danger-ink"><span class="chip" style="background:var(--danger-ink)"></span><span class="sw-meta"><span class="sw-name">danger-ink</span><span class="sw-vals">#8f1d14 · #ffb4a8</span><span class="sw-use">Text on <code>danger-soft</code>.</span></span></button></div></div><div><h3 class="sub">Roles</h3><div class="fam"><button type="button" class="sw" data-name="partner-a" id="sw-partner-a"><span class="chip" style="background:var(--partner-a)"></span><span class="sw-meta"><span class="sw-name">partner-a</span><span class="sw-vals">{majorelle}</span><span class="sw-use">Attribution colour for the partner who created the space.</span></span></button><button type="button" class="sw" data-name="partner-b" id="sw-partner-b"><span class="chip" style="background:var(--partner-b)"></span><span class="sw-meta"><span class="sw-name">partner-b</span><span class="sw-vals">{terracotta}</span><span class="sw-use">Attribution colour for the partner who joined with the code.</span></span></button><button type="button" class="sw" data-name="focus-ring" id="sw-focus-ring"><span class="chip" style="background:var(--focus-ring)"></span><span class="sw-meta"><span class="sw-name">focus-ring</span><span class="sw-vals">{majorelle}</span><span class="sw-use">2px solid focus outline, offset 2px, on every interactive element.</span></span></button></div></div>
+        <div>
+          <h3 class="sub">Contrast checks</h3>
+          <div class="tbl"><table>
+            <thead><tr><th>Pair</th><th>Light</th><th>Dark</th><th>Use</th></tr></thead>
+            <tbody>
+              <tr><td><code>ink</code> on <code>surface</code></td><td class="n">14.4 : 1</td><td class="n">15.3 : 1</td><td>Body text</td></tr>
+              <tr><td><code>ink-muted</code> on <code>surface-sunken</code></td><td class="n">5.2 : 1</td><td class="n">8.5 : 1</td><td>Captions in wells (worst case)</td></tr>
+              <tr><td><code>on-majorelle</code> on <code>majorelle</code></td><td class="n">8.4 : 1</td><td class="n">8.2 : 1</td><td>Primary button</td></tr>
+              <tr><td><code>on-saffron</code> on <code>saffron</code></td><td class="n">7.7 : 1</td><td class="n">9.4 : 1</td><td>Trip countdown</td></tr>
+              <tr><td><code>on-terracotta</code> on <code>terracotta</code></td><td class="n">5.0 : 1</td><td class="n">7.2 : 1</td><td>Partner B fills</td></tr>
+              <tr><td><code>on-zellige</code> on <code>zellige</code></td><td class="n">5.2 : 1</td><td class="n">8.1 : 1</td><td>Check marks</td></tr>
+              <tr><td><code>line-strong</code> on <code>surface</code></td><td class="n">3.3 : 1</td><td class="n">3.9 : 1</td><td>Control borders (3:1 needed)</td></tr>
+              <tr><td><code>saffron</code> on <code>surface-raised</code></td><td class="n">2.1 : 1</td><td class="n">9.3 : 1</td><td>Fill only in light. Never text.</td></tr>
+            </tbody>
+          </table></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="s" id="type">
+      <div class="s-head"><h2>Type</h2><p>Young Serif for display, Figtree for everything else. Serif never below 24px, never on buttons.</p></div>
+      <div class="s-body">
+        <div class="fonts">
+          <div class="font-card"><div class="big" style="font-family:var(--font-serif)">Aa</div><div class="nm">Young Serif</div><div class="rl">Display · screen titles, trip names, hero cards</div></div>
+          <div class="font-card"><div class="big" style="font-family:var(--font-sans);font-weight:600">Aa</div><div class="nm">Figtree 400 / 600</div><div class="rl">Text · body, labels, numbers, buttons</div></div>
+        </div>
+        <div><div class="spec"><div class="spec-meta"><b>display</b>40px / 44px · 400</div><div class="spec-sample" style="font-family:var(--font-serif);font-size:40px;line-height:44px;font-weight:400;letter-spacing:-0.01em;">Wedding fund</div><div class="spec-use">One per screen: the screen title on Home, a goal or trip detail header.</div></div><div class="spec"><div class="spec-meta"><b>title-lg</b>28px / 34px · 400</div><div class="spec-sample" style="font-family:var(--font-serif);font-size:28px;line-height:34px;font-weight:400;">Chefchaouen, 4 nights</div><div class="spec-use">Section headers and card titles in hero cards (next trip).</div></div><div class="spec"><div class="spec-meta"><b>numeral</b>32px / 36px · 600</div><div class="spec-sample" style="font-family:var(--font-sans);font-size:32px;line-height:36px;font-weight:600;letter-spacing:-0.01em;font-variant-numeric:tabular-nums;">14,250 MAD</div><div class="spec-use">Big totals: saved so far, days until the trip, items left. Use tabular figures (<code>font-variant-numeric: tabular-nums</code>).</div></div><div class="spec"><div class="spec-meta"><b>title</b>18px / 24px · 600</div><div class="spec-sample" style="font-family:var(--font-sans);font-size:18px;line-height:24px;font-weight:600;">New sofa</div><div class="spec-use">Card titles in lists, sheet headers.</div></div><div class="spec"><div class="spec-meta"><b>body</b>15px / 22px · 400</div><div class="spec-sample" style="font-family:var(--font-sans);font-size:15px;line-height:22px;font-weight:400;">Sara added 500 — bonus month.</div><div class="spec-use">Default text, journal notes, descriptions.</div></div><div class="spec"><div class="spec-meta"><b>body-strong</b>15px / 22px · 600</div><div class="spec-sample" style="font-family:var(--font-sans);font-size:15px;line-height:22px;font-weight:600;">2 × Olive oil</div><div class="spec-use">List row names, amounts inside sentences.</div></div><div class="spec"><div class="spec-meta"><b>label</b>13px / 18px · 600</div><div class="spec-sample" style="font-family:var(--font-sans);font-size:13px;line-height:18px;font-weight:600;letter-spacing:0.01em;">Packing</div><div class="spec-use">Buttons, tabs, chips, form labels, group headers in Shopping and Prep.</div></div><div class="spec"><div class="spec-meta"><b>caption</b>12px / 16px · 400</div><div class="spec-sample" style="font-family:var(--font-sans);font-size:12px;line-height:16px;font-weight:400;color:var(--ink-muted);">Added by Youssef · 2 days ago</div><div class="spec-use">Attribution lines, timestamps, helper text. Always <code>ink-muted</code>.</div></div></div>
+      </div>
+    </section>
+
+    <section class="s" id="shape">
+      <div class="s-head"><h2>Shape &amp; space</h2><p>A 4px base, four radii, two shadows, and one signature shape: the arch.</p></div>
+      <div class="s-body">
+        <div><h3 class="sub">Spacing</h3><div class="scale"><div class="sp"><span>space-1</span><span class="px">4px</span><span class="bar" style="width:4px"></span></div><div class="sp"><span>space-2</span><span class="px">8px</span><span class="bar" style="width:8px"></span></div><div class="sp"><span>space-3</span><span class="px">12px</span><span class="bar" style="width:12px"></span></div><div class="sp"><span>space-4</span><span class="px">16px</span><span class="bar" style="width:16px"></span></div><div class="sp"><span>space-5</span><span class="px">24px</span><span class="bar" style="width:24px"></span></div><div class="sp"><span>space-6</span><span class="px">32px</span><span class="bar" style="width:32px"></span></div><div class="sp"><span>space-7</span><span class="px">48px</span><span class="bar" style="width:48px"></span></div></div></div>
+        <div><h3 class="sub">Radius</h3><div class="radii"><div class="rad"><div style="border-radius:6px"></div><b>radius-sm</b><span>6px · Checkboxes, small chips, progress bars</span></div><div class="rad"><div style="border-radius:12px"></div><b>radius-md</b><span>12px · Buttons, inputs, list rows</span></div><div class="rad"><div style="border-radius:20px"></div><b>radius-lg</b><span>20px · Cards and bottom sheets</span></div><div class="rad"><div style="border-radius:999px"></div><b>radius-pill</b><span>999px · Avatars, count badges, filter chips</span></div></div></div>
+        <div>
+          <h3 class="sub">The arch</h3>
+          <div class="arches">
+            <div class="arch-demo c zm-arch">S</div><div class="arch-demo zm-arch">L</div><div class="arch-demo b zm-arch">W</div>
+          </div>
+          <p style="margin:var(--space-3) 0 0;max-width:62ch;color:var(--ink-muted)">Goal covers and trip hero photos sit in a Moroccan arch: top corners <code>50% / 40%</code>, bottom corners <code>radius-sm</code>. Use <code>.zm-arch</code>. Imagery only, never buttons or cards.</p>
+        </div>
+        <div><h3 class="sub">Shadow</h3><div class="shadows"><div class="shd" style="box-shadow:var(--shadow-card)">shadow-card</div><div class="shd" style="box-shadow:var(--shadow-pop)">shadow-pop</div></div></div>
+        <div>
+          <h3 class="sub">Ideas vs commitments</h3>
+          <div class="ivc">
+            <div class="idea"><span class="k">Place · a maybe</span><span class="t">Ras El Maa viewpoint</span><span class="m">Sight · old medina · ~0 MAD · must-do</span></div>
+            <div class="commit"><span class="k">Plan entry · a commitment</span><span class="t">Hike to the Spanish Mosque</span><span class="m">Tue 24 Nov · 17:30–19:00</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="s" id="components">
+      <div class="s-head"><h2>Components</h2><p>Live React components from <code>window.Zamane</code>. They follow the theme toggle.</p></div>
+      <div class="s-body">
+        <div class="comp">
+          <div class="comp-demo"><div id="d-button"></div></div>
+          <div class="comp-doc"><h3>Button</h3><p>Verb-first actions. Primary (majorelle) once per view, for the thing the screen is for.</p>
+            <ul><li><code>primary</code> the one main action</li><li><code>secondary</code> default, outlined</li><li><code>ghost</code> low-weight actions inside cards</li><li><code>danger</code> destructive, always confirmed</li><li><code>size="sm"</code> in rows, <code>block</code> for sheets</li></ul></div>
+        </div>
+        <div class="comp">
+          <div class="comp-demo"><div id="d-avatar"></div></div>
+          <div class="comp-doc"><h3>PartnerAvatar</h3><p>Who did it. The initial on a tinted disc, ringed in the partner's colour.</p>
+            <ul><li><code>partner="a"</code> created the space: majorelle</li><li><code>partner="b"</code> joined with the code: terracotta</li><li>Always set the first name beside a small avatar</li><li><code>AvatarPair</code> for the couple in headers and Profile</li></ul></div>
+        </div>
+        <div class="comp">
+          <div class="comp-demo"><div id="d-progress"></div></div>
+          <div class="comp-doc"><h3>Progress</h3><p>Goal and budget bars. Turns zellige with "Done" at 100%, danger with "Over by…" past a budget.</p>
+            <ul><li><code>value</code> always computed from contributions or plan entries</li><li><code>mode="budget"</code> for trip spending</li><li>Animate only when a new contribution lands</li></ul></div>
+        </div>
+        <div class="comp">
+          <div class="comp-demo"><div id="d-goal"></div></div>
+          <div class="comp-doc"><h3>GoalCard</h3><p>A shared goal in a list or on Home: arch cover, amount or percent, progress, who touched it last.</p>
+            <ul><li><code>kind</code> money (saved / target) or general (percent)</li><li>No photo: the title's initial in the arch</li><li>On Home, closest to done first, three at most</li></ul></div>
+        </div>
+        <div class="comp">
+          <div class="comp-demo"><div id="d-trip"></div></div>
+          <div class="comp-doc"><h3>TripCountdown</h3><p>The next or current trip. Status comes from the calendar, never set by hand.</p>
+            <ul><li>Before start: N days to go</li><li>During: Day X of N, "Happening now"</li><li>After: N days ago, block falls back to sunken</li></ul></div>
+        </div>
+        <div class="comp">
+          <div class="comp-demo"><div class="card-flush" id="d-shop"></div></div>
+          <div class="comp-doc"><h3>ShoppingItem</h3><p>One row of the shared list. Tap a checkbox to try it.</p>
+            <ul><li>Bought: struck through, zellige check, "Bought by…"</li><li>Rows sit flush under a category header with a subtotal</li><li>At least 48px tall for touch</li></ul></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="s" id="in-use">
+      <div class="s-head"><h2>In use</h2><p>Home, assembled from the system. Example data.</p></div>
+      <div class="s-body">
+        <div class="phone-row">
+          <div class="phone" id="phone"></div>
+          <div class="notes">
+            <div><b>Total saved leads</b><span>Set in <code>numeral</code>, across every money goal including finished ones.</span></div>
+            <div><b>One saffron moment</b><span>The countdown is the only saffron block on the screen.</span></div>
+            <div><b>Closest to done</b><span>Goals sorted by how near they are, because those motivate most.</span></div>
+            <div><b>One primary action</b><span>"Add to a goal" is the only majorelle button.</span></div>
+            <div><b>Attribution everywhere</b><span>Each card names who acted last, with their avatar.</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="s" id="voice">
+      <div class="s-head"><h2>Voice</h2><p>Sentence case, verbs first, plural "you", first names.</p></div>
+      <div class="s-body">
+        <div class="dd">
+          <div><h4><span class="zm-badge zm-badge-done">Write</span></h4><ul><li>Add contribution</li><li>Sara added 500 · bonus month</li><li>14,250 MAD of 20,000 MAD</li><li>in 12 days · Day 2 of 5</li><li>No trips yet. Plan your first one.</li><li>Goal reached.</li></ul></div>
+          <div class="no"><h4><span class="zm-badge zm-badge-neutral">Avoid</span></h4><ul><li>Submit</li><li>User 1 updated the record</li><li>MAD 14250.00</li><li>Trip starts: 2026-11-21</li><li>Nothing here yet :(</li><li>Woohoo!! You did it!!!</li></ul></div>
+        </div>
+        <p>Money uses one currency per space, written after the amount, no decimals unless typed. Dates read "Fri 14 Mar", times 24-hour "09:00". People may use emoji in their own notes; the interface never does.</p>
+      </div>
+    </section>
+
+    <section class="s" id="icons">
+      <div class="s-head"><h2>Icons</h2><p>Lucide outline, 1.75px stroke. 20px in rows, 16px in chips. No logo yet: the name is set in Young Serif.</p></div>
+      <div class="s-body">
+        <div class="tbl"><table>
+          <thead><tr><th>Plan entry type</th><th>Lucide icon</th><th>Checklist group</th><th>Lucide icon</th></tr></thead>
+          <tbody>
+            <tr><td>Flight</td><td><code>plane</code></td><td>Packing</td><td><code>luggage</code></td></tr>
+            <tr><td>Transport</td><td><code>train-front</code></td><td>Documents</td><td><code>file-text</code></td></tr>
+            <tr><td>Stay</td><td><code>bed-double</code></td><td>Bookings</td><td><code>calendar-check</code></td></tr>
+            <tr><td>Food</td><td><code>utensils</code></td><td>To-do</td><td><code>list-checks</code></td></tr>
+            <tr><td>Sight</td><td><code>landmark</code></td><td></td><td></td></tr>
+            <tr><td>Activity</td><td><code>ticket</code></td><td></td><td></td></tr>
+            <tr><td>Other</td><td><code>circle-dot</code></td><td></td><td></td></tr>
+          </tbody>
+        </table></div>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer><div class="wrap"><span>Zamane design system · v1 · November 2026</span><span>M.Design</span></div></footer>
+<div class="toast" id="toast" hidden></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.3.1/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.3.1/umd/react-dom.production.min.js"></script>
+<script>
+/* @ds-bundle: {"format":4,"namespace":"Zamane","components":[{"name":"Button"},{"name":"PartnerAvatar"},{"name":"Progress"},{"name":"GoalCard"},{"name":"TripCountdown"},{"name":"ShoppingItem"}]} */
+(function () {
+  var React = window.React, h = React.createElement;
+  function cx() { return Array.prototype.filter.call(arguments, Boolean).join(' '); }
+  function money(n, cur) {
+    var s = Math.round(n).toLocaleString('en-US');
+    return cur ? s + ' ' + cur : s;
+  }
+  function initial(name) { return (name || '?').trim().charAt(0).toUpperCase(); }
+  var DAY = 86400000;
+  function day(d) { var x = new Date(d); return Date.UTC(x.getFullYear(), x.getMonth(), x.getDate()); }
+  function fmtDate(d) {
+    return new Date(d).toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' });
+  }
+  function Check() {
+    return h('svg', { width: 14, height: 14, viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: 3, strokeLinecap: 'round', strokeLinejoin: 'round', 'aria-hidden': true }, h('path', { d: 'M20 6 9 17l-5-5' }));
+  }
+
+  function Button(p) {
+    var variant = p.variant || 'secondary', size = p.size || 'md';
+    var rest = Object.assign({}, p); delete rest.variant; delete rest.size; delete rest.block; delete rest.className;
+    return h('button', Object.assign({ type: 'button' }, rest, {
+      className: cx('zm-btn', 'zm-btn-' + variant, size === 'sm' && 'zm-btn-sm', p.block && 'zm-btn-block', p.className)
+    }), p.children);
+  }
+
+  function PartnerAvatar(p) {
+    var partner = p.partner === 'b' ? 'b' : 'a';
+    return h('span', { className: cx('zm-av', 'zm-av-' + partner, 'zm-av-' + (p.size || 'md')), title: p.name, 'aria-label': p.name, role: 'img' }, initial(p.name));
+  }
+  function AvatarPair(p) {
+    return h('span', { className: 'zm-pair' },
+      h(PartnerAvatar, { name: p.a, partner: 'a', size: p.size }),
+      h(PartnerAvatar, { name: p.b, partner: 'b', size: p.size }));
+  }
+  PartnerAvatar.Pair = AvatarPair;
+
+  function Progress(p) {
+    var max = p.max || 100, value = p.value || 0;
+    var ratio = max > 0 ? value / max : 0;
+    var over = p.mode === 'budget' && value > max;
+    var done = p.mode !== 'budget' && ratio >= 1;
+    var pct = Math.min(100, Math.round(ratio * 100));
+    var right = p.valueLabel != null ? p.valueLabel : (over ? 'Over by ' + money(value - max, p.currency) : done ? 'Done' : pct + '%');
+    return h('div', { className: cx('zm-prog', done && 'zm-prog-done', over && 'zm-prog-over') },
+      (p.label || p.showValue !== false) && h('div', { className: 'zm-prog-head' }, h('span', null, p.label || ''), h('span', { className: 'zm-num' }, right)),
+      h('div', { className: 'zm-prog-track', role: 'progressbar', 'aria-valuemin': 0, 'aria-valuemax': max, 'aria-valuenow': value, 'aria-label': p.label || 'Progress' },
+        h('div', { className: 'zm-prog-fill', style: { width: pct + '%' } })));
+  }
+
+  function GoalCard(p) {
+    var money_ = p.kind !== 'general';
+    var value = money_ ? (p.saved || 0) : (p.percent || 0);
+    var max = money_ ? (p.target || 0) : 100;
+    var done = value >= max && max > 0;
+    var amount = money_
+      ? h('div', { className: 'zm-goal-amt zm-num' }, h('b', null, money(p.saved || 0, p.currency)), h('span', null, ' of ' + money(p.target || 0, p.currency)))
+      : h('div', { className: 'zm-goal-amt zm-num' }, h('b', null, (p.percent || 0) + '%'), h('span', null, ' complete'));
+    var who = p.lastBy && h('span', { style: { display: 'inline-flex', alignItems: 'center', gap: 'var(--space-2)' } },
+      h(PartnerAvatar, { name: p.lastBy.name, partner: p.lastBy.partner, size: 'sm' }), p.lastActivity || '');
+    return h('article', { className: 'zm-goal' },
+      h('div', { className: cx('zm-goal-cover', 'zm-arch', p.cover && 'has-img'), 'aria-hidden': true },
+        p.cover ? h('img', { src: p.cover, alt: '' }) : initial(p.title)),
+      h('div', { className: 'zm-goal-body' },
+        h('div', { className: 'zm-goal-top' },
+          h('h3', { className: 'zm-goal-title' }, p.title),
+          done && h('span', { className: 'zm-badge zm-badge-done' }, h(Check), 'Done')),
+        amount,
+        h(Progress, { value: value, max: max, showValue: false }),
+        h('div', { className: 'zm-goal-foot' }, who || h('span'), p.deadline ? h('span', null, 'by ' + fmtDate(p.deadline)) : null)));
+  }
+
+  function TripCountdown(p) {
+    var today = day(p.today || Date.now()), s = day(p.start), e = day(p.end || p.start);
+    var nights = Math.round((e - s) / DAY);
+    var big, small, kicker, state;
+    if (today < s) {
+      var n = Math.round((s - today) / DAY);
+      state = 'upcoming'; big = n; small = n === 1 ? 'day to go' : 'days to go'; kicker = n === 1 ? 'Tomorrow' : 'Next trip';
+    } else if (today <= e) {
+      state = 'now'; big = Math.round((today - s) / DAY) + 1; small = 'of ' + (nights + 1) + ' days'; kicker = 'Happening now';
+    } else {
+      var ago = Math.round((today - e) / DAY);
+      state = 'past'; big = ago; small = ago === 1 ? 'day ago' : 'days ago'; kicker = 'Past trip';
+    }
+    return h('article', { className: cx('zm-trip', 'zm-trip-' + state) },
+      h('div', { className: 'zm-trip-count' }, h('b', null, big), h('span', null, small)),
+      h('div', { className: 'zm-trip-body' },
+        h('span', { className: 'zm-trip-kicker' }, kicker),
+        h('h3', { className: 'zm-trip-title' }, p.title),
+        h('span', { className: 'zm-trip-meta' }, [p.destination, fmtDate(p.start) + ' – ' + fmtDate(p.end || p.start)].filter(Boolean).join(' · '))));
+  }
+
+  function ShoppingItem(p) {
+    var own = React.useState(!!p.bought);
+    var bought = p.onToggle ? !!p.bought : own[0];
+    function toggle() { if (p.onToggle) p.onToggle(!bought); else own[1](!bought); }
+    var sub = [];
+    if (p.addedBy) sub.push(h(PartnerAvatar, { key: 'av', name: p.addedBy.name, partner: p.addedBy.partner, size: 'sm' }), h('span', { key: 'by' }, (bought ? 'Bought' : 'Added') + ' by ' + p.addedBy.name + (p.notes ? ' · ' + p.notes : '')));
+    else if (p.notes) sub.push(h('span', { key: 'n' }, p.notes));
+    return h('div', { className: cx('zm-item', bought && 'zm-item-bought') },
+      h('button', { type: 'button', role: 'checkbox', 'aria-checked': bought, 'aria-label': 'Mark ' + p.name + ' as bought', className: 'zm-check', onClick: toggle }, bought ? h(Check) : null),
+      h('div', { className: 'zm-item-main' },
+        h('span', { className: 'zm-item-name' }, p.quantity && p.quantity !== 1 ? h('span', { className: 'zm-item-qty' }, p.quantity + ' × ') : null, p.name),
+        sub.length ? h('span', { className: 'zm-item-sub' }, sub) : null),
+      p.price != null ? h('span', { className: 'zm-item-price' }, money(p.price, p.currency)) : null);
+  }
+
+  var api = { Button: Button, PartnerAvatar: PartnerAvatar, AvatarPair: AvatarPair, Progress: Progress, GoalCard: GoalCard, TripCountdown: TripCountdown, ShoppingItem: ShoppingItem };
+  window.Zamane = Object.assign(window.Zamane || {}, api);
+})();
+
+</script>
+<script>
+(function () {
+  // theme toggle
+  var root = document.documentElement;
+  function setTheme(t) {
+    if (t === 'system') root.removeAttribute('data-theme'); else root.setAttribute('data-theme', t);
+    document.querySelectorAll('.theme button').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.t === t)); });
+    try { localStorage.setItem('zm-theme', t); } catch (e) {}
+  }
+  var saved = 'system';
+  try { saved = localStorage.getItem('zm-theme') || 'system'; } catch (e) {}
+  setTheme(saved);
+  document.querySelectorAll('.theme button').forEach(function (b) { b.addEventListener('click', function () { setTheme(b.dataset.t); }); });
+
+  // copy swatch
+  var toast = document.getElementById('toast'), tt;
+  function show(msg) { toast.textContent = msg; toast.hidden = false; clearTimeout(tt); tt = setTimeout(function () { toast.hidden = true; }, 1600); }
+  document.querySelectorAll('.sw').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var v = 'var(--' + b.dataset.name + ')';
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(v).then(function () { show('Copied ' + v); }, function () { show(v); });
+      else show(v);
+    });
+  });
+
+  if (!window.React || !window.Zamane) return;
+  var Z = window.Zamane, h = React.createElement;
+  function mount(id, el) { var n = document.getElementById(id); if (n) ReactDOM.createRoot(n).render(el); }
+  var TODAY = '2026-11-09';
+  mount('d-button', h('div', { className: 'zm-row' }, h(Z.Button, { variant: 'primary' }, 'Add contribution'), h(Z.Button, null, 'Schedule'), h(Z.Button, { variant: 'ghost' }, 'See history'), h(Z.Button, { variant: 'danger', size: 'sm' }, 'Delete entry')));
+  mount('d-avatar', h('div', { className: 'zm-row' }, h(Z.PartnerAvatar, { name: 'Sara', partner: 'a', size: 'lg' }), h(Z.PartnerAvatar, { name: 'Youssef', partner: 'b', size: 'lg' }), h(Z.PartnerAvatar, { name: 'Sara', partner: 'a' }), h(Z.PartnerAvatar, { name: 'Youssef', partner: 'b', size: 'sm' }), h(Z.AvatarPair, { a: 'Sara', b: 'Youssef' })));
+  mount('d-progress', h('div', { className: 'zm-stack', style: { maxWidth: 'none' } }, h(Z.Progress, { label: 'Wedding fund', value: 14250, max: 20000 }), h(Z.Progress, { label: 'Learn Spanish', value: 100 }), h(Z.Progress, { label: 'Planned vs budget', mode: 'budget', value: 9200, max: 8000, currency: 'MAD' })));
+  mount('d-goal', h('div', { className: 'zm-stack', style: { maxWidth: 'none' } }, h(Z.GoalCard, { title: 'Wedding fund', saved: 14250, target: 20000, currency: 'MAD', deadline: '2027-06-12', lastBy: { name: 'Sara', partner: 'a' }, lastActivity: 'added 500 · 2 days ago' }), h(Z.GoalCard, { title: 'New sofa', saved: 6000, target: 6000, currency: 'MAD', lastBy: { name: 'Youssef', partner: 'b' }, lastActivity: 'added 1,000 · Oct 30' })));
+  mount('d-trip', h('div', { className: 'zm-stack', style: { maxWidth: 'none' } }, h(Z.TripCountdown, { title: 'Chefchaouen', destination: 'Rif mountains', start: '2026-11-21', end: '2026-11-25', today: TODAY }), h(Z.TripCountdown, { title: 'Lisbon weekend', destination: 'Portugal', start: '2026-11-07', end: '2026-11-10', today: TODAY }), h(Z.TripCountdown, { title: 'Essaouira', destination: 'Atlantic coast', start: '2026-09-02', end: '2026-09-06', today: TODAY })));
+  mount('d-shop', h('div', null, h(Z.ShoppingItem, { name: 'Olive oil', quantity: 2, price: 140, currency: 'MAD', addedBy: { name: 'Sara', partner: 'a' } }), h(Z.ShoppingItem, { name: 'Mint', notes: 'fresh, big bunch', addedBy: { name: 'Youssef', partner: 'b' } }), h(Z.ShoppingItem, { name: 'Milk', price: 9, currency: 'MAD', addedBy: { name: 'Youssef', partner: 'b' }, bought: true })));
+
+  mount('phone', h(React.Fragment, null,
+    h('div', { className: 'ph-top' }, h('div', null, h('div', { className: 'ph-sub' }, 'Monday 9 Nov'), h('div', { className: 'ph-hello' }, 'Hi, you two')), h(Z.AvatarPair, { a: 'Sara', b: 'Youssef' })),
+    h('div', { className: 'ph-total' }, h('div', null, h('div', { className: 'lbl' }, 'Saved together'), h('div', { className: 'num' }, '20,250 MAD')), h('div', { className: 'lbl', style: { textAlign: 'right' } }, '3 goals open', h('br'), '1 done')),
+    h(Z.TripCountdown, { title: 'Chefchaouen', destination: 'Rif mountains', start: '2026-11-21', end: '2026-11-25', today: TODAY }),
+    h('div', { className: 'ph-label' }, 'Closest to done', h('span', null, 'See all')),
+    h(Z.GoalCard, { title: 'Wedding fund', saved: 14250, target: 20000, currency: 'MAD', lastBy: { name: 'Sara', partner: 'a' }, lastActivity: 'added 500 · 2 days ago' }),
+    h('div', { className: 'ph-label' }, 'Shopping', h('span', null, '7 left to buy')),
+    h(Z.Button, { variant: 'primary', block: true }, 'Add to a goal'),
+    h('div', { className: 'ph-tabs' }, h('span', { className: 'on' }, 'Home'), h('span', null, 'Goals'), h('span', null, 'Trips'), h('span', null, 'Shopping'), h('span', null, 'Profile'))
+  ));
+})();
+</script>
+
+</body></html>

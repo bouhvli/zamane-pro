@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content"
+    />
+    <title>Zamane</title>
+    <meta name="theme-color" content="#f8f3ea" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#12161d" media="(prefers-color-scheme: dark)" />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon-180x180.png" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;600&family=Young+Serif&display=swap"
+    />
+    <!-- D23: the per-device theme is applied before first paint (a blocking same-origin script; CSP has no inline). -->
+    <script src="/theme-init.js"></script>
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to main content</a>
+    <!-- First paint is the splash (the launch screen): the mark on surface while GET /api/me resolves. -->
+    <div id="root">
+      <main id="main" class="auth-wrap" tabindex="-1">
+        <div class="view">
+          <div class="splash">
+            <section class="splash-mark" aria-label="Loading Zamane" aria-busy="true">
+              <img
+                class="lockup logo-light"
+                src="/src/client/assets/brand/zamane-logo.svg"
+                alt=""
+                width="125"
+                height="36"
+              />
+              <img
+                class="lockup logo-dark"
+                src="/src/client/assets/brand/zamane-logo-dark.svg"
+                alt=""
+                width="125"
+                height="36"
+              />
+            </section>
+            <p class="splash-status" role="status" id="boot-status"></p>
+          </div>
+        </div>
+      </main>
+    </div>
+    <script type="module" src="/src/client/main.tsx"></script>
+  </body>
+</html>
