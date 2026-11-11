@@ -6,6 +6,7 @@ import { createRoot } from "react-dom/client";
 import { LaunchMessage } from "./components/LaunchMessage.tsx";
 import { isApiError, isNetworkError, setUnauthenticatedHandler } from "./lib/api.ts";
 import { navState } from "./lib/nav.ts";
+import { registerHomeMutations } from "./lib/home.ts";
 import { queryClient, restoreQueryCache } from "./lib/query.ts";
 import { meKey, meQuery } from "./lib/session.ts";
 import { registerServiceWorker } from "./lib/sw.ts";
@@ -16,6 +17,7 @@ import "./styles/auth.css";
 import "./styles/account.css";
 import "./styles/setup.css";
 import "./styles/nav.css";
+import "./styles/home.css";
 import "./styles/app.css";
 
 const router = createRouter({
@@ -63,6 +65,9 @@ if (window.visualViewport) {
   vv.addEventListener("resize", fit);
   fit();
 }
+
+// Offline-capable mutations get their mutationFn before the persisted cache (and its paused mutations) is restored.
+registerHomeMutations(queryClient);
 
 type Boot = "ready" | "offline" | "error";
 

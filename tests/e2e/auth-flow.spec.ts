@@ -37,7 +37,7 @@ test("two partners: sign up, start, join, sign out, reset, sign in", async ({ br
   await expect(s.getByLabel("Space name")).toHaveValue("Our space");
   await expect(s.getByText("Brussels (from this phone)")).toBeVisible();
   await s.getByRole("button", { name: "Start our space" }).click();
-  await expect(s.getByRole("heading", { level: 1, name: "Home" })).toBeVisible();
+  await expect(s.getByRole("heading", { level: 1, name: /^Hi, / })).toBeVisible();
 
   await s.getByRole("link", { name: "Profile" }).click();
   const codeEl = s.getByTestId("invite-code");
@@ -51,7 +51,7 @@ test("two partners: sign up, start, join, sign out, reset, sign in", async ({ br
   await y.getByRole("link", { name: "Join with a code" }).click();
   await y.getByLabel("Invite code").fill(code.toLowerCase().replace("-", " "));
   await y.getByRole("button", { name: "Join space" }).click();
-  await expect(y.getByRole("heading", { level: 1, name: "Home" })).toBeVisible();
+  await expect(y.getByRole("heading", { level: 1, name: /^Hi, / })).toBeVisible();
 
   // Both are in the space now.
   await s.reload();
@@ -98,7 +98,7 @@ test("two partners: sign up, start, join, sign out, reset, sign in", async ({ br
   await expect(y.getByText("That email and password don't match.", { exact: false })).toBeVisible();
   await y.getByLabel("Password", { exact: true }).fill(NEW_PASSWORD);
   await y.getByRole("button", { name: "Sign in" }).click();
-  await expect(y.getByRole("heading", { level: 1, name: "Home" })).toBeVisible();
+  await expect(y.getByRole("heading", { level: 1, name: /^Hi, / })).toBeVisible();
 
   // ---- The TEMP Profile page ----
   await s.getByLabel("First name").fill("Sarah");
@@ -142,10 +142,10 @@ test("guards: signed-in visitors skip the auth pages, the invite link carries th
   await p.getByLabel("Email").fill(sara.email);
   await p.getByLabel("Password", { exact: true }).fill("a-second-sara-password");
   await p.getByRole("button", { name: "Sign in" }).click();
-  await expect(p.getByRole("heading", { level: 1, name: "Home" })).toBeVisible();
+  await expect(p.getByRole("heading", { level: 1, name: /^Hi, / })).toBeVisible();
   for (const path of ["/sign-in", "/create-account", "/forgot-password", "/setup"]) {
     await p.goto(path);
-    await expect(p.getByRole("heading", { level: 1, name: "Home" })).toBeVisible();
+    await expect(p.getByRole("heading", { level: 1, name: /^Hi, / })).toBeVisible();
   }
   await ctx.close();
 });

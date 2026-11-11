@@ -15,6 +15,8 @@ const PERSIST_KEY = "zamane.query-cache";
 
 const persister = createAsyncStoragePersister({
   key: PERSIST_KEY,
+  // Queued writes (an add, its Undo) reach IndexedDB within a quarter-second, so a reload rarely loses one.
+  throttleTime: 250,
   storage: {
     getItem: (k) => get<string>(k).then((v) => v ?? null),
     setItem: (k, v: string) => set(k, v),

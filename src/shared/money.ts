@@ -105,3 +105,21 @@ export function toSafeMinor(v: string | number | bigint): number {
   if (!Number.isSafeInteger(n)) throw new RangeError("money value outside the safe integer range");
   return n;
 }
+
+/**
+ * The designs' amount style: grouped digits, decimals only when there are any, then the code ("20,250 MAD",
+ * "500.5 MAD"). Digits come from the ISO table, never from Intl's currency data (D15, D47).
+ */
+export function formatAmount(minor: number, currency: string): string {
+  if (!Number.isSafeInteger(minor)) throw new RangeError("money must be a safe integer of minor units");
+  const digits = minorUnits(currency);
+  const n = new Intl.NumberFormat("en-US", { minimumFractionDigits: 0, maximumFractionDigits: digits }).format(
+    minor / 10 ** digits,
+  );
+  return `${n} ${currency}`;
+}
+
+/** The number alone, in the same style ("20,250"). */
+export function formatAmountNumber(minor: number, currency: string): string {
+  return formatAmount(minor, currency).replace(/\s+[A-Z]{3}$/, "");
+}
