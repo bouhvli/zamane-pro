@@ -1,0 +1,54 @@
+<!doctype html><meta charset="utf-8"><title>Goals list visual comparison</title>
+<style>body{font:14px system-ui;margin:24px}table{border-collapse:collapse}td,th{padding:4px 10px;border-bottom:1px solid #ddd;text-align:left}.n{text-align:right;font-variant-numeric:tabular-nums}</style>
+<h1>Goals list: prototype vs React</h1>
+<p>Each image: prototype, React, pixel diff (threshold 0.1); phones side by side, wide pages stacked. Magenta = different size. Worst first.
+Known: the prototype's example covers and photos have no real counterpart.</p>
+<table><tr><th>Case</th><th>Size</th><th>Scheme</th><th>Diff</th><th>Heights (proto / React)</th><th></th></tr>
+<tr><td>populated</td><td>390x844</td><td>dark</td><td class="n">3.87%</td><td class="n">1023 / 1023</td><td><a href="populated--390x844--dark.png">image</a></td></tr>
+<tr><td>solo</td><td>390x844</td><td>dark</td><td class="n">3.85%</td><td class="n">1023 / 1023</td><td><a href="solo--390x844--dark.png">image</a></td></tr>
+<tr><td>populated</td><td>390x844</td><td>light</td><td class="n">3.85%</td><td class="n">1023 / 1023</td><td><a href="populated--390x844--light.png">image</a></td></tr>
+<tr><td>solo</td><td>390x844</td><td>light</td><td class="n">3.85%</td><td class="n">1023 / 1023</td><td><a href="solo--390x844--light.png">image</a></td></tr>
+<tr><td>offline</td><td>390x844</td><td>light</td><td class="n">3.51%</td><td class="n">1125 / 1125</td><td><a href="offline--390x844--light.png">image</a></td></tr>
+<tr><td>offline</td><td>390x844</td><td>dark</td><td class="n">3.51%</td><td class="n">1125 / 1125</td><td><a href="offline--390x844--dark.png">image</a></td></tr>
+<tr><td>solo</td><td>360x780</td><td>dark</td><td class="n">3.29%</td><td class="n">1041 / 1041</td><td><a href="solo--360x780--dark.png">image</a></td></tr>
+<tr><td>solo</td><td>360x780</td><td>light</td><td class="n">3.29%</td><td class="n">1041 / 1041</td><td><a href="solo--360x780--light.png">image</a></td></tr>
+<tr><td>populated</td><td>360x780</td><td>dark</td><td class="n">3.24%</td><td class="n">1057 / 1057</td><td><a href="populated--360x780--dark.png">image</a></td></tr>
+<tr><td>populated</td><td>360x780</td><td>light</td><td class="n">3.24%</td><td class="n">1057 / 1057</td><td><a href="populated--360x780--light.png">image</a></td></tr>
+<tr><td>offline</td><td>360x780</td><td>dark</td><td class="n">2.98%</td><td class="n">1159 / 1159</td><td><a href="offline--360x780--dark.png">image</a></td></tr>
+<tr><td>offline</td><td>360x780</td><td>light</td><td class="n">2.95%</td><td class="n">1159 / 1159</td><td><a href="offline--360x780--light.png">image</a></td></tr>
+<tr><td>populated</td><td>1440x900</td><td>light</td><td class="n">2.59%</td><td class="n">900 / 900</td><td><a href="populated--1440x900--light.png">image</a></td></tr>
+<tr><td>solo</td><td>1440x900</td><td>light</td><td class="n">2.59%</td><td class="n">900 / 900</td><td><a href="solo--1440x900--light.png">image</a></td></tr>
+<tr><td>offline</td><td>1440x900</td><td>light</td><td class="n">2.59%</td><td class="n">900 / 900</td><td><a href="offline--1440x900--light.png">image</a></td></tr>
+<tr><td>populated</td><td>1440x900</td><td>dark</td><td class="n">2.59%</td><td class="n">900 / 900</td><td><a href="populated--1440x900--dark.png">image</a></td></tr>
+<tr><td>solo</td><td>1440x900</td><td>dark</td><td class="n">2.59%</td><td class="n">900 / 900</td><td><a href="solo--1440x900--dark.png">image</a></td></tr>
+<tr><td>offline</td><td>1440x900</td><td>dark</td><td class="n">2.59%</td><td class="n">900 / 900</td><td><a href="offline--1440x900--dark.png">image</a></td></tr>
+<tr><td>all-done</td><td>360x780</td><td>light</td><td class="n">0.39%</td><td class="n">780 / 780</td><td><a href="all-done--360x780--light.png">image</a></td></tr>
+<tr><td>all-done</td><td>360x780</td><td>dark</td><td class="n">0.38%</td><td class="n">780 / 780</td><td><a href="all-done--360x780--dark.png">image</a></td></tr>
+<tr><td>all-done</td><td>390x844</td><td>light</td><td class="n">0.33%</td><td class="n">844 / 844</td><td><a href="all-done--390x844--light.png">image</a></td></tr>
+<tr><td>all-done</td><td>390x844</td><td>dark</td><td class="n">0.33%</td><td class="n">844 / 844</td><td><a href="all-done--390x844--dark.png">image</a></td></tr>
+<tr><td>all-done</td><td>1440x900</td><td>light</td><td class="n">0.08%</td><td class="n">900 / 900</td><td><a href="all-done--1440x900--light.png">image</a></td></tr>
+<tr><td>all-done</td><td>1440x900</td><td>dark</td><td class="n">0.08%</td><td class="n">900 / 900</td><td><a href="all-done--1440x900--dark.png">image</a></td></tr>
+<tr><td>error</td><td>360x780</td><td>light</td><td class="n">0.02%</td><td class="n">780 / 780</td><td><a href="error--360x780--light.png">image</a></td></tr>
+<tr><td>empty</td><td>390x844</td><td>light</td><td class="n">0.00%</td><td class="n">844 / 844</td><td><a href="empty--390x844--light.png">image</a></td></tr>
+<tr><td>empty</td><td>390x844</td><td>dark</td><td class="n">0.00%</td><td class="n">844 / 844</td><td><a href="empty--390x844--dark.png">image</a></td></tr>
+<tr><td>empty</td><td>360x780</td><td>light</td><td class="n">0.00%</td><td class="n">780 / 780</td><td><a href="empty--360x780--light.png">image</a></td></tr>
+<tr><td>empty</td><td>360x780</td><td>dark</td><td class="n">0.00%</td><td class="n">780 / 780</td><td><a href="empty--360x780--dark.png">image</a></td></tr>
+<tr><td>empty</td><td>1440x900</td><td>light</td><td class="n">0.00%</td><td class="n">900 / 900</td><td><a href="empty--1440x900--light.png">image</a></td></tr>
+<tr><td>empty</td><td>1440x900</td><td>dark</td><td class="n">0.00%</td><td class="n">900 / 900</td><td><a href="empty--1440x900--dark.png">image</a></td></tr>
+<tr><td>uploads-off</td><td>390x844</td><td>light</td><td class="n">0.00%</td><td class="n">935 / 935</td><td><a href="uploads-off--390x844--light.png">image</a></td></tr>
+<tr><td>uploads-off</td><td>390x844</td><td>dark</td><td class="n">0.00%</td><td class="n">935 / 935</td><td><a href="uploads-off--390x844--dark.png">image</a></td></tr>
+<tr><td>uploads-off</td><td>360x780</td><td>light</td><td class="n">0.00%</td><td class="n">978 / 978</td><td><a href="uploads-off--360x780--light.png">image</a></td></tr>
+<tr><td>uploads-off</td><td>360x780</td><td>dark</td><td class="n">0.00%</td><td class="n">978 / 978</td><td><a href="uploads-off--360x780--dark.png">image</a></td></tr>
+<tr><td>uploads-off</td><td>1440x900</td><td>light</td><td class="n">0.00%</td><td class="n">900 / 900</td><td><a href="uploads-off--1440x900--light.png">image</a></td></tr>
+<tr><td>uploads-off</td><td>1440x900</td><td>dark</td><td class="n">0.00%</td><td class="n">900 / 900</td><td><a href="uploads-off--1440x900--dark.png">image</a></td></tr>
+<tr><td>loading</td><td>390x844</td><td>light</td><td class="n">0.00%</td><td class="n">844 / 844</td><td><a href="loading--390x844--light.png">image</a></td></tr>
+<tr><td>loading</td><td>390x844</td><td>dark</td><td class="n">0.00%</td><td class="n">844 / 844</td><td><a href="loading--390x844--dark.png">image</a></td></tr>
+<tr><td>loading</td><td>360x780</td><td>light</td><td class="n">0.00%</td><td class="n">780 / 780</td><td><a href="loading--360x780--light.png">image</a></td></tr>
+<tr><td>loading</td><td>360x780</td><td>dark</td><td class="n">0.00%</td><td class="n">780 / 780</td><td><a href="loading--360x780--dark.png">image</a></td></tr>
+<tr><td>loading</td><td>1440x900</td><td>light</td><td class="n">0.00%</td><td class="n">900 / 900</td><td><a href="loading--1440x900--light.png">image</a></td></tr>
+<tr><td>loading</td><td>1440x900</td><td>dark</td><td class="n">0.00%</td><td class="n">900 / 900</td><td><a href="loading--1440x900--dark.png">image</a></td></tr>
+<tr><td>error</td><td>390x844</td><td>light</td><td class="n">0.00%</td><td class="n">844 / 844</td><td><a href="error--390x844--light.png">image</a></td></tr>
+<tr><td>error</td><td>390x844</td><td>dark</td><td class="n">0.00%</td><td class="n">844 / 844</td><td><a href="error--390x844--dark.png">image</a></td></tr>
+<tr><td>error</td><td>360x780</td><td>dark</td><td class="n">0.00%</td><td class="n">780 / 780</td><td><a href="error--360x780--dark.png">image</a></td></tr>
+<tr><td>error</td><td>1440x900</td><td>light</td><td class="n">0.00%</td><td class="n">900 / 900</td><td><a href="error--1440x900--light.png">image</a></td></tr>
+<tr><td>error</td><td>1440x900</td><td>dark</td><td class="n">0.00%</td><td class="n">900 / 900</td><td><a href="error--1440x900--dark.png">image</a></td></tr></table>
