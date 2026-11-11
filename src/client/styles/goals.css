@@ -1,0 +1,291 @@
+/* Ported from .ux-forge/goals (zamane.css additions and list.css), direction B · Doorway. Every rule is scoped to
+   html[data-route="goals"] (set by AppShell), so the other pages are untouched; :root tokens and @keyframes stay
+   global. Generated from the prototype files, then kept verbatim: edit the prototype rules here, not their shape. */
+
+html[data-route="goals"] .icon-btn{flex:none;display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border:0;border-radius:var(--radius-md);background:transparent;color:var(--ink-muted);cursor:pointer;text-decoration:none}
+@media (hover:hover){html[data-route="goals"] .icon-btn:hover{color:var(--ink)}}
+/* ===== Page: room for the nav bar and the floating primary (zamane.css base) ===== */
+html[data-route="goals"]{scroll-padding-bottom:calc(var(--nav-bar-h) + var(--fab-zone) + env(safe-area-inset-bottom,0px))}
+html[data-route="goals"] body{padding-bottom:calc(var(--nav-bar-h) + var(--fab-zone) + env(safe-area-inset-bottom,0px))}
+html[data-route="goals"] main{padding-block:var(--space-5) var(--space-6)}
+@media (min-width:48rem){
+  html[data-route="goals"]{scroll-padding-bottom:0;scroll-padding-top:calc(var(--top-bar-h) + var(--space-4))}
+  html[data-route="goals"] body{padding-bottom:0}
+  html[data-route="goals"] main{padding-block:var(--space-6) var(--space-7)}
+}
+/* A view with no floating primary (body.no-fab) needs less room above the nav bar */
+html[data-route="goals"] body.no-fab{padding-bottom:calc(var(--nav-bar-h) + var(--space-5) + env(safe-area-inset-bottom,0px))}
+
+/* ===== The floating primary (phones) / in-page primary (≥ 48rem) ===== */
+html[data-route="goals"] .dock{position:fixed;z-index:9;inset-inline-end:max(var(--fab-gap),env(safe-area-inset-right,0px));bottom:calc(var(--nav-bar-h) + env(safe-area-inset-bottom,0px) + var(--fab-gap))}
+html[data-route="goals"] .dock .btn-primary{width:auto;height:var(--fab-h);padding:0 var(--space-5) 0 var(--space-4);border-radius:var(--radius-lg);box-shadow:var(--shadow-pop)}
+html[data-route="goals"] .dock .btn-primary .ic{width:20px;height:20px;stroke-width:2.25}
+
+/* ===== Section heads, notices, light rows ===== */
+html[data-route="goals"] .sec-head{display:flex;justify-content:space-between;align-items:center;gap:var(--space-3);min-height:44px}
+html[data-route="goals"] .sec-head h2,html[data-route="goals"] .sec-title{margin:0;font-size:13px;line-height:18px;font-weight:600}
+html[data-route="goals"] .see-all{display:inline-flex;align-items:center;min-height:44px;padding-inline:var(--space-2);margin-inline-end:calc(var(--space-2) * -1);border-radius:var(--radius-sm);color:var(--majorelle);font-size:13px;line-height:18px;font-weight:600;text-decoration:none}
+@media (hover:hover){html[data-route="goals"] .see-all:hover{text-decoration:underline}}
+html[data-route="goals"] .notice{display:flex;gap:var(--space-2);align-items:flex-start;margin:0;padding:var(--space-3) var(--space-4);background:var(--surface-sunken);border-radius:var(--radius-md);font-size:13px;line-height:18px;color:var(--ink)}
+html[data-route="goals"] .notice .ic{width:16px;height:16px;margin-top:1px}
+html[data-route="goals"] .notice-danger{background:var(--danger-soft);color:var(--danger-ink)}
+html[data-route="goals"] .row-link,html[data-route="goals"] .prompt{display:flex;align-items:center;gap:var(--space-3);padding:var(--space-3) var(--space-4);border:1px solid var(--line);border-radius:var(--radius-md);background:var(--surface);color:var(--ink);text-decoration:none}
+html[data-route="goals"] .prompt{border-radius:var(--radius-lg)}
+html[data-route="goals"] .prompt>.ic{color:var(--ink-muted)}
+html[data-route="goals"] .prompt>p{margin:0;flex:1;min-width:0;text-wrap:pretty}
+
+/* ===== GoalCard (design system); the whole card is one link via a stretched title ===== */
+html[data-route="goals"] .goals{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:var(--space-3)}
+html[data-route="goals"] .goal{position:relative;display:flex;gap:var(--space-4);padding:var(--space-4);background:var(--surface-raised);border:1px solid var(--line);border-radius:var(--radius-lg);box-shadow:var(--shadow-card)}
+@media (hover:hover){html[data-route="goals"] .goal:hover{border-color:var(--line-strong)}}
+html[data-route="goals"] .goal-cover{flex:none;width:64px;height:80px;background:var(--majorelle-soft);color:var(--majorelle-ink);display:flex;align-items:flex-end;justify-content:center;padding-bottom:var(--space-2);font-family:var(--font-serif);font-size:28px;line-height:1}
+html[data-route="goals"] .goal-cover img{width:100%;height:100%;object-fit:cover;display:block}
+html[data-route="goals"] .goal-cover.has-img{padding:0}
+html[data-route="goals"] .arch{border-radius:50% 50% var(--radius-sm) var(--radius-sm) / 40% 40% var(--radius-sm) var(--radius-sm);overflow:hidden}
+html[data-route="goals"] .goal-body{flex:1;min-width:0;display:flex;flex-direction:column;gap:var(--space-2)}
+html[data-route="goals"] .goal-top{display:flex;justify-content:space-between;align-items:flex-start;gap:var(--space-2)}
+html[data-route="goals"] .goal-title{margin:0;font-size:18px;line-height:24px;font-weight:600}
+html[data-route="goals"] .goal-title a{color:inherit;text-decoration:none}
+html[data-route="goals"] .goal-title a::after{content:"";position:absolute;inset:0;border-radius:var(--radius-lg)}
+html[data-route="goals"] .goal-title a:focus-visible{outline:none}
+html[data-route="goals"] .goal-title a:focus-visible::after{outline:2px solid var(--focus-ring);outline-offset:2px}
+html[data-route="goals"] .goal-amt span{color:var(--ink-muted)}
+html[data-route="goals"] .goal-foot{display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-2);font-size:12px;line-height:16px;color:var(--ink-muted)}
+html[data-route="goals"] .goal-foot .ic{width:16px;height:16px}
+
+/* ===== Progress (design system) ===== */
+html[data-route="goals"] .track{height:8px;border-radius:var(--radius-sm);background:var(--majorelle-soft);overflow:hidden}
+html[data-route="goals"] .fill{height:100%;border-radius:var(--radius-sm);background:var(--majorelle)}
+html[data-route="goals"] .is-done .track{background:var(--zellige-soft)}html[data-route="goals"] .is-done .fill{background:var(--zellige)}
+@media (prefers-reduced-motion:no-preference){html[data-route="goals"] .fill{transition:width var(--dur-fill) var(--ease-out)}}
+
+/* ===== Badges ===== */
+html[data-route="goals"] .badge{display:inline-flex;align-items:center;gap:var(--space-1);flex:none;font-size:12px;line-height:20px;font-weight:600;padding:0 var(--space-2);border-radius:var(--radius-pill)}
+html[data-route="goals"] .badge .ic{width:14px;height:14px;stroke-width:2.25}
+html[data-route="goals"] .badge-done{background:var(--zellige-soft);color:var(--zellige-ink)}
+html[data-route="goals"] .badge-neutral{background:var(--surface-sunken);color:var(--ink-muted)}
+html[data-route="goals"] .badge-saffron{background:var(--saffron-soft);color:var(--saffron-ink)}
+
+/* ===== Skeletons: static, no shimmer ===== */
+html[data-route="goals"] .sk{display:block;background:var(--surface-sunken);border-radius:var(--radius-sm)}
+
+/* ===== Form fields ===== */
+html[data-route="goals"] .field-label{display:block;margin-bottom:var(--space-2);font-size:13px;line-height:18px;font-weight:600}
+html[data-route="goals"] .field{display:flex;align-items:center;gap:var(--space-2);min-height:52px;padding-inline:var(--space-4);border:1px solid var(--line-strong);border-radius:var(--radius-md);background:var(--surface)}
+html[data-route="goals"] .field:focus-within{outline:2px solid var(--focus-ring);outline-offset:2px}
+html[data-route="goals"] .field input,html[data-route="goals"] .field textarea{flex:1;min-width:0;border:0;background:transparent;color:var(--ink);font:inherit;font-size:16px;line-height:24px;outline:none}
+html[data-route="goals"] .field input{height:50px}
+html[data-route="goals"] .field textarea{padding-block:var(--space-3);resize:vertical;min-height:96px;field-sizing:content}
+html[data-route="goals"] .field-num input{font-size:20px;line-height:28px;font-weight:600;font-variant-numeric:tabular-nums}
+html[data-route="goals"] .suffix{color:var(--ink-muted);font-weight:600}
+html[data-route="goals"] .field.is-invalid{border-color:var(--danger);border-width:2px;padding-inline:calc(var(--space-4) - 1px)}
+html[data-route="goals"] .help{margin:var(--space-2) 0 0;font-size:12px;line-height:16px;color:var(--ink-muted)}
+html[data-route="goals"] .err{margin:var(--space-2) 0 0;font-size:13px;line-height:18px;font-weight:600;color:var(--danger)}
+
+/* ===== Toast ===== */
+html[data-route="goals"] .toast{position:fixed;z-index:20;inset-inline:var(--space-4);bottom:calc(var(--nav-bar-h) + env(safe-area-inset-bottom,0px) + var(--fab-gap) + var(--fab-h) + var(--space-2));
+  display:flex;align-items:center;gap:var(--space-3);padding:var(--space-3) var(--space-3) var(--space-3) var(--space-4);border-radius:var(--radius-md);
+  background:var(--ink);color:var(--surface);box-shadow:var(--shadow-pop);font-size:13px;line-height:18px;font-weight:600}
+html[data-route="goals"] body.no-fab .toast{bottom:calc(var(--nav-bar-h) + env(safe-area-inset-bottom,0px) + var(--space-4))}
+html[data-route="goals"] .toast-text{flex:1;min-width:0;display:flex;flex-direction:column}
+html[data-route="goals"] .toast-title{font-size:15px;line-height:22px}
+html[data-route="goals"] .toast-title:empty{display:none}
+html[data-route="goals"] .toast.is-done{background:var(--saffron);color:var(--on-saffron)}
+html[data-route="goals"] .toast-undo{flex:none;position:relative;font:inherit;font-weight:600;height:36px;padding:0 var(--space-3);border:1px solid currentColor;border-radius:var(--radius-sm);background:transparent;color:inherit;cursor:pointer}
+html[data-route="goals"] .toast-undo::before{content:"";position:absolute;inset:-4px -2px}
+html[data-route="goals"] .toast-undo{min-width:44px}
+html[data-route="goals"] .toast :focus-visible{outline-color:currentColor}
+@media (prefers-reduced-motion:no-preference){html[data-route="goals"] .toast{transition:opacity var(--dur-toast) ease,transform var(--dur-toast) var(--ease-out)}html[data-route="goals"] .toast.is-entering{opacity:0;transform:translateY(8px)}}
+@media (prefers-reduced-motion:reduce){html[data-route="goals"] .toast{transition:opacity var(--dur-toast) ease}html[data-route="goals"] .toast.is-entering{opacity:0}}
+html[data-route="goals"].toast-open{scroll-padding-bottom:calc(var(--nav-bar-h) + var(--fab-zone) + env(safe-area-inset-bottom,0px) + 5.5rem)}
+/* ===== Windows High Contrast ===== */
+@media (forced-colors:active){
+  html[data-route="goals"] .track{border:1px solid CanvasText}
+  html[data-route="goals"] .fill{forced-color-adjust:none;background:Highlight}
+  html[data-route="goals"] .toast,html[data-route="goals"] .sheet{border:1px solid CanvasText}
+}
+@media (min-width:48rem){
+  html[data-route="goals"] body.no-fab{padding-bottom:0}
+  html[data-route="goals"] .dock{position:static}
+  html[data-route="goals"] .dock .btn-primary{height:44px;padding:0 var(--space-5) 0 var(--space-4);border-radius:var(--radius-md);box-shadow:none}
+  html[data-route="goals"] .toast,html[data-route="goals"] body.no-fab .toast{inset-inline:auto;left:50%;bottom:var(--space-5);width:min(30rem,calc(100% - 2 * var(--space-4)));translate:-50% 0}
+}
+
+/* =====================================================================
+   Goals area additions (direction B · Doorway). Proposed for the system;
+   recorded in build-notes.md. No new colours: zellige + surface only.
+   ===================================================================== */
+:root{
+  --doorway-ratio:3 / 2; --doorway-ratio-bare:2 / 1; --doorway-max:15rem;
+  --arch-initial-xl:96px; --arch-initial-tile:40px;
+  --surround:4px; --surround-gap:3px; --surround-sm:2px;
+  --dur-surround:320ms;
+}
+
+/* ----- Doorway: the arch holding a cover, or the title's initial ----- */
+html[data-route="goals"] .door{position:relative;display:flex;align-items:flex-end;justify-content:center;overflow:hidden;
+  background:var(--majorelle-soft);color:var(--majorelle-ink);font-family:var(--font-serif);font-weight:400;line-height:1;
+  border-radius:50% 50% var(--radius-sm) var(--radius-sm) / 40% 40% var(--radius-sm) var(--radius-sm);
+  --ring-gap:var(--surround-gap); --ring:var(--surround)}
+html[data-route="goals"] .door-initial{display:block;padding-bottom:.16em;user-select:none}
+html[data-route="goals"] .door--detail{width:min(100%,calc(var(--doorway-max) * 2));margin-inline:auto;aspect-ratio:var(--doorway-ratio-bare);font-size:var(--arch-initial-xl)}
+html[data-route="goals"] .door--detail.has-photo{width:min(100%,calc(var(--doorway-max) * 1.5));aspect-ratio:var(--doorway-ratio)}
+html[data-route="goals"] .door--tile{width:100%;aspect-ratio:5 / 4;font-size:var(--arch-initial-tile);--ring-gap:var(--surround-sm);--ring:var(--surround-sm)}
+html[data-route="goals"] .door--row{flex:none;width:32px;height:40px;font-size:24px;--ring-gap:var(--surround-sm);--ring:var(--surround-sm)}
+html[data-route="goals"] .door--row .door-initial{padding-bottom:3px}
+html[data-route="goals"] .door--form{width:min(100%,calc(var(--doorway-max) * 2));margin-inline:auto;aspect-ratio:var(--doorway-ratio-bare);font-size:var(--arch-initial-xl)}
+html[data-route="goals"] .door--form.has-photo{width:min(100%,calc(var(--doorway-max) * 1.5));aspect-ratio:var(--doorway-ratio)}
+/* With no cover anywhere on the list, tiles use the bare 2:1 doorway (critic minor: sameness costs less height) */
+html[data-route="goals"] .tiles.no-covers .door--tile{aspect-ratio:2 / 1;font-size:32px}
+/* A real cover fills the arch; example covers are a sunken arch with a label, never stock images. */
+html[data-route="goals"] .door img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+html[data-route="goals"] .door-example{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:var(--space-1);
+  background:var(--surface-sunken);color:var(--ink-muted);font-family:var(--font-sans);font-size:12px;line-height:16px;font-weight:600}
+html[data-route="goals"] .door-example .ic{width:24px;height:24px;stroke-width:1.5}
+html[data-route="goals"] .door--tile .door-example .ic,html[data-route="goals"] .door--row .door-example .ic{width:16px;height:16px}
+html[data-route="goals"] .door--row .door-example span{display:none}
+/* Wide screens: the detail doorway stands upright in its column (set by the detail view). */
+
+/* ----- Done: the zellige surround closes around the doorway ----- */
+html[data-route="goals"] .door.is-done{overflow:visible;box-shadow:0 0 0 var(--ring-gap) var(--surface),0 0 0 calc(var(--ring-gap) + var(--ring)) var(--zellige)}
+html[data-route="goals"] .door.is-done>*{border-radius:inherit;overflow:hidden}
+html[data-route="goals"] .door.is-done .door-initial{overflow:visible}
+html[data-route="goals"] .tile .door.is-done{box-shadow:0 0 0 var(--ring-gap) var(--surface-raised),0 0 0 calc(var(--ring-gap) + var(--ring)) var(--zellige)}
+@keyframes surround-in{
+  from{box-shadow:0 0 0 calc(var(--ring-gap) + 12px) transparent,0 0 0 calc(var(--ring-gap) + var(--ring) + 12px) color-mix(in srgb,var(--zellige) 0%,transparent)}
+}
+@keyframes surround-fade{from{box-shadow:0 0 0 var(--ring-gap) transparent,0 0 0 calc(var(--ring-gap) + var(--ring)) transparent}}
+@media (prefers-reduced-motion:no-preference){html[data-route="goals"] .door.is-done.is-closing{animation:surround-in var(--dur-surround) var(--ease-out) both}}
+@media (prefers-reduced-motion:reduce){html[data-route="goals"] .door.is-done.is-closing{animation:surround-fade var(--dur-toast) ease both}}
+@media (forced-colors:active){
+  html[data-route="goals"] .door{border:1px solid CanvasText}
+  html[data-route="goals"] .door.is-done{box-shadow:none;outline:3px solid CanvasText;outline-offset:var(--ring-gap)}
+}
+
+/* ----- Example photo placeholder outside the doorway (journal, composer) ----- */
+html[data-route="goals"] .photo-example{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:var(--space-1);width:100%;
+  background:var(--surface-sunken);color:var(--ink-muted);font-size:12px;line-height:16px;font-weight:600}
+
+/* ----- Quick-add sheet (Home's, reused verbatim) ----- */
+html[data-route="goals"] .pick-list{list-style:none;margin:var(--space-2) 0 0;padding:0;display:flex;flex-direction:column;gap:var(--space-2)}
+html[data-route="goals"] .pick-row{width:100%;display:flex;align-items:center;gap:var(--space-3);min-height:56px;padding:var(--space-3) var(--space-4);border:1px solid var(--line);border-radius:var(--radius-md);background:var(--surface);color:var(--ink);font:inherit;text-align:start;cursor:pointer}
+html[data-route="goals"] #sheet .field input{font-size:20px;line-height:28px;font-weight:600;font-variant-numeric:tabular-nums}
+html[data-route="goals"] #sheet .field-text input{font-size:16px;font-weight:400}
+html[data-route="goals"] .sheet-links{display:flex;flex-wrap:wrap;justify-content:center;gap:0 var(--space-5)}
+html[data-route="goals"] .note-wrap{margin-top:var(--space-2)}
+html[data-route="goals"] .stepper{display:flex;align-items:center;gap:var(--space-2)}
+html[data-route="goals"] .stepper .field{flex:1;min-width:0}
+html[data-route="goals"] .stepper .btn-sec{flex:none;width:56px;height:52px;padding:0}
+
+/* ----- Confirm (alertdialog): a sheet on phones, centred from 48rem ----- */
+html[data-route="goals"] .confirm h2{margin:0;font-size:18px;line-height:24px;font-weight:600}
+html[data-route="goals"] .confirm-body{margin:var(--space-2) 0 0;text-wrap:pretty}
+html[data-route="goals"] .confirm-body p{margin:0 0 var(--space-2)}
+html[data-route="goals"] .confirm .sheet-actions{margin-top:var(--space-5)}
+
+/* ----- Task pages (create and edit): no bottom nav on phones (decision (a)) ----- */
+@media (max-width:47.99rem){
+  html[data-route="goals"][data-chrome="task"] .nav{display:none}
+  html[data-route="goals"][data-chrome="task"] body{padding-bottom:calc(var(--fab-zone) + env(safe-area-inset-bottom,0px))}
+  html[data-route="goals"][data-chrome="task"] body.no-fab{padding-bottom:calc(var(--space-5) + env(safe-area-inset-bottom,0px))}
+  html[data-route="goals"][data-chrome="task"]{scroll-padding-bottom:calc(var(--fab-zone) + env(safe-area-inset-bottom,0px))}
+  html[data-route="goals"][data-chrome="task"] .dock{bottom:calc(env(safe-area-inset-bottom,0px) + var(--fab-gap))}
+  html[data-route="goals"][data-chrome="task"] .toast{bottom:calc(env(safe-area-inset-bottom,0px) + var(--fab-gap) + var(--fab-h) + var(--space-2))}
+  html[data-route="goals"][data-chrome="task"] main{padding-top:0}
+}
+
+/* ----- Prototype footnote ----- */
+html[data-route="goals"] #footnote:empty{display:none}
+/* ===== Goals list (list.css) ===== */
+/* Goals list (direction B · Doorway). Open goals are doorway tiles on subgrid rows, so figures and bars
+   line up across a row; done goals are flat rows whose arch wears the zellige surround. */
+
+/* ----- Masthead: h1, the demoted summary (D2), the primary ----- */
+html[data-route="goals"] .list-head{display:grid;gap:var(--space-1);margin-bottom:var(--space-5)}
+html[data-route="goals"] .list-summary{margin:0;font-size:15px;line-height:22px;color:var(--ink-muted);text-wrap:pretty}
+html[data-route="goals"] .sk-summary{width:min(18rem,80%);height:16px;margin-top:var(--space-2)}
+html[data-route="goals"] .list-notice{margin-bottom:var(--space-5)}
+html[data-route="goals"] .notice-stale{align-items:center;flex-wrap:wrap}
+html[data-route="goals"] .notice-stale>span{flex:1;min-width:12rem}
+html[data-route="goals"] .notice-stale .link-btn{margin:calc(var(--space-2) * -1) 0;min-height:44px}
+
+/* ----- Open goals: tiles ----- */
+html[data-route="goals"] .tiles{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-3)}
+html[data-route="goals"] .tile{position:relative;min-width:0;display:grid;grid-row:span 7;grid-template-rows:subgrid;row-gap:0;
+  padding:var(--space-3);background:var(--surface-raised);border:1px solid var(--line);border-radius:var(--radius-lg);box-shadow:var(--shadow-card)}
+@supports not (grid-template-rows:subgrid){html[data-route="goals"] .tile{display:flex;flex-direction:column}html[data-route="goals"] .tile-bar{margin-top:auto}}
+@media (hover:hover){html[data-route="goals"] .tile:hover{border-color:var(--line-strong)}}
+html[data-route="goals"] .tile>.door{margin-bottom:var(--space-3)}
+html[data-route="goals"] .tile.is-done>.door{margin:var(--space-1) var(--space-1) calc(var(--space-3) + var(--space-1));width:calc(100% - var(--space-2))}
+html[data-route="goals"] .tile-title{margin:0;font-size:15px;line-height:20px;font-weight:600;overflow-wrap:anywhere;text-wrap:pretty}
+html[data-route="goals"] .tile-title a{color:inherit;text-decoration:none}
+html[data-route="goals"] .tile-title a::after{content:"";position:absolute;inset:0;border-radius:var(--radius-lg)}
+html[data-route="goals"] .tile-title a:focus-visible{outline:none}
+html[data-route="goals"] .tile-title a:focus-visible::after{outline:2px solid var(--focus-ring);outline-offset:2px}
+html[data-route="goals"] .tile-fig{margin:var(--space-2) 0 0;font-size:18px;line-height:24px;font-weight:600;white-space:nowrap}
+html[data-route="goals"] .tile-of{margin:0;font-size:12px;line-height:16px;color:var(--ink-muted)}
+html[data-route="goals"] .tile-bar{margin-top:var(--space-2)}
+html[data-route="goals"] .tile-foot{margin:var(--space-3) 0 0;display:flex;gap:var(--space-2);align-items:flex-start;font-size:12px;line-height:16px;color:var(--ink-muted);overflow-wrap:anywhere}
+html[data-route="goals"] .tile-foot .zm-av{margin-top:-4px}
+html[data-route="goals"] .ic-pending{width:14px;height:14px;vertical-align:-2px;margin-inline-end:var(--space-1)}
+html[data-route="goals"] .tile-by{margin:var(--space-1) 0 0;font-size:12px;line-height:16px;color:var(--ink-muted)}
+html[data-route="goals"] .tile-by .badge{margin-top:var(--space-1)}
+
+/* Loading: static skeletons at the tile's shape (no shimmer) */
+html[data-route="goals"] .tile-sk{box-shadow:none}
+html[data-route="goals"] .tile-sk .sk-door{aspect-ratio:5 / 4;margin-bottom:var(--space-3);border-radius:50% 50% var(--radius-sm) var(--radius-sm) / 40% 40% var(--radius-sm) var(--radius-sm)}
+html[data-route="goals"] .tile-sk .sk-line{height:14px;width:80%;margin-top:var(--space-1)}
+html[data-route="goals"] .tile-sk .sk-fig{height:20px;width:70%;margin-top:var(--space-2)}
+html[data-route="goals"] .tile-sk .sk-of{height:12px;width:50%;margin-top:var(--space-1)}
+html[data-route="goals"] .tile-sk .sk-bar{height:8px;margin-top:var(--space-2)}
+
+/* ----- Done goals: flat rows ----- */
+html[data-route="goals"] .done-sec{margin-top:var(--space-6)}
+html[data-route="goals"] .done-sec .sec-title{margin-bottom:var(--space-3)}
+html[data-route="goals"] .done-rows{list-style:none;margin:0;padding:0;display:grid;gap:var(--space-2)}
+html[data-route="goals"] .done-row{position:relative;display:flex;align-items:center;gap:var(--space-3);min-height:64px;padding:var(--space-3) var(--space-4);border:1px solid var(--line);border-radius:var(--radius-md);background:var(--surface)}
+@media (hover:hover){html[data-route="goals"] .done-row:hover{border-color:var(--line-strong)}}
+html[data-route="goals"] .done-row>.door{margin:var(--space-1)}
+html[data-route="goals"] .done-body{flex:1;min-width:0}
+html[data-route="goals"] .done-title{margin:0;font-size:15px;line-height:22px;font-weight:600;overflow-wrap:anywhere}
+html[data-route="goals"] .done-title a{color:inherit;text-decoration:none}
+html[data-route="goals"] .done-title a::after{content:"";position:absolute;inset:0;border-radius:var(--radius-md)}
+html[data-route="goals"] .done-title a:focus-visible{outline:none}
+html[data-route="goals"] .done-title a:focus-visible::after{outline:2px solid var(--focus-ring);outline-offset:2px}
+html[data-route="goals"] .done-meta{margin:0;font-size:12px;line-height:16px;color:var(--ink-muted)}
+
+/* ----- Prompts and errors ----- */
+html[data-route="goals"] .list-empty,html[data-route="goals"] .list-alldone{align-items:flex-start;padding:var(--space-4)}
+html[data-route="goals"] .list-empty .title,html[data-route="goals"] .list-alldone .title{margin:0 0 var(--space-1)}
+html[data-route="goals"] .list-empty p,html[data-route="goals"] .list-alldone p{margin:0;text-wrap:pretty}
+html[data-route="goals"] .list-empty>.ic{margin-top:2px}
+html[data-route="goals"] .list-alldone{flex-wrap:wrap}
+html[data-route="goals"] .list-error{display:grid;justify-items:start;gap:var(--space-4)}
+html[data-route="goals"] .list-error .title{margin:0 0 var(--space-1)}
+html[data-route="goals"] .list-error p{margin:0}
+
+@media (forced-colors:active){html[data-route="goals"] .tile,html[data-route="goals"] .done-row{border:1px solid CanvasText}}
+
+/* Very narrow (below 320 px, or zoomed): one tile per row */
+@media (max-width:19.9375rem){html[data-route="goals"] .tiles{grid-template-columns:minmax(0,1fr)}}
+
+/* ----- 48 rem and up: summary and primary under the h1; three tiles ----- */
+@media (min-width:48rem){
+  html[data-route="goals"] .list-head{grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"h1 h1" "sum dock";align-items:center;row-gap:var(--space-2);margin-bottom:var(--space-6)}
+  html[data-route="goals"] .list-head h1{grid-area:h1}
+  html[data-route="goals"] .list-head .list-summary{grid-area:sum}
+  html[data-route="goals"] .list-head .dock{grid-area:dock}
+  html[data-route="goals"] .list-head .sk-summary{grid-area:sum}
+  html[data-route="goals"] .tiles{grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--space-4)}
+  html[data-route="goals"] .tile{padding:var(--space-4)}
+  html[data-route="goals"] .tile-title{font-size:18px;line-height:24px}
+  html[data-route="goals"] .tile-fig{font-size:20px;line-height:28px}
+  html[data-route="goals"] .tile-foot,html[data-route="goals"] .tile-by,html[data-route="goals"] .tile-of{font-size:13px;line-height:18px}
+}
+/* ----- 64 rem and up: one masthead line closed by a hairline; four tiles ----- */
+@media (min-width:64rem){
+  html[data-route="goals"] .list-head{grid-template-columns:auto minmax(0,1fr) auto;grid-template-areas:"h1 sum dock";column-gap:var(--space-5);padding-bottom:var(--space-5);border-bottom:1px solid var(--line)}
+  html[data-route="goals"] .list-head .list-summary{align-self:center;padding-top:4px}
+  html[data-route="goals"] .tiles{grid-template-columns:repeat(4,minmax(0,1fr))}
+  html[data-route="goals"] .done-rows{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:var(--space-4)}
+}

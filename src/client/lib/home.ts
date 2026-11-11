@@ -2,6 +2,7 @@ import { queryOptions, type QueryClient } from "@tanstack/react-query";
 import { isComplete, progressRatio } from "../../shared/completion.ts";
 import type { EntryResponse, HomeGoal, HomeResponse } from "../../shared/schemas/home.ts";
 import { api } from "./api.ts";
+import { invalidateGoal, patchEntryAdd, patchEntryRemove, restoreGoalCaches, type GoalCaches } from "./goals.ts";
 
 export const homeKey = ["home"] as const;
 
@@ -35,6 +36,8 @@ const entryScope = { id: "goalEntries" };
 export interface RemoveEntryVars {
   goalId: string;
   id: string;
+  /** The caller already patched the caches (an Undo restores its own snapshot). */
+  applied?: boolean;
 }
 
 /** JSON-only, so a paused mutation survives a reload in IndexedDB. */
@@ -46,6 +49,8 @@ export interface AddEntryVars {
   note?: string;
   actorId: string;
   at: string;
+  /** The caller already patched the Goals caches. */
+  applied?: boolean;
 }
 
 /** Home after an entry, as the optimistic update and the toasts see it. */
@@ -91,19 +96,32 @@ export function registerHomeMutations(qc: QueryClient) {
       }),
     onMutate: async (v: AddEntryVars) => {
       await qc.cancelQueries({ queryKey: homeKey });
+      await qc.cancelQueries({ queryKey: ["goals"] });
       const before = qc.getQueryData<HomeData>(homeKey);
       if (before) qc.setQueryData<HomeData>(homeKey, applyEntry(before, v, !navigator.onLine));
-      return { before };
+      // The Goals screens show the same entry at once (the list, the goal's history); undone by onError.
+      const goals = v.applied ? undefined : patchEntryAdd(qc, v, !navigator.onLine);
+      return { before, goals };
     },
-    onError: (_e: unknown, _v: AddEntryVars, ctx: { before?: HomeData } | undefined) => {
+    onError: (_e: unknown, v: AddEntryVars, ctx: { before?: HomeData; goals?: GoalCaches } | undefined) => {
       if (ctx?.before) qc.setQueryData(homeKey, ctx.before);
+      if (ctx?.goals) restoreGoalCaches(qc, v.goalId, ctx.goals);
     },
-    onSettled: () => qc.invalidateQueries({ queryKey: homeKey }),
+    onSettled: (_d: unknown, _e: unknown, v: AddEntryVars) => {
+      void qc.invalidateQueries({ queryKey: homeKey });
+      invalidateGoal(qc, v.goalId);
+    },
   });
   qc.setMutationDefaults(removeEntryKey, {
     scope: entryScope,
     mutationFn: (v: RemoveEntryVars) => api(`/api/goals/${v.goalId}/entries/${v.id}`, { method: "DELETE" }),
-    onSettled: () => qc.invalidateQueries({ queryKey: homeKey }),
+    onMutate: (v: RemoveEntryVars) => {
+      if (!v.applied) patchEntryRemove(qc, v.goalId, v.id);
+    },
+    onSettled: (_d: unknown, _e: unknown, v: RemoveEntryVars) => {
+      void qc.invalidateQueries({ queryKey: homeKey });
+      invalidateGoal(qc, v.goalId);
+    },
   });
 }
 

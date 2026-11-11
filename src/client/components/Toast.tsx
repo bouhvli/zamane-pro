@@ -1,5 +1,5 @@
 import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState } from "react";
-import { say } from "../../lib/announce.ts";
+import { say } from "../lib/announce.ts";
 
 /**
  * Home's toast (home.html): above the floating button on phones, centred from 48rem. 10 s, paused while hovered or
@@ -65,7 +65,7 @@ export const Toast = forwardRef<ToastHandle, { onHiddenWithFocus: () => void }>(
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key !== "Escape" || !t) return;
-      if (document.querySelector("#qa-sheet[open]")) return;
+      if (document.querySelector("dialog[open]")) return;
       hide();
     };
     document.addEventListener("keydown", onKey);

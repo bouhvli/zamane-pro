@@ -1,15 +1,24 @@
 import { useEffect, useLayoutEffect, useRef, useState, type FormEvent } from "react";
 import { useForm } from "react-hook-form";
-import { formatAmount, parseMoney } from "../../../shared/money.ts";
-import { goalRatio, type HomeGoalView } from "../../lib/home.ts";
-import { Icon } from "../Icon.tsx";
+import { formatAmount, parseMoney } from "../../shared/money.ts";
+import { progressRatio } from "../../shared/completion.ts";
+import type { GoalKind } from "../../shared/enums.ts";
+import { Icon } from "./Icon.tsx";
 
 /**
  * The quick-add sheet (home.html #sheet): "Which goal?" then an amount (money goals) or the new total (general
  * goals). A bottom sheet on phones that sits on the keyboard, centred from 48rem. Its own live and alert regions,
  * because the page's region is inert while the modal is open. Backdrop dismissal only when the press both starts
- * and ends outside the sheet (WCAG 2.5.2).
+ * and ends outside the sheet (WCAG 2.5.2). Shared by Home and a goal's page (opened at the amount step with the
+ * goal pre-picked: one goal, so no "Change goal").
  */
+export interface SheetGoal {
+  id: string;
+  kind: GoalKind;
+  title: string;
+  progress: number;
+  target: number | null;
+}
 export type SheetStep = "pick" | "amount";
 
 const MSG = {
@@ -37,7 +46,7 @@ function parsePercent(raw: string): { value?: number; error?: string } {
   return { value: n };
 }
 
-export function QuickAddSheet({
+export function QuickAddSheet<G extends SheetGoal>({
   open,
   step,
   goal,
@@ -50,13 +59,13 @@ export function QuickAddSheet({
 }: {
   open: boolean;
   step: SheetStep;
-  goal: HomeGoalView | null;
-  openGoals: HomeGoalView[];
+  goal: G | null;
+  openGoals: G[];
   currency: string;
   onPick: (goalId: string) => void;
   onChangeGoal: () => void;
   onClose: () => void;
-  onSubmit: (goal: HomeGoalView, value: number, note: string) => void;
+  onSubmit: (goal: G, value: number, note: string) => void;
 }) {
   const dialog = useRef<HTMLDialogElement>(null);
   const live = useRef<HTMLParagraphElement>(null);
@@ -163,10 +172,11 @@ export function QuickAddSheet({
   );
 }
 
-function Pick({ goals, currency, onPick }: { goals: HomeGoalView[]; currency: string; onPick: (id: string) => void }) {
+function Pick({ goals, currency, onPick }: { goals: SheetGoal[]; currency: string; onPick: (id: string) => void }) {
   const first = useRef<HTMLButtonElement>(null);
   useLayoutEffect(() => first.current?.focus(), []);
-  const sorted = [...goals].sort((a, b) => goalRatio(b) - goalRatio(a));
+  const ratio = (g: SheetGoal) => progressRatio(g.kind, g.progress, g.target);
+  const sorted = [...goals].sort((a, b) => ratio(b) - ratio(a));
   return (
     <>
       <h3 className="lbl" id="pick-h">
@@ -193,7 +203,7 @@ function Pick({ goals, currency, onPick }: { goals: HomeGoalView[]; currency: st
   );
 }
 
-function AmountForm({
+function AmountForm<G extends SheetGoal>({
   goal,
   currency,
   canChange,
@@ -201,11 +211,11 @@ function AmountForm({
   onSubmit,
   say,
 }: {
-  goal: HomeGoalView;
+  goal: G;
   currency: string;
   canChange: boolean;
   onChangeGoal: () => void;
-  onSubmit: (goal: HomeGoalView, value: number, note: string) => void;
+  onSubmit: (goal: G, value: number, note: string) => void;
   say: (msg: string, assertive?: boolean) => void;
 }) {
   const money = goal.kind === "money";

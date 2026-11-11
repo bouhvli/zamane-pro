@@ -6,8 +6,8 @@ import { isComplete } from "../../../shared/completion.ts";
 import { formatInviteCode } from "../../../shared/invite-code.ts";
 import { formatAmount } from "../../../shared/money.ts";
 import { localToday, nextTrip, shortDate } from "../../../shared/trip-days.ts";
-import { QuickAddSheet, type SheetStep } from "../../components/home/QuickAddSheet.tsx";
-import { Toast, type ToastHandle } from "../../components/home/Toast.tsx";
+import { QuickAddSheet, type SheetStep } from "../../components/QuickAddSheet.tsx";
+import { Toast, type ToastHandle } from "../../components/Toast.tsx";
 import { Icon } from "../../components/Icon.tsx";
 import { initial } from "../../components/Seat.tsx";
 import { say, setTitle } from "../../lib/announce.ts";
@@ -27,6 +27,7 @@ import {
   type HomeData,
   type HomeGoalView,
 } from "../../lib/home.ts";
+import { patchEntryRemove } from "../../lib/goals.ts";
 import { focusHeading, useArrival } from "../../lib/nav.ts";
 import { useOnline } from "../../lib/online.ts";
 
@@ -187,6 +188,7 @@ function Home() {
     const m = cache.getAll().find((x) => (x.state.variables as AddEntryVars | undefined)?.id === vars.id);
     if (m && m.state.isPaused && m.state.status === "pending") {
       cache.remove(m);
+      patchEntryRemove(qc, vars.goalId, vars.id);
       return;
     }
     remove.mutate({ goalId: vars.goalId, id: vars.id });

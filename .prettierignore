@@ -19,3 +19,4 @@ ARCHITECTURE.md
 .wrangler
 .tanstack
 src/client/styles/home.css
+src/client/styles/goals*.css

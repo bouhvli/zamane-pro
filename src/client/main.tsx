@@ -18,6 +18,10 @@ import "./styles/account.css";
 import "./styles/setup.css";
 import "./styles/nav.css";
 import "./styles/home.css";
+import "./styles/goals.css";
+import "./styles/goals-detail.css";
+import "./styles/goals-composer.css";
+import "./styles/goals-form.css";
 import "./styles/app.css";
 
 const router = createRouter({

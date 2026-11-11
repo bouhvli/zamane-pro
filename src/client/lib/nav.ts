@@ -33,10 +33,18 @@ export function useArrival(onArrive: (first: boolean) => void) {
 }
 
 /** Sets <html data-chrome> and <html data-route> (the prototype's selectors key off them). */
-export function useChrome(chrome: "auth" | "app", route: string) {
+export function useChrome(chrome: "auth" | "app" | "task", route: string) {
   useLayoutEffect(() => {
     const root = document.documentElement;
     root.dataset.chrome = chrome;
     root.dataset.route = route;
   }, [chrome, route]);
+}
+
+/** The prototype's Z.setFab(false): a view without the floating primary needs less room above the nav bar. */
+export function useNoFab(noFab: boolean) {
+  useLayoutEffect(() => {
+    document.body.classList.toggle("no-fab", noFab);
+    return () => document.body.classList.remove("no-fab");
+  }, [noFab]);
 }

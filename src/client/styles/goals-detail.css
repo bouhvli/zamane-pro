@@ -1,0 +1,313 @@
+/* Goal detail: ported from .ux-forge/goals/detail.css, every rule scoped to html[data-route="goals"]; the :root
+   tokens stay global. Generated from the prototype, then kept verbatim. */
+/* Goal detail (#/goals/:id), direction B · Doorway. Owned by the detail builder.
+   Mobile first, one column. From 48rem: the top bar, and the primary at the end of the progress line.
+   From 64rem: a two-column masthead (upright doorway | facts) and History | Journal side by side.
+   Layout is one grid; .gd-mast and .gd-facts are display:contents until 64rem, so every summary
+   block can be placed by area (the Edit link sits beside "‹ Goals" on phones, on the title line wide). */
+
+/* ===== Tokens added (detail). Proposed for the system; listed in build-notes/detail.md ===== */
+:root{
+  --gd-target:44px;            /* the system's minimum target (IA 6.2) */
+  --gd-row-min:56px;           /* History rows are at least 56 px (IA 6.2) */
+  --gd-tab-h:48px;             /* tabs: at least 44 px, half the width each */
+  --gd-photo-max:28rem;        /* journal photos: full text width, capped (decision.md) */
+  --gd-photo-ratio:4 / 5;
+  --gd-photo-off-ratio:2 / 1;  /* "Photo unavailable" placeholders cost less height */
+  --gd-door-col:22rem;         /* ≥ 64rem: the upright doorway's column (and History's) */
+  --gd-door-ratio-wide:4 / 5;
+  --gd-measure:68ch;           /* note text measure on wide screens */
+  --gd-clamp-desc:2;           /* description lines before "More" */
+  --gd-clamp-note:12;          /* note text lines before "Read more" (IA 5.2) */
+  --gd-clamp-row:2;            /* a contribution's note inside its History row */
+}
+/* At 320 px the description gets one line, so "14,250 MAD" stays above the fold and clear of the
+   floating primary (decision.md hold 2). */
+@media (max-width:22.4375rem){:root{--gd-clamp-desc:1}}
+
+/* The design system type role the detail figure uses (zamane.css base; not in base.css) */
+html[data-route="goals"] .numeral{font-size:32px;line-height:36px;font-weight:600;font-variant-numeric:tabular-nums}
+
+/* ===== The page grid ===== */
+html[data-route="goals"] .gd{display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:var(--space-3);align-items:start;
+  grid-template-areas:"back edit" "door door" "id id" "prog prog" "notice notice" "share share" "stats stats" "feeds feeds"}
+html[data-route="goals"] .gd-mast,html[data-route="goals"] .gd-facts{display:contents}
+html[data-route="goals"] .gd-back{grid-area:back}
+html[data-route="goals"] .gd-edit::before{inset:calc((var(--gd-target) - 100%) / -2 - var(--space-1)) 0}
+html[data-route="goals"] .gd-edit{grid-area:edit;justify-self:end;align-self:center}
+html[data-route="goals"] .gd-notice{grid-area:notice}
+html[data-route="goals"] .gd-door{grid-area:door}
+html[data-route="goals"] .gd-id{grid-area:id}
+html[data-route="goals"] .gd-progress{grid-area:prog}
+html[data-route="goals"] .gd-share{grid-area:share}
+html[data-route="goals"] .gd-stats{grid-area:stats}
+html[data-route="goals"] .gd-feeds{grid-area:feeds}
+html[data-route="goals"] .gd>*,html[data-route="goals"] .gd-facts>*{min-width:0}
+
+/* ===== Up-link and Edit ===== */
+html[data-route="goals"] .gd-back{justify-self:start;display:inline-flex;align-items:center;gap:var(--space-1);min-height:var(--gd-target);
+  padding-inline:var(--space-1) var(--space-2);margin-inline-start:calc(var(--space-2) * -1);border-radius:var(--radius-sm);
+  color:var(--majorelle);font-size:13px;line-height:18px;font-weight:600;text-decoration:none}
+@media (hover:hover){html[data-route="goals"] .gd-back:hover{text-decoration:underline}}
+html[data-route="goals"][dir="rtl"] .gd-back .ic,html[data-route="goals"] [dir="rtl"] .gd-back .ic{transform:scaleX(-1)}
+
+/* ===== Offline notice (Home's, plus one line) ===== */
+html[data-route="goals"] .gd-notice .notice{margin-block-start:var(--space-4)}
+@media (min-width:48rem){html[data-route="goals"] .gd-notice .notice{margin-block-start:var(--space-2)}}
+html[data-route="goals"] .gd-notice-line{display:block}
+html[data-route="goals"] .gd-notice-line+.gd-notice-line{margin-block-start:var(--space-1)}
+
+/* ===== Identity: doorway, title, date line, description ===== */
+html[data-route="goals"] .gd-door{margin-block-start:var(--space-2)}
+/* The arch sits flush with the title column, not centred in it (critic F3). */
+html[data-route="goals"] .gd-door .door--detail{margin-inline:0}
+/* Critic F6: on a done goal the container insets the 3 + 4 px surround, so it frames the doorway
+   inside the gutter and keeps the scale's 16 px from the h1. */
+html[data-route="goals"] .gd-door.is-done{padding:calc(var(--surround-gap) + var(--surround))}
+/* Critic F1: on short phones a photo doorway takes the bare 2:1 ratio (object-fit:cover crops it),
+   so the "to go" line and the bar stay clear of the floating primary at 320×568, 360×640 and 375×667. */
+@media (max-width:47.99rem) and (max-height:43.75rem){html[data-route="goals"] .gd-door .door--detail.has-photo{aspect-ratio:var(--doorway-ratio-bare)}}
+/* Dark: the example placeholder is a raised niche, not a black void (critic polish). */
+@media (prefers-color-scheme:dark){:root[data-route="goals"]:not([data-theme="light"]) .gd-door .door-example,:root[data-route="goals"]:not([data-theme="light"]) .gd-photo .photo-example{background:var(--surface-raised)}}
+:root[data-route="goals"][data-theme="dark"] .gd-door .door-example,:root[data-route="goals"][data-theme="dark"] .gd-photo .photo-example{background:var(--surface-raised)}
+html[data-route="goals"] .gd-id{margin-block-start:var(--space-3)}
+@media (min-width:22.5rem){html[data-route="goals"] .gd-id{margin-block-start:var(--space-4)}}
+html[data-route="goals"] .gd-titlerow{display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-2) var(--space-3)}
+html[data-route="goals"] .gd-title{min-width:0;overflow-wrap:anywhere}
+html[data-route="goals"] .gd-meta,html[data-route="goals"] .gd-reached{margin:var(--space-1) 0 0}
+html[data-route="goals"] .gd-meta{color:var(--ink-muted)}
+html[data-route="goals"] .gd-reached{display:flex;align-items:center;gap:var(--space-1);color:var(--zellige-ink);font-weight:600}
+html[data-route="goals"] .gd-reached .ic{width:16px;height:16px;stroke-width:2.25}
+html[data-route="goals"] .gd-descrow{display:flex;align-items:flex-end;gap:var(--space-2);margin-block-start:var(--space-1)}
+html[data-route="goals"] .gd-desc{flex:1;min-width:0;margin:0;overflow-wrap:anywhere;text-wrap:pretty;
+  display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:var(--gd-clamp-desc);overflow:hidden}
+html[data-route="goals"] .gd-desc.is-open{display:block;-webkit-line-clamp:none;overflow:visible}
+/* "More" keeps the description to one line of layout; its 44 px target overhangs the lines around it. */
+html[data-route="goals"] .gd-more{position:relative;flex:none;padding:0 var(--space-1);border:0;border-radius:var(--radius-sm);background:none;
+  color:var(--majorelle);font:inherit;font-weight:600;cursor:pointer}
+html[data-route="goals"] .gd-more::before{content:"";position:absolute;inset:calc((var(--gd-target) - 100%) / -2) calc(var(--space-2) * -1)}
+@media (hover:hover){html[data-route="goals"] .gd-more:hover{text-decoration:underline}}
+
+/* ===== Progress ===== */
+html[data-route="goals"] .gd-progress{margin-block-start:var(--space-4)}
+@media (max-width:22.4375rem){html[data-route="goals"] .gd-progress{margin-block-start:var(--space-3)}} /* 320: keeps the bar 4 px clear of the primary */
+html[data-route="goals"] .gd-figure{margin:0}
+html[data-route="goals"] .gd-second{display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-2);margin:0;color:var(--ink-muted);overflow-wrap:anywhere}
+html[data-route="goals"] .gd-barline{display:flex;align-items:center;gap:var(--space-3);margin-block-start:var(--space-3)}
+html[data-route="goals"] .gd-barline .track{flex:1;min-width:0}
+html[data-route="goals"] .gd-pct{flex:none;min-width:4ch;text-align:end;font-size:13px;line-height:18px;font-weight:600;color:var(--ink-muted)}
+html[data-route="goals"] .gd-ghost{height:var(--gd-target);padding-inline:var(--space-2);margin-block-start:var(--space-2);margin-inline-start:calc(var(--space-2) * -1)}
+@media (hover:hover){html[data-route="goals"] .gd-ghost:hover{text-decoration:underline}}
+/* Completion: the bar fills in majorelle, then turns zellige; the surround closes after the fill. */
+@media (prefers-reduced-motion:no-preference){
+  html[data-route="goals"] .gd-progress .track{transition:background-color var(--dur-mark) ease}
+  html[data-route="goals"] .gd-progress .fill{transition:width var(--dur-fill) var(--ease-out),background-color var(--dur-mark) ease}
+  html[data-route="goals"] .gd-door .door.is-done.is-closing{animation-delay:var(--dur-fill)}
+}
+
+/* ===== Who put in what ===== */
+html[data-route="goals"] .gd-share{margin-block-start:var(--space-5);container-type:inline-size}
+html[data-route="goals"] .gd-share:empty{display:none}
+html[data-route="goals"] .gd-sec-h{margin:0;font-size:13px;line-height:18px;font-weight:600}
+html[data-route="goals"] .gd-cells{list-style:none;margin:var(--space-3) 0 0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-4)}
+html[data-route="goals"] .gd-cell-vis{display:flex;flex-direction:column;align-items:flex-start;gap:var(--space-2)}
+html[data-route="goals"] .gd-cell-text{display:flex;flex-direction:column;min-width:0}
+html[data-route="goals"] .gd-cell-name{font-weight:600;overflow-wrap:anywhere}
+html[data-route="goals"] .gd-cell-fig{overflow-wrap:anywhere}
+html[data-route="goals"] .gd-cell-amt{font-size:18px;line-height:24px;font-weight:600}
+html[data-route="goals"] .gd-cell-pct{font-size:12px;line-height:16px;color:var(--ink-muted)}
+@container (min-width:26rem){html[data-route="goals"] .gd-cell-vis{flex-direction:row;align-items:center;gap:var(--space-3)}}
+html[data-route="goals"] .gd-none,html[data-route="goals"] .gd-solo{margin:var(--space-2) 0 0;color:var(--ink-muted)}
+html[data-route="goals"] .gd-solo{margin-block-start:var(--space-3)}
+
+/* ===== Stats: a disclosure below 64rem, a line from 64rem ===== */
+html[data-route="goals"] .gd-stats{margin-block-start:var(--space-2)}
+html[data-route="goals"] .gd-stats-h{margin:0;font-size:13px;line-height:18px;font-weight:600}
+html[data-route="goals"] .gd-stats-btn{display:inline-flex;align-items:center;gap:var(--space-1);min-height:var(--gd-target);padding-inline:var(--space-2);
+  margin-inline-start:calc(var(--space-2) * -1);border:0;border-radius:var(--radius-sm);background:none;color:var(--majorelle);font:inherit;cursor:pointer}
+html[data-route="goals"] .gd-stats-btn .ic{width:16px;height:16px;stroke-width:2.25}
+html[data-route="goals"] .gd-stats-btn[aria-expanded="true"] .ic{transform:rotate(180deg)}
+@media (hover:hover){html[data-route="goals"] .gd-stats-btn:hover{text-decoration:underline}}
+html[data-route="goals"] .gd-stats-label,html[data-route="goals"] .gd-stats-line{display:none}
+html[data-route="goals"] .gd-dl{display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:var(--space-4);margin:var(--space-1) 0 0;
+  padding:var(--space-2) var(--space-4);background:var(--surface-sunken);border-radius:var(--radius-md)}
+html[data-route="goals"] .gd-dl>div{display:contents}
+html[data-route="goals"] .gd-dl dt,html[data-route="goals"] .gd-dl dd{padding-block:var(--space-1)}
+html[data-route="goals"] .gd-dl dt{color:var(--ink-muted)}
+html[data-route="goals"] .gd-dl dd{margin:0;text-align:end;font-weight:600;overflow-wrap:anywhere}
+
+/* ===== Feeds: tabs below 64rem ===== */
+html[data-route="goals"] .gd-feeds{margin-block-start:var(--space-6);overflow-anchor:none}
+html[data-route="goals"] .gd-tabs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border-block-end:1px solid var(--line)}
+html[data-route="goals"] .gd-tab{position:relative;display:flex;align-items:center;justify-content:center;gap:var(--space-2);min-height:var(--gd-tab-h);
+  padding-inline:var(--space-2);border:0;border-radius:var(--radius-md) var(--radius-md) 0 0;background:none;
+  color:var(--ink-muted);font:inherit;font-weight:600;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+html[data-route="goals"] .gd-tab:focus-visible{outline-offset:-2px}
+@media (hover:hover){html[data-route="goals"] .gd-tab[aria-selected="false"]:hover{color:var(--ink)}}
+html[data-route="goals"] .gd-tab[aria-selected="true"]{color:var(--majorelle)}
+/* The nav's own 8 px majorelle diamond, centred on the tab bar's hairline. No motion on switch (IA 6.12). */
+html[data-route="goals"] .gd-tab::after{content:"";position:absolute;inset-inline-start:50%;bottom:calc(-0.5px - var(--nav-mark) / 2);
+  width:var(--nav-mark);height:var(--nav-mark);margin-inline-start:calc(var(--nav-mark) / -2);
+  background:var(--majorelle);transform:rotate(45deg) scale(0);pointer-events:none}
+html[data-route="goals"] .gd-tab[aria-selected="true"]::after{transform:rotate(45deg) scale(1)}
+html[data-route="goals"] .gd-count{display:inline-flex;align-items:center;justify-content:center;min-width:20px;height:20px;padding-inline:var(--space-1);
+  border-radius:var(--radius-pill);background:var(--surface-sunken);color:var(--ink-muted);font-size:12px;line-height:16px;font-weight:600}
+html[data-route="goals"] .gd-tab[aria-selected="true"] .gd-count{background:var(--majorelle-soft);color:var(--majorelle-ink)}
+html[data-route="goals"] .gd-feed-h{margin:0}
+html[data-route="goals"] .gd-feed-h .gd-count{margin-inline-start:var(--space-2)}
+html[data-route="goals"] .gd-panel{container-type:inline-size}
+html[data-route="goals"] .gd-panel:focus-visible{outline-offset:4px}
+@media (max-width:63.99rem){
+  html[data-route="goals"] .gd-panel:not(.is-selected){display:none}
+  html[data-route="goals"] .gd-feed-h{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+}
+html[data-route="goals"] .gd-empty{margin:var(--space-4) 0 0;color:var(--ink-muted);text-wrap:pretty}
+html[data-route="goals"] .gd-older{margin-block-start:var(--space-4)}
+
+/* ===== History: rows on the sand, hairlines between ===== */
+html[data-route="goals"] .gd-month{display:flex;justify-content:space-between;align-items:baseline;gap:var(--space-3);margin:0;
+  padding-block:var(--space-4) var(--space-2);border-block-end:1px solid var(--line);font-size:13px;line-height:18px;font-weight:600}
+html[data-route="goals"] .gd-month-total{color:var(--ink-muted)}
+html[data-route="goals"] .gd-rows{list-style:none;margin:0;padding:0}
+html[data-route="goals"] .gd-rows>li{border-block-end:1px solid var(--line)}
+html[data-route="goals"] .gd-row{display:grid;grid-template-columns:auto minmax(0,1fr) auto;grid-template-areas:"av what when" ". sub sub";align-content:center;
+  column-gap:var(--space-3);row-gap:var(--space-1);width:calc(100% + var(--space-2) * 2);min-height:var(--gd-row-min);
+  margin-inline:calc(var(--space-2) * -1);padding:var(--space-2);border:0;border-radius:var(--radius-sm);background:none;
+  color:var(--ink);font:inherit;text-align:start;cursor:pointer;-webkit-tap-highlight-color:transparent}
+html[data-route="goals"] .gd-row .zm-av{grid-area:av;align-self:center}
+html[data-route="goals"] .gd-row-what{grid-area:what;align-self:center;overflow-wrap:anywhere}
+html[data-route="goals"] .gd-row-what b{font-weight:600}
+html[data-route="goals"] .gd-row-when{grid-area:when;align-self:center;font-size:13px;line-height:18px;color:var(--ink-muted);white-space:nowrap}
+html[data-route="goals"] .gd-row-sub{grid-area:sub;font-size:13px;line-height:18px;color:var(--ink-muted);overflow-wrap:anywhere;
+  display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:var(--gd-clamp-row);overflow:hidden}
+html[data-route="goals"] .gd-row-pending{grid-area:sub;display:flex;align-items:center;gap:var(--space-1);font-size:13px;line-height:18px;color:var(--ink-muted)}
+html[data-route="goals"] .gd-row-pending .ic,html[data-route="goals"] .gd-ent-when .ic{width:16px;height:16px}
+@media (hover:hover){html[data-route="goals"] .gd-row:hover{background:var(--surface-sunken)}}
+html[data-route="goals"] .gd-row:active{background:var(--surface-sunken)}
+html[data-route="goals"] .gd-row:focus-visible{outline-offset:0}
+@container (max-width:17rem){
+  html[data-route="goals"] .gd-row{grid-template-columns:auto minmax(0,1fr);grid-template-areas:"av what" ". when" ". sub"}
+}
+
+/* ===== Journal: notes set like an album page, no cards ===== */
+html[data-route="goals"] .gd-journal-head{display:flex;align-items:center;justify-content:space-between;gap:var(--space-3);padding-block-start:var(--space-4)}
+html[data-route="goals"] .gd-write .ic{width:18px;height:18px}
+html[data-route="goals"] .gd-write-help{margin-block:var(--space-2) 0}
+html[data-route="goals"] .gd-empty-j{display:flex;flex-direction:column;align-items:flex-start;gap:var(--space-3)}
+html[data-route="goals"] .gd-empty-j .gd-empty{margin-block-start:var(--space-2)}
+html[data-route="goals"] .gd-note{padding-block:var(--space-5)}
+html[data-route="goals"] .gd-note+.gd-note{border-block-start:1px solid var(--line);padding-block-start:var(--space-6)}
+html[data-route="goals"] .gd-note-head{display:flex;align-items:center;gap:var(--space-3);min-height:var(--gd-target)}
+html[data-route="goals"] .gd-note-h{flex:1;min-width:0;margin:0;font-size:15px;line-height:22px;font-weight:600;overflow-wrap:anywhere}
+html[data-route="goals"] .gd-note-date{font-weight:400;color:var(--ink-muted)}
+html[data-route="goals"] .gd-note-edit{flex:none;margin-inline-end:calc(var(--space-3) * -1)}
+html[data-route="goals"] .gd-note-edit .ic{width:16px;height:16px}
+html[data-route="goals"] .gd-note-body{margin-block-start:var(--space-2)}
+html[data-route="goals"] .gd-note-body>:not(:first-child){margin-block-start:var(--space-4)} /* beats .gd-text{margin:0} */
+html[data-route="goals"] .gd-text{margin:0;max-width:var(--gd-measure);white-space:pre-line;overflow-wrap:anywhere;text-wrap:pretty}
+html[data-route="goals"] .gd-note:not(.is-open) .gd-text{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:var(--gd-clamp-note);overflow:hidden}
+html[data-route="goals"] .gd-readmore{margin-block-start:var(--space-1)}
+html[data-route="goals"] .gd-photo{position:relative;display:block;width:100%;max-width:var(--gd-photo-max);aspect-ratio:var(--gd-photo-ratio);
+  padding:0;border:0;background:var(--surface-sunken);color:var(--ink-muted);font:inherit;cursor:zoom-in}
+html[data-route="goals"] .gd-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+html[data-route="goals"] .gd-photo .photo-example{height:100%}
+html[data-route="goals"] .photo-example .ic{width:24px;height:24px;stroke-width:1.5}
+html[data-route="goals"] .gd-photo-off{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:var(--space-1);width:100%;
+  max-width:var(--gd-photo-max);aspect-ratio:var(--gd-photo-off-ratio);background:var(--surface-sunken);color:var(--ink-muted);
+  font-size:12px;line-height:16px;font-weight:600;text-align:center}
+html[data-route="goals"] .gd-photo-off .ic{width:24px;height:24px;stroke-width:1.5}
+
+/* The sheet head (zamane.css; base.css only has it for #qa-sheet) */
+html[data-route="goals"] .sheet-head{display:flex;align-items:flex-start;justify-content:space-between;gap:var(--space-3);margin-bottom:var(--space-4)}
+html[data-route="goals"] .sheet-head h2{margin:0;font-size:18px;line-height:24px;font-weight:600}
+html[data-route="goals"] .sheet-head .icon-btn{margin:-10px -10px 0 0}
+
+/* ===== Entry sheet (Home's bottom sheet; centred from 48rem) ===== */
+html[data-route="goals"] .gd-sheet h2:focus{outline:none}
+html[data-route="goals"] .gd-ent{display:flex;align-items:flex-start;gap:var(--space-3)}
+html[data-route="goals"] .gd-ent-text{min-width:0}
+html[data-route="goals"] .gd-ent-text>p{margin:0}
+html[data-route="goals"] .gd-ent .title{overflow-wrap:anywhere}
+html[data-route="goals"] .gd-ent-when{display:flex;align-items:center;gap:var(--space-1);margin-block-start:var(--space-1)!important;color:var(--ink-muted)}
+html[data-route="goals"] .gd-ent-note{margin-block-start:var(--space-3)!important;white-space:pre-line;overflow-wrap:anywhere}
+html[data-route="goals"] .gd-ent-gone{margin:0}
+html[data-route="goals"] .gd-sheet .btn-danger .ic{width:18px;height:18px}
+html[data-route="goals"] .gd-sheet .help{margin:0;text-align:center}
+
+/* ===== Photo viewer: full screen on phones, centred from 48rem ===== */
+html[data-route="goals"] .gd-viewer{position:fixed;inset:0;width:100%;max-width:none;height:100%;max-height:none;margin:0;
+  padding:max(var(--space-2),env(safe-area-inset-top,0px)) max(var(--space-4),env(safe-area-inset-right,0px)) max(var(--space-4),env(safe-area-inset-bottom,0px)) max(var(--space-4),env(safe-area-inset-left,0px));
+  border:0;background:var(--surface);color:var(--ink);
+  transition:opacity var(--dur-sheet) ease,display var(--dur-sheet) allow-discrete,overlay var(--dur-sheet) allow-discrete}
+html[data-route="goals"] .gd-viewer:not([open]){opacity:0}
+@starting-style{html[data-route="goals"] .gd-viewer[open]{opacity:0}}
+html[data-route="goals"] .gd-viewer[open]{display:grid;grid-template-rows:auto minmax(0,1fr);gap:var(--space-2)}
+html[data-route="goals"] .gd-viewer::backdrop{background:color-mix(in srgb,var(--ink) 40%,transparent)}
+html[data-route="goals"] .gd-viewer-close{justify-self:end;margin-inline-end:calc(var(--space-2) * -1)}
+html[data-route="goals"] .gd-viewer-fig{display:flex;align-items:center;justify-content:center;min-height:0;margin:0}
+html[data-route="goals"] .gd-viewer-fig img{max-width:100%;max-height:100%;object-fit:contain}
+html[data-route="goals"] .gd-viewer-fig .photo-example{width:100%;max-width:40rem;aspect-ratio:4 / 3;border-radius:var(--radius-md)}
+html[data-route="goals"]:has(.gd-viewer[open]){overflow:hidden}
+@media (min-width:48rem){
+  html[data-route="goals"] .gd-viewer{inset:0;margin:auto;width:min(90vw,48rem);height:fit-content;max-height:90vh;padding:var(--space-4);border-radius:var(--radius-lg);box-shadow:var(--shadow-pop)}
+}
+
+/* ===== Loading and partial: static skeletons, no shimmer ===== */
+html[data-route="goals"] .gd-door .gd-sk-door{background:var(--surface-sunken)}
+html[data-route="goals"] .gd-sk-title{height:44px;width:70%}
+html[data-route="goals"] .gd-sk-line{height:16px;width:45%;margin-block-start:var(--space-2)}
+html[data-route="goals"] .gd-sk-num{height:36px;width:50%}
+html[data-route="goals"] .gd-sk-bar{height:8px;width:100%;margin-block-start:var(--space-3)}
+html[data-route="goals"] .gd-sk-lbl{height:14px;width:30%}
+html[data-route="goals"] .gd-sk-cells{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-4);margin-block-start:var(--space-3)}
+html[data-route="goals"] .gd-sk-cell{height:96px}
+html[data-route="goals"] .gd-sk-rows{display:block;margin-block-start:var(--space-4)}
+html[data-route="goals"] .gd-sk-row{height:40px;margin-block:var(--space-2) var(--space-4)}
+
+/* ===== Error, not found, deleted ===== */
+html[data-route="goals"] .gd--state{display:block}
+html[data-route="goals"] .gd-state{display:flex;flex-direction:column;align-items:flex-start;gap:var(--space-3);max-width:36rem;padding-block-start:var(--space-5)}
+html[data-route="goals"] .gd-state p{margin:0;color:var(--ink-muted);text-wrap:pretty}
+html[data-route="goals"] .gd-state .btn-primary,html[data-route="goals"] .gd-state .btn-sec{margin-block-start:var(--space-2)}
+
+/* ===== Windows High Contrast ===== */
+@media (forced-colors:active){
+  html[data-route="goals"] .gd-tab::after{background:Highlight;forced-color-adjust:none}
+  html[data-route="goals"] .gd-tab[aria-selected="true"] .gd-tab-text{text-decoration:underline;text-underline-offset:3px}
+  html[data-route="goals"] .gd-photo,html[data-route="goals"] .gd-photo-off,html[data-route="goals"] .gd-dl,html[data-route="goals"] .gd-viewer{border:1px solid CanvasText}
+  html[data-route="goals"] .gd-count{border:1px solid CanvasText}
+}
+
+/* ===== ≥ 48rem: the primary leaves the corner for the end of the progress line ===== */
+@media (min-width:48rem){
+  html[data-route="goals"] .gd{grid-template-areas:"back edit" "notice notice" "door door" "id id" "prog dock" "share share" "stats stats" "feeds feeds"}
+  html[data-route="goals"] .gd .dock{grid-area:dock;align-self:end;justify-self:end}
+}
+
+/* ===== ≥ 64rem: two-column masthead, doorway (upright) | facts; feeds side by side ===== */
+@media (min-width:64rem){
+  html[data-route="goals"] .gd{grid-template-columns:minmax(0,1fr);grid-template-areas:"back" "notice" "mast" "feeds"}
+  html[data-route="goals"] .gd-mast{grid-area:mast;display:grid;grid-template-columns:minmax(0,var(--gd-door-col)) minmax(0,1fr);grid-template-areas:"door facts";
+    column-gap:var(--space-7);align-items:start;margin-block-start:var(--space-3)}
+  html[data-route="goals"] .gd-facts{grid-area:facts;display:grid;grid-template-columns:minmax(0,1fr) auto auto;column-gap:var(--space-2);align-content:start;
+    grid-template-areas:"id edit dock" "prog prog prog" "share share share" "stats stats stats"}
+  html[data-route="goals"] .gd-door{margin:0}
+  html[data-route="goals"] .gd-door .door--detail{aspect-ratio:var(--gd-door-ratio-wide);max-height:none}
+  html[data-route="goals"] .gd-id{margin:0}
+  html[data-route="goals"] .gd-edit{align-self:start;height:var(--gd-target);padding-inline:var(--space-5);border-radius:var(--radius-md)}
+  html[data-route="goals"] .gd-edit::before{content:none}
+  html[data-route="goals"] .gd .dock{align-self:start}
+  html[data-route="goals"] .gd-progress{margin-block-start:var(--space-5)}
+  html[data-route="goals"] .gd-share{margin-block-start:var(--space-6)}
+  html[data-route="goals"] .gd-stats{margin-block-start:var(--space-4)}
+  html[data-route="goals"] .gd-stats-btn,html[data-route="goals"] .gd-dl{display:none!important}
+  html[data-route="goals"] .gd-stats-label{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;display:block}
+  html[data-route="goals"] .gd-stats-line{display:block;margin:0;font-size:13px;line-height:18px;color:var(--ink-muted);text-wrap:pretty}
+  html[data-route="goals"] .gd-feeds{display:grid;grid-template-columns:minmax(0,var(--gd-door-col)) minmax(0,1fr);column-gap:var(--space-7);align-items:start;
+    margin-block-start:var(--space-7);padding-block-start:var(--space-5);border-block-start:1px solid var(--line)}
+  html[data-route="goals"] .gd-tabs{display:none}
+  html[data-route="goals"] .gd-feed-h{display:flex;align-items:center;min-height:var(--gd-target);font-size:13px;line-height:18px;font-weight:600}
+  html[data-route="goals"] .gd-journal-head{padding-block-start:0}
+  html[data-route="goals"] .gd-group:first-of-type .gd-month{padding-block-start:var(--space-2)}
+  html[data-route="goals"] .gd-note:first-child{padding-block-start:var(--space-3)}
+}
