@@ -2,7 +2,7 @@
 
 Zamane is a private, mobile-first PWA for exactly two people. This document describes the plumbing: runtime, data, API, auth, realtime, uploads, offline and environments. It is the contract the code follows; when the code changes shape, this file changes in the same commit.
 
-> Status: **Phase 0 (plan)**. Nothing below is built yet. Versions were checked on 2026-11-09.
+> Status: **Phases 1–3 built** (scaffold, database, auth and spaces, the auth screens), 2026-11-11. Goals, trips, shopping, Home, realtime, uploads and deploys are still plan. Versions were checked on 2026-11-09; deviations are logged from D33.
 
 ---
 
@@ -397,7 +397,7 @@ sequenceDiagram
 - **`/api/*` is never cached by the service worker.** TanStack Query's persisted cache owns data.
 - `registerType: "prompt"`: a waiting worker shows "New version available — Reload", which posts `SKIP_WAITING` and then reloads. There is no silent `skipWaiting`.
 
-**Offline reads.** `PersistQueryClientProvider` uses `createAsyncStoragePersister` over `idb-keyval`, with `maxAge` 7 days and `buster = ${APP_VERSION}:${userId}`. Logout runs `queryClient.clear()`, removes the persisted client and closes the socket.
+**Offline reads.** `persistQueryClient` uses `createAsyncStoragePersister` over `idb-keyval`, with `maxAge` 7 days and `buster = ${APP_VERSION}`; it is restored before the first render. Sign-in and sign-up clear the cache before loading the new session, so one user's data never reaches another (D41). Logout runs `queryClient.clear()`, removes the persisted client and closes the socket.
 
 **Offline writes.** These work offline:
 
@@ -467,7 +467,7 @@ pnpm wrangler secret list --env production     # names only, to check
 
 - **Unit** (Vitest, Node): money, category normalisation, invite codes, completion, stats, budget, trip status and day list, the invalidation map, env validation (Cloudinary all-or-nothing).
 - **API** (Vitest with `@cloudflare/vitest-pool-workers`, inside workerd against a Neon branch): auth flows; create and join (the concurrency test fires 10 parallel joins at one code, and exactly one succeeds); cross-space isolation (reads, writes and deletes against another space's ids return 404, 404 and 204-with-no-effect); idempotent create replay; 409 on stale `updatedAt`; completion and un-completion; budget with scheduled and unscheduled places; uploads in both modes.
-- **E2E** (Playwright): two browser contexts, Sara and Youssef. Sara adds a shopping item and Youssef sees it within 2 s without a reload. A second spec covers offline: add an item offline, go online, and the item syncs.
+- **E2E** (Playwright, against `vite dev` started with `E2E=1`, D40): the auth flow end to end (sign up, start, join, sign out, reset through the emailed link, sign in, the TEMP Profile, guards, the invite link). Later phases: two browser contexts, Sara and Youssef. Sara adds a shopping item and Youssef sees it within 2 s without a reload. A second spec covers offline: add an item offline, go online, and the item syncs.
 - **CI** (GitHub Actions) on each pull request:
   1. install, lint, typecheck, unit tests;
   2. create Neon branch `pr-N` (schema-only from `main`, D31; `neondatabase/create-branch-action@v6`), then migrate and seed;
@@ -503,7 +503,17 @@ Exact versions go in `package.json`, and pnpm writes the lockfile.
 
 Runtime: Node 22 (you have 22.18), pnpm 10. Worker `compatibility_date` is `2026-11-10`, the newest date the pinned workerd supports at scaffold time (D36), with `nodejs_compat`.
 
-## 14. Decision log
+## 14. Follow-ups (open after Phases 1–3)
+
+- **Needs your action:** `NEON_API_KEY` in `.env` (the guard refuses `db:seed` without it, so the seed is unverified against the database); a GitHub remote, with `NEON_API_KEY`, `BETTER_AUTH_SECRET` secrets and the `NEON_PROJECT_ID` variable, so CI can run; the Workers Paid plan before any deploy (D3, measured below); the production `APP_URL` and `EMAIL_FROM` in `wrangler.jsonc`.
+- **Email verification** is not built: the auth designs have no "verify your email" or "check your inbox" screen for it, and nothing gates on `email_verified`.
+- **Screens awaiting design:** Profile/Settings (a TEMP page holds name, password, space, members, invite code, theme and sign-out) and Shopping. The privacy page linked from Create account is a TEMP placeholder. Home, Goals and Trips are designed and come in their phases; until Home is built, the invite code after Start shows on the TEMP Profile page instead of Home's first-run card (D44).
+- **Nav bar** (`.ux-forge/nav-bar`) is designed but not built; the placeholders link to Profile until it is.
+- **From the designs, pending Home:** the hand-off notices on Home ("Your space is ready…", "You're already in a space with {name}.") and the entry to the switch ("Join their space instead" on the first-run card, D33).
+- **D3 measured:** scrypt costs ~49 ms per hash and ~50 ms per verify inside workerd (local, `tests/api/scrypt.test.ts`), about 5× the Free plan's 10 ms CPU budget.
+- **Uploads cleanup on the switch:** deleting a solo space should also destroy its Cloudinary assets (Phase 6).
+
+## 15. Decision log
 
 | # | Decision | Why |
 |---|---|---|
@@ -547,3 +557,7 @@ Runtime: Node 22 (you have 22.18), pnpm 10. Worker `compatibility_date` is `2026
 | D33 | **The switch: a scoped exception to D19.** Someone *alone* in a space they started can join their partner's instead: `POST /api/spaces/join { code, replaceSolo: true }`. One interactive transaction locks their space (`FOR UPDATE`), checks they're still alone (else `409 partner_joined` with the partner's name), checks the code before anything is deleted (else `404 invite_invalid`, nothing deleted), deletes the solo space (cascade) and joins as slot b. | The auth designs build it (`/setup/join?switch=true` and its confirmation). It touches none of D19's open questions: there's no partner, no shared attribution and nothing to rejoin. A partner joining the solo space at the same moment either commits first (→ `partner_joined`) or finds the space gone (FK violation → `invite_invalid`). Cloudinary cleanup of the deleted space's assets joins in Phase 6. Leaving a shared space stays `501`. |
 | D37 | **API additions the auth screens need:** the `GET /api/me` body above; `partnerName` in the join response (it fills the waiting seat); `409 already_in_space` on create and join (the join statement alone would answer `invite_invalid`, which would be untrue); a join retry by someone already in that space answers `200`; `Retry-After: 60` and `rate_limited` on every 429 (the screens wait that long before re-enabling the button); `GET /api/password-reset/check` (the reset screen shows "Link doesn't work" on arrival); `GET /api/spaces/mine/summary`. Client-side, the invite link `/join#code=XXXX-XXXX` keeps the code on the device (session storage), strips it from the URL and routes to Create account, Join, or Home. | Each one is drawn by the designs in `.ux-forge/auth`. The fragment keeps the code out of server logs. |
 | D38 | **A gate in front of Better Auth.** Only the endpoints the app uses are reachable (others `404`). Bodies are validated with the same Zod schemas as the forms, and emails are normalised, before the rate limiter and the handler. `change-password` always revokes the other sessions. Better Auth's error codes are translated into the app's `{ error: { code, message, fields? } }` (`invalid_credentials`, `email_taken`, `invalid_token`, `validation_failed`). | One error shape everywhere (§3), one validation rule set (the forms' messages come back from the server unchanged), a smaller attack surface, and the sign-up enumeration Better Auth allows is kept to one message with no hint of whose account it is. |
+| D40 | **The auth E2E runs against `vite dev` with `E2E=1`, not `vite preview`.** | It reads the reset link from a test-only endpoint (`GET /api/test/last-reset-link`), which exists only when the Worker is built by a dev server with `E2E=1` *and* `APP_ENV=development`. A production build defines the flag as `false`, so the route's code is not bundled; `check:secrets` fails the build if it ever is, and an API test checks it answers 404 without the flag. |
+| D41 | **The persisted query cache's buster is the app version only; sign-in and sign-up clear the cache instead of keying it by user id.** | The buster is read when the cache is restored, before anyone is known to be signed in. Clearing on every session start gives the same guarantee (no data crosses users) without a second restore. |
+| D43 | **Routes follow the designs: `/sign-in`, `/create-account` (not `/sign-up`), `/forgot-password`, `/reset-password?token=`, `/setup`, `/setup/start`, `/setup/join` (and `?switch=true`), `/join#code=`, `/privacy` (TEMP).** The launch screen is `/` before the session is known: a static splash in `index.html` (first paint), then the right route, or "You're offline" / "Zamane didn't open" when there's no session to open from. | The designs name them; the splash in `index.html` is what makes "no flash of the wrong screen" true, since React replaces it in one synchronous commit once `/api/me` has answered. |
+| D44 | **Until Home, the nav bar and Profile are designed and built, the app pages are placeholders (the route name only) with a link to a TEMP Profile page.** The TEMP Profile shows the display name (editable), change password, the space name, both members with their slot, the invite code with Copy and New code, the theme (light, dark or system, D23) and Sign out. | Auth needs these controls now; their look waits for a design, and each TEMP file says so at its top. |

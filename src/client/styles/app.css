@@ -1,0 +1,64 @@
+/* App pages while their designs are pending: the placeholders and the TEMP Profile page. Tokens only.
+   TEMP: awaiting design. Replace with the designed screens. */
+.placeholder,
+.temp-page {
+  max-width: calc(24rem + var(--space-4) * 2);
+}
+.placeholder-links {
+  margin: var(--space-4) 0 0;
+}
+.temp-section {
+  display: grid;
+  gap: var(--space-3);
+  margin-top: var(--space-6);
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--line);
+}
+.temp-section > p {
+  margin: 0;
+}
+.temp-section .auth-form {
+  justify-items: start;
+}
+.temp-section .auth-form > .fgroup,
+.temp-section .auth-form > .form-alert {
+  width: 100%;
+}
+.temp-members {
+  display: grid;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.temp-members li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+.temp-code {
+  margin: 0;
+  font-size: 32px;
+  line-height: 36px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+.temp-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+/* The service worker's "New version available — Reload" prompt (§9). */
+.sw-update {
+  position: fixed;
+  z-index: 30;
+  inset-inline: var(--space-4);
+  bottom: calc(var(--space-4) + env(safe-area-inset-bottom, 0px));
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: var(--shadow-pop);
+}
+.sw-update p {
+  margin: 0;
+}

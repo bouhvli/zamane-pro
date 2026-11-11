@@ -195,3 +195,10 @@ describe("rate limits", () => {
     expect(statuses.at(-1)).toBe(429);
   });
 });
+
+describe("the test-only reset-link route", () => {
+  it("doesn't exist in a build without E2E (production never has it; check:secrets proves its code is absent)", async () => {
+    const r = await new Client().request("/api/test/last-reset-link?email=someone@example.com");
+    expect(r.status).toBe(404);
+  });
+});

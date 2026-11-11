@@ -1,0 +1,115 @@
+/* Ported from .ux-forge/auth/auth.css: the auth shell (direction C · Two seats). Scoped to html[data-chrome="auth"]
+   where the prototype styled the whole page. */
+
+:root{
+  --seat:40px; --seat-sm:32px; --seat-overlap:8px; --seat-ring:2px;
+  --lockup-hero:48px; --lockup-hero-wide:56px; --lockup-bar:40px;
+  --auth-col:24rem; --auth-col-setup:40rem;
+  --dur-seat:160ms; --seat-hold:240ms;
+  --kb:0px;
+}
+
+/* No nav, no floating primary: the page pads only for the safe area and the keyboard (A8). */
+html[data-chrome="auth"]{scroll-padding-bottom:calc(var(--space-6) + var(--kb) + env(safe-area-inset-bottom,0px))}
+html[data-chrome="auth"] body{padding-bottom:calc(var(--space-6) + env(safe-area-inset-bottom,0px))}
+html[data-chrome="auth"] main{padding-block:0 var(--space-6)}
+
+/* ----- Column ----- */
+.auth-wrap{max-width:calc(var(--auth-col) + var(--space-4) * 2);margin-inline:auto;
+  padding-inline:max(var(--space-4),env(safe-area-inset-left,0px)) max(var(--space-4),env(safe-area-inset-right,0px))}
+html[data-route^="setup"] .auth-wrap{max-width:calc(var(--auth-col-setup) + var(--space-4) * 2)}
+
+/* ----- Header: the lockup leads signed-out screens; setup adds the account line ----- */
+.auth-head{padding-top:max(var(--space-6),env(safe-area-inset-top,0px));margin-bottom:var(--space-6)}
+.auth-head-row{display:flex;align-items:center;justify-content:space-between;gap:var(--space-3);flex-wrap:wrap;min-height:44px}
+.auth-head .brand{display:block;line-height:0}
+.lockup{height:var(--lockup-hero);width:auto}
+.auth-head.is-setup{padding-top:max(var(--space-4),env(safe-area-inset-top,0px));margin-bottom:var(--space-5)}
+.auth-head.is-setup .lockup{height:var(--lockup-bar)}
+.auth-head .back{gap:var(--space-1)}
+.auth-head .back .ic{width:20px;height:20px}
+.account{display:flex;align-items:center;gap:var(--space-2);margin:0;margin-inline-start:auto;font-size:13px;line-height:18px;color:var(--ink-muted)}
+.account .link-btn{margin-inline:0;padding-inline:var(--space-2)}
+@media (max-width:22.4375rem){.account-name{display:none}} /* the Sign out control stays; the name is in the h1's seat */
+
+/* ----- Page heading row: h1 with the person's seats at its end (Home's masthead) ----- */
+.page-head{display:flex;align-items:flex-start;justify-content:space-between;gap:var(--space-3);margin-bottom:var(--space-2)}
+.page-head h1{margin:0}
+.page-head .seat-pair{margin-top:-3px}
+.lede{margin:0 0 var(--space-5);color:var(--ink-muted);text-wrap:pretty}
+.lede strong{color:var(--ink);font-weight:600}
+
+/* ----- Forms ----- */
+.auth-form{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--space-4)}
+.fgroup{min-width:0}
+.auth-form .form-alert:empty{display:none}
+.auth-form .notice p{margin:0}
+.auth-form .notice a{color:inherit;font-weight:600}
+.auth-form .btn-primary{height:52px;font-size:15px;line-height:22px;margin-top:var(--space-1)}
+.fgroup .err{display:flex;gap:var(--space-1);align-items:flex-start}
+.fgroup .err .ic{width:16px;height:16px;margin-top:1px}
+.field-label-row{display:flex;align-items:center;justify-content:space-between;gap:var(--space-2)}
+.field input[dir="ltr"]{text-align:start}
+/* Show/Hide sits inside the field box, after the input */
+.field-pw{padding-inline-end:var(--space-1)}
+.pw-toggle{flex:none;min-width:44px;height:44px;padding:0 var(--space-3);border:0;border-radius:var(--radius-sm);background:none;color:var(--majorelle);font:inherit;font-size:13px;line-height:18px;font-weight:600;cursor:pointer}
+.pw-toggle:focus-visible{outline-offset:-2px}
+/* Invite code: Home's .code face, what Sara shows is what Youssef types */
+.field-code{min-height:64px}
+.field-code input{height:62px;font-size:32px;line-height:36px;font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:.04em}
+@media (max-width:22.4375rem){.field-code input{font-size:28px;line-height:34px}}
+
+/* Secondary links under a form: 8px apart at least, each a 44px target */
+.alt-links{display:grid;gap:var(--space-2);margin-top:var(--space-5);font-size:15px;line-height:22px}
+.alt-links p{margin:0;display:flex;flex-wrap:wrap;align-items:center;column-gap:var(--space-1)}
+.alt-links .link-btn{font-size:15px;line-height:22px;margin-inline-start:0;padding-inline:var(--space-1)}
+.fine{margin:var(--space-5) 0 0;font-size:12px;line-height:16px;color:var(--ink-muted);text-wrap:pretty}
+.fine a{color:var(--majorelle);font-weight:600}
+
+/* Notices on the page (offline, signed-out, session-ended, reset-done) */
+.page-notice{margin-bottom:var(--space-5)}
+.page-notice p{margin:0}
+
+/* ----- Seats (directions.md C): avatars are the only imagery; aria-hidden, the text carries it ----- */
+.seat-pair{display:inline-flex;align-items:center;flex:none;vertical-align:middle}
+.seat-pair>.seat+.seat{margin-inline-start:calc(var(--seat-overlap) * -1)}
+.seat{display:inline-flex;align-items:center;justify-content:center;flex:none;width:var(--seat);height:var(--seat);
+  border-radius:var(--radius-pill);font-weight:600;font-size:15px;line-height:1;
+  border:2px solid var(--surface);box-sizing:border-box;position:relative}
+.seat--sm{width:var(--seat-sm);height:var(--seat-sm);font-size:13px}
+.seat--a{background:var(--majorelle-soft);color:var(--majorelle-ink);box-shadow:0 0 0 var(--seat-ring) var(--partner-a)}
+.seat--b{background:var(--terracotta-soft);color:var(--terracotta-ink);box-shadow:0 0 0 var(--seat-ring) var(--partner-b)}
+.seat--neutral{background:var(--surface-sunken);color:var(--ink);box-shadow:0 0 0 var(--seat-ring) var(--line-strong)}
+/* taken: a partner-A seat with no letter (Join card: "someone already started") */
+.seat--taken{background:var(--majorelle-soft);box-shadow:0 0 0 var(--seat-ring) var(--partner-a)}
+/* empty: the system's "not yet" outline. Not interactive: no plus, no hover, no pulse. */
+.seat--empty{background:transparent;border:var(--seat-ring) dashed var(--line-strong);box-shadow:none}
+.seat-pair>.seat--empty{background:var(--surface)}
+.card .seat-pair>.seat{border-color:var(--surface-raised)}
+.card .seat-pair>.seat--empty{background:var(--surface-raised);border-color:var(--line-strong)}
+/* the fill: a letter lands (160ms fade + 0.9→1 scale, no travel) */
+.seat.is-filling{animation:seat-fill var(--dur-seat) var(--ease-out) both}
+@keyframes seat-fill{from{opacity:0;transform:scale(.9)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.seat.is-filling{animation:none}}
+@media (forced-colors:active){
+  .seat{forced-color-adjust:none;background:Canvas;color:CanvasText;border-color:Canvas;box-shadow:0 0 0 2px CanvasText}
+  .seat--empty{border:2px dashed CanvasText;box-shadow:none}
+}
+
+/* ----- Route fade (none under reduced motion) ----- */
+.view{animation:view-in var(--dur-mark) var(--ease-out) both}
+@keyframes view-in{from{opacity:0}to{opacity:1}}
+@media (prefers-reduced-motion:reduce){.view{animation:none}}
+
+/* ----- Confirm: reuse the shared sheet; centred from 48rem ----- */
+.confirm .seat-pair{margin-bottom:var(--space-3)}
+
+/* ----- 48 rem and up: a centred column on sand; the lockup grows ----- */
+@media (min-width:48rem){
+  .auth-head{padding-top:var(--space-7);margin-bottom:var(--space-7)}
+  .auth-head.is-hero .lockup{height:var(--lockup-hero-wide)}
+  .auth-head.is-setup{padding-top:var(--space-5);padding-bottom:var(--space-4);margin-bottom:var(--space-6);border-bottom:1px solid var(--line)}
+  html[data-route^="setup"] .auth-head-wrap{max-width:calc(1080px + var(--space-4) * 2)}
+  .page-head{justify-content:flex-start;align-items:center;gap:var(--space-4)}
+  .page-head .seat-pair{margin-top:0}
+}
