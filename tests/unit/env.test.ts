@@ -52,6 +52,8 @@ describe("env validation", () => {
   });
 
   it("uses BETTER_AUTH_URL when set (D22)", () => {
-    expect(getConfig({ ...base, BETTER_AUTH_URL: "https://auth.example.com" }).authUrl).toBe("https://auth.example.com");
+    expect(getConfig({ ...base, BETTER_AUTH_URL: "https://auth.example.com" }).authUrl).toBe(
+      "https://auth.example.com",
+    );
   });
 });

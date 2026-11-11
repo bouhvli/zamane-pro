@@ -1,0 +1,76 @@
+import { z } from "zod";
+
+/**
+ * Bindings parsed once per isolate, on first use (§10). Errors name the missing or invalid keys, never their values.
+ * Unknown keys (anything else in .env) are ignored.
+ */
+const APP_ENVS = ["development", "preview", "production"] as const;
+
+const optionalString = z
+  .string()
+  .optional()
+  .transform((v) => (v ?? "").trim());
+
+const schema = z
+  .object({
+    APP_ENV: z.enum(APP_ENVS),
+    DATABASE_URL: z
+      .string()
+      .min(1)
+      .refine((v) => /^postgres(ql)?:\/\//.test(v), "must be a postgres:// URL"),
+    BETTER_AUTH_SECRET: z.string().min(32, "must be at least 32 characters"),
+    BETTER_AUTH_URL: optionalString.pipe(z.union([z.literal(""), z.url()])),
+    APP_URL: z.url(),
+    RESEND_API_KEY: optionalString,
+    EMAIL_FROM: optionalString,
+    CLOUDINARY_CLOUD_NAME: optionalString,
+    CLOUDINARY_API_KEY: optionalString,
+    CLOUDINARY_API_SECRET: optionalString,
+  })
+  .superRefine((e, ctx) => {
+    const cloud = [
+      ["CLOUDINARY_CLOUD_NAME", e.CLOUDINARY_CLOUD_NAME],
+      ["CLOUDINARY_API_KEY", e.CLOUDINARY_API_KEY],
+      ["CLOUDINARY_API_SECRET", e.CLOUDINARY_API_SECRET],
+    ] as const;
+    const set = cloud.filter(([, v]) => v !== "");
+    if (set.length > 0 && set.length < cloud.length) {
+      for (const [k, v] of cloud)
+        if (v === "") ctx.addIssue({ code: "custom", path: [k], message: "Cloudinary keys are all-or-nothing" });
+    }
+    if (e.APP_ENV !== "development" && e.RESEND_API_KEY === "")
+      ctx.addIssue({ code: "custom", path: ["RESEND_API_KEY"], message: "required outside development" });
+    if (e.RESEND_API_KEY !== "" && e.EMAIL_FROM === "")
+      ctx.addIssue({ code: "custom", path: ["EMAIL_FROM"], message: "required when RESEND_API_KEY is set" });
+  });
+
+export type AppConfig = z.output<typeof schema> & {
+  authUrl: string;
+  uploadsEnabled: boolean;
+};
+
+let cached: { source: object; config: AppConfig } | null = null;
+
+export class EnvError extends Error {
+  override name = "EnvError";
+}
+
+export function getConfig(env: object): AppConfig {
+  if (cached && cached.source === env) return cached.config;
+  const parsed = schema.safeParse(env);
+  if (!parsed.success) {
+    const keys = parsed.error.issues.map((i) => `${i.path.join(".") || "(env)"}: ${i.message}`);
+    throw new EnvError(`Invalid Worker configuration. ${keys.join("; ")}`);
+  }
+  const e = parsed.data;
+  if (/-pooler\./.test(new URL(e.DATABASE_URL).hostname)) {
+    console.warn("DATABASE_URL uses a -pooler host. Use the direct (unpooled) endpoint (D32).");
+  }
+  const config: AppConfig = {
+    ...e,
+    authUrl: e.BETTER_AUTH_URL || e.APP_URL,
+    uploadsEnabled: e.CLOUDINARY_CLOUD_NAME !== "",
+  };
+  cached = { source: env, config };
+  return config;
+}

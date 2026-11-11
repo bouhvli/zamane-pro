@@ -40,6 +40,9 @@ export function atomic<T extends [BatchItem<"pg">, ...BatchItem<"pg">[]]>(
 
 export async function withTx<T>(c: DbContext, fn: (tx: Tx) => Promise<T>): Promise<T> {
   const pool = new Pool({ connectionString: c.env.DATABASE_URL });
+  // A socket closing after the request has ended emits "error" on the pool; without a listener that is an
+  // uncaught exception. The query results have already been returned by then.
+  pool.on("error", (err: Error) => console.warn(`db pool: ${err.name}`));
   try {
     return await drizzleWs({ client: pool, schema }).transaction(fn);
   } finally {
