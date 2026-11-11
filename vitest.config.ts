@@ -1,4 +1,3 @@
-import { cloudflareTest } from "@cloudflare/vitest-plugin";
 import { existsSync } from "node:fs";
 import { defineConfig } from "vitest/config";
 
@@ -20,27 +19,22 @@ export default defineConfig({
       },
       {
         define,
-        plugins: [
-          cloudflareTest({
-            wrangler: { configPath: "./wrangler.jsonc" },
-            miniflare: {
-              bindings: {
-                APP_ENV: "development",
-                APP_URL: "http://localhost:3000",
-                DATABASE_URL: process.env.DATABASE_URL ?? "",
-                BETTER_AUTH_SECRET: process.env.BETTER_AUTH_SECRET || "test-secret-test-secret-test-secret-0123",
-                RESEND_API_KEY: "",
-                // Fake credentials: signing is checked offline; cleanup calls fail and are only logged.
-                CLOUDINARY_CLOUD_NAME: "zamane-test",
-                CLOUDINARY_API_KEY: "000000000000000",
-                CLOUDINARY_API_SECRET: "test-cloudinary-secret",
-              },
-            },
-          }),
-        ],
         test: {
           name: "api",
           include: ["tests/api/**/*.test.ts"],
+          environment: "node",
+          // The server reads its configuration from process.env (D56). Fake Cloudinary credentials: signing is
+          // checked offline; cleanup calls fail and are only logged.
+          env: {
+            APP_ENV: "development",
+            APP_URL: "http://localhost:3000",
+            DATABASE_URL: process.env.DATABASE_URL ?? "",
+            BETTER_AUTH_SECRET: process.env.BETTER_AUTH_SECRET || "test-secret-test-secret-test-secret-0123",
+            RESEND_API_KEY: "",
+            CLOUDINARY_CLOUD_NAME: "zamane-test",
+            CLOUDINARY_API_KEY: "000000000000000",
+            CLOUDINARY_API_SECRET: "test-cloudinary-secret",
+          },
           testTimeout: 60_000,
           hookTimeout: 60_000,
           // Tests share one database: run files one after another.

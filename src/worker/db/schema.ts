@@ -499,3 +499,20 @@ export const shoppingItems = pgTable(
     check("shopping_items_bought_pair", sql`(${t.boughtAt} is null) = (${t.boughtBy} is null)`),
   ],
 );
+
+/**
+ * Request counters for the rate limits (D57): one row per hashed key per minute. Not space data: no space_id,
+ * no personal data (keys are SHA-256 of "limiter:purpose:value"). Rows older than an hour are swept.
+ */
+export const rateLimits = pgTable(
+  "rate_limits",
+  {
+    key: text("key").notNull(),
+    windowStart: timestamp("window_start", { withTimezone: true }).notNull(),
+    count: integer("count").notNull().default(1),
+  },
+  (t) => [
+    primaryKey({ name: "rate_limits_pk", columns: [t.key, t.windowStart] }),
+    index("rate_limits_window_idx").on(t.windowStart),
+  ],
+);

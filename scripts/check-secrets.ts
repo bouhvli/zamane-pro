@@ -1,20 +1,18 @@
 /**
  * pnpm check:secrets (§11, §12, D34): fails if the build output carries a secret.
- *   - the client bundle (dist/client, what browsers get) must not contain "CLOUDINARY_API_SECRET", "postgres://"
- *     or "postgresql://". The Worker bundle legitimately names its own bindings, so the literals are not checked there;
- *   - no file in dist/ may contain a secret value present in this environment (DATABASE_URL, BETTER_AUTH_SECRET, …);
- *   - the test-only reset-link route must be absent from the Worker code (its .js files).
- * dist/zamane/.dev.vars is skipped: the Cloudflare plugin writes it for local `vite preview` from .env. It is never
- * served (it's outside dist/client) and never uploaded by `wrangler deploy`.
+ *   - what browsers get (.vercel/output/static) must not contain "CLOUDINARY_API_SECRET", "postgres://" or
+ *     "postgresql://". The server function legitimately names its own settings, so the literals aren't checked there;
+ *   - no file in .vercel/output may contain a secret value present in this environment (DATABASE_URL, …);
+ *   - the test-only reset-link route must be absent from the server function.
  */
 import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { join, relative } from "node:path";
 
 if (existsSync(".env")) process.loadEnvFile(".env");
 
-const DIST = "dist";
-if (!existsSync(DIST)) {
-  console.error("check:secrets: no dist/ — run `pnpm build` first.");
+const OUT = ".vercel/output";
+if (!existsSync(OUT)) {
+  console.error("check:secrets: no .vercel/output — run `pnpm build` first.");
   process.exit(1);
 }
 
@@ -33,16 +31,14 @@ function* files(dir: string): Generator<string> {
 }
 
 const problems: string[] = [];
-for (const file of files(DIST)) {
-  const rel = relative(DIST, file).replace(/\\/g, "/");
-  if (rel === "zamane/.dev.vars") continue;
-  if (rel.startsWith("client/") && /(^|\/)\.dev\.vars/.test(rel))
-    problems.push(`${rel}: a .dev.vars file in served assets`);
+for (const file of files(OUT)) {
+  const rel = relative(OUT, file).replace(/\\/g, "/");
+  if (/(^|\/)\.env(\.|$)/.test(rel)) problems.push(`${rel}: an .env file in the build output`);
   const text = readFileSync(file, "utf8");
-  if (rel.startsWith("client/"))
+  if (rel.startsWith("static/"))
     for (const lit of LITERALS) if (text.includes(lit)) problems.push(`${rel}: contains "${lit}"`);
   for (const [key, value] of VALUES) if (text.includes(value)) problems.push(`${rel}: contains the value of ${key}`);
-  if (rel.startsWith("zamane/") && rel.endsWith(".js"))
+  if (rel.startsWith("functions/") && rel.endsWith(".mjs"))
     for (const t of TEST_ONLY) if (text.includes(t)) problems.push(`${rel}: contains the test-only route ("${t}")`);
 }
 
@@ -50,4 +46,4 @@ if (problems.length) {
   console.error(`check:secrets: ${problems.length} problem(s):\n  ${problems.join("\n  ")}`);
   process.exit(1);
 }
-console.log("check:secrets: dist/ is clean (no secrets, no test-only routes).");
+console.log("check:secrets: .vercel/output is clean (no secrets, no test-only routes).");

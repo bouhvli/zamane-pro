@@ -4,9 +4,9 @@ import { formatInviteCode } from "../../src/shared/invite-code.ts";
 import { goals, spaces } from "../../src/worker/db/schema.ts";
 import { getMySpace } from "../../src/worker/services/spaces.ts";
 import { Client, createSpace, db, person } from "./helpers.ts";
-import { env } from "cloudflare:workers";
+import app from "../../src/worker/index.ts";
 
-const ctx = { env: env as unknown as { DATABASE_URL: string } };
+const ctx = {};
 
 describe("creating a space", () => {
   it("creates it with the creator in slot a and an invite code", async () => {
@@ -211,8 +211,7 @@ describe("rotating the code, and the space boundary", () => {
 
   it("rejects cross-origin and non-JSON writes", async () => {
     const { c } = await person();
-    const { exports } = await import("cloudflare:workers");
-    const res = await exports.default.fetch(
+    const res = await app.fetch(
       new Request("http://localhost:3000/api/spaces", {
         method: "POST",
         headers: { Origin: "https://evil.example", "Content-Type": "application/json", Cookie: c.cookieHeader() },
@@ -220,7 +219,7 @@ describe("rotating the code, and the space boundary", () => {
       }),
     );
     expect(res.status).toBe(403);
-    const form = await exports.default.fetch(
+    const form = await app.fetch(
       new Request("http://localhost:3000/api/spaces", {
         method: "POST",
         headers: { Origin: "http://localhost:3000", "Content-Type": "text/plain", Cookie: c.cookieHeader() },

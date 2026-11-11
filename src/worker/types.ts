@@ -17,7 +17,6 @@ export interface SpaceContext {
 }
 
 export interface AppEnv {
-  Bindings: Env;
   Variables: {
     requestId: string;
     config: AppConfig;

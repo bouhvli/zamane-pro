@@ -15,6 +15,13 @@
       "when": 1794414877557,
       "tag": "0001_note_block_alt",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1794421662719,
+      "tag": "0002_rate_limits",
+      "breakpoints": true
     }
   ]
 }

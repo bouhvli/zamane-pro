@@ -1,10 +1,10 @@
-import { env, exports } from "cloudflare:workers";
 import { eq, like } from "drizzle-orm";
 import { dbFor } from "../../src/worker/db/client.ts";
+import app from "../../src/worker/index.ts";
 import { session as sessionTable, user as userTable, verification } from "../../src/worker/db/schema.ts";
 
 export const ORIGIN = "http://localhost:3000";
-export const db = () => dbFor((env as unknown as { DATABASE_URL: string }).DATABASE_URL);
+export const db = () => dbFor(process.env.DATABASE_URL!);
 
 let ipCounter = Math.floor(Math.random() * 200);
 /** A fresh client IP, so the IP-keyed rate limits of one test don't spill into another. */
@@ -26,10 +26,10 @@ export class Client {
   }
 
   async request(path: string, init: { method?: string; body?: unknown } = {}) {
-    const headers = new Headers({ Origin: ORIGIN, "cf-connecting-ip": this.ip });
+    const headers = new Headers({ Origin: ORIGIN, "x-real-ip": this.ip });
     if (init.body !== undefined) headers.set("Content-Type", "application/json");
     if (this.cookies.size) headers.set("Cookie", this.cookieHeader());
-    const res = await exports.default.fetch(
+    const res = await app.fetch(
       new Request(`${ORIGIN}${path}`, {
         method: init.method ?? (init.body !== undefined ? "POST" : "GET"),
         headers,

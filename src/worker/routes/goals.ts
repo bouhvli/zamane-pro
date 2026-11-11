@@ -61,12 +61,12 @@ export const goalRoutes = new Hono<AppEnv>()
     const r = await updateGoal(c, spaceId, userId, c.req.valid("param").goalId, c.req.valid("json"));
     if (r.kind === "not_found") throw notFound();
     if (r.kind === "conflict") return c.json({ ...errorBody("conflict", CONFLICT_MESSAGE), current: r.current }, 409);
-    if (r.oldCover) destroyLater(c, c.get("config"), [r.oldCover]);
+    if (r.oldCover) destroyLater(c.get("config"), [r.oldCover]);
     return c.json({ goal: r.goal, completed: r.completed, reopened: r.reopened });
   })
   .delete("/:goalId", validate("param", goalParam), async (c) => {
     const ids = await deleteGoal(c, c.get("space").spaceId, c.req.valid("param").goalId);
-    if (ids) destroyLater(c, c.get("config"), ids);
+    if (ids) destroyLater(c.get("config"), ids);
     return c.body(null, 204);
   })
   .get("/:goalId/stats", validate("param", goalParam), async (c) => {
@@ -105,13 +105,13 @@ export const goalRoutes = new Hono<AppEnv>()
     if (r.kind === "forbidden")
       return c.json(errorBody("forbidden", "Only the person who wrote a note can edit it."), 403);
     if (r.kind === "conflict") return c.json({ ...errorBody("conflict", CONFLICT_MESSAGE), current: r.current }, 409);
-    destroyLater(c, c.get("config"), r.removedImages);
+    destroyLater(c.get("config"), r.removedImages);
     return c.json({ note: r.note });
   })
   .delete("/:goalId/notes/:noteId", validate("param", noteParam), async (c) => {
     const { spaceId, userId } = c.get("space");
     const { goalId, noteId } = c.req.valid("param");
-    destroyLater(c, c.get("config"), await deleteNote(c, spaceId, goalId, noteId, userId));
+    destroyLater(c.get("config"), await deleteNote(c, spaceId, goalId, noteId, userId));
     return c.body(null, 204);
   });
 

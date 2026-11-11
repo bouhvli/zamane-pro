@@ -2,7 +2,7 @@ import { defineConfig, devices } from "@playwright/test";
 
 /**
  * Two projects on one dev server (port 3000, started with E2E=1 so the test-only reset-link route exists):
- * - e2e: the full auth flow against the real Worker and the Neon dev/PR branch;
+ * - e2e: the app end to end against the real API (Node, via the Vite dev server) and the Neon dev/PR branch;
  * - visual: each prototype state (.ux-forge/auth, over file://) next to the matching React route (API mocked),
  *   at 390×844 and 360×780, light and dark, pixel-diffed into tests/visual/report/.
  */

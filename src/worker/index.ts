@@ -1,6 +1,6 @@
 /**
- * The Worker: Hono under /api (§3, §5). Static assets and the SPA fallback are served by Workers static assets;
- * only /api/* reaches this code (`run_worker_first`).
+ * The server: Hono under /api (§3, §5), one Vercel Function (src/worker/vercel.ts, D56). Static files and the SPA
+ * fallback are served by Vercel from the client build; only /api/* reaches this code.
  *
  * Middleware order (outermost first): requestId → errorHandler → secureHeaders → body limit → configure (env,
  * auth instance) → same-origin JSON → rateLimit (selected routes) → session → requireSpace (space routes).
@@ -57,12 +57,12 @@ app.use("*", configure);
 // Better Auth has its own CSRF defences (origin check, Fetch Metadata); everything else is same-origin JSON.
 app.route("/api/auth", authRoutes);
 
-if (typeof __E2E__ !== "undefined" && __E2E__) {
+if (__E2E__) {
   // Dead code in every production build (__E2E__ is defined as false), so the module isn't bundled at all.
   app.all("/api/test/*", async (c) => {
-    if (c.env.APP_ENV !== "development") return notFoundHandler(c);
+    if (c.get("config").APP_ENV !== "development") return notFoundHandler(c);
     const { testOnlyRoutes } = await import("./routes/test-only.ts");
-    return testOnlyRoutes.fetch(new Request(c.req.url.replace("/api/test", ""), c.req.raw), c.env, c.executionCtx);
+    return testOnlyRoutes.fetch(new Request(c.req.url.replace("/api/test", ""), c.req.raw));
   });
 }
 
@@ -79,4 +79,4 @@ const api = new Hono<AppEnv>()
 app.route("/api", api);
 
 export type AppType = typeof api;
-export default app satisfies ExportedHandler<Env>;
+export default app;

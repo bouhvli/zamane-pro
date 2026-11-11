@@ -2,6 +2,7 @@ import { v7 as uuidv7 } from "uuid";
 import { spacePrefix, stringToSign } from "../../shared/cloudinary.ts";
 import type { ImageAsset, UploadSignature } from "../../shared/schemas/goals.ts";
 import type { AppConfig } from "../env.ts";
+import { background } from "../background.ts";
 import { ApiError } from "../errors.ts";
 
 /**
@@ -67,12 +68,8 @@ export async function destroyAsset(config: AppConfig, publicId: string): Promise
   if (!res.ok) throw new Error(`cloudinary destroy answered ${res.status}`);
 }
 
-/** After commit, in waitUntil: a failure never fails the request. */
-export function destroyLater(
-  c: { executionCtx?: Pick<ExecutionContext, "waitUntil"> },
-  config: AppConfig,
-  publicIds: string[],
-) {
+/** After commit, in the background: a failure never fails the request. */
+export function destroyLater(config: AppConfig, publicIds: string[]) {
   if (!publicIds.length || !config.uploadsEnabled) return;
   const work = Promise.all(
     publicIds.map((id) =>
@@ -81,9 +78,5 @@ export function destroyLater(
       ),
     ),
   );
-  try {
-    c.executionCtx?.waitUntil(work);
-  } catch {
-    // No execution context (a script or test): the promise still runs.
-  }
+  background(work);
 }

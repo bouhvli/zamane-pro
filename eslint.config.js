@@ -8,11 +8,10 @@ export default tseslint.config(
     ignores: [
       "dist",
       "node_modules",
-      ".wrangler",
+      ".vercel",
       ".tanstack",
       ".ux-forge",
       "src/client/routeTree.gen.ts",
-      "src/worker/worker-configuration.d.ts",
       "public/theme-init.js",
       "playwright-report",
       "test-results",

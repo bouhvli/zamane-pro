@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 /**
- * Bindings parsed once per isolate, on first use (§10). Errors name the missing or invalid keys, never their values.
+ * The server's settings (process.env), parsed once, on first use (§10). Errors name the missing or invalid keys, never their values.
  * Unknown keys (anything else in .env) are ignored.
  */
 const APP_ENVS = ["development", "preview", "production"] as const;
@@ -68,7 +68,7 @@ export function getConfig(env: object): AppConfig {
   const parsed = schema.safeParse(env);
   if (!parsed.success) {
     const keys = parsed.error.issues.map((i) => `${i.path.join(".") || "(env)"}: ${i.message}`);
-    throw new EnvError(`Invalid Worker configuration. ${keys.join("; ")}`);
+    throw new EnvError(`Invalid server configuration. ${keys.join("; ")}`);
   }
   const e = parsed.data;
   if (/-pooler\./.test(new URL(e.DATABASE_URL).hostname)) {
@@ -82,4 +82,9 @@ export function getConfig(env: object): AppConfig {
   };
   cached = { source: env, config };
   return config;
+}
+
+/** The server's own configuration, from its environment variables (Vercel project settings, or .env locally). */
+export function serverConfig(): AppConfig {
+  return getConfig(process.env);
 }

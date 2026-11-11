@@ -3,7 +3,7 @@ node_modules
 pnpm-lock.yaml
 drizzle/meta
 src/client/routeTree.gen.ts
-src/worker/worker-configuration.d.ts
+.vercel
 src/client/styles/tokens.css
 src/client/styles/auth.css
 src/client/styles/account.css
@@ -16,7 +16,6 @@ tests/visual/report
 playwright-report
 test-results
 ARCHITECTURE.md
-.wrangler
 .tanstack
 src/client/styles/home.css
 src/client/styles/goals*.css

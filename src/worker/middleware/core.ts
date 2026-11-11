@@ -1,23 +1,23 @@
 import type { Context, ErrorHandler, MiddlewareHandler, NotFoundHandler } from "hono";
 import { HTTPException } from "hono/http-exception";
 import { createAuth } from "../auth.ts";
-import { EnvError, getConfig } from "../env.ts";
+import { EnvError, serverConfig } from "../env.ts";
 import { ApiError, pgError } from "../errors.ts";
 import type { AppEnv } from "../types.ts";
 
-/** requestId: from Cloudflare's cf-ray when present, else random. Echoed as x-request-id. */
+/** requestId: Vercel's x-vercel-id when present, else random. Echoed as x-request-id. */
 export const requestId: MiddlewareHandler<AppEnv> = async (c, next) => {
-  const id = c.req.header("cf-ray") ?? crypto.randomUUID();
+  const id = c.req.header("x-vercel-id") ?? crypto.randomUUID();
   c.set("requestId", id);
   await next();
   c.header("x-request-id", id);
 };
 
-/** Parses the bindings (once per isolate) and builds the per-request Better Auth instance. */
+/** Parses the configuration (once per instance) and builds the per-request Better Auth instance. */
 export const configure: MiddlewareHandler<AppEnv> = async (c, next) => {
-  const config = getConfig(c.env);
+  const config = serverConfig();
   c.set("config", config);
-  c.set("auth", createAuth(config, c.executionCtx));
+  c.set("auth", createAuth(config));
   await next();
 };
 
@@ -69,6 +69,7 @@ export const sameOriginJson: MiddlewareHandler<AppEnv> = async (c, next) => {
   await next();
 };
 
+/** The caller's IP: Vercel sets x-real-ip (and overwrites any value a client sends). Locally there is none. */
 export function clientIp(c: Context): string {
-  return c.req.header("cf-connecting-ip") ?? "local";
+  return c.req.header("x-real-ip") ?? "local";
 }

@@ -20,7 +20,7 @@ dist-ssr
 .dev.vars
 .dev.vars.*
 
-# Cloudflare / Wrangler local state
+# Old Cloudflare / Wrangler local state
 .wrangler/
 
 # Test output
