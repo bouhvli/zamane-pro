@@ -1,7 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Placeholder } from "../../../../components/Placeholder.tsx";
+import { GoalForm } from "../../../../components/goals/GoalForm.tsx";
 
-/** Edit goal: built in a later phase. */
-export const Route = createFileRoute("/_app/goals/$goalId/edit")({
-  component: () => <Placeholder name="Edit goal" route="goals/edit" />,
-});
+/** Edit goal (.ux-forge/goals form.js, edit mode). */
+export const Route = createFileRoute("/_app/goals/$goalId/edit")({ component: EditGoal });
+
+function EditGoal() {
+  const { me } = Route.useRouteContext();
+  const { goalId } = Route.useParams();
+  return <GoalForm mode="edit" goalId={goalId} currency={me.space.currency} />;
+}

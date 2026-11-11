@@ -1,0 +1,926 @@
+[
+  {
+    "id": "edit-wedding-cover-failed",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 15.05833748546753,
+    "heights": [
+      1298,
+      1338
+    ],
+    "image": "edit-wedding-cover-failed--360x780--dark.png"
+  },
+  {
+    "id": "edit-wedding-cover-failed",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 14.95972429828932,
+    "heights": [
+      1298,
+      1338
+    ],
+    "image": "edit-wedding-cover-failed--360x780--light.png"
+  },
+  {
+    "id": "new-cover-failed",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 14.542657342657343,
+    "heights": [
+      1375,
+      1375
+    ],
+    "image": "new-cover-failed--390x844--light.png"
+  },
+  {
+    "id": "edit-wedding-cover-uploading",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 14.538735983690113,
+    "heights": [
+      1268,
+      1308
+    ],
+    "image": "edit-wedding-cover-uploading--360x780--dark.png"
+  },
+  {
+    "id": "new-cover-failed",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 14.465827505827505,
+    "heights": [
+      1375,
+      1375
+    ],
+    "image": "new-cover-failed--390x844--dark.png"
+  },
+  {
+    "id": "edit-wedding-cover-uploading",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 14.445081549439347,
+    "heights": [
+      1268,
+      1308
+    ],
+    "image": "edit-wedding-cover-uploading--360x780--light.png"
+  },
+  {
+    "id": "new-cover-uploading",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 14.053188447240492,
+    "heights": [
+      1345,
+      1345
+    ],
+    "image": "new-cover-uploading--390x844--light.png"
+  },
+  {
+    "id": "new-cover-uploading",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 14.042321990277381,
+    "heights": [
+      1345,
+      1345
+    ],
+    "image": "new-cover-uploading--390x844--dark.png"
+  },
+  {
+    "id": "edit-wedding-conflict",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 13.610746477640676,
+    "heights": [
+      1465,
+      1465
+    ],
+    "image": "edit-wedding-conflict--390x844--light.png"
+  },
+  {
+    "id": "edit-wedding-conflict",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 13.573291327557538,
+    "heights": [
+      1465,
+      1465
+    ],
+    "image": "edit-wedding-conflict--390x844--dark.png"
+  },
+  {
+    "id": "edit-wedding-invalid",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 13.36076817558299,
+    "heights": [
+      1296,
+      1296
+    ],
+    "image": "edit-wedding-invalid--360x780--dark.png"
+  },
+  {
+    "id": "edit-wedding-invalid",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 13.347265089163237,
+    "heights": [
+      1296,
+      1296
+    ],
+    "image": "edit-wedding-invalid--360x780--light.png"
+  },
+  {
+    "id": "edit-wedding-offline",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 13.150234741784036,
+    "heights": [
+      1420,
+      1420
+    ],
+    "image": "edit-wedding-offline--390x844--dark.png"
+  },
+  {
+    "id": "edit-wedding-offline",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 13.15005417118093,
+    "heights": [
+      1420,
+      1420
+    ],
+    "image": "edit-wedding-offline--390x844--light.png"
+  },
+  {
+    "id": "new-cover-failed",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 13.00715942724582,
+    "heights": [
+      1389,
+      1389
+    ],
+    "image": "new-cover-failed--360x780--light.png"
+  },
+  {
+    "id": "new-cover-failed",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 13.005959523238142,
+    "heights": [
+      1389,
+      1389
+    ],
+    "image": "new-cover-failed--360x780--dark.png"
+  },
+  {
+    "id": "edit-wedding-offline",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 12.738990753800344,
+    "heights": [
+      1418,
+      1418
+    ],
+    "image": "edit-wedding-offline--360x780--light.png"
+  },
+  {
+    "id": "edit-wedding-offline",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 12.737227707255915,
+    "heights": [
+      1418,
+      1418
+    ],
+    "image": "edit-wedding-offline--360x780--dark.png"
+  },
+  {
+    "id": "edit-wedding-completion-preview",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 12.65488991295443,
+    "heights": [
+      1302,
+      1302
+    ],
+    "image": "edit-wedding-completion-preview--360x780--dark.png"
+  },
+  {
+    "id": "edit-wedding-completion-preview",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 12.622461170848268,
+    "heights": [
+      1302,
+      1302
+    ],
+    "image": "edit-wedding-completion-preview--360x780--light.png"
+  },
+  {
+    "id": "new-cover-uploading",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 12.489984465701905,
+    "heights": [
+      1359,
+      1359
+    ],
+    "image": "new-cover-uploading--360x780--dark.png"
+  },
+  {
+    "id": "new-cover-uploading",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 12.459733464148476,
+    "heights": [
+      1359,
+      1359
+    ],
+    "image": "new-cover-uploading--360x780--light.png"
+  },
+  {
+    "id": "edit-wedding-conflict",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 12.345446950710109,
+    "heights": [
+      1463,
+      1463
+    ],
+    "image": "edit-wedding-conflict--360x780--light.png"
+  },
+  {
+    "id": "edit-wedding-conflict",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 12.345067213488266,
+    "heights": [
+      1463,
+      1463
+    ],
+    "image": "edit-wedding-conflict--360x780--dark.png"
+  },
+  {
+    "id": "edit-wedding-default",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 12.090343498072205,
+    "heights": [
+      1268,
+      1268
+    ],
+    "image": "edit-wedding-default--360x780--dark.png"
+  },
+  {
+    "id": "edit-wedding-delete-confirm",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 12.090343498072205,
+    "heights": [
+      1268,
+      1268
+    ],
+    "image": "edit-wedding-delete-confirm--360x780--dark.png"
+  },
+  {
+    "id": "edit-wedding-default",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 12.089467227479846,
+    "heights": [
+      1268,
+      1268
+    ],
+    "image": "edit-wedding-default--360x780--light.png"
+  },
+  {
+    "id": "edit-wedding-delete-confirm",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 12.089467227479846,
+    "heights": [
+      1268,
+      1268
+    ],
+    "image": "edit-wedding-delete-confirm--360x780--light.png"
+  },
+  {
+    "id": "edit-wedding-cover-failed",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 12.017081279376361,
+    "heights": [
+      1318,
+      1342
+    ],
+    "image": "edit-wedding-cover-failed--390x844--dark.png"
+  },
+  {
+    "id": "edit-wedding-cover-failed",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 11.926516106843977,
+    "heights": [
+      1318,
+      1342
+    ],
+    "image": "edit-wedding-cover-failed--390x844--light.png"
+  },
+  {
+    "id": "edit-wedding-cover-uploading",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 11.492534396497811,
+    "heights": [
+      1288,
+      1312
+    ],
+    "image": "edit-wedding-cover-uploading--390x844--dark.png"
+  },
+  {
+    "id": "edit-wedding-cover-uploading",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 11.44875703564728,
+    "heights": [
+      1288,
+      1312
+    ],
+    "image": "edit-wedding-cover-uploading--390x844--light.png"
+  },
+  {
+    "id": "edit-wedding-invalid",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 10.762995869378848,
+    "heights": [
+      1316,
+      1316
+    ],
+    "image": "edit-wedding-invalid--390x844--dark.png"
+  },
+  {
+    "id": "edit-wedding-invalid",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 10.748967344712025,
+    "heights": [
+      1316,
+      1316
+    ],
+    "image": "edit-wedding-invalid--390x844--light.png"
+  },
+  {
+    "id": "edit-wedding-default",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 10.082616658703616,
+    "heights": [
+      1288,
+      1288
+    ],
+    "image": "edit-wedding-default--390x844--dark.png"
+  },
+  {
+    "id": "edit-wedding-default",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 10.08002866698519,
+    "heights": [
+      1288,
+      1288
+    ],
+    "image": "edit-wedding-default--390x844--light.png"
+  },
+  {
+    "id": "edit-wedding-completion-preview",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 9.657464212678937,
+    "heights": [
+      1304,
+      1304
+    ],
+    "image": "edit-wedding-completion-preview--390x844--dark.png"
+  },
+  {
+    "id": "edit-wedding-completion-preview",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 9.655104609092339,
+    "heights": [
+      1304,
+      1304
+    ],
+    "image": "edit-wedding-completion-preview--390x844--light.png"
+  },
+  {
+    "id": "edit-wedding-delete-confirm",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 8.987697085523171,
+    "heights": [
+      1288,
+      1288
+    ],
+    "image": "edit-wedding-delete-confirm--390x844--dark.png"
+  },
+  {
+    "id": "edit-wedding-delete-confirm",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 8.985507246376812,
+    "heights": [
+      1288,
+      1288
+    ],
+    "image": "edit-wedding-delete-confirm--390x844--light.png"
+  },
+  {
+    "id": "edit-wedding-default",
+    "size": "1440x900",
+    "scheme": "light",
+    "diffPercent": 4.031844576229306,
+    "heights": [
+      1349,
+      1349
+    ],
+    "image": "edit-wedding-default--1440x900--light.png"
+  },
+  {
+    "id": "edit-wedding-default",
+    "size": "1440x900",
+    "scheme": "dark",
+    "diffPercent": 4.031587183922247,
+    "heights": [
+      1349,
+      1349
+    ],
+    "image": "edit-wedding-default--1440x900--dark.png"
+  },
+  {
+    "id": "edit-wedding-not-found",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 1.5356125356125356,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "edit-wedding-not-found--360x780--dark.png"
+  },
+  {
+    "id": "edit-wedding-not-found",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 1.507834757834758,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "edit-wedding-not-found--360x780--light.png"
+  },
+  {
+    "id": "edit-wedding-not-found",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 1.3100012152144853,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "edit-wedding-not-found--390x844--dark.png"
+  },
+  {
+    "id": "edit-wedding-not-found",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 1.2863045327500302,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "edit-wedding-not-found--390x844--light.png"
+  },
+  {
+    "id": "edit-wedding-uploads-off",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 0.05718069098350788,
+    "heights": [
+      923,
+      923
+    ],
+    "image": "edit-wedding-uploads-off--360x780--light.png"
+  },
+  {
+    "id": "new-uploads-off",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 0.05599162742019885,
+    "heights": [
+      980,
+      980
+    ],
+    "image": "new-uploads-off--390x844--light.png"
+  },
+  {
+    "id": "edit-wedding-uploads-off",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 0.04423979776092452,
+    "heights": [
+      923,
+      923
+    ],
+    "image": "edit-wedding-uploads-off--360x780--dark.png"
+  },
+  {
+    "id": "edit-guest-room-default",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 0.039353981396299705,
+    "heights": [
+      1087,
+      1087
+    ],
+    "image": "edit-guest-room-default--360x780--light.png"
+  },
+  {
+    "id": "edit-guest-room-default",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 0.01768346595932803,
+    "heights": [
+      1102,
+      1102
+    ],
+    "image": "edit-guest-room-default--390x844--light.png"
+  },
+  {
+    "id": "new-default",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "new-default--390x844--light.png"
+  },
+  {
+    "id": "new-default",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "new-default--390x844--dark.png"
+  },
+  {
+    "id": "new-default",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "new-default--360x780--light.png"
+  },
+  {
+    "id": "new-default",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "new-default--360x780--dark.png"
+  },
+  {
+    "id": "new-default",
+    "size": "1440x900",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      900,
+      900
+    ],
+    "image": "new-default--1440x900--light.png"
+  },
+  {
+    "id": "new-default",
+    "size": "1440x900",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      900,
+      900
+    ],
+    "image": "new-default--1440x900--dark.png"
+  },
+  {
+    "id": "new-invalid",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "new-invalid--390x844--light.png"
+  },
+  {
+    "id": "new-invalid",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "new-invalid--390x844--dark.png"
+  },
+  {
+    "id": "new-invalid",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "new-invalid--360x780--light.png"
+  },
+  {
+    "id": "new-invalid",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "new-invalid--360x780--dark.png"
+  },
+  {
+    "id": "new-percent",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "new-percent--390x844--light.png"
+  },
+  {
+    "id": "new-percent",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "new-percent--390x844--dark.png"
+  },
+  {
+    "id": "new-percent",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "new-percent--360x780--light.png"
+  },
+  {
+    "id": "new-percent",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      780,
+      780
+    ],
+    "image": "new-percent--360x780--dark.png"
+  },
+  {
+    "id": "new-details",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      1285,
+      1285
+    ],
+    "image": "new-details--390x844--light.png"
+  },
+  {
+    "id": "new-details",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      1285,
+      1285
+    ],
+    "image": "new-details--390x844--dark.png"
+  },
+  {
+    "id": "new-details",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      1304,
+      1304
+    ],
+    "image": "new-details--360x780--light.png"
+  },
+  {
+    "id": "new-details",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      1304,
+      1304
+    ],
+    "image": "new-details--360x780--dark.png"
+  },
+  {
+    "id": "new-offline",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "new-offline--390x844--light.png"
+  },
+  {
+    "id": "new-offline",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      844,
+      844
+    ],
+    "image": "new-offline--390x844--dark.png"
+  },
+  {
+    "id": "new-offline",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      794,
+      794
+    ],
+    "image": "new-offline--360x780--light.png"
+  },
+  {
+    "id": "new-offline",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      794,
+      794
+    ],
+    "image": "new-offline--360x780--dark.png"
+  },
+  {
+    "id": "new-uploads-off",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      980,
+      980
+    ],
+    "image": "new-uploads-off--390x844--dark.png"
+  },
+  {
+    "id": "new-uploads-off",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      1014,
+      1014
+    ],
+    "image": "new-uploads-off--360x780--light.png"
+  },
+  {
+    "id": "new-uploads-off",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      1014,
+      1014
+    ],
+    "image": "new-uploads-off--360x780--dark.png"
+  },
+  {
+    "id": "edit-guest-room-default",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      1102,
+      1102
+    ],
+    "image": "edit-guest-room-default--390x844--dark.png"
+  },
+  {
+    "id": "edit-guest-room-default",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      1087,
+      1087
+    ],
+    "image": "edit-guest-room-default--360x780--dark.png"
+  },
+  {
+    "id": "edit-sofa-default",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      1221,
+      1221
+    ],
+    "image": "edit-sofa-default--390x844--light.png"
+  },
+  {
+    "id": "edit-sofa-default",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      1221,
+      1221
+    ],
+    "image": "edit-sofa-default--390x844--dark.png"
+  },
+  {
+    "id": "edit-sofa-default",
+    "size": "360x780",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      1206,
+      1206
+    ],
+    "image": "edit-sofa-default--360x780--light.png"
+  },
+  {
+    "id": "edit-sofa-default",
+    "size": "360x780",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      1206,
+      1206
+    ],
+    "image": "edit-sofa-default--360x780--dark.png"
+  },
+  {
+    "id": "edit-wedding-uploads-off",
+    "size": "390x844",
+    "scheme": "light",
+    "diffPercent": 0,
+    "heights": [
+      923,
+      923
+    ],
+    "image": "edit-wedding-uploads-off--390x844--light.png"
+  },
+  {
+    "id": "edit-wedding-uploads-off",
+    "size": "390x844",
+    "scheme": "dark",
+    "diffPercent": 0,
+    "heights": [
+      923,
+      923
+    ],
+    "image": "edit-wedding-uploads-off--390x844--dark.png"
+  }
+]

@@ -3,6 +3,8 @@ import type { MeResponse } from "../../shared/schemas/spaces.ts";
 import { api, isApiError } from "./api.ts";
 import { carry } from "./carry.ts";
 import { clearQueryCache } from "./query.ts";
+import { clearAllGoalDrafts } from "./goal-drafts.ts";
+import { clearNoteDrafts } from "./note-drafts.ts";
 
 export const meKey = ["me"] as const;
 
@@ -47,5 +49,8 @@ export async function signOut(qc: QueryClient): Promise<void> {
   await clearQueryCache();
   qc.setQueryData(meKey, null);
   carry.clearAll();
+  // Drafts typed on this phone belong to this person (goals.html: cleared on logout).
+  clearAllGoalDrafts();
+  clearNoteDrafts();
   // Phase 5: closeRealtime();
 }
