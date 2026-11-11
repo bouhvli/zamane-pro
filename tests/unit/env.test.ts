@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
-import { getConfig } from "../../src/worker/env.ts";
+import { getConfig, senderFor } from "../../src/worker/env.ts";
 
 const base = {
   APP_ENV: "development",
@@ -38,9 +38,9 @@ describe("env validation", () => {
     expect(all.uploadsEnabled).toBe(true);
   });
 
-  it("requires Resend outside development, and EMAIL_FROM with it", () => {
+  it("requires Resend outside development", () => {
     expect(() => getConfig({ ...base, APP_ENV: "production" })).toThrowError(/RESEND_API_KEY/);
-    expect(() => getConfig({ ...base, RESEND_API_KEY: "re_x" })).toThrowError(/EMAIL_FROM/);
+    expect(getConfig({ ...base, RESEND_API_KEY: "re_x" }).RESEND_API_KEY).toBe("re_x");
   });
 
   it("warns about a -pooler host (D32)", () => {
@@ -51,9 +51,11 @@ describe("env validation", () => {
     warn.mockRestore();
   });
 
-  it("uses BETTER_AUTH_URL when set (D22)", () => {
-    expect(getConfig({ ...base, BETTER_AUTH_URL: "https://auth.example.com" }).authUrl).toBe(
-      "https://auth.example.com",
-    );
+  it("uses the app's origin for auth and picks the sender (D45)", () => {
+    const dev = getConfig({ ...base });
+    expect(dev.authUrl).toBe("http://localhost:3000");
+    expect(dev.emailFrom).toBe("Zamane <onboarding@resend.dev>");
+    expect(senderFor("production", "https://www.zamane.app")).toBe("Zamane <no-reply@zamane.app>");
+    expect(senderFor("preview", "https://pr-4.zamane.app")).toBe("Zamane <no-reply@pr-4.zamane.app>");
   });
 });

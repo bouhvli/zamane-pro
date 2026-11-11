@@ -18,9 +18,11 @@ export const devOutbox = new Map<string, string>();
  * the message (and its link) to the Worker console instead. Never returned in an HTTP response.
  */
 export async function sendEmail(config: AppConfig, email: Email, meta?: { link?: string }): Promise<void> {
+  // E2E dev servers keep the link even when Resend is configured (the test addresses can't receive mail).
+  if (typeof __E2E__ !== "undefined" && __E2E__ && config.APP_ENV === "development" && meta?.link)
+    devOutbox.set(email.to, meta.link);
   if (config.RESEND_API_KEY === "") {
     if (config.APP_ENV !== "development") throw new Error("RESEND_API_KEY is required outside development");
-    if (typeof __E2E__ !== "undefined" && __E2E__ && meta?.link) devOutbox.set(email.to, meta.link);
     console.log(`[dev email] "${email.subject}" → ${email.to}${meta?.link ? `\n[dev email] link: ${meta.link}` : ""}`);
     return;
   }
@@ -28,7 +30,7 @@ export async function sendEmail(config: AppConfig, email: Email, meta?: { link?:
     method: "POST",
     headers: { Authorization: `Bearer ${config.RESEND_API_KEY}`, "Content-Type": "application/json" },
     body: JSON.stringify({
-      from: config.EMAIL_FROM,
+      from: config.emailFrom,
       to: [email.to],
       subject: email.subject,
       text: email.text,

@@ -30,7 +30,6 @@ export default defineConfig({
                 DATABASE_URL: process.env.DATABASE_URL ?? "",
                 BETTER_AUTH_SECRET: process.env.BETTER_AUTH_SECRET || "test-secret-test-secret-test-secret-0123",
                 RESEND_API_KEY: "",
-                EMAIL_FROM: "",
                 CLOUDINARY_CLOUD_NAME: "",
                 CLOUDINARY_API_KEY: "",
                 CLOUDINARY_API_SECRET: "",
