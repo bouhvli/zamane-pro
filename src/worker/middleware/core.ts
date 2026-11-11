@@ -1,7 +1,7 @@
 import type { Context, ErrorHandler, MiddlewareHandler, NotFoundHandler } from "hono";
 import { HTTPException } from "hono/http-exception";
 import { createAuth } from "../auth.ts";
-import { getConfig } from "../env.ts";
+import { EnvError, getConfig } from "../env.ts";
 import { ApiError, pgError } from "../errors.ts";
 import type { AppEnv } from "../types.ts";
 
@@ -37,7 +37,12 @@ export const onError: ErrorHandler<AppEnv> = (err, c) => {
   }
   // Never log the message of a database error: Drizzle puts the query and its parameters in it.
   const pg = pgError(err);
-  const what = pg ? `postgres ${pg.code}${pg.constraint ? ` (${pg.constraint})` : ""}` : err.name;
+  // EnvError messages name the missing or invalid keys, never their values.
+  const what = pg
+    ? `postgres ${pg.code}${pg.constraint ? ` (${pg.constraint})` : ""}`
+    : err instanceof EnvError
+      ? err.message
+      : err.name;
   console.error(`[${c.get("requestId") ?? "-"}] ${c.req.method} ${new URL(c.req.url).pathname} failed: ${what}`);
   return c.json(errorBody("internal", "Something went wrong on our side. Try again in a moment."), 500);
 };
