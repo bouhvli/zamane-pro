@@ -113,7 +113,7 @@ function SignIn() {
     ) : null;
 
   return (
-    <AuthShell route="sign-in">
+    <AuthShell route="sign-in" tiles="pair">
       <PageHead title={C.title} />
       {noticeEl}
       <Notice id="si-offline" icon="wifi-off" hidden={f.online}>

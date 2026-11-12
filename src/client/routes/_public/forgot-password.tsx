@@ -42,7 +42,7 @@ function ForgotPassword() {
   const [sent, setSent] = useState<string | null>(null);
   const [selectOnShow, setSelectOnShow] = useState(false);
   return (
-    <AuthShell route="forgot-password">
+    <AuthShell route="forgot-password" tiles="pair">
       {sent === null ? (
         <ResetForm initialEmail={carry.get("email")} select={selectOnShow} onSent={(email) => setSent(email)} />
       ) : (

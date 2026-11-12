@@ -32,6 +32,7 @@ import "./styles/shopping.css";
 import "./styles/shopping-dialogs.css";
 import "./styles/shopping-form.css";
 import "./styles/profile.css";
+import "./styles/auth-zellige.css";
 import "./styles/app.css";
 
 const router = createRouter({
