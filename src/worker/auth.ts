@@ -11,6 +11,7 @@ import { dbFor } from "./db/client.ts";
 import * as schema from "./db/schema.ts";
 import type { AppConfig } from "./env.ts";
 import { sendEmail } from "./services/email.ts";
+import { changeEmailEmail } from "./services/change-email.ts";
 import { resetPasswordEmail } from "./services/reset-email.ts";
 
 /** Options shared with auth.config.ts (the schema CLI), minus anything that needs the configuration. */
@@ -24,7 +25,10 @@ export const authOptions = {
     resetPasswordTokenExpiresIn: 60 * 60,
     revokeSessionsOnPasswordReset: true,
   },
-  user: { modelName: "user", fields: { name: "displayName" } },
+  // Change email (D70): never applied at once. The confirmation link goes to the NEW address and the account keeps its
+  // current one until it is opened (updateEmailWithoutVerification stays off).
+  user: { modelName: "user", fields: { name: "displayName" }, changeEmail: { enabled: true } },
+  emailVerification: { expiresIn: 60 * 60 },
   session: { cookieCache: { enabled: true, maxAge: 5 * 60 } },
   rateLimit: { enabled: false }, // D57: the app's own limiter (a Neon table) runs in Hono middleware instead
   advanced: {
@@ -48,6 +52,18 @@ export function createAuth(config: AppConfig) {
         verification: schema.verification,
       },
     }),
+    emailVerification: {
+      ...authOptions.emailVerification,
+      // Only the change-email flow sends one (sign-up doesn't ask for verification). `user.email` is the NEW address.
+      sendVerificationEmail: async ({ user, url }) => {
+        const email = changeEmailEmail({ to: user.email, name: user.name, url, appUrl: config.APP_URL });
+        background(
+          sendEmail(config, email, { link: url }).catch((e: unknown) =>
+            console.error("change-email email failed:", e instanceof Error ? e.name : "unknown"),
+          ),
+        );
+      },
+    },
     emailAndPassword: {
       ...authOptions.emailAndPassword,
       // Same response whether or not the account exists (Better Auth runs a dummy lookup); the email is sent

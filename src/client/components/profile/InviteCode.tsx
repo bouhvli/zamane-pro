@@ -9,10 +9,11 @@ import { Button } from "../Button.tsx";
 import { spaceKey } from "./space.ts";
 
 /**
+ * Shown only while the partner has not joined (the couple card hides it for a linked space).
  * The invite code as two set tiles in a grout well with a saffron diamond between. The hyphen stays in the text
  * (visually hidden) so copy, tests and screen readers see "K7QM-4XZP".
  */
-export function InviteCode({ space, solo }: { space: MySpace; solo: boolean }) {
+export function InviteCode({ space, code: current }: { space: MySpace; code: string }) {
   const qc = useQueryClient();
   const online = useOnline();
   const [copied, setCopied] = useState(false);
@@ -30,13 +31,13 @@ export function InviteCode({ space, solo }: { space: MySpace; solo: boolean }) {
     return () => clearTimeout(t);
   }, [copied]);
 
-  const code = formatInviteCode(space.inviteCode);
+  const code = formatInviteCode(current);
   const [first, second] = code.split("-");
   const reason = online ? null : "pf-code-offline";
   return (
     <div className="pf-code">
       <p className="lbl" id="pf-code-label">
-        {solo ? "Send this code to your partner" : "Invite code"}
+        Send this code to your partner
       </p>
       <p
         className={`pf-slip${copied ? " is-copied" : ""}`}

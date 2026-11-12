@@ -31,6 +31,7 @@ import {
 import { addEntryKey, homeKey, removeEntryKey, type AddEntryVars, type RemoveEntryVars } from "../../../../lib/home.ts";
 import { focusHeading, useArrival, useNoFab } from "../../../../lib/nav.ts";
 import { useOnline } from "../../../../lib/online.ts";
+import { unknownName, unknownSlot } from "../../../../lib/people.ts";
 import { photoUrl } from "../../../../lib/uploads.ts";
 import { useEntryCommit } from "../../../../lib/use-entry-commit.ts";
 
@@ -152,8 +153,8 @@ function GoalDetail() {
   const solo = (data?.members.length ?? 2) === 1;
   const mad = (minor: number) => formatAmount(minor, currency);
   const p: People = {
-    name: (id) => members.get(id)?.displayName ?? "Your partner",
-    slot: (id) => members.get(id)?.slot ?? (id === me.user.id ? me.space.slot : "b"),
+    name: (id) => members.get(id)?.displayName ?? unknownName(members.size > 0),
+    slot: (id) => members.get(id)?.slot ?? (id === me.user.id ? me.space.slot : unknownSlot(members.size > 0, "b")),
     mad,
     myId: me.user.id,
   };

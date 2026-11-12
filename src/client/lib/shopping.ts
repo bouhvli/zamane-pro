@@ -9,6 +9,7 @@ import {
 } from "../../shared/schemas/shopping.ts";
 import { guessCategory, guessUnit, spelling } from "../../shared/shopping-list.ts";
 import { api } from "./api.ts";
+import { unknownName, unknownSlot, type AvatarSlot } from "./people.ts";
 
 /**
  * The shopping list (§5, .ux-forge/shopping): one query with every row and the two members (D62).
@@ -305,7 +306,7 @@ export interface ShopPeople {
   name: (id: string | null | undefined) => string;
   /** Sara's name in the pair, "you" when you're on your own (Shop.who). */
   who: (id: string | null | undefined) => string;
-  slot: (id: string) => "a" | "b";
+  slot: (id: string) => AvatarSlot;
 }
 
 /** The list, with the adds this device couldn't sync merged in as failed rows, and who is who. */
@@ -325,16 +326,24 @@ export function useShoppingData() {
   const people = useMemo<ShopPeople>(() => {
     const members = new Map((data?.members ?? []).map((m) => [m.userId, m]));
     const solo = (data?.members.length ?? 2) < 2;
+    const loaded = members.size > 0;
     const name = (id: string | null | undefined) =>
-      !id ? "Your partner" : id === me.user.id ? me.user.displayName : (members.get(id)?.displayName ?? "Your partner");
+      !id
+        ? "Your partner"
+        : id === me.user.id
+          ? me.user.displayName
+          : (members.get(id)?.displayName ?? unknownName(loaded));
     return {
       meId: me.user.id,
       solo,
       partnerId: [...members.keys()].find((k) => k !== me.user.id) ?? null,
       name,
-      who: (id) => (solo ? "you" : name(id)),
+      // Alone, what you did is "you"; what a partner who left did keeps their placeholder name.
+      who: (id) => (solo && (!id || id === me.user.id) ? "you" : name(id)),
       slot: (id) =>
-        id === me.user.id ? me.space.slot : (members.get(id)?.slot ?? (me.space.slot === "a" ? "b" : "a")),
+        id === me.user.id
+          ? me.space.slot
+          : (members.get(id)?.slot ?? unknownSlot(loaded, me.space.slot === "a" ? "b" : "a")),
     };
   }, [data, me]);
   return { q, data, items, people };

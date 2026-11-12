@@ -491,6 +491,12 @@ html:has(.sheet[open]) {
   color: var(--terracotta-ink);
   box-shadow: 0 0 0 2px var(--partner-b);
 }
+/* Someone who left the space: a neutral avatar, no partner colour. */
+.zm-av-former {
+  background: var(--surface-sunken);
+  color: var(--ink-muted);
+  box-shadow: 0 0 0 2px var(--line-strong);
+}
 .zm-av-sm {
   width: 24px;
   height: 24px;

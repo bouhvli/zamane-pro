@@ -258,6 +258,14 @@ html[data-route="shopping"] .zm-av-b {
   color: var(--terracotta-ink);
   box-shadow: 0 0 0 2px var(--partner-b);
 }
+html[data-route="shopping"] .zm-av-former {
+  background: var(--surface-sunken);
+  color: var(--ink-muted);
+  box-shadow: 0 0 0 2px var(--line-strong);
+}
+html[data-route="shopping"] .zm-av-xs.zm-av-former {
+  box-shadow: 0 0 0 1.5px var(--line-strong);
+}
 html[data-route="shopping"] .zm-av-sm {
   width: 24px;
   height: 24px;

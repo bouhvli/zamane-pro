@@ -59,6 +59,9 @@ const GATES: Record<string, Gate> = {
   },
   "POST /sign-out": {},
   "GET /get-session": {},
+  // Sign out other devices (D71), and the confirmation link of a change of email (D70), opened from the email.
+  "POST /revoke-other-sessions": {},
+  "GET /verify-email": {},
   "POST /request-password-reset": {
     validate: (b) => ({ email: check(forgotPasswordSchema, b).email }),
     limit: (c, b) => [ip(c, "reset"), email("reset", b)],

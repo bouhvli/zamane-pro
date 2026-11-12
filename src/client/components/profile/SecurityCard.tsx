@@ -1,14 +1,17 @@
+import { useMutation } from "@tanstack/react-query";
 import { useEffect, useRef, useState } from "react";
 import { changePasswordSchema } from "../../../shared/schemas/auth.ts";
 import { api, isApiError } from "../../lib/api.ts";
 import { say } from "../../lib/announce.ts";
+import { useOnline } from "../../lib/online.ts";
 import { useAuthForm } from "../../lib/use-auth-form.ts";
 import { Button } from "../Button.tsx";
 import { Field } from "../Field.tsx";
 import { FormAlert, Notice } from "../Notice.tsx";
+import { EmailRow } from "./EmailRow.tsx";
 import { CardHead } from "./Zellige.tsx";
 
-export function SecurityCard() {
+function PasswordRow() {
   const [done, setDone] = useState(false);
   const [open, setOpen] = useState(false);
   const toggle = useRef<HTMLButtonElement>(null);
@@ -65,8 +68,10 @@ export function SecurityCard() {
     }
   });
   return (
-    <section className="pf-card" aria-labelledby="pf-pw-h">
-      <CardHead id="pf-pw-h">Security</CardHead>
+    <div className="pf-set" role="group" aria-labelledby="pf-pw-h">
+      <h3 className="pf-h3" id="pf-pw-h">
+        Password
+      </h3>
       <Notice id="pf-pw-offline" icon="wifi-off" hidden={f.online}>
         Changing your password needs a connection.
       </Notice>
@@ -135,6 +140,72 @@ export function SecurityCard() {
           </Button>
         </div>
       )}
+    </div>
+  );
+}
+
+/** Better Auth's revoke-other-sessions: every session but this one ends. */
+function DevicesRow() {
+  const online = useOnline();
+  const [done, setDone] = useState(false);
+  const revoke = useMutation({
+    mutationFn: () => api("/api/auth/revoke-other-sessions", { method: "POST", body: {} }),
+    onSuccess: () => {
+      setDone(true);
+      say("Signed out on your other devices.");
+    },
+  });
+  const failed = revoke.isError && !(isApiError(revoke.error) && revoke.error.status === 429);
+  return (
+    <div className="pf-set" role="group" aria-labelledby="pf-dev-h">
+      <h3 className="pf-h3" id="pf-dev-h">
+        Other devices
+      </h3>
+      <div className="pf-reveal">
+        <p className="muted">Ends every other session on your account. This device stays signed in.</p>
+        <Button
+          variant="secondary"
+          id="pf-dev-out"
+          pending={revoke.isPending && "Signing out…"}
+          disabledReason={online ? null : "pf-dev-offline-msg"}
+          onClick={() => {
+            setDone(false);
+            if (!online) {
+              say("Signing out your other devices needs a connection.");
+              return;
+            }
+            revoke.mutate();
+          }}
+        >
+          Sign out other devices
+        </Button>
+        <Notice id="pf-dev-offline" icon="wifi-off" hidden={online}>
+          Signing out your other devices needs a connection.
+        </Notice>
+        {done && (
+          <p className="pf-status" data-state="saved" id="pf-dev-done">
+            Signed out on your other devices.
+          </p>
+        )}
+        {revoke.isError && (
+          <p className="err" role="alert">
+            {failed
+              ? "Couldn't sign out your other devices. Try again."
+              : "Too many tries. Wait a minute, then try again."}
+          </p>
+        )}
+      </div>
+    </div>
+  );
+}
+
+export function SecurityCard({ email, emailChanged }: { email: string; emailChanged: "updated" | "failed" | null }) {
+  return (
+    <section className="pf-card" aria-labelledby="pf-sec-h">
+      <CardHead id="pf-sec-h">Security</CardHead>
+      <PasswordRow />
+      <EmailRow email={email} changed={emailChanged} />
+      <DevicesRow />
     </section>
   );
 }

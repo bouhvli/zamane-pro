@@ -6,6 +6,7 @@ import { day, isoDate, time } from "../../../lib/goals.ts";
 import type { ChecklistItem, EntryItem, PlaceItem, useTripWrites } from "../../../lib/trips.ts";
 import { Icon, type IconName } from "../../Icon.tsx";
 import { initial } from "../../Seat.tsx";
+import type { AvatarSlot } from "../../../lib/people.ts";
 
 /** What every part of the trip page shares: the data, the device's clock, the people and the page-level actions. */
 export const TAB_NAME = { plan: "Plan", places: "Places", prep: "Prep" } as const;
@@ -14,7 +15,7 @@ export const TABS = ["plan", "places", "prep"] as const;
 
 export interface People {
   name: (id: string | null) => string;
-  slot: (id: string | null) => "a" | "b";
+  slot: (id: string | null) => AvatarSlot;
 }
 
 export type NowNext = { now: PlanEntryView | null; next: PlanEntryView | null; nothingLeft: boolean };

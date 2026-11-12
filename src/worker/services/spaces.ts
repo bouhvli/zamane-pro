@@ -191,7 +191,8 @@ export async function getMySpace(c: DbContext, spaceId: string, userId: string):
     name: s.name,
     currency: s.currency,
     timezone: s.timezone,
-    inviteCode: s.inviteCode,
+    // Once the partner has joined, nobody needs the code: it isn't sent (it comes back when someone leaves).
+    inviteCode: members.length >= 2 ? null : s.inviteCode,
     inviteCodeRotatedAt: s.inviteCodeRotatedAt?.toISOString() ?? null,
     slot: me.slot,
     members: members.map((m) => ({ ...m, joinedAt: m.joinedAt.toISOString() })),
@@ -205,9 +206,14 @@ export async function rotateInviteCode(c: DbContext, spaceId: string): Promise<s
       const [row] = await db(c)
         .update(spaces)
         .set({ inviteCode: code, inviteCodeRotatedAt: new Date(), updatedAt: new Date() })
-        .where(eq(spaces.id, spaceId))
+        .where(
+          and(
+            eq(spaces.id, spaceId),
+            sql`(select count(*) from space_members m where m.space_id = ${spaces.id}) < 2`, // a partner joining meanwhile wins
+          ),
+        )
         .returning({ inviteCode: spaces.inviteCode });
-      if (!row) throw new ApiError(404, "not_found", "Not found.");
+      if (!row) throw new ApiError(409, "partner_joined", "Your partner has already joined.");
       return row.inviteCode;
     } catch (err) {
       if (isUniqueViolation(err, "spaces_invite_code_unique")) continue;
@@ -215,6 +221,16 @@ export async function rotateInviteCode(c: DbContext, spaceId: string): Promise<s
     }
   }
   throw new Error("could not draw a unique invite code");
+}
+
+/** PATCH /api/spaces/mine: any member may rename. Currency and time zone never change. */
+export async function renameSpace(c: DbContext, spaceId: string, name: string): Promise<void> {
+  const rows = await db(c)
+    .update(spaces)
+    .set({ name, updatedAt: new Date() })
+    .where(eq(spaces.id, spaceId))
+    .returning({ id: spaces.id });
+  if (!rows[0]) throw new ApiError(404, "not_found", "Not found.");
 }
 
 /** What the switch would delete: shown in its confirmation. */

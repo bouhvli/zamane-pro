@@ -200,13 +200,9 @@ describe("rotating the code, and the space boundary", () => {
     await expect(getMySpace(ctx, sb.id, userA)).rejects.toMatchObject({ status: 404, code: "not_found" });
   });
 
-  it("answers 403 no_space without a space, and 501 for leaving (D19)", async () => {
+  it("answers 403 no_space without a space", async () => {
     const { c } = await person();
     expect((await c.request("/api/spaces/mine")).json.error.code).toBe("no_space");
-    await createSpace(c);
-    const leave = await c.request("/api/spaces/mine/leave", { body: {} });
-    expect(leave.status).toBe(501);
-    expect(leave.json.error.code).toBe("not_implemented");
   });
 
   it("rejects cross-origin and non-JSON writes", async () => {

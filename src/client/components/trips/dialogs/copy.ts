@@ -1,4 +1,5 @@
 import { TRIP_LIMITS } from "../../../../shared/schemas/trips.ts";
+import type { AvatarSlot } from "../../../lib/people.ts";
 
 /**
  * The dialogs' words, verbatim from .ux-forge/trips dialogs.js (C, tooLong, sNotice...). Currency-bearing
@@ -132,7 +133,7 @@ export type Kind = "entry" | "place" | "item";
 export const nounOf = (k: Kind) => (k === "entry" ? "plan item" : k === "place" ? "place" : "item");
 
 /** Who changed a record while it was open (Goals §6.7): the partner, this person elsewhere, or unknown. */
-export type Actor = { kind: "partner"; name: string; slot: "a" | "b" } | { kind: "self" } | { kind: "other" };
+export type Actor = { kind: "partner"; name: string; slot: AvatarSlot } | { kind: "self" } | { kind: "other" };
 
 export function sNotice(a: Actor, noun: string): string {
   const tail = " while you were editing. Check the marked fields, then save again.";

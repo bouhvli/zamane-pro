@@ -65,3 +65,11 @@ export type ChangePasswordInput = z.input<typeof changePasswordSchema>;
 
 export const updateMeSchema = z.object({ displayName: displayNameSchema });
 export type UpdateMeInput = z.input<typeof updateMeSchema>;
+
+/** DELETE /api/me: the current password is the confirmation. */
+export const deleteAccountSchema = z.object({ password: currentPasswordSchema });
+export type DeleteAccountInput = z.input<typeof deleteAccountSchema>;
+
+/** POST /api/me/email: the new address (checked like sign-up) and the current password. */
+export const changeEmailSchema = z.object({ newEmail: emailSchema, password: currentPasswordSchema });
+export type ChangeEmailInput = z.input<typeof changeEmailSchema>;

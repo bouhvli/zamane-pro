@@ -47,7 +47,7 @@ declare module "@tanstack/react-router" {
   }
   interface HistoryState {
     /** A one-off notice for the screen being opened (never in the URL). */
-    notice?: "signed-out" | "session-ended" | "reset-done" | "created" | "joined";
+    notice?: "signed-out" | "account-deleted" | "session-ended" | "reset-done" | "created" | "joined";
     /** Shopping: the item sheet is open (its own history entry, so Back closes it) and for which row. */
     shopSheet?: string;
     /** Shopping: a confirmation is open on top (its own history entry, so Back keeps). */

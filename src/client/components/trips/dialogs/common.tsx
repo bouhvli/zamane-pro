@@ -7,6 +7,7 @@ import { say } from "../../../lib/announce.ts";
 import { tripsQuery } from "../../../lib/trips.ts";
 import { Icon } from "../../Icon.tsx";
 import { PartnerAvatarSm } from "../../goals/Avatar.tsx";
+import { unknownName, unknownSlot, type AvatarSlot } from "../../../lib/people.ts";
 import { C, tooLong, type Actor } from "./copy.ts";
 import type { Canon, Def } from "./engine.ts";
 
@@ -45,10 +46,17 @@ export function usePeople() {
   const q = useQuery(tripsQuery);
   return useMemo(() => {
     const members = new Map((q.data?.members ?? []).map((m) => [m.userId, m]));
+    const loaded = members.size > 0;
     const name = (id: string | null | undefined) =>
-      !id ? "Your partner" : id === me.user.id ? me.user.displayName : (members.get(id)?.displayName ?? "Your partner");
-    const slot = (id: string): "a" | "b" =>
-      id === me.user.id ? me.space.slot : (members.get(id)?.slot ?? (me.space.slot === "a" ? "b" : "a"));
+      !id
+        ? "Your partner"
+        : id === me.user.id
+          ? me.user.displayName
+          : (members.get(id)?.displayName ?? unknownName(loaded));
+    const slot = (id: string): AvatarSlot =>
+      id === me.user.id
+        ? me.space.slot
+        : (members.get(id)?.slot ?? unknownSlot(loaded, me.space.slot === "a" ? "b" : "a"));
     const actor = (id: string): Actor =>
       id === me.user.id ? { kind: "self" } : { kind: "partner", name: name(id), slot: slot(id) };
     return { meId: me.user.id, currency: me.space.currency, name, slot, actor };

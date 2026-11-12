@@ -3,6 +3,7 @@ import type { MySpace } from "../../../shared/schemas/spaces.ts";
 import { Button } from "../Button.tsx";
 import { PartnerAvatar } from "../PartnerAvatar.tsx";
 import { InviteCode } from "./InviteCode.tsx";
+import { SpaceSettings } from "./SpaceSettings.tsx";
 import { TileStar } from "./Zellige.tsx";
 
 type Slot = "a" | "b";
@@ -33,8 +34,8 @@ function WaitingPlate() {
 
 /**
  * The couple card: a 104px field of star-and-cross tessellation (Sara's glaze left, Youssef's right, unglazed
- * until he joins), the two name plates over its lower edge, the space name and the invite code. Solo, the code is
- * the hero.
+ * until he joins), the two name plates over its lower edge, the space name (editable) with its currency and time
+ * zone. Only a space whose partner has not joined shows the invite code; once there are two, the code is gone.
  */
 export function CoupleCard({ space }: { space: UseQueryResult<{ space: MySpace }> }) {
   const data = space.data?.space;
@@ -56,7 +57,10 @@ export function CoupleCard({ space }: { space: UseQueryResult<{ space: MySpace }
           {data ? data.name : "Your space"}
         </h2>
         {data ? (
-          <InviteCode space={data} solo={solo} />
+          <>
+            {solo && data.inviteCode && <InviteCode space={data} code={data.inviteCode} />}
+            <SpaceSettings key={data.id} space={data} />
+          </>
         ) : space.isError ? (
           <div className="pf-state">
             <p className="muted" role="status">

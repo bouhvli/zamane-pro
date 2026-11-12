@@ -44,19 +44,38 @@ export async function startSession(qc: QueryClient): Promise<MeResponse | null> 
 }
 
 /**
- * Sign out on this device (§9): end the session, clear the query cache, remove the persisted IndexedDB cache and
- * close the socket (Phase 5). Clears what was carried between auth screens.
+ * What this phone keeps for the space it was in: the query cache (and its persisted copy) and the drafts typed
+ * for it. Used when the person leaves the space, and by every way of ending a session.
  */
-export async function signOut(qc: QueryClient): Promise<void> {
-  await api("/api/auth/sign-out", { method: "POST", body: {} });
+export async function clearSpaceData(): Promise<void> {
   await clearQueryCache();
-  qc.setQueryData(meKey, null);
-  carry.clearAll();
-  // Drafts typed on this phone belong to this person (goals.html: cleared on logout).
   clearAllGoalDrafts();
   clearAllTripDrafts();
   clearAllShoppingDrafts();
   failedAdds.clearAll();
   clearNoteDrafts();
+}
+
+/** The session is over (signed out, or the account deleted): forget everything this phone held for the person. */
+export async function endLocalSession(qc: QueryClient): Promise<void> {
+  await clearSpaceData();
+  qc.setQueryData(meKey, null);
+  carry.clearAll();
   // Phase 5: closeRealtime();
+}
+
+/**
+ * Sign out on this device (§9): end the session, clear the query cache, remove the persisted IndexedDB cache and
+ * close the socket (Phase 5). Clears what was carried between auth screens, and the drafts typed on this phone
+ * (they belong to this person, goals.html: cleared on logout).
+ */
+export async function signOut(qc: QueryClient): Promise<void> {
+  await api("/api/auth/sign-out", { method: "POST", body: {} });
+  await endLocalSession(qc);
+}
+
+/** After leaving the space: the same account with no space, so the app routes it to the setup flow. */
+export async function afterLeavingSpace(qc: QueryClient, me: MeResponse): Promise<void> {
+  await clearSpaceData();
+  qc.setQueryData(meKey, { ...me, space: null } satisfies MeResponse);
 }

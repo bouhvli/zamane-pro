@@ -30,6 +30,7 @@ import { say, setTitle } from "../../../../lib/announce.ts";
 import { takeFlash, type Flash } from "../../../../lib/flash.ts";
 import { focusEl, focusHeading, useArrival, useNoFab } from "../../../../lib/nav.ts";
 import { useOnline } from "../../../../lib/online.ts";
+import { unknownName, unknownSlot } from "../../../../lib/people.ts";
 import { nowHM, tripQuery, tripsQuery, useTripWrites, type EntryItem } from "../../../../lib/trips.ts";
 
 /**
@@ -144,8 +145,9 @@ function Detail({ tripId }: { tripId: string }) {
   // ---------- people, money ----------
   const members = new Map(listQ.data?.members.map((m) => [m.userId, m]) ?? []);
   const people: People = {
-    name: (id) => (id ? (members.get(id)?.displayName ?? "Your partner") : "Your partner"),
-    slot: (id) => (id ? (members.get(id)?.slot ?? (id === me.user.id ? me.space.slot : "b")) : "b"),
+    name: (id) => (id ? (members.get(id)?.displayName ?? unknownName(members.size > 0)) : "Your partner"),
+    slot: (id) =>
+      id ? (members.get(id)?.slot ?? (id === me.user.id ? me.space.slot : unknownSlot(members.size > 0, "b"))) : "b",
   };
   const currency = listQ.data?.currency ?? me.space.currency;
   const cloudName = listQ.data?.images?.cloudName ?? null;

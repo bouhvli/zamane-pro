@@ -413,6 +413,80 @@ html[data-route="profile"] .pf-sw-in:checked ~ .pf-sw-label {
   color: var(--majorelle-ink);
 }
 
+/* ===== Sections inside a card (Security): a small heading and a hairline between them ===== */
+html[data-route="profile"] .pf-set {
+  display: grid;
+  gap: var(--space-3);
+  min-width: 0;
+}
+html[data-route="profile"] .pf-set + .pf-set,
+html[data-route="profile"] .pf-danger {
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--line);
+}
+html[data-route="profile"] .pf-h3 {
+  margin: 0;
+  font-size: 15px;
+  line-height: 20px;
+  font-weight: 600;
+}
+html[data-route="profile"] .pf-current {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+html[data-route="profile"] .pf-set .pf-form {
+  gap: var(--space-3);
+}
+
+/* ===== Your space: name, and the read-only currency and time zone ===== */
+html[data-route="profile"] .pf-space-set {
+  display: grid;
+  gap: var(--space-3);
+}
+html[data-route="profile"] .pf-code + .pf-space-set {
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--line);
+}
+html[data-route="profile"] .pf-facts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-3);
+  margin: 0;
+}
+html[data-route="profile"] .pf-facts > div {
+  min-width: 0;
+}
+html[data-route="profile"] .pf-facts dt {
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+html[data-route="profile"] .pf-facts dd {
+  margin: 2px 0 0;
+  overflow-wrap: anywhere;
+}
+html[data-route="profile"] .pf-facts-help {
+  margin: 0;
+}
+
+/* ===== Your data: export, then the danger actions set apart under their own rule ===== */
+html[data-route="profile"] .pf-danger {
+  display: grid;
+  gap: var(--space-4);
+}
+html[data-route="profile"] .pf-danger-h {
+  color: var(--danger-ink);
+}
+html[data-route="profile"] .pf-reveal .err {
+  margin: 0;
+}
+html[data-route="profile"] .pf-reveal .page-notice {
+  width: 100%;
+}
+
 /* ===== About and sign out ===== */
 html[data-route="profile"] .pf-about {
   display: grid;

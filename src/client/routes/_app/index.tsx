@@ -30,6 +30,7 @@ import {
 import { patchEntryRemove } from "../../lib/goals.ts";
 import { focusHeading, useArrival } from "../../lib/nav.ts";
 import { useOnline } from "../../lib/online.ts";
+import { FORMER_PARTNER, type AvatarSlot } from "../../lib/people.ts";
 
 /**
  * Home (.ux-forge/home/home.html, direction B · Within reach). States: loading (skeleton), error, first-run (the
@@ -631,7 +632,10 @@ function GoalCard({
   const pct = Math.round(goalRatio(g) * 100);
   const done = goalDone(g);
   const num = (minor: number) => formatAmount(minor, currency);
-  const who = g.last ? members.get(g.last.userId) : undefined;
+  // A contributor who has left keeps their contributions: shown as a former partner, with a neutral avatar.
+  const who: { displayName: string; slot: AvatarSlot } | undefined = g.last
+    ? (members.get(g.last.userId) ?? { displayName: FORMER_PARTNER, slot: "former" })
+    : undefined;
   let lastText = "";
   if (g.last && who) {
     const when = g.pendingSync ? "waiting to sync" : g.last.note || relativeTime(g.last.at);

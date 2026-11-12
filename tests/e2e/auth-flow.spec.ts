@@ -42,6 +42,14 @@ test("two partners: sign up, start, join, sign out, reset, sign in", async ({ br
   await s.getByRole("link", { name: "Profile" }).click();
   const codeEl = s.getByTestId("invite-code");
   await expect(codeEl).toHaveText(/^[2-9A-HJKMNP-Z]{4}-[2-9A-HJKMNP-Z]{4}$/);
+  const firstCode = (await codeEl.textContent())!.trim();
+
+  // Solo, the code can be copied and replaced (both go away once the partner has joined).
+  await s.getByRole("button", { name: "Copy code" }).click();
+  await expect(s.getByRole("button", { name: "Copied" })).toBeVisible();
+  expect(await s.evaluate(() => navigator.clipboard.readText())).toBe(firstCode);
+  await s.getByRole("button", { name: "New code" }).click();
+  await expect(codeEl).not.toHaveText(firstCode);
   const code = (await codeEl.textContent())!.trim();
 
   // ---- Youssef joins with the code ----
@@ -60,7 +68,7 @@ test("two partners: sign up, start, join, sign out, reset, sign in", async ({ br
 
   // ---- Youssef signs out ----
   await y.getByRole("link", { name: "Profile" }).click();
-  await y.getByRole("button", { name: "Sign out" }).click();
+  await y.getByRole("button", { name: "Sign out", exact: true }).click();
   await expect(y).toHaveURL(/\/sign-in/);
   await expect(y.locator("#si-note")).toHaveText("You're signed out.");
   await y.goto("/profile");
@@ -107,12 +115,10 @@ test("two partners: sign up, start, join, sign out, reset, sign in", async ({ br
   await expect(s.getByText("Saved.", { exact: true })).toBeVisible();
   await expect(s.locator(".pf-plates").getByText("Sarah", { exact: true })).toBeVisible();
 
-  await s.getByRole("button", { name: "Copy code" }).click();
-  await expect(s.getByRole("button", { name: "Copied" })).toBeVisible();
-  expect(await s.evaluate(() => navigator.clipboard.readText())).toBe(code);
-
-  await s.getByRole("button", { name: "New code" }).click();
-  await expect(codeEl).not.toHaveText(code);
+  // Linked: no invite code, Copy code or New code any more.
+  await expect(s.getByTestId("invite-code")).toHaveCount(0);
+  await expect(s.getByRole("button", { name: "Copy code" })).toHaveCount(0);
+  await expect(s.getByRole("button", { name: "New code" })).toHaveCount(0);
 
   await s.getByLabel("Dark").check();
   await expect(s.locator("html")).toHaveAttribute("data-theme", "dark");

@@ -1,6 +1,7 @@
 import { useEffect, useState, type ReactNode } from "react";
 import type { NoteView } from "../../../../shared/schemas/goals.ts";
 import { ago, day, month, monthKey, type EntryItem, type GoalItem } from "../../../lib/goals.ts";
+import type { AvatarSlot } from "../../../lib/people.ts";
 import { photoUrl } from "../../../lib/uploads.ts";
 import { Icon } from "../../Icon.tsx";
 import { PartnerAvatarSm } from "../Avatar.tsx";
@@ -11,7 +12,7 @@ import { PartnerAvatarSm } from "../Avatar.tsx";
  */
 export interface People {
   name: (userId: string) => string;
-  slot: (userId: string) => "a" | "b";
+  slot: (userId: string) => AvatarSlot;
   mad: (minor: number) => string;
   myId: string;
 }

@@ -35,6 +35,10 @@ export const createSpaceSchema = z.object({
 });
 export type CreateSpaceInput = z.input<typeof createSpaceSchema>;
 
+/** PATCH /api/spaces/mine: the same name rule as create. Currency and time zone are fixed at creation. */
+export const renameSpaceSchema = createSpaceSchema.pick({ name: true });
+export type RenameSpaceInput = z.input<typeof renameSpaceSchema>;
+
 /** The code arrives as typed (or pasted); the server normalises it with the same parser as the client. */
 export const inviteCodeSchema = z.string().transform((raw, ctx) => {
   const p = parseInviteCode(raw);
@@ -66,7 +70,8 @@ export interface MySpace {
   name: string;
   currency: string;
   timezone: string;
-  inviteCode: string;
+  /** Only while the space has one member: once the partner has joined, the code isn't sent. */
+  inviteCode: string | null;
   inviteCodeRotatedAt: string | null;
   slot: Slot;
   members: SpaceMember[];
@@ -94,4 +99,10 @@ export interface SoloSummary {
   goals: number;
   trips: number;
   items: number;
+}
+
+/** POST /api/spaces/mine/leave. `deleted` is true when the leaver was the last member and the space went too. */
+export interface LeaveResponse {
+  left: boolean;
+  deleted: boolean;
 }

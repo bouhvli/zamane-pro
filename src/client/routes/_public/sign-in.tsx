@@ -30,6 +30,7 @@ const C = {
   offline: "You're offline. Signing in needs a connection.",
   online: "Back online. You can sign in now.",
   signedOut: "You're signed out.",
+  accountDeleted: "Your account was deleted.",
   sessionEnded: "You've been signed out. Sign in again to carry on.",
   resetDone: "Password changed. Sign in with your new password.",
 };
@@ -42,7 +43,7 @@ function SignIn() {
   const pwRef = useRef<HTMLInputElement | null>(null);
   const emailRef = useRef<HTMLInputElement | null>(null);
 
-  const keepCarried = notice !== "signed-out" && notice !== "reset-done";
+  const keepCarried = notice !== "signed-out" && notice !== "reset-done" && notice !== "account-deleted";
   const f = useAuthForm({
     formId: "si",
     schema: signInSchema,
@@ -54,6 +55,7 @@ function SignIn() {
   useArrival((first) => {
     setTitle(C.title);
     if (notice === "signed-out") say(C.signedOut);
+    if (notice === "account-deleted") say(C.accountDeleted);
     if (first) return;
     const hasEmail = !!emailRef.current?.value;
     focusEl(hasEmail && !notice ? pwRef.current : document.querySelector<HTMLElement>("#main h1"));
@@ -95,6 +97,10 @@ function SignIn() {
     notice === "signed-out" ? (
       <Notice id="si-note" icon="info">
         {C.signedOut}
+      </Notice>
+    ) : notice === "account-deleted" ? (
+      <Notice id="si-note" icon="check">
+        {C.accountDeleted}
       </Notice>
     ) : notice === "session-ended" ? (
       <Notice id="si-note" icon="info">

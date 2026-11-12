@@ -24,6 +24,7 @@ import {
 } from "../../../lib/goals.ts";
 import { focusHeading, useArrival, useNoFab } from "../../../lib/nav.ts";
 import { useOnline } from "../../../lib/online.ts";
+import { unknownName, unknownSlot, type AvatarSlot } from "../../../lib/people.ts";
 
 /**
  * The Goals list (.ux-forge/goals list.js, direction B · Doorway): open goals as doorway tiles on subgrid rows,
@@ -137,8 +138,9 @@ function GoalsList() {
     .filter((g): g is GoalItem => !!g);
   const doneList = ord.done.map((id) => byId.get(id)).filter((g): g is GoalItem => !!g);
 
-  const name = (userId: string) => members.get(userId)?.displayName ?? "Your partner";
-  const slot = (userId: string) => members.get(userId)?.slot ?? (userId === me.user.id ? me.space.slot : "b");
+  const name = (userId: string) => members.get(userId)?.displayName ?? unknownName(members.size > 0);
+  const slot = (userId: string): AvatarSlot =>
+    members.get(userId)?.slot ?? (userId === me.user.id ? me.space.slot : unknownSlot(members.size > 0, "b"));
   const fmt = (minor: number) => formatAmountNumber(minor, currency);
   const mad = (minor: number) => formatAmount(minor, currency);
 
@@ -390,7 +392,7 @@ function Tile({
   fmt: (m: number) => string;
   mad: (m: number) => string;
   name: (id: string) => string;
-  slot: (id: string) => "a" | "b";
+  slot: (id: string) => AvatarSlot;
   onOpen: () => void;
 }) {
   const money = g.kind === "money";
