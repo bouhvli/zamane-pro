@@ -66,7 +66,7 @@ function ResetPassword() {
   const [diedOnSubmit, setDiedOnSubmit] = useState(false);
 
   return (
-    <AuthShell route="reset-password">
+    <AuthShell route="reset-password" tiles="pair">
       {view === "form" && token ? (
         <ResetForm
           token={token}

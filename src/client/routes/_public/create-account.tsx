@@ -88,7 +88,7 @@ function CreateAccount() {
   const isTaken = f.form.formState.errors.email?.type === "server" && emailErr === C.taken;
 
   return (
-    <AuthShell route="create-account">
+    <AuthShell route="create-account" tiles={code.ok || intent ? "pair" : "solo"}>
       <PageHead title={C.title} />
       {code.ok && (
         <Notice id="ca-code" icon="info">

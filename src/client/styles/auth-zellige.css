@@ -1,0 +1,251 @@
+/* The signed-out screens in the zellige identity (Sign in, Create account, Forgot, Reset). AuthShell adds the `.az`
+   frame when a route passes `tiles`; without it the older auth shell (auth.css) is untouched.
+
+   The wall (AuthTiles.tsx) is a field of khatam stars laid in diamond rings around a doorway: partner A's
+   majorelle, a saffron course, partner B's terracotta, a saffron course, and round again. The doorway is a keel
+   arch cut through the wall onto the page's own sand, and the lockup stands in it. Tokens only; the star mask
+   (--zl-star-fill) is declared in profile.css. The tiles are decoration: aria-hidden, no text on them. */
+
+/* ===== The wall ===== */
+.az-wall {
+  --zl-u: 40px;
+  --az-cy: calc(100% - 44px); /* the rings' centre: inside the doorway */
+  --az-arch-w: 184px;
+  --az-gap: var(--surface-raised);
+  --az-grout: var(--surface-sunken);
+  --az-unfired: color-mix(in srgb, var(--line-strong) 38%, var(--surface));
+  position: relative;
+  overflow: hidden;
+  height: calc(clamp(156px, 27vh, 248px) + env(safe-area-inset-top, 0px));
+  background: var(--az-gap);
+}
+.az-tiles {
+  position: absolute;
+  inset-inline-start: 50%;
+  top: var(--az-cy);
+  width: calc(25 * var(--zl-u));
+  height: calc(33 * var(--zl-u));
+  max-width: none;
+  translate: -50% -50%;
+}
+.az-ring {
+  stroke: var(--az-grout);
+  stroke-width: 2;
+  transform-box: view-box;
+  transform-origin: 50% 50%;
+}
+.az-ring-a {
+  fill: var(--majorelle);
+}
+.az-ring-b {
+  fill: var(--terracotta);
+}
+.az-ring-s {
+  fill: var(--saffron);
+}
+/* Create account, before a partner: the second glaze is unfired. */
+.az-wall.is-solo .az-ring-b {
+  fill: var(--az-unfired);
+}
+
+/* ===== The doorway: a keel arch, the lockup in it ===== */
+.az-arch {
+  position: absolute;
+  inset-inline-start: 50%;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  width: var(--az-arch-w);
+  translate: -50% 0;
+}
+.az-cap {
+  display: block;
+  width: 100%;
+  aspect-ratio: 200 / 120;
+  overflow: visible;
+}
+.az-cap path {
+  vector-effect: non-scaling-stroke;
+  fill: none;
+}
+.az-cap .az-cap-fill {
+  fill: var(--surface);
+}
+.az-cap-grout {
+  stroke: var(--surface);
+  stroke-width: 9;
+}
+.az-cap-line {
+  stroke: var(--line-strong);
+  stroke-width: 1;
+}
+.az-door {
+  flex: 1 0 14px;
+  margin-top: -1px;
+  background: var(--surface);
+  border-inline: 1px solid var(--line-strong);
+  box-shadow:
+    4px 0 0 var(--surface),
+    -4px 0 0 var(--surface);
+}
+.az-brand {
+  position: absolute;
+  inset-inline-start: 50%;
+  bottom: 14px;
+  line-height: 0;
+  translate: -50% 0;
+}
+.az-brand .lockup {
+  height: 30px;
+}
+
+/* ===== The page under the wall: the heading takes the doorway's axis ===== */
+.az .az-col > main {
+  padding-top: var(--space-5);
+}
+.az .page-head {
+  justify-content: center;
+  text-align: center;
+}
+.az .lede {
+  text-align: center;
+}
+
+/* ===== The rule above the other way in: a hairline with one tile on it ===== */
+.az .alt-links {
+  position: relative;
+}
+.az .alt-links::before {
+  content: "";
+  height: 16px;
+  background:
+    linear-gradient(var(--line), var(--line)) left center / calc(50% - 16px) 1px no-repeat,
+    linear-gradient(var(--line), var(--line)) right center / calc(50% - 16px) 1px no-repeat;
+}
+.az .alt-links::after {
+  content: "";
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: calc(50% - 8px);
+  width: 16px;
+  height: 16px;
+  background: var(--terracotta);
+  -webkit-mask: var(--zl-star-fill) center / contain no-repeat;
+  mask: var(--zl-star-fill) center / contain no-repeat;
+}
+
+/* ===== Motion: the wall lays itself ring by ring from the doorway; a request sends a pulse out through it ===== */
+@media (prefers-reduced-motion: no-preference) {
+  .az-ring {
+    animation: az-lay 520ms var(--ease-out) both;
+    animation-delay: calc(var(--d) * 45ms);
+    transition: fill 320ms ease calc(var(--d) * 30ms);
+  }
+  .az-arch {
+    animation: az-rise 420ms var(--ease-out) both;
+  }
+  .az:has(form [data-busy]) .az-ring {
+    animation: az-pulse 1400ms ease-in-out infinite;
+    animation-delay: calc(var(--d) * 80ms);
+  }
+}
+@keyframes az-lay {
+  from {
+    opacity: 0;
+    transform: scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes az-rise {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes az-pulse {
+  0%,
+  60%,
+  100% {
+    opacity: 1;
+  }
+  30% {
+    opacity: 0.45;
+  }
+}
+
+/* ===== 64rem and up: the wall stands beside the form, the doorway runs to the floor ===== */
+@media (min-width: 64rem) {
+  html[data-chrome="auth"] body:has(.az) {
+    padding-bottom: 0;
+  }
+  .az {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    min-height: 100dvh;
+  }
+  .az-wall {
+    --zl-u: 60px;
+    --az-cy: 50%;
+    --az-arch-w: min(300px, 56%);
+    position: sticky;
+    top: 0;
+    height: 100dvh;
+  }
+  .az-arch {
+    top: max(12%, calc(50% - 250px));
+  }
+  .az-brand {
+    top: calc(50dvh - max(12dvh, calc(50dvh - 250px)));
+    bottom: auto;
+    translate: -50% -50%;
+  }
+  .az-brand .lockup {
+    height: var(--lockup-hero);
+  }
+  .az-col {
+    display: grid;
+    align-content: center;
+    padding-block: var(--space-6) var(--space-5);
+  }
+  .az-col > .auth-wrap {
+    width: 100%;
+  }
+  .az .page-head {
+    justify-content: flex-start;
+    text-align: start;
+  }
+  .az .lede {
+    text-align: start;
+  }
+}
+
+/* ===== Forced colours: the tiles cannot draw, so the wall goes and the lockup stands alone ===== */
+@media (forced-colors: active) {
+  .az-tiles,
+  .az-cap,
+  .az-door,
+  .az .alt-links::before,
+  .az .alt-links::after {
+    display: none;
+  }
+  .az {
+    display: block;
+  }
+  .az-wall {
+    position: static;
+    height: auto;
+    padding: max(var(--space-6), env(safe-area-inset-top, 0px)) var(--space-4) 0;
+    background: none;
+  }
+  .az-arch,
+  .az-brand {
+    position: static;
+    width: auto;
+    translate: none;
+  }
+}
