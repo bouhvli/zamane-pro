@@ -22,6 +22,7 @@ export default defineConfig({
         test: {
           name: "api",
           include: ["tests/api/**/*.test.ts"],
+          setupFiles: ["tests/api/setup.ts"],
           environment: "node",
           // The server reads its configuration from process.env (D56). Fake Cloudinary credentials: signing is
           // checked offline; cleanup calls fail and are only logged.

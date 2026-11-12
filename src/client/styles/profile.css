@@ -1,0 +1,471 @@
+/* Profile and Settings (.ux-forge/profile, direction B "Set tiles"). Every rule is scoped to html[data-route="profile"]
+   (set by AppShell), so the other pages are untouched. Tokens only; the --zl-* variables are the motif's own.
+   Zellige green is not used here (it means "done" elsewhere). */
+:root {
+  --zl-star-fill: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cpath d='M48 24L40.97 31.03 40.97 40.97 31.03 40.97 24 48 16.97 40.97 7.03 40.97 7.03 31.03 0 24 7.03 16.97 7.03 7.03 16.97 7.03 24 0 31.03 7.03 40.97 7.03 40.97 16.97Z'/%3E%3C/svg%3E");
+  --zl-star-line: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cpath fill='none' stroke='black' stroke-width='1.5' d='M48 24L40.97 31.03 40.97 40.97 31.03 40.97 24 48 16.97 40.97 7.03 40.97 7.03 31.03 0 24 7.03 16.97 7.03 7.03 16.97 7.03 24 0 31.03 7.03 40.97 7.03 40.97 16.97Z'/%3E%3C/svg%3E");
+}
+
+/* ===== The motif engine: stars in --zl-glaze, crosses in --zl-gap, a grout line between. Decoration only. ===== */
+html[data-route="profile"] .zl {
+  --zl-u: 48px;
+  --zl-gap: var(--surface-sunken);
+  --zl-glaze: var(--majorelle-soft);
+  --zl-grout: var(--line);
+  position: relative;
+  isolation: isolate;
+  background: var(--zl-gap);
+}
+html[data-route="profile"] .zl::before,
+html[data-route="profile"] .zl::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  -webkit-mask-size: var(--zl-u) var(--zl-u);
+  mask-size: var(--zl-u) var(--zl-u);
+  -webkit-mask-position: center;
+  mask-position: center;
+}
+html[data-route="profile"] .zl::before {
+  background: var(--zl-glaze);
+  -webkit-mask-image: var(--zl-star-fill);
+  mask-image: var(--zl-star-fill);
+}
+html[data-route="profile"] .zl::after {
+  background: var(--zl-grout);
+  -webkit-mask-image: var(--zl-star-line);
+  mask-image: var(--zl-star-line);
+}
+@media (forced-colors: active) {
+  html[data-route="profile"] .zl::before,
+  html[data-route="profile"] .zl::after {
+    display: none;
+  }
+  html[data-route="profile"] .zl {
+    background: transparent;
+  }
+}
+html[data-route="profile"] .pf-star {
+  width: 1em;
+  height: 1em;
+  fill: currentColor;
+  flex: none;
+}
+
+/* ===== Page ===== */
+html[data-route="profile"] .pf {
+  display: grid;
+  gap: var(--space-5);
+  max-width: 40rem;
+  margin-inline: auto;
+}
+html[data-route="profile"] .pf > .title-lg {
+  margin-block-end: calc(var(--space-2) * -1);
+}
+html[data-route="profile"] .pf-grid {
+  display: grid;
+  gap: var(--space-5);
+  grid-template-columns: minmax(0, 1fr);
+}
+@media (min-width: 48rem) {
+  html[data-route="profile"] .pf {
+    max-width: 64rem;
+  }
+  html[data-route="profile"] .pf-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: stretch;
+  }
+}
+
+/* ===== Cards: plain, hairline, radius 12, a serif heading ===== */
+html[data-route="profile"] .pf-card {
+  min-width: 0;
+  display: grid;
+  align-content: start;
+  gap: var(--space-4);
+  padding: var(--space-5) var(--space-4);
+  background: var(--surface-raised);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+}
+@media (min-width: 48rem) {
+  html[data-route="profile"] .pf-card {
+    padding: var(--space-5);
+  }
+}
+html[data-route="profile"] .pf-h2 {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 28px;
+  text-wrap: balance;
+}
+html[data-route="profile"] .pf-card .page-notice {
+  margin: 0;
+}
+html[data-route="profile"] .pf-form {
+  justify-items: start;
+}
+html[data-route="profile"] .pf-form > .fgroup,
+html[data-route="profile"] .pf-form > .form-alert {
+  width: 100%;
+}
+html[data-route="profile"] .pf-form .btn-primary {
+  height: 44px;
+  font-size: 13px;
+  line-height: 18px;
+  margin-top: 0;
+}
+html[data-route="profile"] .pf-form > .help {
+  margin: 0;
+}
+html[data-route="profile"] .pf-status {
+  margin: 0;
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--ink-muted);
+}
+html[data-route="profile"] .pf-status:empty {
+  display: none;
+}
+html[data-route="profile"] .pf-reveal {
+  display: grid;
+  justify-items: start;
+  gap: var(--space-3);
+}
+html[data-route="profile"] .pf-reveal p {
+  margin: 0;
+}
+html[data-route="profile"] .pf-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+/* ===== The couple card ===== */
+html[data-route="profile"] .pf-couple {
+  padding: 0;
+  gap: 0;
+  overflow: hidden;
+}
+html[data-route="profile"] .pf-field {
+  --zl-u: 40px;
+  --zl-gap: linear-gradient(90deg, var(--majorelle-soft) 0 50%, var(--terracotta-soft) 0);
+  --zl-glaze: linear-gradient(90deg, var(--majorelle) 0 50%, var(--terracotta) 0);
+  --zl-grout: var(--surface-raised);
+  height: 104px;
+}
+html[data-route="profile"] .pf-field.is-solo {
+  /* The partner has not joined: the second glaze is unfired. */
+  --zl-gap: linear-gradient(90deg, var(--majorelle-soft) 0 50%, var(--surface-sunken) 0);
+  --zl-glaze: linear-gradient(
+    90deg,
+    var(--majorelle) 0 50%,
+    color-mix(in srgb, var(--line-strong) 45%, var(--surface-raised)) 0
+  );
+}
+html[data-route="profile"] .pf-plates {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-2);
+  margin: -22px 0 0;
+  padding: 0 var(--space-3);
+  list-style: none;
+}
+html[data-route="profile"] .pf-plate {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-width: 0;
+  padding: 6px 12px 6px 6px;
+  background: var(--surface-raised);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-sm);
+  outline: 3px solid var(--surface-raised);
+  justify-self: start;
+  max-width: 100%;
+}
+html[data-route="profile"] .pf-plate-b {
+  justify-self: end;
+  flex-direction: row-reverse;
+  padding: 6px 6px 6px 12px;
+  text-align: end;
+}
+html[data-route="profile"] .pf-who {
+  display: grid;
+  min-width: 0;
+  font-size: 15px;
+  line-height: 20px;
+}
+html[data-route="profile"] .pf-name {
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+html[data-route="profile"] .pf-plate-wait {
+  border-style: dashed;
+}
+html[data-route="profile"] .pf-empty {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 32px;
+  height: 32px;
+  font-size: 14px;
+  color: var(--line-strong);
+  border: 1px dashed var(--line-strong);
+  border-radius: var(--radius-pill);
+}
+html[data-route="profile"] .pf-body {
+  display: grid;
+  gap: var(--space-4);
+  padding: var(--space-4) var(--space-4) var(--space-5);
+}
+html[data-route="profile"] .pf-space {
+  overflow-wrap: anywhere;
+}
+html[data-route="profile"] .pf-state {
+  display: grid;
+  justify-items: start;
+  gap: var(--space-3);
+  margin: 0;
+}
+
+/* ===== The invite code: one slip, the whole code in two groups ===== */
+html[data-route="profile"] .pf-code {
+  display: grid;
+  gap: var(--space-3);
+}
+html[data-route="profile"] .pf-code .lbl {
+  margin: 0;
+}
+html[data-route="profile"] .pf-slip {
+  --code-size: 32px;
+  --code-line: 40px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--space-5);
+  margin: 0;
+  padding: var(--space-5) var(--space-3);
+  background: var(--surface-sunken);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  font-family: ui-monospace, "Cascadia Mono", Consolas, monospace;
+  font-weight: 600;
+  font-size: var(--code-size);
+  line-height: var(--code-line);
+  letter-spacing: 0.14em;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+}
+html[data-route="profile"] .pf-g {
+  padding-inline-start: 0.14em; /* balances the trailing letter-space so each group is optically centred */
+}
+html[data-route="profile"] .is-solo .pf-slip {
+  --code-size: 38px;
+  --code-line: 46px;
+}
+@media (max-width: 22.4375rem) {
+  html[data-route="profile"] .pf-slip {
+    --code-size: 26px;
+    --code-line: 34px;
+    gap: var(--space-4);
+  }
+  html[data-route="profile"] .is-solo .pf-slip {
+    --code-size: 30px;
+    --code-line: 38px;
+  }
+}
+html[data-route="profile"] .pf-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-2);
+}
+html[data-route="profile"] .pf-actions .btn-primary,
+html[data-route="profile"] .pf-actions .btn-sec {
+  padding-inline: var(--space-3);
+}
+html[data-route="profile"] .pf-code > .help,
+html[data-route="profile"] .pf-code > .err {
+  margin: 0;
+}
+/* The one moment: Copy code settles the slip by a pixel, then it comes back. */
+@media (prefers-reduced-motion: no-preference) {
+  html[data-route="profile"] .pf-slip {
+    transition: transform var(--dur-press) ease;
+  }
+  html[data-route="profile"] .pf-slip.is-copied {
+    transform: translateY(1px);
+  }
+}
+
+/* ===== Appearance: theme tiles ===== */
+html[data-route="profile"] .pf-theme {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+html[data-route="profile"] .pf-theme .help {
+  margin-top: var(--space-4);
+}
+html[data-route="profile"] .pf-swatches {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-3);
+}
+html[data-route="profile"] .pf-sw {
+  position: relative;
+  display: grid;
+  align-content: start;
+  gap: var(--space-2);
+  min-height: 44px;
+  text-align: center;
+  cursor: pointer;
+}
+html[data-route="profile"] .pf-sw-in {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+html[data-route="profile"] .pf-sw-tile {
+  position: relative;
+  display: block;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border-radius: var(--radius-sm);
+  box-shadow: 0 0 0 1px var(--line-strong);
+}
+html[data-route="profile"] .pf-sw-pane {
+  position: absolute;
+  inset: 0;
+  --zl-u: 24px;
+}
+/* The two themes' own colours, so each tile shows its theme whichever one is on now (values from tokens.css). */
+html[data-route="profile"] .pf-sw-light-pane {
+  --zl-gap: #dfe8f5;
+  --zl-glaze: #1d4e89;
+  --zl-grout: #fffdf8;
+}
+html[data-route="profile"] .pf-sw-dark-pane {
+  --zl-gap: #1b2b44;
+  --zl-glaze: #8fb4ea;
+  --zl-grout: #1b2029;
+}
+html[data-route="profile"] .pf-sw-system .pf-sw-light-pane {
+  clip-path: polygon(0 0, 100% 0, 0 100%);
+}
+html[data-route="profile"] .pf-sw-system .pf-sw-dark-pane {
+  clip-path: polygon(100% 0, 100% 100%, 0 100%);
+}
+html[data-route="profile"] .pf-sw-check {
+  position: absolute;
+  inset-block-start: 4px;
+  inset-inline-end: 4px;
+  z-index: 1;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: var(--radius-pill);
+  background: var(--majorelle);
+  color: var(--on-majorelle);
+  border: 2px solid var(--surface-raised);
+}
+html[data-route="profile"] .pf-sw-check .ic {
+  width: 12px;
+  height: 12px;
+  stroke-width: 3;
+}
+html[data-route="profile"] .pf-sw-in:checked ~ .pf-sw-tile {
+  /* the grout frame: a gap, then the glaze colour */
+  box-shadow:
+    0 0 0 2px var(--surface-raised),
+    0 0 0 4px var(--majorelle);
+}
+html[data-route="profile"] .pf-sw-in:checked ~ .pf-sw-tile .pf-sw-check {
+  display: inline-flex;
+}
+html[data-route="profile"] .pf-sw-in:focus-visible ~ .pf-sw-tile {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 6px;
+}
+html[data-route="profile"] .pf-sw-label {
+  font-size: 13px;
+  line-height: 18px;
+  font-weight: 600;
+  text-wrap: balance;
+}
+html[data-route="profile"] .pf-sw-in:checked ~ .pf-sw-label {
+  color: var(--majorelle-ink);
+}
+
+/* ===== About and sign out ===== */
+html[data-route="profile"] .pf-about {
+  display: grid;
+  gap: var(--space-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+html[data-route="profile"] .pf-about li {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+}
+html[data-route="profile"] .pf-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--majorelle);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+html[data-route="profile"] .pf-out {
+  display: grid;
+  justify-items: start;
+  gap: var(--space-3);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--line);
+}
+html[data-route="profile"] .pf-out p {
+  margin: 0;
+}
+
+/* ===== Forced colours: the pattern is gone above; edges become real borders ===== */
+@media (forced-colors: active) {
+  html[data-route="profile"] .pf-card,
+  html[data-route="profile"] .pf-plate,
+  html[data-route="profile"] .pf-slip {
+    border-color: CanvasText;
+  }
+  html[data-route="profile"] .pf-sw-tile {
+    border: 1px solid CanvasText;
+    box-shadow: none;
+  }
+  html[data-route="profile"] .pf-sw-in:checked ~ .pf-sw-tile {
+    border: 4px solid Highlight;
+    box-shadow: none;
+  }
+  html[data-route="profile"] .pf-sw-check {
+    background: Highlight;
+    color: HighlightText;
+    border-color: Canvas;
+    forced-color-adjust: none;
+  }
+}

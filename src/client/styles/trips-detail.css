@@ -1,0 +1,1557 @@
+/* Ported from .ux-forge/trips/detail.css, scoped to html[data-route="trips"] like trips.css (D60). */
+
+/* ===== Tokens added (detail). Proposed for the system; listed in build-notes/detail.md ===== */
+:root {
+  --td-target: 44px; /* the system's minimum target (ia 6.2) */
+  --td-row-min: 56px; /* plan and Prep rows are at least 56 px (ia 6.2) */
+  --td-tab-h: 44px; /* tabs: 44 px tall, a third of the width each; 44 keeps the fold (directions.md) */
+  --td-door-col: 20rem; /* ≥ 64rem: the upright doorway's column */
+  --td-door-ratio-wide: 4 / 5;
+  --td-wide-max: 80rem; /* ≥ 80rem: the detail's content width (ia D4) */
+  --td-clamp-notes: 2; /* notes lines before "More" (ia D3) */
+  --td-now-air: var(--space-1); /* the 4 px gaps around the tabs during the trip (fold rule 4) */
+}
+/* ===== Summary: one flow on phones ===== */
+html[data-route="trips"] .td > * {
+  min-width: 0;
+}
+html[data-route="trips"] .td-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  min-height: var(--td-target);
+}
+html[data-route="trips"] .td-back {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-height: var(--td-target);
+  padding-inline: var(--space-1) var(--space-2);
+  margin-inline-start: calc(var(--space-2) * -1);
+  border-radius: var(--radius-sm);
+  color: var(--majorelle);
+  font-size: 13px;
+  line-height: 18px;
+  font-weight: 600;
+  text-decoration: none;
+}
+@media (hover: hover) {
+  html[data-route="trips"] .td-back:hover {
+    text-decoration: underline;
+  }
+}
+html[data-route="trips"] [dir="rtl"] .td-back .ic {
+  transform: scaleX(-1);
+}
+html[data-route="trips"] .td-door {
+  margin-block-start: var(--space-2);
+}
+html[data-route="trips"] .td-door:empty,
+html[data-route="trips"] .td-when:empty,
+html[data-route="trips"] .td-notes:empty,
+html[data-route="trips"] .td-left:empty,
+html[data-route="trips"] .td-bud:empty,
+html[data-route="trips"] .td-notice:empty {
+  display: none;
+}
+html[data-route="trips"] .td-door .door--detail {
+  margin-inline: 0;
+}
+/* Below 22.5rem a photo takes the bare 2:1 too, so the light band stays on the first screen (directions.md B). */
+@media (max-width: 22.4375rem) {
+  html[data-route="trips"] .td-door .door--detail.has-photo {
+    aspect-ratio: var(--doorway-ratio-bare);
+  }
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .td-door .door-example {
+    background: var(--surface-raised);
+  }
+}
+:root[data-theme="dark"] .td-door .door-example {
+  background: var(--surface-raised);
+}
+html[data-route="trips"] .td-id {
+  margin-block-start: var(--space-4);
+}
+html[data-route="trips"] .td-titlerow {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--space-3);
+}
+html[data-route="trips"] .td-title {
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+/* During the trip the doorway shrinks to the 32 × 40 thumb, hidden below 22.5rem (the fold hold). */
+html[data-route="trips"] .td-titlerow .door--thumb {
+  display: none;
+  margin-block-end: var(--space-1);
+}
+@media (min-width: 22.5rem) {
+  html[data-route="trips"] .td-titlerow .door--thumb {
+    display: flex;
+  }
+}
+html[data-route="trips"] .td-nowtext {
+  margin: var(--space-1) 0 0;
+  font-size: 13px;
+  line-height: 18px;
+  font-weight: 600;
+  color: var(--saffron-ink);
+}
+html[data-route="trips"] .td-meta {
+  margin: var(--space-1) 0 0;
+  color: var(--ink-muted);
+  overflow-wrap: anywhere;
+}
+html[data-route="trips"] .td--now .td-meta {
+  margin: 0;
+  font-size: 13px;
+  line-height: 18px;
+}
+html[data-route="trips"] .td-adddates {
+  height: var(--td-target);
+  padding-inline: var(--space-2);
+  margin-inline-start: var(--space-2);
+  vertical-align: middle;
+}
+html[data-route="trips"] .td-adddates .ic {
+  width: 16px;
+  height: 16px;
+}
+html[data-route="trips"] .td-when {
+  margin-block-start: var(--space-3);
+}
+html[data-route="trips"] .td-notes {
+  margin-block-start: var(--space-3);
+}
+html[data-route="trips"] .td-notesrow {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--space-2);
+}
+html[data-route="trips"] .td-notes-text {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  overflow-wrap: anywhere;
+  text-wrap: pretty;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: var(--td-clamp-notes);
+  overflow: hidden;
+}
+html[data-route="trips"] .td-notes-text.is-open {
+  display: block;
+  -webkit-line-clamp: none;
+  overflow: visible;
+}
+/* "More" takes one line of layout; its 44 px target overhangs the lines around it. */
+html[data-route="trips"] .td-more {
+  position: relative;
+  flex: none;
+  padding: 0 var(--space-1);
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: none;
+  color: var(--majorelle);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+html[data-route="trips"] .td-more::before {
+  content: "";
+  position: absolute;
+  inset: calc((var(--td-target) - 100%) / -2) calc(var(--space-2) * -1);
+}
+@media (hover: hover) {
+  html[data-route="trips"] .td-more:hover {
+    text-decoration: underline;
+  }
+}
+html[data-route="trips"] .td-left {
+  margin-block-start: var(--space-2);
+}
+html[data-route="trips"] .td-leftline {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin: 0;
+  color: var(--ink-muted);
+}
+html[data-route="trips"] .td-leftlink {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--td-target);
+  border-radius: var(--radius-sm);
+  color: var(--majorelle);
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+html[data-route="trips"] .td-leftsep {
+  padding-inline: var(--space-2);
+  color: var(--ink-muted);
+}
+/* ===== Budget: a disclosure inside the h2 "Budget" (phones and tablets) ===== */
+html[data-route="trips"] .td-bud {
+  margin-block-start: var(--space-3);
+}
+html[data-route="trips"] .td-bud-h {
+  margin: 0;
+  font-size: 13px;
+  line-height: 18px;
+  font-weight: 600;
+}
+html[data-route="trips"] .td-bud-k {
+  display: block;
+  color: var(--ink-muted);
+}
+html[data-route="trips"] .td-bud-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  width: calc(100% + var(--space-2) * 2);
+  min-height: var(--td-target);
+  margin-inline: calc(var(--space-2) * -1);
+  padding-inline: var(--space-2);
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: none;
+  color: var(--ink);
+  font: inherit;
+  font-size: 15px;
+  line-height: 22px;
+  font-weight: 600;
+  text-align: start;
+  cursor: pointer;
+}
+html[data-route="trips"] .td-bud-btn .ic {
+  width: 20px;
+  height: 20px;
+  color: var(--ink-muted);
+}
+html[data-route="trips"] .td-bud-btn[aria-expanded="true"] .ic {
+  transform: rotate(180deg);
+}
+@media (hover: hover) {
+  html[data-route="trips"] .td-bud-btn:hover .td-bud-fig {
+    text-decoration: underline;
+  }
+}
+html[data-route="trips"] .td-bud-fig {
+  margin: 0;
+  font-weight: 600;
+}
+html[data-route="trips"] .td-bud-state {
+  margin: 0;
+  color: var(--ink);
+}
+html[data-route="trips"] .td-setbud {
+  height: var(--td-target);
+  padding-inline: var(--space-2);
+  margin-inline-start: calc(var(--space-2) * -1);
+}
+/* During the trip on phones: one 44 px row, "Budget · 400 MAD left ▾" with the bar beside it (fold rule 3). */
+html[data-route="trips"] .td-bud-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: var(--td-target);
+}
+html[data-route="trips"] .td-bud-row .td-bud-h {
+  display: flex;
+  align-items: center;
+  flex: none;
+  gap: var(--space-1);
+}
+html[data-route="trips"] .td-bud-row .td-bud-k {
+  display: inline;
+  color: var(--ink);
+}
+html[data-route="trips"] .td-bud-row .td-bud-k::after {
+  content: " ·";
+  color: var(--ink-muted);
+}
+html[data-route="trips"] .td-bud-row .td-bud-btn {
+  width: auto;
+  margin-inline: 0;
+  padding-inline: var(--space-1);
+  font-size: 13px;
+  line-height: 18px;
+}
+html[data-route="trips"] .td-bud-row .td-bud-btn .ic {
+  width: 16px;
+  height: 16px;
+}
+html[data-route="trips"] .td-bud-row .bbar {
+  flex: 1;
+  min-width: 3rem;
+}
+/* The breakdown: numbers are earned (DS). On the sand, ideas dashed like a place. */
+html[data-route="trips"] .td-bd {
+  margin-block-start: var(--space-2);
+  padding-block: var(--space-3) var(--space-1);
+  border-block-start: 1px solid var(--line);
+}
+html[data-route="trips"] .td-bd-fig {
+  margin: 0 0 var(--space-1);
+  font-weight: 600;
+}
+html[data-route="trips"] .td-bd-explain {
+  max-width: 60ch;
+  text-wrap: pretty;
+}
+html[data-route="trips"] .td-bd-list {
+  list-style: none;
+  margin: var(--space-2) 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  font-size: 13px;
+  line-height: 18px;
+}
+html[data-route="trips"] .td-bd-list li {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+html[data-route="trips"] .td-bd-list .ic {
+  width: 16px;
+  height: 16px;
+  color: var(--ink-muted);
+}
+html[data-route="trips"] .td-bd-ideas {
+  align-self: flex-start;
+  padding: var(--space-1) var(--space-2);
+  border: 2px dashed var(--line-strong);
+  border-radius: var(--radius-sm);
+}
+html[data-route="trips"] .td-bd-change {
+  margin-block-start: var(--space-1);
+}
+/* ===== The primary: floating on phones (zamane.css); it ends the summary from 48rem ===== */
+@media (min-width: 48rem) {
+  html[data-route="trips"] .td-sum .dock {
+    margin-block-start: var(--space-4);
+  }
+}
+/* ===== Offline notice (Home's, plus one line), under the summary (ia F14) ===== */
+html[data-route="trips"] .td-notice {
+  margin-block-start: var(--space-4);
+}
+html[data-route="trips"] .td-notice-line {
+  display: block;
+}
+html[data-route="trips"] .td-notice-line + .td-notice-line {
+  margin-block-start: var(--space-1);
+}
+/* ===== Tabs below 64rem ===== */
+html[data-route="trips"] .td-tabs {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-block-start: var(--space-5);
+  border-block-end: 1px solid var(--line);
+}
+html[data-route="trips"] .td-tab {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--td-tab-h);
+  padding-inline: var(--space-1);
+  border: 0;
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+  background: none;
+  color: var(--ink-muted);
+  font: inherit;
+  font-size: 13px;
+  line-height: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  overflow-wrap: anywhere;
+  text-align: center;
+}
+html[data-route="trips"] .td-tab:focus-visible {
+  outline-offset: -2px;
+}
+@media (hover: hover) {
+  html[data-route="trips"] .td-tab[aria-selected="false"]:hover {
+    color: var(--ink);
+  }
+}
+html[data-route="trips"] .td-tab[aria-selected="true"] {
+  color: var(--majorelle);
+}
+/* The nav's own 8 px majorelle diamond on the hairline. No motion on switch (ia 6.12). */
+html[data-route="trips"] .td-tab::after {
+  content: "";
+  position: absolute;
+  inset-inline-start: 50%;
+  bottom: calc(-0.5px - var(--nav-mark) / 2);
+  width: var(--nav-mark);
+  height: var(--nav-mark);
+  margin-inline-start: calc(var(--nav-mark) / -2);
+  background: var(--majorelle);
+  transform: rotate(45deg) scale(0);
+  pointer-events: none;
+}
+html[data-route="trips"] .td-tab[aria-selected="true"]::after {
+  transform: rotate(45deg) scale(1);
+}
+html[data-route="trips"] .td-panel {
+  padding-block-start: var(--space-4);
+  container-type: inline-size;
+}
+html[data-route="trips"] .td-panel:focus-visible {
+  outline-offset: 4px;
+}
+html[data-route="trips"] .td-ph {
+  margin: 0;
+}
+html[data-route="trips"] .td-pcap {
+  margin: 0;
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--ink-muted);
+}
+@media (max-width: 63.99rem) {
+  html[data-route="trips"] .td-panel:not(.is-selected) {
+    display: none;
+  }
+  html[data-route="trips"] .td-phead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}
+html[data-route="trips"] .td-intro {
+  margin: 0;
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--ink-muted);
+  text-wrap: pretty;
+}
+html[data-route="trips"] .td-empty {
+  margin: var(--space-4) 0 0;
+  color: var(--ink-muted);
+  text-wrap: pretty;
+}
+html[data-route="trips"] .td-paneladd {
+  margin-block-start: var(--space-5);
+}
+html[data-route="trips"] .td-paneladd .ic,
+html[data-route="trips"] .pc-sched .ic {
+  width: 18px;
+  height: 18px;
+}
+html[data-route="trips"] .td-why {
+  margin: var(--space-1) 0 0;
+}
+html[data-route="trips"] .td-secerr {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-2);
+  margin-block-start: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  background: var(--surface-sunken);
+  border-radius: var(--radius-md);
+}
+html[data-route="trips"] .td-secerr p {
+  margin: 0;
+}
+html[data-route="trips"] .td-retry .ic {
+  width: 18px;
+  height: 18px;
+}
+/* ===== Plan: serif day chapters, commitments as solid cards, ticks on the sand ===== */
+html[data-route="trips"] .pl-day {
+  margin-block-start: var(--space-5);
+}
+html[data-route="trips"] .pl > .pl-day:first-child,
+html[data-route="trips"] .pl > .pl-jump + .pl-day {
+  margin-block-start: 0;
+}
+html[data-route="trips"] .pl-dayhead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  min-height: var(--td-target);
+}
+html[data-route="trips"] .pl-dayh {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  column-gap: var(--space-2);
+  margin: 0;
+  font-weight: 400;
+}
+html[data-route="trips"] .pl-dayh:focus {
+  outline: none;
+}
+html[data-route="trips"] .pl-dayh:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+html[data-route="trips"] .pl-big {
+  font-family: var(--font-serif);
+  font-size: 28px;
+  line-height: 34px;
+}
+html[data-route="trips"] .pl-cap {
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--ink-muted);
+}
+html[data-route="trips"] .pl-dayadd {
+  height: var(--td-target);
+  padding-inline: var(--space-3);
+  margin-inline-end: calc(var(--space-3) * -1);
+}
+html[data-route="trips"] .pl-dayadd .ic {
+  width: 18px;
+  height: 18px;
+}
+html[data-route="trips"] .pl-anytime {
+  margin: var(--space-1) 0 var(--space-2);
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 600;
+  color: var(--ink-muted);
+}
+html[data-route="trips"] .pl-left {
+  margin: 0 0 var(--space-2);
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--ink-muted);
+}
+html[data-route="trips"] .pl-rows {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+html[data-route="trips"] .pl-rows + .pl-rows {
+  margin-block-start: var(--space-2);
+}
+html[data-route="trips"] .pl-row {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+}
+html[data-route="trips"] .pl-card {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: stretch;
+  min-height: var(--td-row-min);
+  padding: 0;
+  overflow: hidden;
+  font: inherit;
+  color: var(--ink);
+  text-align: start;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+@media (hover: hover) {
+  html[data-route="trips"] .pl-card:hover {
+    border-color: var(--line-strong);
+  }
+}
+html[data-route="trips"] .pl-card:active {
+  background: var(--surface-sunken);
+}
+html[data-route="trips"] .pl-body {
+  flex: 1;
+  min-width: 0;
+  display: block;
+  padding: var(--space-2) var(--space-3);
+}
+html[data-route="trips"] .pl-av {
+  float: right;
+  float: inline-end;
+  margin-inline-start: var(--space-2);
+  line-height: 0;
+}
+html[data-route="trips"] [dir="rtl"] .pl-av {
+  float: left;
+  float: inline-end;
+}
+html[data-route="trips"] .pl-title {
+  display: block;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+html[data-route="trips"] .pl-ic {
+  display: inline-flex;
+  vertical-align: -3px;
+  margin-inline-end: 6px;
+  color: var(--ink-muted);
+}
+html[data-route="trips"] .pl-ic .ic {
+  width: 18px;
+  height: 18px;
+}
+html[data-route="trips"] .pl-meta {
+  display: block;
+  margin-block-start: 2px;
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--ink-muted);
+  overflow-wrap: anywhere;
+}
+html[data-route="trips"] .pl-loc {
+  display: inline-block;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  vertical-align: bottom;
+}
+html[data-route="trips"] .pl-next {
+  font-weight: 600;
+  color: var(--ink);
+}
+html[data-route="trips"] .pl-sub {
+  display: block;
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--ink-muted);
+}
+html[data-route="trips"] .pl-by {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-block-start: var(--space-1);
+  font-size: 13px;
+  line-height: 18px;
+  font-weight: 600;
+  color: var(--zellige-ink);
+}
+html[data-route="trips"] .pl-queued {
+  display: flex;
+  margin-block-start: var(--space-1);
+}
+html[data-route="trips"] .pl-row .tick {
+  margin-block-start: 16px;
+}
+/* The Now cell: the one saffron block during the trip (decision.md). on-saffron on saffron 7.71 / 9.40;
+   ink and ink-muted on saffron-soft 13.66 / 5.49 light, 11.16 / 5.89 dark. */
+html[data-route="trips"] .pl-card.is-now {
+  background: var(--light-soft);
+}
+html[data-route="trips"] .pl-cell {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  inline-size: var(--now-cell);
+  padding: var(--space-2) var(--space-1);
+  background: var(--light);
+  color: var(--on-light);
+  text-align: center;
+  transform-origin: left center;
+}
+html[data-route="trips"] [dir="rtl"] .pl-cell {
+  transform-origin: right center;
+}
+html[data-route="trips"] .pl-cell-k {
+  font-size: 13px;
+  line-height: 18px;
+  font-weight: 600;
+}
+html[data-route="trips"] .pl-cell-t {
+  font-size: 15px;
+  line-height: 22px;
+  font-weight: 600;
+}
+html[data-route="trips"] .pl-cell-e {
+  font-size: 12px;
+  line-height: 16px;
+}
+html[data-route="trips"] .td .tick {
+  background: var(--surface);
+}
+html[data-route="trips"] .td .tick[aria-checked="true"] {
+  background: var(--zellige);
+}
+/* The one orchestrated moment: the light leaves the row when its Now entry is ticked (transform and opacity;
+   the tint fades). Reduced motion: the row is simply redrawn. */
+@media (prefers-reduced-motion: no-preference) {
+  html[data-route="trips"] .td .tick {
+    transition:
+      background-color var(--dur-press) ease,
+      border-color var(--dur-press) ease;
+  }
+  html[data-route="trips"] .pl-card.is-leaving {
+    background: var(--surface-raised);
+    transition: background-color var(--dur-light) var(--ease-out);
+  }
+  html[data-route="trips"] .pl-card.is-leaving .pl-cell {
+    transform: scaleX(0);
+    opacity: 0;
+    transition:
+      transform var(--dur-light) var(--ease-out),
+      opacity var(--dur-light) var(--ease-out);
+  }
+  html[data-route="trips"] .pl-card.is-leaving .pl-body {
+    transform: translateX(calc(var(--now-cell) * -1));
+    transition: transform var(--dur-light) var(--ease-out);
+  }
+  html[data-route="trips"] [dir="rtl"] .pl-card.is-leaving .pl-body {
+    transform: translateX(var(--now-cell));
+  }
+}
+/* Empty days: sunken wells with their Add; runs of 3+ are single 48 px lines (ia D7). */
+html[data-route="trips"] .pl-well {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  min-height: var(--td-row-min);
+  padding: var(--space-1) var(--space-1) var(--space-1) var(--space-4);
+  background: var(--surface-sunken);
+  border-radius: var(--radius-md);
+  color: var(--ink-muted);
+}
+html[data-route="trips"] .pl-well p {
+  margin: 0;
+}
+html[data-route="trips"] .pl-well .pl-dayadd {
+  margin: 0;
+}
+html[data-route="trips"] .pl-day.is-run {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: 48px;
+  margin-block-start: var(--space-2);
+  padding-inline-start: var(--space-4);
+  background: var(--surface-sunken);
+  border-radius: var(--radius-md);
+}
+html[data-route="trips"] .pl-day.is-run .pl-dayhead {
+  flex: 1;
+  min-height: 0;
+}
+html[data-route="trips"] .pl-day.is-run .pl-big {
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 22px;
+  font-weight: 600;
+}
+html[data-route="trips"] .pl-day.is-run .pl-well {
+  min-height: 0;
+  padding: 0 var(--space-1) 0 0;
+  background: none;
+}
+html[data-route="trips"] .pl-day.is-run .pl-well p {
+  display: none;
+}
+html[data-route="trips"] .pl-day.is-run + .pl-day:not(.is-run) {
+  margin-block-start: var(--space-5);
+}
+/* Earlier days: folded during the trip */
+html[data-route="trips"] .pl-fold {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  width: 100%;
+  min-height: var(--td-target);
+  padding: var(--space-1) 0;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: none;
+  color: var(--ink);
+  font: inherit;
+  text-align: start;
+  cursor: pointer;
+}
+html[data-route="trips"] .pl-fold .ic {
+  width: 18px;
+  height: 18px;
+  color: var(--ink-muted);
+}
+html[data-route="trips"] .pl-fold[aria-expanded="true"] .ic {
+  transform: rotate(90deg);
+}
+html[data-route="trips"] [dir="rtl"] .pl-fold[aria-expanded="false"] .ic {
+  transform: scaleX(-1);
+}
+html[data-route="trips"] .pl-fold-text {
+  display: flex;
+  flex-direction: column;
+}
+html[data-route="trips"] .pl-fold-k {
+  font-size: 13px;
+  line-height: 18px;
+  font-weight: 600;
+}
+html[data-route="trips"] .pl-fold-sum {
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--ink-muted);
+}
+@media (hover: hover) {
+  html[data-route="trips"] .pl-fold:hover .pl-fold-k {
+    text-decoration: underline;
+  }
+}
+html[data-route="trips"] .pl-earlier-days {
+  padding-block-end: var(--space-3);
+}
+html[data-route="trips"] .pl-earlier-days > .pl-day:first-child {
+  margin-block-start: var(--space-2);
+}
+html[data-route="trips"] .pl-earlier + .pl-day {
+  margin-block-start: 0;
+}
+/* Outside the trip dates, No date yet */
+html[data-route="trips"] .pl-group {
+  margin-block-start: var(--space-6);
+}
+html[data-route="trips"] .pl-gh {
+  margin: 0;
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: 600;
+}
+html[data-route="trips"] .pl-intro {
+  margin: var(--space-1) 0 var(--space-3);
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--ink-muted);
+}
+html[data-route="trips"] .pl-gh + .pl-rows {
+  margin-block-start: var(--space-3);
+}
+html[data-route="trips"] .pl-jump {
+  margin-block-end: var(--space-4);
+}
+html[data-route="trips"] .pl-jumprow {
+  display: flex;
+  gap: var(--space-2);
+}
+html[data-route="trips"] .pl-select {
+  flex: 1;
+  min-width: 0;
+  height: var(--td-target);
+  padding-inline: var(--space-3);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-md);
+  background: var(--surface-raised);
+  color: var(--ink);
+  font: inherit;
+  font-size: 16px;
+}
+/* During the trip on phones: the compaction rules that hold the fold (directions.md, shared ground) */
+@media (max-width: 47.99rem) {
+  html[data-route="trips"] .td--now {
+    margin-block-start: calc(var(--space-2) - var(--space-5));
+  }
+  /* main's 24 px top becomes 8 */
+  html[data-route="trips"] .td--now .td-id {
+    margin-block-start: 0;
+  }
+  html[data-route="trips"] .td--now .td-notes {
+    display: none;
+  }
+  html[data-route="trips"] .td--now .td-bud {
+    margin-block-start: var(--td-now-air);
+  }
+  html[data-route="trips"] .td--now .td-notice {
+    margin-block-start: var(--space-2);
+  }
+  html[data-route="trips"] .td--now .td-tabs {
+    margin-block-start: var(--td-now-air);
+  }
+  html[data-route="trips"] .td--now .td-panel {
+    padding-block-start: var(--td-now-air);
+  }
+}
+/* ===== Places: ideas drawn as ideas (dashed, on the page, no fill) ===== */
+html[data-route="trips"] .td-panel--places .td-paneladd {
+  margin-block-start: var(--space-3);
+}
+html[data-route="trips"] .pc-group {
+  margin-block-start: var(--space-5);
+}
+html[data-route="trips"] .pc-gh {
+  margin: 0 0 var(--space-2);
+  font-size: 15px;
+  line-height: 22px;
+  font-weight: 600;
+}
+html[data-route="trips"] .pc-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-3);
+  container-type: inline-size;
+}
+html[data-route="trips"] .pc {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+}
+html[data-route="trips"] .pc-main {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-1);
+  min-height: var(--td-row-min);
+  padding: var(--space-3);
+  border: 0;
+  border-radius: calc(var(--radius-md) - 2px);
+  background: none;
+  color: var(--ink);
+  font: inherit;
+  text-align: start;
+  cursor: pointer;
+}
+@media (hover: hover) {
+  html[data-route="trips"] .pc-main:hover {
+    background: var(--surface-sunken);
+  }
+}
+html[data-route="trips"] .pc-main:focus-visible {
+  outline-offset: 0;
+}
+html[data-route="trips"] .pc-line {
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+html[data-route="trips"] .pc-meta {
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--ink-muted);
+  overflow-wrap: anywhere;
+}
+html[data-route="trips"] .pc-tags {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  margin-block-start: var(--space-1);
+}
+html[data-route="trips"] .pc-visited {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: 13px;
+  line-height: 18px;
+  font-weight: 600;
+  color: var(--zellige-ink);
+}
+html[data-route="trips"] .pc-visited .ic {
+  width: 16px;
+  height: 16px;
+  stroke-width: 2.25;
+}
+html[data-route="trips"] .pc-act {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  padding: 0 var(--space-3) var(--space-3);
+}
+html[data-route="trips"] .pc-act .td-why {
+  text-align: end;
+}
+html[data-route="trips"] .pc-inplan {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--td-target);
+  padding-inline: var(--space-2);
+  margin-inline-end: calc(var(--space-2) * -1);
+  border-radius: var(--radius-sm);
+  color: var(--majorelle);
+  font-size: 13px;
+  line-height: 18px;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+@container (min-width:20rem) {
+  html[data-route="trips"] .pc {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+  html[data-route="trips"] .pc-act {
+    justify-content: flex-end;
+    padding: var(--space-3);
+  }
+  /* The long "In the plan · …" link stays under the card body, so the title keeps its width. */
+  html[data-route="trips"] .pc:has(.pc-inplan) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  html[data-route="trips"] .pc:has(.pc-inplan) .pc-act {
+    padding: 0 var(--space-3) var(--space-3);
+  }
+}
+/* ===== Prep: groups with the zellige tally; ticks on the sand; nothing moves when ticked ===== */
+html[data-route="trips"] .pr-group {
+  margin-block-start: var(--space-5);
+}
+html[data-route="trips"] .td-intro + .pr-group {
+  margin-block-start: var(--space-4);
+}
+html[data-route="trips"] .pr-head {
+  display: grid;
+  grid-template-columns: minmax(0, auto) auto minmax(0, 1fr) auto;
+  align-items: center;
+  column-gap: var(--space-3);
+  min-height: var(--td-target);
+}
+html[data-route="trips"] .pr-head .tally {
+  grid-column: 2;
+}
+html[data-route="trips"] .pr-h {
+  grid-column: 1;
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  gap: var(--space-2);
+  margin: 0;
+  font-size: 15px;
+  line-height: 22px;
+  font-weight: 600;
+}
+html[data-route="trips"] .pr-h .ic {
+  width: 20px;
+  height: 20px;
+  color: var(--ink-muted);
+}
+html[data-route="trips"] .pr-reorder {
+  grid-column: 4;
+  height: var(--td-target);
+  padding-inline: var(--space-2);
+  margin-inline-end: calc(var(--space-2) * -1);
+}
+html[data-route="trips"] .pr-reorder .ic {
+  width: 18px;
+  height: 18px;
+}
+/* Narrow panels (320 phones, the 3/12 column): the tally drops under the heading so the count never breaks. */
+@container (max-width:22rem) {
+  html[data-route="trips"] .pr-head {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+  html[data-route="trips"] .pr-head .tally {
+    grid-column: 1;
+    grid-row: 2;
+    margin-block-end: var(--space-1);
+  }
+  html[data-route="trips"] .pr-reorder {
+    grid-column: 2;
+    grid-row: 1;
+  }
+}
+html[data-route="trips"] .pr-head .td-why {
+  grid-column: 1 / -1;
+  margin: 0 0 var(--space-1);
+}
+html[data-route="trips"] .pr-rows {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+html[data-route="trips"] .pr-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: var(--td-row-min);
+  border-block-end: 1px solid var(--line);
+}
+html[data-route="trips"] .pr-btn {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 2px;
+  min-height: var(--td-row-min);
+  padding: var(--space-2);
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: none;
+  color: var(--ink);
+  font: inherit;
+  text-align: start;
+  cursor: pointer;
+}
+@media (hover: hover) {
+  html[data-route="trips"] .pr-btn:hover {
+    background: var(--surface-sunken);
+  }
+}
+html[data-route="trips"] .pr-btn:focus-visible {
+  outline-offset: 0;
+}
+html[data-route="trips"] .pr-title {
+  overflow-wrap: anywhere;
+}
+html[data-route="trips"] .pr-by {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--ink-muted);
+}
+html[data-route="trips"] .pr-by .zm-av-sm {
+  width: 20px;
+  height: 20px;
+  font-size: 10px;
+}
+html[data-route="trips"] .pr-by.is-done {
+  color: var(--zellige-ink);
+  font-weight: 600;
+}
+html[data-route="trips"] .pr-move {
+  display: flex;
+  gap: var(--space-2);
+  flex: none;
+}
+html[data-route="trips"] .pr-mv {
+  width: var(--td-target);
+  padding: 0;
+}
+html[data-route="trips"] .pr-mv .ic {
+  width: 18px;
+  height: 18px;
+}
+html[data-route="trips"] .pr-mv-t {
+  display: none;
+}
+@container (min-width:30rem) {
+  html[data-route="trips"] .pr-mv {
+    width: auto;
+    padding-inline: var(--space-3);
+  }
+  html[data-route="trips"] .pr-mv-t {
+    display: inline;
+  }
+}
+html[data-route="trips"] .pr-add {
+  margin-block-start: var(--space-1);
+}
+html[data-route="trips"] .pr-add .ic {
+  width: 18px;
+  height: 18px;
+  margin-inline-end: var(--space-1);
+}
+html[data-route="trips"] .pr-field {
+  margin-block-start: var(--space-2);
+}
+html[data-route="trips"] .pr-fieldrow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+html[data-route="trips"] .pr-fieldrow .btn-primary,
+html[data-route="trips"] .pr-fieldrow .btn-sec {
+  flex: none;
+  padding-inline: var(--space-4);
+}
+html[data-route="trips"] .pr-input {
+  flex: 1 1 auto;
+  min-width: 0;
+  min-height: var(--td-target);
+  padding-inline: var(--space-3);
+}
+html[data-route="trips"] .pr-input input {
+  height: calc(var(--td-target) - 2px);
+}
+html[data-route="trips"] .pr-field .help {
+  margin-block-start: var(--space-1);
+}
+/* ===== Loading and partial: static skeletons, no shimmer ===== */
+html[data-route="trips"] .td-door .td-sk-door {
+  background: var(--surface-sunken);
+}
+html[data-route="trips"] .td-sk-title {
+  height: 44px;
+  width: 70%;
+}
+html[data-route="trips"] .td-sk-line {
+  height: 16px;
+  width: 50%;
+  margin-block-start: var(--space-2);
+}
+html[data-route="trips"] .td-sk-band {
+  height: var(--light-band-h);
+  border-radius: var(--radius-md);
+}
+html[data-route="trips"] .td-sk-bar {
+  height: var(--bbar-h);
+  width: 100%;
+  margin-block-start: var(--space-3);
+}
+html[data-route="trips"] .td-sk-rows {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin-block-start: var(--space-4);
+}
+html[data-route="trips"] .td-sk-row {
+  height: var(--td-row-min);
+  border-radius: var(--radius-md);
+}
+/* ===== Error, not found, deleted ===== */
+html[data-route="trips"] .td--state {
+  display: block;
+}
+html[data-route="trips"] .td-state {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-3);
+  max-width: 36rem;
+  padding-block-start: var(--space-5);
+}
+html[data-route="trips"] .td-state p {
+  margin: 0;
+  color: var(--ink-muted);
+  text-wrap: pretty;
+}
+html[data-route="trips"] .td-state .btn-primary {
+  margin-block-start: var(--space-2);
+}
+/* ===== Windows High Contrast ===== */
+@media (forced-colors: active) {
+  html[data-route="trips"] .td-tab::after {
+    background: Highlight;
+    forced-color-adjust: none;
+  }
+  html[data-route="trips"] .td-tab[aria-selected="true"] {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  html[data-route="trips"] .pl-cell {
+    border-inline-end: 2px solid CanvasText;
+  }
+  html[data-route="trips"] .pl-card.is-now {
+    border: 2px solid CanvasText;
+  }
+  html[data-route="trips"] .pl-well,
+  html[data-route="trips"] .td-secerr,
+  html[data-route="trips"] .pl-day.is-run {
+    border: 1px solid CanvasText;
+  }
+  html[data-route="trips"] .td-bd-ideas {
+    border-color: CanvasText;
+  }
+}
+/* ===== ≥ 64rem: the summary becomes a band; tabs become columns ===== */
+@media (min-width: 64rem) {
+  html[data-route="trips"] .td-sum {
+    display: grid;
+    grid-template-columns: minmax(0, calc(var(--td-door-col) + var(--space-7))) minmax(0, 1fr) auto auto;
+    column-gap: var(--space-2);
+    grid-template-rows: repeat(6, auto) 1fr;
+    grid-template-areas: "back back back back" "door id edit dock" "door when when when" "door notes notes notes" "door left left left" "door bud bud bud" "door . . .";
+  }
+  html[data-route="trips"] .td-top {
+    display: contents;
+  }
+  html[data-route="trips"] .td-back {
+    grid-area: back;
+    justify-self: start;
+  }
+  html[data-route="trips"] .td-edit {
+    grid-area: edit;
+    align-self: start;
+    height: var(--td-target);
+    padding-inline: var(--space-5);
+    border-radius: var(--radius-md);
+  }
+  html[data-route="trips"] .td-edit::before {
+    content: none;
+  }
+  html[data-route="trips"] .td-door {
+    grid-area: door;
+    margin: var(--space-2) var(--space-7) 0 0;
+  }
+  html[data-route="trips"] [dir="rtl"] .td-door {
+    margin: var(--space-2) 0 0 var(--space-7);
+  }
+  html[data-route="trips"] .td-door .door--detail,
+  html[data-route="trips"] .td-door .door--detail.has-photo {
+    width: 100%;
+    aspect-ratio: var(--td-door-ratio-wide);
+    max-height: none;
+  }
+  html[data-route="trips"] .td-id {
+    grid-area: id;
+    margin-block-start: var(--space-2);
+  }
+  html[data-route="trips"] .td-when {
+    grid-area: when;
+  }
+  html[data-route="trips"] .td-notes {
+    grid-area: notes;
+  }
+  html[data-route="trips"] .td-left {
+    grid-area: left;
+  }
+  html[data-route="trips"] .td-bud {
+    grid-area: bud;
+    margin-block-start: var(--space-5);
+    padding-block-start: var(--space-4);
+    border-block-start: 1px solid var(--line);
+  }
+  html[data-route="trips"] .td-sum .dock {
+    grid-area: dock;
+    align-self: start;
+    margin-block-start: var(--space-2);
+  }
+  html[data-route="trips"] .td-edit {
+    margin-block-start: var(--space-2);
+  }
+  html[data-route="trips"] .td--now .td-sum {
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    grid-template-rows: auto;
+    grid-template-areas: "back back back" "id edit dock" "notes notes notes" "bud bud bud";
+  }
+  html[data-route="trips"] .td-bud-k {
+    font-size: 13px;
+  }
+  html[data-route="trips"] .td-bud .td-bud-fig {
+    margin-block-start: var(--space-1);
+    font-size: 15px;
+    line-height: 22px;
+  }
+  html[data-route="trips"] .td-bd {
+    border: 0;
+    padding-block: var(--space-2) 0;
+  }
+  html[data-route="trips"] .td-bd-list {
+    flex-direction: row;
+    flex-wrap: wrap;
+    column-gap: var(--space-5);
+  }
+  html[data-route="trips"] .td-notice {
+    margin-block-start: var(--space-5);
+  }
+  html[data-route="trips"] .td-tabs {
+    display: none;
+  }
+  html[data-route="trips"] .td-panels {
+    display: grid;
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    grid-template-rows: auto 1fr;
+    grid-template-areas: "plan places" "plan prep";
+    column-gap: var(--space-7);
+    align-items: start;
+    margin-block-start: var(--space-6);
+    padding-block-start: var(--space-5);
+    border-block-start: 1px solid var(--line);
+  }
+  html[data-route="trips"] .td-panel {
+    padding: 0;
+  }
+  html[data-route="trips"] .td-panel--plan {
+    grid-area: plan;
+  }
+  html[data-route="trips"] .td-panel--places {
+    grid-area: places;
+  }
+  html[data-route="trips"] .td-panel--prep {
+    grid-area: prep;
+    margin-block-start: var(--space-7);
+  }
+  html[data-route="trips"] .td-phead {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    column-gap: var(--space-3);
+    min-height: var(--td-target);
+    margin-block-end: var(--space-2);
+  }
+  html[data-route="trips"] .td-ph {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: 28px;
+    line-height: 34px;
+  }
+  html[data-route="trips"] .td-ph:focus {
+    outline: none;
+  }
+  html[data-route="trips"] .pl-big {
+    font-size: 24px;
+    line-height: 30px;
+  }
+  /* the column h2 leads; serif stays ≥ 24 px */
+  html[data-route="trips"] .td-ph:focus-visible {
+    outline: 2px solid var(--focus-ring);
+    outline-offset: 2px;
+  }
+}
+@media (min-width: 80rem) {
+  html[data-route="trips"] main.wrap:has(> #view > .td) {
+    max-width: var(--td-wide-max);
+  }
+  html[data-route="trips"] .td-panels {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 4fr) minmax(0, 3fr);
+    grid-template-rows: auto;
+    grid-template-areas: "plan places prep";
+  }
+  html[data-route="trips"] .td-panel--prep {
+    margin-block-start: 0;
+  }
+}
+/* ===== Review round (critique + accessibility, Director) ===== */
+/* F1 blocker: offline during the trip. Phones get the one-line notice and the 4 px tab gaps go to 0. */
+html[data-route="trips"] .td-notice-short {
+  display: none;
+}
+@media (max-width: 47.99rem) {
+  html[data-route="trips"] .td--now .td-notice-short {
+    display: block;
+  }
+  html[data-route="trips"] .td--now .td-notice-full {
+    display: none;
+  }
+  html[data-route="trips"] .td--now .td-notice .notice {
+    padding: 6px var(--space-3);
+    align-items: center;
+  }
+  html[data-route="trips"] .td--now:has(.td-notice:not(:empty)) {
+    --td-now-air: 0px;
+  }
+  /* F2: today's done rows collapse to one 48 px line (tick, title, who · when) so the Now row keeps its place */
+  html[data-route="trips"] .td--now .pl-row.is-done .pl-body {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-height: 44px;
+    padding-block: var(--space-1);
+  }
+  html[data-route="trips"] .td--now .pl-row.is-done .pl-title {
+    flex: 1;
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  html[data-route="trips"] .td--now .pl-row.is-done .pl-by {
+    flex: none;
+    margin: 0;
+    font-size: 12px;
+  }
+  html[data-route="trips"] .td--now .pl-row.is-done .pl-by .zm-av {
+    display: none;
+  }
+  html[data-route="trips"] .td--now .pl-row.is-done .tick {
+    margin-block-start: 10px;
+  }
+}
+html[data-route="trips"] .pl-leftnext {
+  display: inline;
+  min-height: 0;
+  padding: 0;
+  margin: 0;
+  font-size: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+html[data-route="trips"] .pl-leftnext::before {
+  content: "";
+  position: absolute;
+  inset: -12px 0;
+}
+html[data-route="trips"] .pl-leftnext {
+  position: relative;
+}
+/* F6: the thumb arch leads the title row */
+html[data-route="trips"] .td-titlerow {
+  align-items: center;
+}
+html[data-route="trips"] .td-titlerow .door--thumb {
+  margin: 0;
+}
+/* F3: wide screens keep the plan in view */
+html[data-route="trips"] .td-bd-why {
+  font-size: 12px;
+  line-height: 16px;
+}
+html[data-route="trips"] .td-bd-why summary {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--majorelle);
+  font-weight: 600;
+  cursor: pointer;
+}
+html[data-route="trips"] .td-bd-why .td-bd-explain {
+  margin: 0 0 var(--space-2);
+}
+@media (min-width: 64rem) {
+  :root {
+    --td-door-col: 15rem;
+  }
+  html[data-route="trips"] .td-bd {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    column-gap: var(--space-5);
+  }
+  html[data-route="trips"] .td-bd-list {
+    margin: 0;
+  }
+  html[data-route="trips"] .td-bd-why {
+    order: 2;
+  }
+  /* During the trip: identity on the left, the budget on the right of the band (IA D4) */
+  /* The budget has a set width, so its long breakdown row can't grow the auto columns and starve the title */
+  html[data-route="trips"] .td--now .td-sum {
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    column-gap: var(--space-2);
+    grid-template-areas: "back edit dock" "id bud bud" "notes bud bud";
+  }
+  html[data-route="trips"] .td--now .td-bud {
+    width: min(30rem, 48vw);
+    min-width: 0;
+    margin-block-start: var(--space-2);
+    margin-inline-start: var(--space-6);
+    padding-block-start: 0;
+    border: 0;
+  }
+  html[data-route="trips"] .td--now .td-bud .td-bd {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  html[data-route="trips"] .td--now .td-bud .td-bd-list {
+    column-gap: var(--space-4);
+  }
+  html[data-route="trips"] .td--now .td-edit {
+    margin-block-start: 0;
+    justify-self: end;
+  }
+  html[data-route="trips"] .td--now .td-sum .dock {
+    margin-block-start: 0;
+  }
+}
+/* F9: at 80 rem the top bar aligns with the wider detail */
+@media (min-width: 80rem) {
+  html[data-route="trips"]:has(#view > .td) .app-header .wrap {
+    max-width: var(--td-wide-max);
+  }
+}

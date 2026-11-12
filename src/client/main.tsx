@@ -7,6 +7,8 @@ import { LaunchMessage } from "./components/LaunchMessage.tsx";
 import { isApiError, isNetworkError, setUnauthenticatedHandler } from "./lib/api.ts";
 import { navState } from "./lib/nav.ts";
 import { registerHomeMutations } from "./lib/home.ts";
+import { registerShoppingMutations } from "./lib/shopping.ts";
+import { registerTripMutations } from "./lib/trips.ts";
 import { queryClient, restoreQueryCache } from "./lib/query.ts";
 import { meKey, meQuery } from "./lib/session.ts";
 import { registerServiceWorker } from "./lib/sw.ts";
@@ -22,6 +24,14 @@ import "./styles/goals.css";
 import "./styles/goals-detail.css";
 import "./styles/goals-composer.css";
 import "./styles/goals-form.css";
+import "./styles/trips.css";
+import "./styles/trips-detail.css";
+import "./styles/trips-dialogs.css";
+import "./styles/trips-form.css";
+import "./styles/shopping.css";
+import "./styles/shopping-dialogs.css";
+import "./styles/shopping-form.css";
+import "./styles/profile.css";
 import "./styles/app.css";
 
 const router = createRouter({
@@ -38,6 +48,10 @@ declare module "@tanstack/react-router" {
   interface HistoryState {
     /** A one-off notice for the screen being opened (never in the URL). */
     notice?: "signed-out" | "session-ended" | "reset-done" | "created" | "joined";
+    /** Shopping: the item sheet is open (its own history entry, so Back closes it) and for which row. */
+    shopSheet?: string;
+    /** Shopping: a confirmation is open on top (its own history entry, so Back keeps). */
+    shopConfirm?: true;
   }
 }
 
@@ -72,6 +86,8 @@ if (window.visualViewport) {
 
 // Offline-capable mutations get their mutationFn before the persisted cache (and its paused mutations) is restored.
 registerHomeMutations(queryClient);
+registerTripMutations(queryClient);
+registerShoppingMutations(queryClient);
 
 type Boot = "ready" | "offline" | "error";
 

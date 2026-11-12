@@ -1,0 +1,1 @@
+ALTER TABLE "trip_checklist_items" ADD COLUMN "seeded" boolean DEFAULT false NOT NULL;

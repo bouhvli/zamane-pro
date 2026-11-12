@@ -1,0 +1,388 @@
+/* Ported from .ux-forge/trips/form.css, scoped to html[data-route="trips"] like trips.css (D60). */
+
+/* Create and edit trip (form view), direction B · Saffron light. Owned by the form builder.
+   Ported from .ux-forge/goals/form.css. Uses zamane.css tokens; the few layout values it needs are declared
+   here as tokens (Goals proposed the same four for the shared layer, see build-notes/form.md). No new colours. */
+:root {
+  --task-head-h: 56px;
+  --form-col: 36rem;
+  --field-col: 20rem;
+  --date-col: 11rem;
+}
+/* ----- Page column: one centred column ≈ 36rem from 48rem (ia.md §5.7) ----- */
+html[data-route="trips"] .form-page {
+  max-width: var(--form-col);
+  margin-inline: auto;
+}
+/* ----- Task header: ✕ Cancel + title on phones; the h1 alone from 48rem ----- */
+html[data-route="trips"] .task-head {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: var(--task-head-h);
+}
+html[data-route="trips"] .task-title {
+  margin: 0;
+  min-width: 0;
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+html[data-route="trips"] .task-cancel {
+  gap: var(--space-1);
+}
+@media (max-width: 47.99rem) {
+  html[data-route="trips"] .task-head {
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    margin-inline: calc(var(--space-4) * -1);
+    margin-block-end: var(--space-4);
+    padding: env(safe-area-inset-top, 0px) var(--space-4) 0;
+    background: var(--surface);
+    border-block-end: 1px solid var(--line);
+  }
+  html[data-route="trips"]:has(#view .task-head) {
+    scroll-padding-top: calc(var(--task-head-h) + env(safe-area-inset-top, 0px) + var(--space-3));
+  }
+  /* WCAG 2.4.11 */
+  html[data-route="trips"] .form-cancel {
+    display: none;
+  }
+}
+@media (min-width: 48rem) {
+  html[data-route="trips"] .task-cancel {
+    display: none;
+  }
+  html[data-route="trips"] .task-head {
+    min-height: 0;
+    margin-block-end: var(--space-5);
+  }
+  html[data-route="trips"] .task-title {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: 28px;
+    line-height: 34px;
+    text-wrap: balance;
+  }
+}
+/* ----- The form: one column of groups ----- */
+html[data-route="trips"] .trip-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  container: trip-form / inline-size;
+}
+html[data-route="trips"] .form-slot:empty {
+  display: none;
+}
+html[data-route="trips"] .fg {
+  min-width: 0;
+  margin: 0;
+}
+html[data-route="trips"] .fg > p.field-label {
+  margin-block-start: 0;
+}
+html[data-route="trips"] fieldset.fg {
+  border: 0;
+  padding: 0;
+}
+html[data-route="trips"] fieldset.fg legend {
+  padding: 0;
+}
+html[data-route="trips"] .err {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-1);
+}
+html[data-route="trips"] .err .ic,
+html[data-route="trips"] .mark .ic {
+  width: 16px;
+  height: 16px;
+  margin-top: 1px;
+}
+/* Title: Young Serif 28/34 inside the field. What you type is how the doorway will read. */
+html[data-route="trips"] .field-title textarea {
+  min-height: 0;
+  height: auto;
+  padding-block: var(--space-3);
+  resize: none;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: 28px;
+  line-height: 34px;
+  field-sizing: content;
+}
+/* Dates: one fieldset, First day and Last day side by side once there's room for two native pickers */
+html[data-route="trips"] .dates-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-3);
+}
+html[data-route="trips"] .date-cell {
+  min-width: 0;
+}
+html[data-route="trips"] .sub-label {
+  font-weight: 400;
+  color: var(--ink-muted);
+}
+html[data-route="trips"] .field-date {
+  padding-inline: var(--space-3);
+}
+html[data-route="trips"] .field-date.is-invalid {
+  padding-inline: calc(var(--space-3) - 1px);
+}
+html[data-route="trips"] .field-date input {
+  min-width: 0;
+  width: 100%;
+}
+@container trip-form (min-width:20rem) {
+  html[data-route="trips"] .dates-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@container trip-form (min-width:30rem) {
+  html[data-route="trips"] .dates-grid {
+    grid-template-columns: repeat(2, minmax(0, var(--date-col)));
+  }
+  html[data-route="trips"] .field-budget {
+    max-width: var(--field-col);
+  }
+}
+html[data-route="trips"] .field-area {
+  align-items: stretch;
+}
+/* Date-change preview under Dates (edit, role=status): the consequence before saving (D12) */
+html[data-route="trips"] .preview:empty {
+  display: none;
+}
+html[data-route="trips"] .preview {
+  margin: var(--space-3) 0 0;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  background: var(--surface-sunken);
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--ink);
+  text-wrap: pretty;
+}
+html[data-route="trips"] .preview p {
+  margin: 0;
+}
+html[data-route="trips"] .preview p + p {
+  margin-top: var(--space-1);
+}
+/* ----- Optional details (create): a disclosure row between hairlines ----- */
+html[data-route="trips"] .details-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  width: 100%;
+  min-height: 48px;
+  padding: var(--space-2) 0;
+  border: 0;
+  border-block: 1px solid var(--line);
+  background: none;
+  color: var(--ink);
+  font: inherit;
+  font-weight: 600;
+  text-align: start;
+  cursor: pointer;
+}
+html[data-route="trips"] .details-toggle .ic {
+  color: var(--ink-muted);
+}
+html[data-route="trips"] .details-toggle[aria-expanded="true"] .ic {
+  transform: rotate(180deg);
+}
+@media (hover: hover) {
+  html[data-route="trips"] .details-toggle:hover span {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  html[data-route="trips"] .details-toggle .ic {
+    transition: transform var(--dur-mark) var(--ease-out);
+  }
+}
+html[data-route="trips"] .details {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+/* ----- Cover: the doorway preview; the upload pill is solid surface-raised, never text on the photo ----- */
+html[data-route="trips"] .cover-stage {
+  position: relative;
+  margin-block-start: var(--space-3);
+}
+html[data-route="trips"] .cover-pill {
+  position: absolute;
+  inset-inline: 0;
+  bottom: var(--space-3);
+  width: fit-content;
+  max-width: calc(100% - var(--space-6));
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-pill);
+  background: var(--surface-raised);
+  color: var(--ink);
+  box-shadow: var(--shadow-card);
+  font-size: 13px;
+  line-height: 18px;
+  font-weight: 600;
+}
+html[data-route="trips"] .cover-group > .err {
+  margin-top: var(--space-3);
+}
+html[data-route="trips"] .cover-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-block-start: var(--space-3);
+}
+/* Create: the static light-band preview under the cover (direction B); absent until both dates are in */
+html[data-route="trips"] .band-slot:empty {
+  display: none;
+}
+html[data-route="trips"] .cover-group .band-slot {
+  margin-block-start: var(--space-3);
+}
+/* ----- Merge marks (Goals §6.7) ----- */
+html[data-route="trips"] .mark-slot:empty {
+  display: none;
+}
+html[data-route="trips"] .mark {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: var(--space-2) 0 0;
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--ink-muted);
+}
+html[data-route="trips"] .mark .zm-av {
+  border-color: var(--surface);
+}
+html[data-route="trips"] .mark-conflict {
+  flex-wrap: wrap;
+  row-gap: 0;
+  padding: var(--space-1) var(--space-1) var(--space-1) var(--space-3);
+  border-radius: var(--radius-md);
+  background: var(--surface-sunken);
+  color: var(--ink);
+  font-size: 13px;
+  line-height: 18px;
+}
+html[data-route="trips"] .mark-conflict .mark-text {
+  flex: 1 1 10rem;
+  min-width: 0;
+  padding-block: var(--space-2);
+  overflow-wrap: anywhere;
+}
+html[data-route="trips"] .mark-conflict .link-btn {
+  margin-inline: auto 0;
+}
+html[data-route="trips"] .mark-conflict .zm-av {
+  border-color: var(--surface-sunken);
+}
+html[data-route="trips"] .notice-merge:focus {
+  outline: none;
+}
+html[data-route="trips"] .notice-draft {
+  align-items: center;
+  padding-block: 0;
+  padding-inline-end: var(--space-2);
+}
+html[data-route="trips"] .notice-draft > span {
+  flex: 1;
+  min-width: 0;
+}
+html[data-route="trips"] .notice-draft .link-btn {
+  margin-inline: 0;
+}
+/* ----- Actions: a footer bar on phones; primary then Cancel from 48rem ----- */
+html[data-route="trips"] .form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+}
+html[data-route="trips"] .submit-reason[hidden] {
+  display: none;
+}
+@media (max-width: 47.99rem) {
+  html[data-route="trips"] .form-actions {
+    display: contents;
+  }
+  html[data-route="trips"] .submit-reason {
+    order: -1;
+  }
+  /* the reason can't sit beside the bar's button, so it leads the form */
+  /* The primary sits bottom-end in a solid footer bar (Goals critic F4), so it never covers a field, an error or
+     the disclosure. It rides the keyboard (form.js placeDock). The task-chrome body padding is taller than the bar. */
+  html[data-route="trips"] #view .form-page .dock {
+    position: fixed;
+    inset-inline: 0;
+    bottom: 0;
+    z-index: 9;
+    display: flex;
+    justify-content: flex-end;
+    padding: var(--space-3) max(var(--space-4), env(safe-area-inset-right, 0px))
+      calc(var(--space-3) + env(safe-area-inset-bottom, 0px)) max(var(--space-4), env(safe-area-inset-left, 0px));
+    background: var(--surface);
+    border-block-start: 1px solid var(--line);
+  }
+  html[data-route="trips"] #view .form-page .dock .btn-primary {
+    box-shadow: none;
+  }
+  html[data-route="trips"]:has(#view .form-page) .toast {
+    bottom: calc(env(safe-area-inset-bottom, 0px) + var(--fab-h) + var(--space-3) * 2 + var(--space-2));
+  }
+}
+/* ----- Delete trip: last, set apart ----- */
+html[data-route="trips"] .delete-zone {
+  margin-block-start: var(--space-6);
+  padding-block-start: var(--space-5);
+  border-block-start: 1px solid var(--line);
+}
+@media (hover: hover) {
+  html[data-route="trips"] .btn-danger:not([aria-disabled="true"]):hover {
+    background: var(--danger-soft);
+  }
+}
+/* The example-data footnote sits in the form's column, not at the page edge */
+html[data-route="trips"]:has(#view .form-page) #footnote {
+  max-width: var(--form-col);
+  margin-inline: auto;
+}
+/* ----- Trip gone (404 / deleted while editing / bad id) ----- */
+html[data-route="trips"] .gone {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-4);
+  padding-block: var(--space-5);
+}
+html[data-route="trips"] .gone p {
+  margin: 0;
+}
+/* ----- Windows High Contrast ----- */
+@media (forced-colors: active) {
+  html[data-route="trips"] .cover-pill,
+  html[data-route="trips"] .mark-conflict,
+  html[data-route="trips"] .preview {
+    border: 1px solid CanvasText;
+  }
+  html[data-route="trips"] .task-head,
+  html[data-route="trips"] #view .form-page .dock {
+    border-color: CanvasText;
+  }
+}

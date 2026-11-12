@@ -3,6 +3,9 @@ import type { MeResponse } from "../../shared/schemas/spaces.ts";
 import { api, isApiError } from "./api.ts";
 import { carry } from "./carry.ts";
 import { clearQueryCache } from "./query.ts";
+import { clearAllShoppingDrafts } from "../components/shopping/drafts.ts";
+import { clearAllTripDrafts } from "../components/trips/form/drafts.ts";
+import { failedAdds } from "./shopping.ts";
 import { clearAllGoalDrafts } from "./goal-drafts.ts";
 import { clearNoteDrafts } from "./note-drafts.ts";
 
@@ -51,6 +54,9 @@ export async function signOut(qc: QueryClient): Promise<void> {
   carry.clearAll();
   // Drafts typed on this phone belong to this person (goals.html: cleared on logout).
   clearAllGoalDrafts();
+  clearAllTripDrafts();
+  clearAllShoppingDrafts();
+  failedAdds.clearAll();
   clearNoteDrafts();
   // Phase 5: closeRealtime();
 }

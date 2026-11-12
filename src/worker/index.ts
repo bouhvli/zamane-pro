@@ -12,6 +12,8 @@ import { ApiError } from "./errors.ts";
 import { configure, notFoundHandler, onError, requestId, sameOriginJson } from "./middleware/core.ts";
 import { authRoutes } from "./routes/auth.ts";
 import { goalRoutes, uploadRoutes } from "./routes/goals.ts";
+import { shoppingRoutes } from "./routes/shopping.ts";
+import { tripRoutes } from "./routes/trips.ts";
 import { homeRoutes } from "./routes/home.ts";
 import { meRoutes, passwordResetRoutes } from "./routes/me.ts";
 import { publicRoutes } from "./routes/public.ts";
@@ -74,6 +76,8 @@ const api = new Hono<AppEnv>()
   .route("/spaces", spaceRoutes)
   .route("/home", homeRoutes)
   .route("/goals", goalRoutes)
+  .route("/trips", tripRoutes)
+  .route("/shopping", shoppingRoutes)
   .route("/uploads", uploadRoutes);
 
 app.route("/api", api);

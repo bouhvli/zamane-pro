@@ -55,8 +55,8 @@ test("two partners: sign up, start, join, sign out, reset, sign in", async ({ br
 
   // Both are in the space now.
   await s.reload();
-  await expect(s.getByText(/Sara · partner a/)).toBeVisible();
-  await expect(s.getByText(/Youssef · partner b/)).toBeVisible();
+  await expect(s.locator(".pf-plates").getByText("Sara", { exact: true })).toBeVisible();
+  await expect(s.locator(".pf-plates").getByText("Youssef", { exact: true })).toBeVisible();
 
   // ---- Youssef signs out ----
   await y.getByRole("link", { name: "Profile" }).click();
@@ -100,11 +100,12 @@ test("two partners: sign up, start, join, sign out, reset, sign in", async ({ br
   await y.getByRole("button", { name: "Sign in" }).click();
   await expect(y.getByRole("heading", { level: 1, name: /^Hi, / })).toBeVisible();
 
-  // ---- The TEMP Profile page ----
+  // ---- The Profile page ----
+  // The name saves by itself when the field loses focus.
   await s.getByLabel("First name").fill("Sarah");
-  await s.getByRole("button", { name: "Save name" }).click();
+  await s.getByLabel("First name").blur();
   await expect(s.getByText("Saved.", { exact: true })).toBeVisible();
-  await expect(s.getByText(/Sarah · partner a/)).toBeVisible();
+  await expect(s.locator(".pf-plates").getByText("Sarah", { exact: true })).toBeVisible();
 
   await s.getByRole("button", { name: "Copy code" }).click();
   await expect(s.getByRole("button", { name: "Copied" })).toBeVisible();
@@ -120,6 +121,8 @@ test("two partners: sign up, start, join, sign out, reset, sign in", async ({ br
   await s.getByLabel("Same as this phone").check();
   await expect(s.locator("html")).not.toHaveAttribute("data-theme", /.+/);
 
+  await s.getByRole("button", { name: "Change password" }).click(); // opens the form
+  await expect(s.locator("#pf-current")).toBeFocused();
   await s.getByLabel("Current password").fill(sara.password);
   await s.getByLabel("New password").fill("a-second-sara-password");
   await s.getByRole("button", { name: "Change password" }).click();

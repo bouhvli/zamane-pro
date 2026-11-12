@@ -1,0 +1,2 @@
+ALTER TABLE "shopping_items" ADD COLUMN "unit" text DEFAULT 'piece' NOT NULL;--> statement-breakpoint
+ALTER TABLE "shopping_items" ADD CONSTRAINT "shopping_items_unit" CHECK ("shopping_items"."unit" in ('piece', 'l', 'g', 'kg'));

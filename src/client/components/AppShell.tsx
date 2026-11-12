@@ -73,8 +73,8 @@ function scrollTop() {
 export function AppShell({ me, children }: { me: { displayName: string; slot: "a" | "b" }; children: ReactNode }) {
   const { pathname } = useLocation();
   const current = destOf(pathname);
-  // Create and edit a goal are task pages: no bottom nav on phones (goals.html, decision (a)).
-  const task = /^\/goals\/(new|[^/]+\/edit)\/?$/.test(pathname);
+  // Create and edit a goal or a trip are task pages: no bottom nav on phones (goals.html, decision (a)).
+  const task = /^\/(goals|trips)\/(new|[^/]+\/edit)\/?$/.test(pathname);
   useChrome(task ? "task" : "app", (current ?? pathname).replace(/^\//, "") || "home");
 
   // Tapping the tab you're already on (at its top level) scrolls back to the top (iOS / Android convention).

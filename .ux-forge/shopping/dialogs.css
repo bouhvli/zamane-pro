@@ -1,0 +1,57 @@
+/* Item sheet and confirmations. Direction A · Aisle ledger.
+   Built on the shared .sheet: a bottom sheet on phones, a centred 28 rem dialog from 48 rem. No new colours.
+   The facts read like the till slip on the list: a label, a dotted run, the value flush right. Classes are ish-*. */
+:root{--ish-w:28rem;--ish-max-h:90dvh}
+
+.sheet.ish{container:ish / inline-size}
+@media (min-width:48rem){
+  .sheet.ish,.sheet.if-form{width:min(var(--ish-w),calc(100% - 2 * var(--space-4)));max-height:var(--ish-max-h)}
+}
+.ish>.vh{margin:0;inset-block-start:0}
+
+.ish-head{display:flex;align-items:flex-start;justify-content:space-between;gap:var(--space-3);margin-block-end:var(--space-3)}
+.ish-head .icon-btn{margin:calc(var(--space-2) * -1) calc(var(--space-3) * -1) 0 0}
+.ish-title{margin:0;min-width:0;font-family:var(--font-serif);font-weight:400;font-size:24px;line-height:30px;text-wrap:balance;overflow-wrap:anywhere}
+.ish-title:focus{outline:none} /* programmatic focus target, like the shell's h1 */
+
+/* Quantity with its unit */
+.ish-sum{margin:0 0 var(--space-3);font-size:18px;line-height:24px;font-weight:600}
+
+/* Facts: label, dotted run, value */
+.ish-facts{margin:0}
+.ish-row{display:flex;align-items:flex-end;gap:var(--space-2);min-height:28px}
+.ish-row dt{flex:1 1 auto;display:flex;align-items:flex-end;gap:var(--space-2);font-size:13px;line-height:22px;font-weight:600;color:var(--ink-muted)}
+.ish-row dt::after{content:"";flex:1 1 1rem;min-width:1rem;margin-bottom:6px;border-bottom:var(--leader)}
+.ish-row dd{flex:0 1 auto;max-width:70%;margin:0;text-align:end;font-weight:600;overflow-wrap:anywhere}
+
+.ish-notes{margin-block-start:var(--space-3)}
+.ish-label{margin:0 0 var(--space-1);font-size:13px;line-height:18px;font-weight:600;color:var(--ink-muted)}
+.ish-notes p{margin:0;white-space:pre-wrap;overflow-wrap:anywhere;text-wrap:pretty}
+
+.ish-by{display:flex;align-items:center;gap:var(--space-2);margin:var(--space-4) 0 0;font-size:12px;line-height:16px;color:var(--ink-muted)}
+.ish-by+.ish-by{margin-block-start:var(--space-2)}
+.ish-done{color:var(--zellige-ink);font-weight:600}
+.ish-done .ic{width:20px;height:20px;stroke-width:2.25}
+.ish-queued{margin-block-start:var(--space-3)}
+.ish-failed{margin-block-start:var(--space-4)}
+.ish-gone{margin:0;font-size:15px;line-height:22px;font-weight:600}
+
+/* Actions: the safe ones first, the destructive one set apart at the end */
+.ish-acts{display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-2);margin-block-start:var(--space-5)}
+.ish-acts>button{padding-inline:var(--space-4)}
+.ish-acts .ic{width:16px;height:16px}
+.ish-acts .ish-del{margin-inline-start:auto}
+@container ish (max-width:22rem){
+  .ish-acts{flex-direction:column;align-items:stretch}
+  .ish-acts .ish-del{margin-inline-start:0}
+}
+.ish-reasons{display:flex;flex-direction:column;gap:var(--space-1);margin:var(--space-2) 0 0;font-size:12px;line-height:16px;color:var(--ink-muted);text-wrap:pretty}
+.ish-reasons span{display:flex;gap:var(--space-1);align-items:flex-start}
+.ish-reasons .ic{width:14px;height:14px;margin-top:1px}
+
+/* Confirmations: the consequence in one line, the safe button first */
+@media (min-width:30rem){.confirm .sheet-actions{flex-direction:row;justify-content:flex-end}.confirm .sheet-actions>button{padding-inline:var(--space-5)}}
+
+@media (forced-colors:active){
+  .ish-row dt::after{border-bottom-color:CanvasText}
+}

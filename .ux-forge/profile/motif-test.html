@@ -1,0 +1,92 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" href="../shopping/zamane.css">
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;600&family=Young+Serif&display=swap" rel="stylesheet">
+<style>
+:root{
+ --zl-star-fill:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cpath d='M48 24L40.97 31.03 40.97 40.97 31.03 40.97 24 48 16.97 40.97 7.03 40.97 7.03 31.03 0 24 7.03 16.97 7.03 7.03 16.97 7.03 24 0 31.03 7.03 40.97 7.03 40.97 16.97Z'/%3E%3C/svg%3E");
+ --zl-star-line:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cpath fill='none' stroke='black' stroke-width='1.5' d='M48 24L40.97 31.03 40.97 40.97 31.03 40.97 24 48 16.97 40.97 7.03 40.97 7.03 31.03 0 24 7.03 16.97 7.03 7.03 16.97 7.03 24 0 31.03 7.03 40.97 7.03 40.97 16.97Z'/%3E%3C/svg%3E");
+}
+.zl{--zl-u:48px;--zl-gap:var(--surface-sunken);--zl-glaze:var(--majorelle-soft);--zl-grout:var(--line);position:relative;isolation:isolate;background:var(--zl-gap)}
+.zl::before,.zl::after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+ -webkit-mask-size:var(--zl-u) var(--zl-u);mask-size:var(--zl-u) var(--zl-u);-webkit-mask-position:center;mask-position:center}
+.zl::before{background:var(--zl-glaze);-webkit-mask-image:var(--zl-star-fill);mask-image:var(--zl-star-fill)}
+.zl::after{background:var(--zl-grout);-webkit-mask-image:var(--zl-star-line);mask-image:var(--zl-star-line)}
+@media (forced-colors:active){.zl::before,.zl::after{display:none}}
+.star{width:1em;height:1em;fill:currentColor;flex:none}
+body{padding:16px;font-family:var(--font-sans)}
+.row{display:grid;grid-template-columns:repeat(3,minmax(0,350px));gap:24px;align-items:start}
+.mono{font-family:ui-monospace,"Cascadia Mono",Consolas,monospace;font-variant-numeric:tabular-nums}
+.av{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;font-weight:600;flex:none}
+.av.a{background:var(--partner-a);color:var(--on-majorelle)}.av.b{background:var(--partner-b);color:var(--on-terracotta)}
+.mem{display:flex;gap:10px;align-items:center}.mem b{display:block}
+.btn{min-height:44px;padding:0 16px;border-radius:var(--radius-md);font:600 15px var(--font-sans);border:1px solid var(--line-strong);background:transparent;color:var(--ink)}
+.btn.p{background:var(--majorelle);color:var(--on-majorelle);border-color:transparent}
+h2.hd{margin:0;font-family:var(--font-serif);font-weight:400;font-size:22px;line-height:28px}
+
+.A .chamf{--c:10px;padding:1px;position:relative;background:var(--line-strong);clip-path:polygon(var(--c) 0,calc(100% - var(--c)) 0,100% var(--c),100% calc(100% - var(--c)),calc(100% - var(--c)) 100%,var(--c) 100%,0 calc(100% - var(--c)),0 var(--c))}
+.A .chamf>.in{background:var(--surface-raised);--c2:calc(var(--c) - .41px);clip-path:polygon(var(--c2) 0,calc(100% - var(--c2)) 0,100% var(--c2),100% calc(100% - var(--c2)),calc(100% - var(--c2)) 100%,var(--c2) 100%,0 calc(100% - var(--c2)),0 var(--c2))}
+.A .frieze{--zl-u:24px;height:24px;--zl-gap:var(--surface-raised);--zl-grout:transparent;
+ --zl-glaze:linear-gradient(90deg,var(--majorelle) 0 calc(50% - 12px),var(--saffron) 0 calc(50% + 12px),var(--terracotta) 0)}
+.A .frieze.solo{--zl-glaze:linear-gradient(90deg,var(--majorelle) 0 calc(50% - 12px),var(--saffron) 0 calc(50% + 12px),var(--line) 0)}
+.A .body{padding:16px;display:grid;gap:14px}
+.A .slip{position:relative;display:flex;align-items:center;justify-content:center;gap:12px;padding:14px 12px;background:var(--surface-sunken);outline:1px solid var(--line-strong);outline-offset:-5px;border:1px solid var(--line-strong);color:var(--ink)}
+.A .slip .star{color:var(--saffron);font-size:14px}
+.A .slip .code{margin:0;font-size:30px;line-height:36px;letter-spacing:.14em;font-weight:600;color:var(--ink)}
+.A .rule{display:flex;align-items:center;gap:10px;color:var(--line-strong);margin:20px 0 14px}.A .rule::before,.A .rule::after{content:"";flex:1;height:1px;background:var(--line)}.A .rule .star{font-size:12px;color:var(--majorelle)}
+
+.B .card{background:var(--surface-raised);border:1px solid var(--line);border-radius:var(--radius-md);overflow:hidden}
+.B .field{--zl-u:40px;--zl-gap:var(--surface-raised);--zl-glaze:var(--majorelle-soft);height:104px}
+.B .field .half{position:absolute;inset:0 0 0 50%;z-index:-1;background:var(--terracotta-soft);-webkit-mask:var(--zl-star-fill) center/40px 40px;mask:var(--zl-star-fill) center/40px 40px}
+.B .field .half.solo{background:var(--line)}
+.B .plate{position:relative;background:var(--surface-raised);border:1px solid var(--line-strong);padding:6px 12px 6px 6px;border-radius:var(--radius-sm);outline:3px solid var(--surface-raised)}
+.B .body{padding:30px 16px 16px;display:grid;gap:14px}
+.B .tiles{display:flex;justify-content:center;gap:8px;margin:0;padding:8px;background:var(--line);border-radius:var(--radius-sm);align-items:center}
+.B .tiles .g{background:var(--surface-raised);color:var(--ink);padding:10px 8px 10px 14px;font-size:32px;line-height:38px;font-weight:600;letter-spacing:.12em;border-radius:3px;box-shadow:inset 0 1px 0 #fff8,inset 0 -2px 0 var(--surface-sunken),inset 0 0 0 1px var(--line-strong)}
+.B .tiles .dia{width:8px;height:8px;background:var(--saffron);transform:rotate(45deg);flex:none}
+.B .hbar{--zl-u:16px;--zl-gap:transparent;--zl-glaze:var(--zellige-soft);--zl-grout:var(--line);height:8px;margin-top:6px}
+.B .sect{padding:16px;margin-top:16px}
+
+.C .board{position:relative;background:var(--surface-raised);border:1px solid var(--line-strong);padding:16px;overflow:hidden}
+.C .board::before{content:"";position:absolute;inset:0 0 auto 0;height:10px;background:repeating-linear-gradient(90deg,var(--line-strong) 0 1px,transparent 1px 8px);-webkit-mask:linear-gradient(#000 0 40%,transparent 40%);mask:linear-gradient(#000 0 40%,transparent 40%)}
+.C .lens{display:block;width:100%;height:auto;max-height:150px;margin-block:8px}
+.C .ray{stroke:var(--line);stroke-width:1;fill:none}
+.C .ca{stroke:var(--majorelle);stroke-width:2;fill:none}.C .cb{stroke:var(--terracotta);stroke-width:2;fill:none}
+.C .eye{fill:var(--saffron-soft);stroke:var(--saffron-ink);stroke-width:1.5}
+.C .stub{position:relative;background:var(--surface-sunken);padding:14px 16px 12px;text-align:center;--n:9px;clip-path:polygon(0 0,100% 0,100% calc(50% - var(--n)),calc(100% - var(--n)) 50%,100% calc(50% + var(--n)),100% 100%,0 100%,0 calc(50% + var(--n)),var(--n) 50%,0 calc(50% - var(--n)))}
+.C .stub .code{margin:0;font-size:30px;line-height:36px;letter-spacing:.14em;font-weight:600}
+.C .stub .perf{border:0;border-top:2px dotted var(--line-strong);margin:10px 0}
+.C .hd2{display:grid;gap:4px}.C .hd2::after{content:"";height:5px;background:repeating-linear-gradient(90deg,var(--line-strong) 0 1px,transparent 1px 8px);border-bottom:1px solid var(--line-strong)}
+</style></head><body>
+<div class="row">
+<div class="A"><div class="chamf"><div class="in">
+ <div class="zl frieze" aria-hidden="true"></div>
+ <div class="body">
+  <h2 class="hd">Sara &amp; Youssef</h2>
+  <div style="display:flex;gap:16px"><div class="mem"><span class="av a">S</span><span><b>Sara</b><span class="caption">partner A</span></span></div><div class="mem"><span class="av b">Y</span><span><b>Youssef</b><span class="caption">partner B</span></span></div></div>
+  <div class="slip"><svg class="star" aria-hidden="true" viewBox="0 0 48 48"><path d="M48 24L40.97 31.03 40.97 40.97 31.03 40.97 24 48 16.97 40.97 7.03 40.97 7.03 31.03 0 24 7.03 16.97 7.03 7.03 16.97 7.03 24 0 31.03 7.03 40.97 7.03 40.97 16.97Z"/></svg><p class="code mono" dir="ltr">K7QM-4XZP</p><svg class="star" aria-hidden="true" viewBox="0 0 48 48"><path d="M48 24L40.97 31.03 40.97 40.97 31.03 40.97 24 48 16.97 40.97 7.03 40.97 7.03 31.03 0 24 7.03 16.97 7.03 7.03 16.97 7.03 24 0 31.03 7.03 40.97 7.03 40.97 16.97Z"/></svg></div>
+  <div style="display:flex;gap:8px"><button class="btn p">Copy code</button><button class="btn">New code</button></div>
+ </div></div></div>
+ <div class="rule" aria-hidden="true"><svg class="star" viewBox="0 0 48 48"><path d="M48 24L40.97 31.03 40.97 40.97 31.03 40.97 24 48 16.97 40.97 7.03 40.97 7.03 31.03 0 24 7.03 16.97 7.03 7.03 16.97 7.03 24 0 31.03 7.03 40.97 7.03 40.97 16.97Z"/></svg></div>
+ <h2 class="hd">You</h2><p class="caption">As your partner will see it.</p>
+ <br><div class="chamf"><div class="in"><div class="zl frieze solo" aria-hidden="true"></div><div class="body"><h2 class="hd">Solo state</h2><div class="slip"><p class="code mono" dir="ltr">K7QM-4XZP</p></div></div></div></div>
+</div>
+<div class="B"><div class="card">
+ <div class="zl field" aria-hidden="true"><span class="half"></span></div>
+ <div style="display:flex;justify-content:space-between;padding:0 12px;margin-top:-62px;position:relative;gap:8px">
+  <div class="plate mem" style="margin-top:20px"><span class="av a">S</span><span><b>Sara</b><span class="caption">partner A</span></span></div>
+  <div class="plate mem" style="margin-top:20px"><span class="av b">Y</span><span><b>Youssef</b><span class="caption">partner B</span></span></div></div>
+ <div class="body"><h2 class="hd">Sara &amp; Youssef</h2>
+  <p class="tiles mono" dir="ltr"><span class="g">K7QM</span><span class="dia" aria-hidden="true"></span><span class="g">4XZP</span></p>
+  <div style="display:flex;gap:8px"><button class="btn p">Copy code</button><button class="btn">New code</button></div></div></div>
+ <div class="card sect"><h2 class="hd">You</h2><div class="zl hbar" aria-hidden="true"></div><p class="caption" style="margin-top:8px">As your partner will see it.</p></div>
+</div>
+<div class="C"><div class="board">
+ <h2 class="hd" style="margin-top:6px">Sara &amp; Youssef</h2>
+ <svg class="lens" viewBox="0 0 240 120" aria-hidden="true"><g class="ray"><path d="M120 4V116M60 60H180M32 14 208 106M208 14 32 106"/></g>
+  <circle class="ca" cx="92" cy="60" r="44"/><circle class="cb" cx="148" cy="60" r="44"/>
+  <path class="eye" transform="translate(120 60)" d="M14 0L9.9 4.1 9.9 9.9 4.1 9.9 0 14 -4.1 9.9 -9.9 9.9 -9.9 4.1 -14 0 -9.9 -4.1 -9.9 -9.9 -4.1 -9.9 0 -14 4.1 -9.9 9.9 -9.9 9.9 -4.1Z"/></svg>
+ <div style="display:flex;justify-content:space-between"><div class="mem"><span class="av a">S</span><span><b>Sara</b><span class="caption">partner A</span></span></div><div class="mem"><span class="av b">Y</span><span><b>Youssef</b><span class="caption">partner B</span></span></div></div>
+ <div class="stub" style="margin-top:16px"><p class="code mono" dir="ltr">K7QM-4XZP</p><hr class="perf"><div style="display:flex;gap:8px;justify-content:center"><button class="btn p">Copy code</button><button class="btn">New code</button></div></div>
+ <div class="hd2" style="margin-top:20px"><h2 class="hd">You</h2></div>
+</div></div>
+</div></body></html>

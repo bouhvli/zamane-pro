@@ -101,7 +101,7 @@ const blocks = z
 export const createNoteSchema = z.object({ id: z.uuid(), blocks });
 export const updateNoteSchema = z.object({ blocks, updatedAt: z.iso.datetime({ offset: true }) });
 
-export const UPLOAD_PURPOSE = ["goal-cover", "note-image"] as const;
+export const UPLOAD_PURPOSE = ["goal-cover", "trip-cover", "note-image"] as const;
 export const signUploadSchema = z.object({ purpose: z.enum(UPLOAD_PURPOSE) });
 
 // ---------- responses ----------

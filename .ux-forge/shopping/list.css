@@ -1,0 +1,137 @@
+/* Shopping list (direction A · Aisle ledger). Flat rows on the sand, hairlines between rows only, Young Serif group heads
+   with a dotted leader to the item count, tabular numerals for every quantity, the 44 px tick, C's pencil stroke on a ticked name.
+   The primary is the floating Add item button (shared .dock, as on Goals and Trips); from 48 rem it sits beside the h1;
+   from 64 rem the summary is a sticky rail (grid placement only; the DOM order stays h1, button, summary, list). */
+
+/* ----- Masthead ----- */
+.masthead{display:grid;gap:var(--space-2)}
+.masthead h1{margin:0}
+
+/* ----- Summary (S8): the answer to "how much is left?" ----- */
+.sum{margin-top:var(--space-2);margin-bottom:var(--space-3)}
+.sum-line{display:flex;flex-wrap:wrap;align-items:center;column-gap:var(--space-3);min-height:44px}
+.sum-count{font-size:18px;line-height:24px;font-weight:600}
+.sum-count:focus:not(:focus-visible){outline:none}
+.sum-bought{font-size:15px;line-height:22px;color:var(--ink-muted)}
+.sum-bought::before{content:"·";margin-inline-end:var(--space-3)}
+.tidy{margin-inline-start:auto}
+/* The dotted run: name, leader, figure flush right. The signature of direction A. */
+.g-lead{flex:1 1 1.5rem;min-width:1.5rem;align-self:flex-end;margin-bottom:6px;border-bottom:var(--leader)}
+
+/* ----- Notices ----- */
+.list-notice{margin-bottom:var(--space-4)}
+.notice-stale{align-items:center;flex-wrap:wrap}
+.notice-stale>span{flex:1;min-width:12rem}
+.notice-stale .link-btn{margin:calc(var(--space-2) * -1) 0}
+.stale-note{margin:0 0 var(--space-2)}
+
+/* ----- Groups: the head is the leader line; the space above it is the divider (no cards) ----- */
+.grp{margin-top:var(--space-5)}
+.list-body>.grp:first-child,.groups>.grp:first-child{margin-top:var(--space-2)}
+.g-head{display:flex;flex-wrap:wrap;align-items:flex-end;column-gap:var(--space-2);margin:0 0 var(--space-1);padding-inline-end:var(--space-1);font-family:var(--font-serif);font-weight:400;font-size:20px;line-height:26px}
+.g-name{min-width:0;max-width:100%;overflow-wrap:anywhere;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;overflow:hidden;text-wrap:balance}
+.g-count{flex:none;font-family:var(--font-sans);font-size:13px;line-height:26px;font-weight:600;color:var(--ink-muted)}
+
+/* ----- Rows: [tick 44] [name / meta line] [quantity and unit]. 56 px minimum; the meta line is always reserved. ----- */
+.rows{list-style:none;margin:0;padding:0}
+.row{position:relative;display:grid;grid-template-columns:var(--tick-hit) minmax(0,1fr);align-items:center;min-height:var(--row-min)}
+.row+.row{border-top:1px solid var(--line)}
+.row .tick{grid-column:1;justify-self:start}
+.row-body{grid-column:2;display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:var(--space-3);align-items:baseline;align-content:center;min-height:var(--row-min);
+  padding:var(--space-2) var(--space-1);margin:0;font:inherit;color:inherit;text-align:start;background:none;border:0;border-radius:var(--radius-sm);cursor:pointer;-webkit-tap-highlight-color:transparent}
+.row-body:focus-visible{outline:2px solid var(--focus-ring);outline-offset:-2px}
+@media (hover:hover){.row-body:hover .r-title{text-decoration:underline;text-decoration-color:var(--line-strong);text-underline-offset:3px}}
+.r-head{grid-column:1;grid-row:1;display:flex;align-items:baseline;gap:6px;min-width:0}
+.r-title{position:relative;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;overflow:hidden;width:fit-content;max-width:100%;min-width:0;overflow-wrap:anywhere;text-wrap:balance;
+  font-size:16px;line-height:22px;font-weight:600}
+.r-qty{grid-column:2;grid-row:1;white-space:nowrap;font-size:15px;line-height:22px;font-weight:600;text-align:end}
+.r-meta{grid-column:1 / -1;grid-row:2;display:flex;align-items:center;gap:6px;min-width:0;min-height:18px;overflow:hidden;font-size:13px;line-height:18px;color:var(--ink-muted)}
+.r-meta>*+*::before{content:"·";margin-inline-end:6px}
+.r-notes{flex:0 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.r-when{flex:0 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.r-notes+.r-when{flex:none}
+@media (max-width:29.99rem){
+  .r-meta{flex-wrap:wrap;overflow:visible;column-gap:6px;row-gap:0}
+  .r-notes{flex:1 1 100%;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;white-space:normal;overflow-wrap:anywhere;text-overflow:clip}
+  .r-notes+.r-when::before{display:none}
+}
+.r-flag{flex:none;display:inline-flex;align-items:center;gap:4px;white-space:nowrap}
+.r-flag .ic{width:14px;height:14px}
+.r-flag.is-failed{color:var(--danger-ink);font-weight:600}
+.is-pending .r-meta{flex-wrap:wrap}
+
+/* Bought, in place: colour and text change only; height, position and width never do (S3). */
+.is-bought .r-title,.is-bought .r-qty{color:var(--ink-bought)}
+/* C's pencil stroke across the name: one stroke, added to the colour change, never in place of it. */
+/* One 1.5 px stroke per line (the title can wrap to 3 lines), centred on the x-height: 13 px into each 22 px line. */
+.r-title::after{content:"";position:absolute;inset:0;
+  background:repeating-linear-gradient(to bottom,transparent 0 12.25px,var(--ink-bought) 12.25px 13.75px,transparent 13.75px 22px);transform:scaleX(0);transform-origin:left center}
+.is-bought .r-title::after{transform:scaleX(1)}
+.is-pending.is-bought .r-title::after{-webkit-mask-image:repeating-linear-gradient(90deg,#000 0 6px,transparent 6px 9px);mask-image:repeating-linear-gradient(90deg,#000 0 6px,transparent 6px 9px)}
+@media (prefers-reduced-motion:no-preference){
+  .r-title::after{transition:transform var(--dur-stroke) var(--ease-out)}
+  .r-title,.r-qty{transition:color var(--dur-settle) ease}
+  .row.is-leaving{opacity:0;transition:opacity 120ms ease}
+}
+/* A new row (mine or the partner's): a wash that fades; no movement. */
+@keyframes wash{0%,70%{background-color:var(--majorelle-soft)}100%{background-color:transparent}}
+.row.is-new{animation:wash var(--dur-wash) linear both}
+
+/* ----- The Bought group: a sunken band, the only zellige text on the page ----- */
+.done{margin-top:var(--space-6);padding:var(--space-1) var(--space-4) var(--space-2);background:var(--surface-sunken);border-radius:var(--radius-md)}
+.done-head{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;column-gap:var(--space-2)}
+.done-h{margin:0;font-size:inherit;line-height:inherit}
+.done-toggle{display:inline-flex;align-items:center;gap:var(--space-2);min-height:44px;margin-inline-start:calc(var(--space-2) * -1);padding:0 var(--space-2);border:0;border-radius:var(--radius-sm);background:none;
+  font:inherit;font-size:16px;line-height:22px;font-weight:600;color:var(--zellige-ink);cursor:pointer;-webkit-tap-highlight-color:transparent}
+.done-toggle.is-static{padding-inline:0;margin-inline-start:0;cursor:default}
+.done-toggle .ic{width:18px;height:18px;stroke-width:2.25}
+.done-toggle[aria-expanded="true"] .ic{transform:rotate(90deg)}
+@media (prefers-reduced-motion:no-preference){.done-toggle .ic{transition:transform var(--dur-mark) var(--ease-out)}}
+.clear-btn{display:inline-flex;align-items:center;min-height:44px;padding:0 var(--space-3);margin-inline-end:calc(var(--space-3) * -1);border:0;border-radius:var(--radius-sm);background:none;
+  font:inherit;font-size:13px;line-height:18px;font-weight:600;letter-spacing:.01em;color:var(--danger-ink);cursor:pointer;-webkit-tap-highlight-color:transparent}
+.clear-btn[aria-disabled="true"]{color:var(--ink-muted);cursor:not-allowed}
+@media (hover:hover){.clear-btn:not([aria-disabled="true"]):hover{text-decoration:underline}}
+.done-why{margin:0 0 var(--space-2)}
+.allbought{margin:var(--space-3) 0 0;text-wrap:pretty}
+
+/* ----- Empty, error, loading ----- */
+.empty,.list-error{margin-top:var(--space-5)}
+.empty .title,.list-error .title{margin:0 0 var(--space-1)}
+
+.empty p,.list-error p{margin:0;text-wrap:pretty}
+.list-error{display:grid;justify-items:start;gap:var(--space-4)}
+.list-sk{display:grid;margin-top:var(--space-5)}
+.sk-h2{width:7rem;height:20px;margin-block:var(--space-4) var(--space-2)}
+.sk-row{display:grid;grid-template-columns:var(--tick-hit) minmax(0,1fr);align-items:center;min-height:var(--row-min)}
+.sk-tick{width:24px;height:24px;margin:10px}
+.sk-text{display:grid;gap:var(--space-1)}
+.sk-line{height:16px;width:55%}.sk-line.short{height:12px;width:30%}
+
+/* ----- 48 rem: the Add item button sits beside the h1; one comfortable column ----- */
+@media (min-width:48rem){
+  .masthead{grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:var(--space-4);margin-bottom:var(--space-5)}
+  .masthead h1{font-size:32px;line-height:38px}
+  .list-layout{max-width:40rem}
+  .sum{margin-top:0}
+}
+/* ----- 64 rem: one masthead line closed by a hairline; the summary is a sticky rail, always open (S11) ----- */
+@media (min-width:64rem){
+  .masthead{padding-bottom:var(--space-5);border-bottom:1px solid var(--line)}
+  .list-layout{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);column-gap:var(--space-7);align-items:start;max-width:none}
+  .sum{grid-column:2;grid-row:1;position:sticky;top:calc(var(--top-bar-h) + var(--space-5));margin:0;padding:var(--space-4) var(--space-5) var(--space-5);background:var(--surface-raised);border:1px solid var(--line);border-radius:var(--radius-lg)}
+  .list-body{grid-column:1;grid-row:1;max-width:40rem}
+  .sum-line{min-height:0}
+  .tidy{margin-inline-start:0}
+}
+
+/* ----- Forced colours: the stroke becomes a real line-through; leaders and bands get borders ----- */
+@media (forced-colors:active){
+  .r-title::after{display:none}
+  .is-bought .r-title{text-decoration:line-through}
+  .g-lead{border-bottom-color:CanvasText}
+  .done,.sum{border:1px solid CanvasText}
+  .row+.row{border-top-color:CanvasText}
+  .row.is-new{outline:1px solid Highlight}
+}
+
+/* Short landscape screens: the Add item button joins the flow (zamane.css), nothing stays pinned over the content */

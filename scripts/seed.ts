@@ -231,11 +231,11 @@ async function main() {
     ),
     db.insert(s.shoppingItems).values(
       [
-        { name: "Olive oil", quantity: 2, category: "Pantry", price: 1_400, by: sara },
+        { name: "Olive oil", quantity: 2, unit: "l", category: "Pantry", by: sara },
         { name: "Mint", category: "Fruit & Veg", notes: "fresh, big bunch", by: youssef },
-        { name: "Tomatoes", quantity: 6, category: "fruit & veg", by: sara },
-        { name: "Dish soap", category: "Home", price: 350, by: youssef },
-        { name: "Milk", category: "Dairy", price: 120, by: youssef, bought: true },
+        { name: "Tomatoes", quantity: 1, unit: "kg", category: "fruit & veg", by: sara },
+        { name: "Dish soap", category: "Home", by: youssef },
+        { name: "Milk", quantity: 2, unit: "l", category: "Dairy", by: youssef, bought: true },
       ].map((i) => ({
         id: uuidv7(),
         spaceId,
@@ -243,7 +243,7 @@ async function main() {
         quantity: i.quantity ?? 1,
         category: i.category,
         categoryKey: categoryKey(i.category),
-        price: i.price ?? null,
+        unit: i.unit ?? "piece",
         notes: i.notes ?? null,
         boughtAt: i.bought ? ago(1) : null,
         boughtBy: i.bought ? sara : null,

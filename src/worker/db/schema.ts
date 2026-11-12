@@ -444,6 +444,8 @@ export const tripChecklistItems = pgTable(
     position: integer("position").notNull(),
     doneAt: timestamp("done_at", { withTimezone: true }),
     doneBy: uuid("done_by").references(() => user.id),
+    // Suggested when the trip was created (D24): the screens show no "Added by" for these (D59).
+    seeded: boolean("seeded").notNull().default(false),
     createdBy: uuid("created_by")
       .notNull()
       .references(() => user.id),
@@ -477,7 +479,7 @@ export const shoppingItems = pgTable(
     quantity: integer("quantity").notNull().default(1),
     category: text("category"),
     categoryKey: text("category_key"),
-    price: money("price"),
+    unit: text("unit").notNull().default("piece"),
     notes: text("notes"),
     boughtAt: timestamp("bought_at", { withTimezone: true }),
     boughtBy: uuid("bought_by").references(() => user.id),
@@ -495,7 +497,7 @@ export const shoppingItems = pgTable(
     check("shopping_items_quantity_positive", sql`${t.quantity} > 0`),
     check("shopping_items_category_len", maxLen(t.category, CAPS.name)),
     check("shopping_items_notes_len", maxLen(t.notes, CAPS.notes)),
-    check("shopping_items_price_nonneg", sql`${t.price} is null or ${t.price} >= 0`),
+    check("shopping_items_unit", sql`${t.unit} in ('piece', 'l', 'g', 'kg')`),
     check("shopping_items_bought_pair", sql`(${t.boughtAt} is null) = (${t.boughtBy} is null)`),
   ],
 );

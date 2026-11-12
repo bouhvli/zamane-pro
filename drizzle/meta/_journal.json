@@ -22,6 +22,27 @@
       "when": 1794421662719,
       "tag": "0002_rate_limits",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1794469142747,
+      "tag": "0003_trip_item_seeded",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1794486695833,
+      "tag": "0004_shopping_drop_price",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1794486700732,
+      "tag": "0005_shopping_unit",
+      "breakpoints": true
     }
   ]
 }
