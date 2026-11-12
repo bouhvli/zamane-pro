@@ -866,8 +866,11 @@ html[data-route="trips"] .lead-body {
   display: grid;
   gap: var(--space-1);
 }
+html[data-route="trips"] .lead-body {
+  margin-top: var(--space-3);
+}
 html[data-route="trips"] .lead-body .light {
-  margin-bottom: var(--space-2);
+  margin-top: var(--space-2);
 }
 html[data-route="trips"] .lead-title {
   font-family: var(--font-serif);
@@ -1079,16 +1082,12 @@ html[data-route="trips"] .sk-tile {
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: var(--space-4);
   }
-  html[data-route="trips"] .trip-lead .trip-card {
-    display: grid;
-    grid-template-columns: minmax(12rem, 2fr) 3fr;
-    gap: var(--space-5);
-    align-items: center;
-    padding: var(--space-4);
+  /* The lead stays stacked (cover, title and date, days to go) at every width; it just stops stretching. */
+  html[data-route="trips"] .trip-lead {
+    max-width: 32rem;
   }
-  html[data-route="trips"] .door--lead {
-    aspect-ratio: 4 / 3;
-    max-height: none;
+  html[data-route="trips"] .trip-lead .trip-card {
+    padding: var(--space-4);
   }
   html[data-route="trips"] .lead-title {
     font-size: 40px;
@@ -1118,9 +1117,6 @@ html[data-route="trips"] .sk-tile {
   }
   html[data-route="trips"] .trip-tiles {
     grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-  html[data-route="trips"] .trip-lead .trip-card {
-    grid-template-columns: minmax(14rem, 1fr) 2fr;
   }
   html[data-route="trips"] .past-rows {
     grid-template-columns: repeat(2, minmax(0, 1fr));

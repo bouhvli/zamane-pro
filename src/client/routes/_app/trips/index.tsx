@@ -366,7 +366,7 @@ function statusLine(t: TripView, today: string): string {
 
 type CardProps = { t: TripView; today: string; cloudName: string | null; onOpen: () => void };
 
-/** The lead: the doorway on the light band, then the title and where / when. The whole card is one link. */
+/** The lead (next trip): the cover, under it the title and where / when, under that the days to go. One link. */
 function LeadCard({ t, today, cloudName, onOpen }: CardProps) {
   return (
     <li className="trip-lead" data-id={t.id}>
@@ -375,11 +375,11 @@ function LeadCard({ t, today, cloudName, onOpen }: CardProps) {
           <TripDoorway title={t.title} cover={t.cover} size="lead" cloudName={cloudName} />
         </div>
         <div className="lead-body">
-          <LightBand trip={t} today={today} lead />
           <h3 className="lead-title">{t.title}</h3>
           <p className="lead-meta">
             <Meta t={t} />
           </p>
+          <LightBand trip={t} today={today} lead />
         </div>
       </Link>
     </li>
