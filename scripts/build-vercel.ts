@@ -69,7 +69,8 @@ const SECURITY = {
     "style-src 'self' https://fonts.googleapis.com",
     "font-src https://fonts.gstatic.com",
     "img-src 'self' data: blob: https://res.cloudinary.com",
-    "connect-src 'self' https://api.cloudinary.com",
+    // res.cloudinary.com: the service worker's image cache fetches covers itself, and its fetches follow connect-src.
+    "connect-src 'self' https://api.cloudinary.com https://res.cloudinary.com",
     "worker-src 'self'",
     "manifest-src 'self'",
     "frame-ancestors 'none'",

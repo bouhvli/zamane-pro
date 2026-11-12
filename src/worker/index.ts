@@ -34,7 +34,8 @@ app.use(
       styleSrc: ["'self'", "https://fonts.googleapis.com"],
       fontSrc: ["https://fonts.gstatic.com"],
       imgSrc: ["'self'", "data:", "blob:", "https://res.cloudinary.com"],
-      connectSrc: ["'self'", "https://api.cloudinary.com"],
+      // res.cloudinary.com: the service worker's image cache fetches covers itself, and its fetches follow connect-src.
+      connectSrc: ["'self'", "https://api.cloudinary.com", "https://res.cloudinary.com"],
       workerSrc: ["'self'"],
       manifestSrc: ["'self'"],
       frameAncestors: ["'none'"],
