@@ -1,6 +1,7 @@
 import type { UseQueryResult } from "@tanstack/react-query";
 import type { MySpace } from "../../../shared/schemas/spaces.ts";
 import { Button } from "../Button.tsx";
+import { Loader } from "../Loader.tsx";
 import { PartnerAvatar } from "../PartnerAvatar.tsx";
 import { InviteCode } from "./InviteCode.tsx";
 import { SpaceSettings } from "./SpaceSettings.tsx";
@@ -71,9 +72,9 @@ export function CoupleCard({ space }: { space: UseQueryResult<{ space: MySpace }
             </Button>
           </div>
         ) : (
-          <p className="muted pf-state" role="status">
-            Loading…
-          </p>
+          <div className="pf-state">
+            <Loader label="Loading your space" />
+          </div>
         )}
       </div>
     </section>

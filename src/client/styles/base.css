@@ -519,3 +519,114 @@ html:has(.sheet[open]) {
 .zm-pair > .zm-av + .zm-av {
   margin-left: -8px;
 }
+
+/* ===== The loader (Loader.tsx): three zellige shapes turning in different directions ===== */
+.zload {
+  --zload-size: 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: calc(var(--zload-size) * 0.3);
+  height: var(--zload-size);
+  vertical-align: middle;
+}
+.zload > i {
+  display: block;
+  flex: none;
+  width: var(--zload-size);
+  height: var(--zload-size);
+}
+/* Khatam star, clockwise. */
+.zload > i:nth-child(1) {
+  background: var(--majorelle);
+  clip-path: polygon(
+    100% 50%,
+    85.35% 64.65%,
+    85.35% 85.35%,
+    64.65% 85.35%,
+    50% 100%,
+    35.35% 85.35%,
+    14.65% 85.35%,
+    14.65% 64.65%,
+    0 50%,
+    14.65% 35.35%,
+    14.65% 14.65%,
+    35.35% 14.65%,
+    50% 0,
+    64.65% 14.65%,
+    85.35% 14.65%,
+    85.35% 35.35%
+  );
+  animation: zload-cw 2s linear infinite;
+}
+/* Hexagon, anti-clockwise. */
+.zload > i:nth-child(2) {
+  background: var(--terracotta);
+  clip-path: polygon(50% 0, 93.3% 25%, 93.3% 75%, 50% 100%, 6.7% 75%, 6.7% 25%);
+  animation: zload-ccw 2.6s linear infinite;
+}
+/* Four-point star, flipping on its vertical axis. */
+.zload > i:nth-child(3) {
+  background: var(--saffron);
+  clip-path: polygon(50% 0, 61% 39%, 100% 50%, 61% 61%, 50% 100%, 39% 61%, 0 50%, 39% 39%);
+  animation: zload-flip 1.8s ease-in-out infinite;
+}
+.zload--lg {
+  --zload-size: 20px;
+}
+.zload--mono > i {
+  background: currentColor;
+}
+@keyframes zload-cw {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes zload-ccw {
+  to {
+    transform: rotate(-360deg);
+  }
+}
+@keyframes zload-flip {
+  to {
+    transform: rotateY(360deg);
+  }
+}
+/* No spinning for people who asked for less motion: the three shapes just breathe, one after the other. */
+@media (prefers-reduced-motion: reduce) {
+  .zload > i {
+    animation: zload-breathe 1.5s ease-in-out infinite;
+  }
+  .zload > i:nth-child(2) {
+    animation-delay: 0.25s;
+  }
+  .zload > i:nth-child(3) {
+    animation-delay: 0.5s;
+  }
+}
+@keyframes zload-breathe {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+/* A pending button keeps its width (the label stays, unseen) and shows the loader in the middle. */
+[data-busy] {
+  position: relative;
+}
+[data-busy] > .btn-hold {
+  visibility: hidden;
+}
+[data-busy] > .zload {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  translate: -50% -50%;
+}
+@media (forced-colors: active) {
+  .zload > i {
+    background: CanvasText;
+  }
+}

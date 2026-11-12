@@ -46,7 +46,12 @@
                 height="36"
               />
             </section>
-            <p class="splash-status" role="status" id="boot-status"></p>
+            <!-- Shown by main.tsx after 1 s; the same markup as components/Loader.tsx. -->
+            <div class="splash-status">
+              <span class="zload zload--lg" id="boot-loader" role="status" hidden>
+                <i></i><i></i><i></i><span class="vh">Loading Zamane</span>
+              </span>
+            </div>
           </div>
         </div>
       </main>

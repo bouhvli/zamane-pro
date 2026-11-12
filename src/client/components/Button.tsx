@@ -6,6 +6,7 @@ import {
   type MouseEvent,
   type ReactNode,
 } from "react";
+import { Loader } from "./Loader.tsx";
 
 /**
  * The design system's Button (window.Zamane.Button), typed. The variants map to the shared layer's classes
@@ -32,7 +33,7 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonVariant;
   size?: "md" | "sm";
   block?: boolean;
-  /** Label shown while a request runs ("Signing in…"). */
+  /** Said (never drawn) while a request runs ("Signing in…"); the loader is what shows. */
   pending?: string | false;
   /** id of the element that says why the button can't be used right now. */
   disabledReason?: string | null;
@@ -74,7 +75,17 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
         onClick?.(e);
       }}
     >
-      {busy ? pending : children}
+      {busy ? (
+        <>
+          <span className="btn-hold" aria-hidden="true">
+            {children}
+          </span>
+          <Loader mono={variant === "primary" || variant === "danger"} />
+          <span className="vh">{pending}</span>
+        </>
+      ) : (
+        children
+      )}
     </button>
   );
 });

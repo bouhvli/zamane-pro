@@ -6,6 +6,7 @@ import { say } from "../../lib/announce.ts";
 import { meKey } from "../../lib/session.ts";
 import { useAuthForm } from "../../lib/use-auth-form.ts";
 import { Field } from "../Field.tsx";
+import { Loader } from "../Loader.tsx";
 import { FormAlert, Notice } from "../Notice.tsx";
 import { spaceKey } from "./space.ts";
 
@@ -125,7 +126,7 @@ export function SpaceSettings({ space }: { space: MySpace }) {
           }}
         />
         <p className="pf-status" data-state={status}>
-          {status === "saving" ? "Saving…" : status === "saved" ? "Saved." : null}
+          {status === "saving" ? <Loader label="Saving" /> : status === "saved" ? "Saved." : null}
         </p>
       </form>
       <dl className="pf-facts" aria-describedby="pf-facts-help">

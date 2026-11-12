@@ -97,9 +97,9 @@ type Boot = "ready" | "offline" | "error";
  * without one, the launch screen says what's true (offline, or the server failed). Only a 401 means signed out.
  */
 async function boot(): Promise<Boot> {
-  const status = document.getElementById("boot-status");
+  const loader = document.getElementById("boot-loader");
   const t = setTimeout(() => {
-    if (status) status.textContent = "Loading Zamane";
+    if (loader) loader.hidden = false;
   }, 1000);
   try {
     await restoreQueryCache();

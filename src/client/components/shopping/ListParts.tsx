@@ -3,6 +3,7 @@ import type { Totals } from "../../../shared/shopping-list.ts";
 import { day, time } from "../../lib/goals.ts";
 import { qtyText, type ShoppingItem } from "../../lib/shopping.ts";
 import { Icon } from "../Icon.tsx";
+import { Loader } from "../Loader.tsx";
 import { plural } from "./util.ts";
 
 /** The pieces of the list view (.ux-forge/shopping list.js): the summary, groups and rows, the Bought group. */
@@ -282,7 +283,7 @@ export function Summary({
   if (loading)
     return (
       <p className="sum-line">
-        <span className="sum-count">Loading…</span>
+        <Loader label="Loading the list" />
       </p>
     );
   if (!t || !t.any) return null;

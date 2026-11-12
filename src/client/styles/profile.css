@@ -510,6 +510,65 @@ html[data-route="profile"] .pf-link {
   text-decoration: underline;
   text-underline-offset: 2px;
 }
+/* The update button: a small zellige tile beside a solid label (no text on the pattern). Ready = filled majorelle. */
+html[data-route="profile"] .pf-upd {
+  display: grid;
+  justify-items: start;
+  gap: var(--space-2);
+  padding-block: var(--space-3);
+}
+html[data-route="profile"] .pf-upd p {
+  margin: 0;
+}
+html[data-route="profile"] .pf-zl-btn {
+  display: inline-flex;
+  align-items: stretch;
+  min-height: 44px;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid var(--majorelle);
+  border-radius: var(--radius-md);
+  background: var(--surface-raised);
+  color: var(--ink);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+html[data-route="profile"] .pf-zl-tile {
+  --zl-u: 22px;
+  --zl-gap: var(--majorelle-soft);
+  --zl-glaze: var(--majorelle);
+  --zl-grout: var(--surface-raised);
+  display: grid;
+  place-items: center;
+  width: 44px;
+  flex: none;
+  color: var(--surface-raised);
+  font-size: 18px;
+}
+html[data-route="profile"] .pf-zl-label {
+  display: inline-flex;
+  align-items: center;
+  padding-inline: var(--space-4);
+}
+html[data-route="profile"] .pf-zl-btn.is-ready {
+  background: var(--majorelle);
+  color: var(--surface-raised);
+}
+html[data-route="profile"] .pf-zl-btn.is-ready .pf-zl-tile {
+  --zl-gap: var(--surface-raised);
+  --zl-glaze: var(--majorelle-soft);
+  --zl-grout: var(--majorelle);
+  color: var(--majorelle);
+}
+html[data-route="profile"] .pf-zl-btn:focus-visible {
+  outline: 3px solid var(--focus, var(--majorelle));
+  outline-offset: 2px;
+}
+html[data-route="profile"] .pf-zl-btn[aria-disabled="true"] {
+  opacity: 0.6;
+  cursor: default;
+}
 html[data-route="profile"] .pf-out {
   display: grid;
   justify-items: start;
