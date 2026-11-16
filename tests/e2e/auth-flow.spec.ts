@@ -127,6 +127,20 @@ test("two partners: sign up, start, join, sign out, reset, sign in", async ({ br
   await s.getByLabel("Same as this phone").check();
   await expect(s.locator("html")).not.toHaveAttribute("data-theme", /.+/);
 
+  // The logo, per device: the lockup, the favicon and the manifest the app installs from (so its icon) follow.
+  await s.getByLabel("Tiles").check();
+  await expect(s.locator("html")).toHaveAttribute("data-logo", "tiles");
+  await expect(s.locator('link[rel="manifest"]')).toHaveAttribute("href", "/manifest-tiles.webmanifest");
+  await expect(s.locator('link[rel="icon"][type="image/svg+xml"]')).toHaveAttribute("href", "/icons/tiles/favicon.svg");
+  await expect(s.locator("#pf-logo-note")).toContainText("Changed in the app.");
+  await s.reload();
+  await expect(s.locator("html")).toHaveAttribute("data-logo", "tiles"); // before first paint
+  await expect(s.locator('link[rel="manifest"]')).toHaveAttribute("href", "/manifest-tiles.webmanifest");
+  await expect(s.locator(".app-header .brand img").first()).toHaveAttribute("src", /zamane-tiles-logo/);
+  await s.getByLabel("Calligraphy").check();
+  await expect(s.locator("html")).not.toHaveAttribute("data-logo", /.+/);
+  await expect(s.locator('link[rel="manifest"]')).toHaveAttribute("href", "/manifest.webmanifest");
+
   await s.getByRole("button", { name: "Change password" }).click(); // opens the form
   await expect(s.locator("#pf-current")).toBeFocused();
   await s.getByLabel("Current password").fill(sara.password);

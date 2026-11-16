@@ -5,14 +5,14 @@ const base = {
   APP_ENV: "development",
   DATABASE_URL: "postgresql://u:p@ep-cool-name-123.eu-central-1.aws.neon.tech/db?sslmode=require",
   BETTER_AUTH_SECRET: "x".repeat(44),
-  APP_URL: "http://localhost:3000",
+  APP_URL: "http://localhost:5000",
 };
 
 describe("env validation", () => {
   it("accepts a local config with uploads off", () => {
     const c = getConfig({ ...base });
     expect(c.uploadsEnabled).toBe(false);
-    expect(c.authUrl).toBe("http://localhost:3000");
+    expect(c.authUrl).toBe("http://localhost:5000");
   });
 
   it("names missing keys, never values", () => {
@@ -53,7 +53,7 @@ describe("env validation", () => {
 
   it("uses the app's origin for auth and picks the sender (D45)", () => {
     const dev = getConfig({ ...base });
-    expect(dev.authUrl).toBe("http://localhost:3000");
+    expect(dev.authUrl).toBe("http://localhost:5000");
     expect(dev.emailFrom).toBe("Zamane <onboarding@resend.dev>");
     expect(senderFor("production", "https://www.zamane.app")).toBe("Zamane <no-reply@zamane.app>");
     expect(senderFor("preview", "https://pr-4.zamane.app")).toBe("Zamane <no-reply@pr-4.zamane.app>");

@@ -1,4 +1,4 @@
-/** D23: light, dark or system, stored per device. public/theme-init.js applies it before first paint. */
+/** D23: light, dark or system, stored per device. public/theme-init.js applies it before first paint (and the logo). */
 export type Theme = "light" | "dark" | "system";
 const KEY = "zamane.theme";
 

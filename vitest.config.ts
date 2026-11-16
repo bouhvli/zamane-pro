@@ -28,7 +28,7 @@ export default defineConfig({
           // checked offline; cleanup calls fail and are only logged.
           env: {
             APP_ENV: "development",
-            APP_URL: "http://localhost:3000",
+            APP_URL: "http://localhost:5000",
             DATABASE_URL: process.env.DATABASE_URL ?? "",
             BETTER_AUTH_SECRET: process.env.BETTER_AUTH_SECRET || "test-secret-test-secret-test-secret-0123",
             RESEND_API_KEY: "",

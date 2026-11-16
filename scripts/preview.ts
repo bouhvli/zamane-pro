@@ -1,5 +1,5 @@
 /**
- * pnpm preview: serves the built .vercel/output on :3000 the way Vercel routes it (D56), to check a build locally:
+ * pnpm preview: serves the built .vercel/output on :5000 the way Vercel routes it (D56), to check a build locally:
  * /api/* → the bundled function (with .env as its environment), files from static/, otherwise index.html.
  */
 import { existsSync, readFileSync, statSync } from "node:fs";
@@ -58,4 +58,4 @@ createServer((req, res) => {
   }
   res.writeHead(200, { "Content-Type": TYPES[extname(hit)] ?? "application/octet-stream" });
   res.end(readFileSync(hit));
-}).listen(3000, () => console.log("preview: http://localhost:3000 (the built output)"));
+}).listen(5000, () => console.log("preview: http://localhost:5000 (the built output)"));

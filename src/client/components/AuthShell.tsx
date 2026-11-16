@@ -1,17 +1,24 @@
 import type { ReactNode } from "react";
-import logoDark from "../assets/brand/zamane-logo-dark.svg";
-import logo from "../assets/brand/zamane-logo.svg";
+import { LOGOS, useLogo } from "../lib/logo.ts";
 import { useChrome } from "../lib/nav.ts";
 import { TileWall } from "./AuthTiles.tsx";
 import { Icon } from "./Icon.tsx";
 
-/** The lockup: light and dark files, switched by the theme. Not a link on these screens. */
-export function Lockup({ decorative }: { decorative?: boolean }) {
+/** The intrinsic size of each lockup at 36px tall (the CSS sets the height; width follows). */
+export const LOCKUP_SIZE = { classic: { width: 125, height: 36 }, tiles: { width: 143, height: 36 } } as const;
+
+/**
+ * The lockup of the logo chosen on this device (lib/logo.ts): light and dark files, switched by the theme.
+ * Not a link on these screens; the app bar wraps it in one.
+ */
+export function Lockup({ decorative, className = "lockup" }: { decorative?: boolean; className?: string }) {
+  const logo = useLogo();
+  const f = LOGOS[logo];
   const alt = decorative ? "" : "Zamane";
   return (
     <>
-      <img className="lockup logo-light" src={logo} alt={alt} width={125} height={36} />
-      <img className="lockup logo-dark" src={logoDark} alt={alt} width={125} height={36} />
+      <img className={`${className} logo-light`} src={f.lockup} alt={alt} {...LOCKUP_SIZE[logo]} />
+      <img className={`${className} logo-dark`} src={f.lockupDark} alt={alt} {...LOCKUP_SIZE[logo]} />
     </>
   );
 }
