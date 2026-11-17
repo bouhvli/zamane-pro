@@ -15,7 +15,7 @@ import sharp from "sharp";
 const ROOT = join(import.meta.dirname, "..", "..");
 const PROTO = pathToFileURL(join(ROOT, ".ux-forge/nav-bar/nav-bar.html")).href;
 const REPORT = join(ROOT, "tests/visual/report/nav");
-const APP = "http://localhost:3000";
+const APP = "http://localhost:5000";
 const THRESHOLD = 0.1;
 
 const ME = {

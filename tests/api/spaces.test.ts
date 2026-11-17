@@ -208,7 +208,7 @@ describe("rotating the code, and the space boundary", () => {
   it("rejects cross-origin and non-JSON writes", async () => {
     const { c } = await person();
     const res = await app.fetch(
-      new Request("http://localhost:3000/api/spaces", {
+      new Request("http://localhost:5000/api/spaces", {
         method: "POST",
         headers: { Origin: "https://evil.example", "Content-Type": "application/json", Cookie: c.cookieHeader() },
         body: "{}",
@@ -216,9 +216,9 @@ describe("rotating the code, and the space boundary", () => {
     );
     expect(res.status).toBe(403);
     const form = await app.fetch(
-      new Request("http://localhost:3000/api/spaces", {
+      new Request("http://localhost:5000/api/spaces", {
         method: "POST",
-        headers: { Origin: "http://localhost:3000", "Content-Type": "text/plain", Cookie: c.cookieHeader() },
+        headers: { Origin: "http://localhost:5000", "Content-Type": "text/plain", Cookie: c.cookieHeader() },
         body: "{}",
       }),
     );

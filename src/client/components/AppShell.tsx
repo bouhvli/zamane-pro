@@ -1,8 +1,7 @@
 import { Link, useLocation } from "@tanstack/react-router";
 import type { MouseEvent, ReactNode } from "react";
-import logoDark from "../assets/brand/zamane-logo-dark.svg";
-import logo from "../assets/brand/zamane-logo.svg";
 import { useChrome } from "../lib/nav.ts";
+import { Lockup } from "./AuthShell.tsx";
 import { initial } from "./Seat.tsx";
 
 /**
@@ -90,8 +89,7 @@ export function AppShell({ me, children }: { me: { displayName: string; slot: "a
       <header className="app-header">
         <div className="wrap bar">
           <Link className="brand" to="/" onClick={onTab("/")}>
-            <img className="logo-light" src={logo} alt="Zamane" width={125} height={36} />
-            <img className="logo-dark" src={logoDark} alt="Zamane" width={125} height={36} />
+            <Lockup className="brand-lockup" />
           </Link>
           <nav className="nav" aria-label="Main">
             <ul className="nav-list">

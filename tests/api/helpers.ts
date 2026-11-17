@@ -3,7 +3,7 @@ import { dbFor } from "../../src/worker/db/client.ts";
 import app from "../../src/worker/index.ts";
 import { session as sessionTable, user as userTable, verification } from "../../src/worker/db/schema.ts";
 
-export const ORIGIN = "http://localhost:3000";
+export const ORIGIN = "http://localhost:5000";
 export const db = () => dbFor(process.env.DATABASE_URL!);
 
 let ipCounter = Math.floor(Math.random() * 200);

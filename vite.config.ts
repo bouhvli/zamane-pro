@@ -35,6 +35,48 @@ function devApi(): Plugin {
   };
 }
 
+/**
+ * The web app manifest. Two copies differ only in their icons: manifest.webmanifest (classic, written by
+ * vite-plugin-pwa) and manifest-tiles.webmanifest (tiles, below). Each device links the one for its logo
+ * (src/client/lib/logo.ts). They share `id` (the value browsers already derived from start_url), so a switch is
+ * the same installed app with new icons, not a second app.
+ */
+const MANIFEST = {
+  id: "/",
+  name: "Zamane",
+  short_name: "Zamane",
+  display: "standalone",
+  start_url: "/",
+  scope: "/",
+  lang: "en",
+  theme_color: "#1d4e89",
+  background_color: "#f8f3ea",
+} as const;
+
+/** The icon set under `dir` ("" for the classic icons at the root, "/icons/tiles" for the tiles logo). */
+function appIcons(dir: string) {
+  return [
+    { src: `${dir}/pwa-192x192.png`, sizes: "192x192", type: "image/png" },
+    { src: `${dir}/pwa-512x512.png`, sizes: "512x512", type: "image/png" },
+    { src: `${dir}/maskable-icon-512x512.png`, sizes: "512x512", type: "image/png", purpose: "maskable" },
+  ];
+}
+
+/** Emits manifest-tiles.webmanifest into the client build, before vite-plugin-pwa precaches the output. */
+function tilesManifest(): Plugin {
+  return {
+    name: "zamane-tiles-manifest",
+    apply: "build",
+    generateBundle() {
+      this.emitFile({
+        type: "asset",
+        fileName: "manifest-tiles.webmanifest",
+        source: JSON.stringify({ ...MANIFEST, icons: appIcons("/icons/tiles") }),
+      });
+    },
+  };
+}
+
 /** D30: vite-plugin-pwa runs for the client (browser) build only, never for the server code Vite loads in dev. */
 function clientOnly(plugins: PluginOption): Plugin[] {
   return (plugins as Plugin[]).flat().map((p) => ({
@@ -49,8 +91,8 @@ export default defineConfig(({ mode }) => {
   const e2e = !production && process.env.E2E === "1";
 
   return {
-    server: { port: 3000, strictPort: true },
-    preview: { port: 3000, strictPort: true },
+    server: { port: 5000, strictPort: true },
+    preview: { port: 5000, strictPort: true },
     define: {
       __APP_VERSION__: JSON.stringify(pkg.version),
       __E2E__: JSON.stringify(e2e),
@@ -65,6 +107,7 @@ export default defineConfig(({ mode }) => {
       }),
       react(),
       devApi(),
+      ...clientOnly([tilesManifest()]),
       ...clientOnly(
         VitePWA({
           strategies: "injectManifest",
@@ -72,20 +115,7 @@ export default defineConfig(({ mode }) => {
           filename: "sw.ts",
           registerType: "prompt",
           injectRegister: false,
-          manifest: {
-            name: "Zamane",
-            short_name: "Zamane",
-            display: "standalone",
-            start_url: "/",
-            scope: "/",
-            theme_color: "#1d4e89",
-            background_color: "#f8f3ea",
-            icons: [
-              { src: "/pwa-192x192.png", sizes: "192x192", type: "image/png" },
-              { src: "/pwa-512x512.png", sizes: "512x512", type: "image/png" },
-              { src: "/maskable-icon-512x512.png", sizes: "512x512", type: "image/png", purpose: "maskable" },
-            ],
-          },
+          manifest: { ...MANIFEST, icons: appIcons("") },
           injectManifest: {
             globPatterns: ["**/*.{js,css,html,svg,png,ico,webmanifest}"],
           },

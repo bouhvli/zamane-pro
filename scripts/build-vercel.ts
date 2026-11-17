@@ -89,10 +89,11 @@ writeFileSync(
       version: 3,
       routes: [
         { src: "/(.*)", headers: SECURITY, continue: true },
-        // Fingerprinted build files never change; the service worker and the page must always be fresh.
+        // Fingerprinted build files never change; the service worker, the page and both manifests (one per logo,
+        // src/client/lib/logo.ts) must always be fresh.
         { src: "/assets/(.*)", headers: { "Cache-Control": "public, max-age=31536000, immutable" }, continue: true },
         {
-          src: "/(sw\\.js|index\\.html|manifest\\.webmanifest)",
+          src: "/(sw\\.js|index\\.html|manifest(-tiles)?\\.webmanifest)",
           headers: { "Cache-Control": "no-cache" },
           continue: true,
         },

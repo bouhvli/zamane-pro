@@ -18,7 +18,7 @@ import { resetPasswordEmail } from "../../src/worker/services/reset-email.ts";
 const ROOT = join(import.meta.dirname, "..", "..");
 const PROTO = pathToFileURL(join(ROOT, ".ux-forge/auth/auth.html")).href;
 const REPORT = join(ROOT, "tests/visual/report/auth");
-const APP = "http://localhost:3000";
+const APP = "http://localhost:5000";
 const SIZES = [
   { w: 390, h: 844 },
   { w: 360, h: 780 },

@@ -413,6 +413,39 @@ html[data-route="profile"] .pf-sw-in:checked ~ .pf-sw-label {
   color: var(--majorelle-ink);
 }
 
+/* ===== Appearance: Theme, then Logo, a small heading each and a hairline between them ===== */
+html[data-route="profile"] .pf-theme > legend {
+  padding: 0;
+  margin-block-end: var(--space-3);
+}
+/* The hairline sits on a wrapper: on the fieldset itself, the legend would be drawn into the border. */
+html[data-route="profile"] .pf-look-set {
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--line);
+}
+html[data-route="profile"] .pf-logos {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+/* Each tile shows that logo's app icon as it sits on a home screen. Two columns at 2:1 keep the theme tiles'
+   height (three columns at 4:3) at every width. */
+html[data-route="profile"] .pf-logo-tile {
+  aspect-ratio: 2 / 1;
+  background: var(--surface-sunken);
+}
+/* Positioned so the percentage height resolves against the tile (its height comes from the aspect ratio). */
+html[data-route="profile"] .pf-logo-icon {
+  position: absolute;
+  top: 17%;
+  left: 50%; /* centring: the same in either direction */
+  translate: -50% 0;
+  display: block;
+  width: auto;
+  height: 66%;
+  aspect-ratio: 1;
+  border-radius: 22%;
+  box-shadow: 0 0 0 1px var(--line);
+}
+
 /* ===== Sections inside a card (Security): a small heading and a hairline between them ===== */
 html[data-route="profile"] .pf-set {
   display: grid;

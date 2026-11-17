@@ -154,6 +154,12 @@ h1[tabindex="-1"]:focus {
 :root[data-theme="dark"] .logo-dark {
   display: block !important;
 }
+/* The static splash (index.html) carries both logos; <html data-logo> shows this device's one. React renders only
+   the chosen logo (lib/logo.ts). Four-part selectors so they beat the theme rules above. */
+:root[data-logo="tiles"] .splash-mark .logo-classic,
+:root:not([data-logo="tiles"]) .splash-mark .logo-tiles {
+  display: none !important;
+}
 
 /* ===== Buttons (design system Button) ===== */
 .btn-primary,

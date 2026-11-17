@@ -15,7 +15,7 @@ import sharp from "sharp";
 const ROOT = join(import.meta.dirname, "..", "..");
 const PROTO = pathToFileURL(join(ROOT, ".ux-forge/home/home.html")).href;
 const REPORT = join(ROOT, "tests/visual/report/home");
-const APP = "http://localhost:3000";
+const APP = "http://localhost:5000";
 const THRESHOLD = 0.1;
 const TODAY = new Date("2026-11-09T10:00:00");
 
