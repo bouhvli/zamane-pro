@@ -68,13 +68,33 @@ export function EmailRow({ email, changed }: { email: string; changed: "updated"
   });
 
   return (
-    <div className="pf-set" aria-labelledby="pf-email-h" role="group">
-      <h3 className="pf-h3" id="pf-email-h">
-        Email
-      </h3>
-      <Notice id="pf-email-offline" icon="wifi-off" hidden={f.online}>
+    <div className="pf-item" aria-labelledby="pf-email-h" role="group">
+      <div className="pf-item-text">
+        <h3 className="pf-h3" id="pf-email-h">
+          Email
+        </h3>
+        <p className="pf-item-val" id="pf-email-value">
+          <bdi dir="ltr">{email}</bdi>
+        </p>
+      </div>
+      {!open && (
+        <Button
+          ref={toggle}
+          variant="secondary"
+          size="sm"
+          className="pf-item-act"
+          id="pf-email-open"
+          aria-expanded="false"
+          aria-controls="pf-email"
+          disabledReason={f.online ? null : "pf-email-offline-msg"}
+          onClick={show}
+        >
+          Change<span className="vh"> email</span>
+        </Button>
+      )}
+      <p className="help" id="pf-email-offline-msg" hidden={f.online}>
         Changing your email needs a connection.
-      </Notice>
+      </p>
       {changed === "updated" && (
         <Notice id="pf-email-updated" icon="check">
           Your email address was changed.
@@ -91,12 +111,9 @@ export function EmailRow({ email, changed }: { email: string; changed: "updated"
           <bdi dir="ltr">{email}</bdi> until you open it.
         </Notice>
       )}
-      {open ? (
+      {open && (
         <form id="pf-email" className="auth-form pf-form" noValidate onSubmit={onSubmit}>
           <FormAlert formId="pf-email" message={f.alert} />
-          <p className="muted pf-current">
-            Your email is <bdi dir="ltr">{email}</bdi>.
-          </p>
           <Field
             id="pf-email-new"
             label="New email"
@@ -124,7 +141,7 @@ export function EmailRow({ email, changed }: { email: string; changed: "updated"
             inputRef={pw.ref}
             input={{ ...pw, autoComplete: "current-password", dir: "ltr", autoCapitalize: "none", spellCheck: false }}
           />
-          <div className="pf-row">
+          <div className="pf-btns">
             <Button type="submit" variant="primary" pending={f.pending} disabledReason={f.disabledReason}>
               Change email
             </Button>
@@ -140,23 +157,6 @@ export function EmailRow({ email, changed }: { email: string; changed: "updated"
             </Button>
           </div>
         </form>
-      ) : (
-        <div className="pf-reveal">
-          <p className="muted">
-            Your email is <bdi dir="ltr">{email}</bdi>.
-          </p>
-          <Button
-            ref={toggle}
-            variant="secondary"
-            id="pf-email-open"
-            aria-expanded="false"
-            aria-controls="pf-email"
-            disabledReason={f.online ? null : "pf-email-offline-msg"}
-            onClick={show}
-          >
-            Change email
-          </Button>
-        </div>
       )}
     </div>
   );

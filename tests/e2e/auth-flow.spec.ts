@@ -124,7 +124,7 @@ test("two partners: sign up, start, join, sign out, reset, sign in", async ({ br
   await expect(s.locator("html")).toHaveAttribute("data-theme", "dark");
   await s.reload();
   await expect(s.locator("html")).toHaveAttribute("data-theme", "dark"); // per device, before first paint
-  await s.getByLabel("Same as this phone").check();
+  await s.getByLabel("Automatic").check();
   await expect(s.locator("html")).not.toHaveAttribute("data-theme", /.+/);
 
   // The logo, per device: the lockup, the favicon and the manifest the app installs from (so its icon) follow.

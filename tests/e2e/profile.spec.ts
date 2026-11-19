@@ -105,7 +105,7 @@ test("space settings, linking, leaving, export, change email, other devices, del
   // ---- Change email: the form opens on request, the link confirms it ----
   await s.getByRole("button", { name: "Change email" }).click();
   await expect(s.locator("#pf-email-new")).toBeFocused();
-  await expect(s.locator("#pf-email")).toContainText(sara.email);
+  await expect(s.locator("#pf-email-value")).toHaveText(sara.email); // the row keeps showing the current address
   await s.getByRole("button", { name: "Cancel" }).click();
   await expect(s.locator("#pf-email-open")).toBeFocused();
   await s.getByRole("button", { name: "Change email" }).click();
@@ -129,7 +129,7 @@ test("space settings, linking, leaving, export, change email, other devices, del
   await s.goto(link);
   await expect(s).toHaveURL(/\/profile\?email=updated/);
   await expect(s.locator("#pf-email-updated")).toHaveText("Your email address was changed.");
-  await expect(s.locator("#pf-email-open").locator("xpath=preceding-sibling::p")).toContainText(NEW_EMAIL);
+  await expect(s.locator("#pf-email-value")).toHaveText(NEW_EMAIL);
 
   // ---- Delete the account (Sara is alone: the space goes with it) ----
   await s.getByRole("button", { name: "Delete my account" }).click();

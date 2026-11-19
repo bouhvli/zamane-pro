@@ -25,11 +25,18 @@ export function TileStar() {
   );
 }
 
-/** A section card's heading: the serif h2, nothing else (the tile field lives on the couple card only). */
-export function CardHead({ id, children }: { id: string; children: ReactNode }) {
+/**
+ * A settings section (.ux-forge/settings): the serif h2 led by one small star, then its grouped list(s). The id is
+ * the index's anchor; the heading takes focus when the index jumps to it.
+ */
+export function Section({ id, title, children }: { id: string; title: string; children: ReactNode }) {
   return (
-    <h2 className="pf-h2" id={id}>
+    <section className="pf-section" id={id} aria-labelledby={`${id}-h`}>
+      <h2 className="pf-section-h" id={`${id}-h`} tabIndex={-1}>
+        <TileStar />
+        {title}
+      </h2>
       {children}
-    </h2>
+    </section>
   );
 }
