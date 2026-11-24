@@ -1,0 +1,194 @@
+/* Zamane motion (from the zamane-motion kit): the kit's tokens and keyframes, and the motion it adds to the app's
+   own components. The app's existing motion (button press, progress fills, shopping ticks, sheets, toasts, the goal
+   surround) stays where it is; this file adds what was missing. Each piece carries its own reduced-motion rule
+   (the kit's blanket "everything 1ms" override is not used: it would flatten the app's designed reduced-motion fades).
+   Rules from the brand book: pressed scales to 0.98; nothing blinks or flashes. */
+
+/* ---------------------------------------------------------------- tokens */
+:root {
+  --dur-instant: 80ms;
+  --dur-fast: 120ms; /* presses, small state changes */
+  --dur-base: 200ms; /* colour changes, fades */
+  --dur-slow: 320ms; /* list moves, collapses */
+  --dur-slower: 480ms; /* entrances */
+  --dur-count: 700ms; /* numbers */
+
+  --ease-in: cubic-bezier(0.4, 0, 1, 1); /* exits */
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1); /* things that move from A to B */
+  --ease-back: cubic-bezier(0.34, 1.56, 0.64, 1); /* small pops */
+  /* --ease-out (arrivals) is already in base.css, with the same curve. */
+}
+
+/* ------------------------------------------------- cards that open a page */
+/* Home's goal cards, the goal tiles and done rows, the trip cards: each is one tap target (a stretched link). They
+   press down, and lift on hover where there is a mouse. */
+@media (prefers-reduced-motion: no-preference) {
+  .home .goal,
+  html[data-route="goals"] .tile,
+  html[data-route="goals"] .done-row,
+  html[data-route="trips"] .trip-lead,
+  html[data-route="trips"] .trip-tile,
+  html[data-route="trips"] .trip-past {
+    transition:
+      transform var(--dur-fast) var(--ease-out),
+      box-shadow var(--dur-base) var(--ease-out),
+      border-color var(--dur-base) var(--ease-out);
+    -webkit-tap-highlight-color: transparent;
+  }
+  .home .goal:active,
+  html[data-route="goals"] .tile:active,
+  html[data-route="goals"] .done-row:active,
+  html[data-route="trips"] .trip-lead:active,
+  html[data-route="trips"] .trip-tile:active,
+  html[data-route="trips"] .trip-past:active {
+    transform: scale(0.98);
+  }
+  @media (hover: hover) {
+    .home .goal:hover,
+    html[data-route="goals"] .tile:hover,
+    html[data-route="trips"] .trip-lead:hover,
+    html[data-route="trips"] .trip-tile:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-pop);
+    }
+    .home .goal:hover:active,
+    html[data-route="goals"] .tile:hover:active,
+    html[data-route="trips"] .trip-lead:hover:active,
+    html[data-route="trips"] .trip-tile:hover:active {
+      transform: translateY(0) scale(0.99);
+    }
+  }
+}
+
+/* ---------------------------------------------------------- the star burst */
+/* Eight small zellige stars fly out once, when a goal is reached. `.zm-burst-at` is the zero-size point they leave
+   from: put it inside a positioned element. */
+.zm-bar {
+  position: relative;
+}
+html[data-route="goals"] .gd-barwrap {
+  flex: 1;
+  min-width: 0;
+}
+.zm-burst-at {
+  position: absolute;
+  top: 50%;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+.zm-burst {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+.zm-burst-star {
+  position: absolute;
+  left: -7px;
+  top: -7px;
+  width: 14px;
+  height: 14px;
+  opacity: 0;
+  animation: zm-burst 900ms var(--ease-out) forwards;
+}
+.zm-burst[data-size="lg"] .zm-burst-star {
+  left: -10px;
+  top: -10px;
+  width: 20px;
+  height: 20px;
+}
+@keyframes zm-burst {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) scale(0.2) rotate(0deg);
+  }
+  15% {
+    opacity: 1;
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--dx), var(--dy)) scale(1) rotate(var(--rot));
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .zm-burst {
+    display: none;
+  }
+}
+@media (forced-colors: active) {
+  .zm-burst {
+    display: none;
+  }
+}
+
+/* ------------------------------------------------------------- done badge */
+/* The "Done" badge pops in the moment a goal is reached on screen (not when it was already done). */
+@media (prefers-reduced-motion: no-preference) {
+  .zm-pop {
+    animation: zm-pop 420ms var(--ease-back);
+  }
+}
+@keyframes zm-pop {
+  0% {
+    transform: scale(0.6);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* ------------------------------------------------------ page transitions */
+/* Route changes cross-fade with a small rise (View Transitions; TanStack Router's defaultViewTransition). The nav
+   and the top bar have their own names, so they stay still while the page changes under them. */
+/* A view-transition-name makes a stacking context. On phones the header is static and only the fixed tab bar inside it
+   shows, so only the bar is named: naming the header would trap the bar's z-index inside it, and the page's cards
+   would paint (and take taps) over it. From 48rem the header is sticky with its own z-index, so it can carry a name. */
+.nav {
+  view-transition-name: zm-nav;
+}
+@media (min-width: 48rem) {
+  .app-header {
+    view-transition-name: zm-header;
+  }
+  .nav {
+    view-transition-name: none;
+  }
+}
+::view-transition-old(root) {
+  animation: zm-vt-out var(--dur-base) var(--ease-in) both;
+}
+::view-transition-new(root) {
+  animation: zm-vt-in var(--dur-slow) var(--ease-out) both;
+}
+::view-transition-group(zm-header),
+::view-transition-group(zm-nav) {
+  animation: none;
+}
+@keyframes zm-vt-out {
+  to {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+@keyframes zm-vt-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}

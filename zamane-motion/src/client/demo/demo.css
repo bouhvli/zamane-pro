@@ -1,0 +1,22 @@
+/* Playground layout only. Not needed by the app. */
+.demo{font-family:var(--font-sans)}
+body{background:var(--surface);color:var(--ink);font-family:var(--font-sans);font-size:15px;line-height:22px;-webkit-font-smoothing:antialiased}
+.demo{max-width:440px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:var(--space-6) 120px;display:flex;flex-direction:column;gap:var(--space-6)}
+.demo-head h1{font-family:var(--font-serif);font-weight:400;font-size:40px;line-height:44px;margin:0}
+.demo-head p{margin:var(--space-2) 0 0;color:var(--ink-muted)}
+.demo-section{display:flex;flex-direction:column;gap:var(--space-3);min-width:0}
+.demo-section h2{margin:0;font-size:18px;line-height:24px;font-weight:600}
+.demo-hint{margin:0;color:var(--ink-muted);font-size:13px;line-height:18px}
+.demo-row{display:flex;flex-wrap:wrap;gap:var(--space-2);align-items:center}
+.demo-list{background:var(--surface-raised);border:1px solid var(--line);border-radius:var(--radius-lg);overflow:hidden;min-height:8px}
+.demo-list .zm-item{background:transparent}
+.demo-group{margin:var(--space-2) 0 0;font-size:13px;font-weight:600;letter-spacing:.01em;color:var(--ink-muted)}
+.demo-stack{display:flex;flex-direction:column;gap:var(--space-3)}
+.demo-total{display:flex;justify-content:space-between;align-items:flex-end;background:var(--surface-raised);border:1px solid var(--line);border-radius:var(--radius-lg);padding:var(--space-4)}
+.demo-total>span{font-size:12px;color:var(--ink-muted)}
+.demo-total b{font-size:32px;line-height:36px;font-weight:600}
+.demo-sheet{display:flex;flex-direction:column;gap:var(--space-2)}
+.demo-sheet label{font-size:13px;font-weight:600}
+.demo-sheet input{font:inherit;padding:var(--space-3);border:1px solid var(--line-strong);border-radius:var(--radius-md);background:var(--surface);color:var(--ink);margin-bottom:var(--space-2)}
+.demo-sheet .zm-btn{margin-top:var(--space-2)}
+.zm-tabs{border:1px solid var(--line);border-radius:var(--radius-lg)}

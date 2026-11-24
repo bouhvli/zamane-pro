@@ -5,6 +5,7 @@ import { groupNameOf, totals as totalsOf, type ListItem } from "../../../shared/
 import { setTitle } from "../../lib/announce.ts";
 import { isApiError } from "../../lib/api.ts";
 import { day } from "../../lib/goals.ts";
+import { haptic } from "../../lib/motion.ts";
 import { focusHeading, useArrival } from "../../lib/nav.ts";
 import { useOnline } from "../../lib/online.ts";
 import {
@@ -143,6 +144,7 @@ export function ShoppingList({ search }: { search: ShoppingSearch }) {
     (it: ShoppingItem, want: boolean) => {
       writes.setBought(it.id, want);
       announceTick(it.name, want);
+      if (want) haptic(); // a short tap on Android when an item is ticked (motion kit)
       if (want)
         toast.current?.show({
           msg: `Bought ${it.name}`,

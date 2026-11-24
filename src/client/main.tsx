@@ -34,12 +34,16 @@ import "./styles/shopping-form.css";
 import "./styles/profile.css";
 import "./styles/auth-zellige.css";
 import "./styles/app.css";
+import "./styles/motion.css";
 
 const router = createRouter({
   routeTree,
   context: { queryClient },
   defaultPreload: "intent",
   scrollRestoration: false,
+  // A change of page cross-fades (styles/motion.css). Same-page navigations (a sheet's history entry, search params)
+  // don't. Browsers without View Transitions just swap the page.
+  defaultViewTransition: { types: ({ pathChanged }) => (pathChanged ? ["page"] : false) },
 });
 
 declare module "@tanstack/react-router" {

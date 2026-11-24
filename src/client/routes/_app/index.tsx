@@ -4,8 +4,11 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { v7 as uuidv7 } from "uuid";
 import { isComplete } from "../../../shared/completion.ts";
 import { formatInviteCode } from "../../../shared/invite-code.ts";
-import { formatAmount } from "../../../shared/money.ts";
+import { formatAmount, minorUnits } from "../../../shared/money.ts";
 import { localToday, nextTrip, shortDate } from "../../../shared/trip-days.ts";
+import { AnimatedList } from "../../components/motion/AnimatedList.tsx";
+import { AnimatedNumber } from "../../components/motion/AnimatedNumber.tsx";
+import { Celebrate } from "../../components/motion/Celebrate.tsx";
 import { QuickAddSheet, type SheetStep } from "../../components/QuickAddSheet.tsx";
 import { Toast, type ToastHandle } from "../../components/Toast.tsx";
 import { Icon } from "../../components/Icon.tsx";
@@ -29,6 +32,7 @@ import {
 } from "../../lib/home.ts";
 import { patchEntryRemove } from "../../lib/goals.ts";
 import { focusHeading, useArrival } from "../../lib/nav.ts";
+import { haptic, useBecameTrue } from "../../lib/motion.ts";
 import { useOnline } from "../../lib/online.ts";
 import { FORMER_PARTNER, type AvatarSlot } from "../../lib/people.ts";
 
@@ -350,7 +354,7 @@ function Home() {
         <Link className="total" to="/goals">
           <h2 className="lbl">Saved together</h2>
           <span className="big num" id="total-num">
-            {money(data!.total)}
+            <AnimatedNumber value={data!.total} format={money} step={10 ** minorUnits(currency)} />
           </span>
           <span className="counts">
             <span>{counts}</span>
@@ -609,16 +613,24 @@ function GoalsRoom({
         <h2 id="h-goals">Closest to done</h2>
         {seeAll}
       </div>
-      <ul className="goals" role="list">
-        {shown.map((g) => (
-          <GoalCard key={g.id} goal={g} currency={currency} members={members} />
-        ))}
-      </ul>
+      <AnimatedList
+        className="goals"
+        items={shown}
+        getKey={(g) => g.id}
+        appear
+        itemProps={(g) => ({ className: `goal${goalDone(g) ? " is-done" : ""}` })}
+      >
+        {(g) => <GoalCard goal={g} currency={currency} members={members} />}
+      </AnimatedList>
     </section>
   );
 }
 
-/** The design system's GoalCard, as Home draws it: the whole card is one link via a stretched title. */
+/**
+ * The design system's GoalCard, as Home draws it (inside the AnimatedList's <li>): the whole card is one link via a
+ * stretched title. The amount counts when a contribution lands; reaching the target pops the Done badge and bursts
+ * stars from the end of the bar.
+ */
 function GoalCard({
   goal: g,
   currency,
@@ -631,6 +643,10 @@ function GoalCard({
   const isMoney = g.kind === "money";
   const pct = Math.round(goalRatio(g) * 100);
   const done = goalDone(g);
+  const reached = useBecameTrue(done);
+  useEffect(() => {
+    if (reached) haptic(18);
+  }, [reached]);
   const num = (minor: number) => formatAmount(minor, currency);
   // A contributor who has left keeps their contributions: shown as a former partner, with a neutral avatar.
   const who: { displayName: string; slot: AvatarSlot } | undefined = g.last
@@ -645,7 +661,7 @@ function GoalCard({
         : `${who.displayName} moved it to ${g.last.percent}% · ${g.pendingSync ? "waiting to sync" : relativeTime(g.last.at)}`;
   }
   return (
-    <li className={`goal${done ? " is-done" : ""}`}>
+    <>
       <div className="goal-cover arch" aria-hidden="true">
         {initial(g.title)}
       </div>
@@ -657,7 +673,7 @@ function GoalCard({
             </Link>
           </h3>
           {done && (
-            <span className="badge-done">
+            <span key={reached} className={`badge-done${reached ? " zm-pop" : ""}`}>
               <Icon name="check" />
               Done
             </span>
@@ -666,26 +682,35 @@ function GoalCard({
         <div className="goal-amt num">
           {isMoney ? (
             <>
-              <b>{num(g.progress)}</b>
+              <b>
+                <AnimatedNumber value={g.progress} format={num} step={10 ** minorUnits(currency)} />
+              </b>
               <span> of {num(g.target ?? 0)}</span>
             </>
           ) : (
             <>
-              <b>{g.progress}%</b>
+              <b>
+                <AnimatedNumber value={g.progress} format={(n) => `${n}%`} />
+              </b>
               <span> complete</span>
             </>
           )}
         </div>
-        <div
-          className="track"
-          role="progressbar"
-          aria-label={g.title}
-          aria-valuemin={0}
-          aria-valuemax={100}
-          aria-valuenow={pct}
-          aria-valuetext={isMoney ? `${num(g.progress)} of ${num(g.target ?? 0)}` : `${g.progress}%`}
-        >
-          <div className="fill" style={{ width: `${pct}%` }} />
+        <div className="zm-bar">
+          <div
+            className="track"
+            role="progressbar"
+            aria-label={g.title}
+            aria-valuemin={0}
+            aria-valuemax={100}
+            aria-valuenow={pct}
+            aria-valuetext={isMoney ? `${num(g.progress)} of ${num(g.target ?? 0)}` : `${g.progress}%`}
+          >
+            <div className="fill" style={{ width: `${pct}%` }} />
+          </div>
+          <span className="zm-burst-at" style={{ insetInlineStart: `${Math.min(pct, 100)}%` }}>
+            <Celebrate fire={reached} />
+          </span>
         </div>
         <div className="goal-foot">
           {g.last && who ? (
@@ -701,6 +726,6 @@ function GoalCard({
           )}
         </div>
       </div>
-    </li>
+    </>
   );
 }
