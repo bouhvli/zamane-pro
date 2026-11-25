@@ -10,7 +10,7 @@ import { afterLeavingSpace, endLocalSession } from "../../lib/session.ts";
 import { Button } from "../Button.tsx";
 import { ConfirmDialog } from "../ConfirmDialog.tsx";
 import { Field } from "../Field.tsx";
-import { CardHead } from "./Zellige.tsx";
+import { Section } from "./Zellige.tsx";
 
 type Mode = "leave" | "delete" | null;
 
@@ -27,9 +27,9 @@ function fileName(res: Response): string {
 }
 
 /**
- * "Your data": export, and the two danger actions (leave the space, delete the account), set apart under their
- * own rule. Each one needs a connection and says so. Both confirmations are the app's ConfirmDialog; deleting
- * also asks for the current password, inside the dialog.
+ * "Your data": export, then the two danger actions (leave the space, delete the account) in their own list,
+ * under a danger heading and edge. Each one needs a connection and says so. Both confirmations are the app's
+ * ConfirmDialog; deleting also asks for the current password, inside the dialog.
  */
 export function DataCard({ me, space }: { me: MeResponse; space: MySpace | undefined }) {
   const qc = useQueryClient();
@@ -226,70 +226,92 @@ export function DataCard({ me, space }: { me: MeResponse; space: MySpace | undef
   );
 
   return (
-    <section className="pf-card" aria-labelledby="pf-data-h">
-      <CardHead id="pf-data-h">Your data</CardHead>
-      <div className="pf-reveal">
-        <p className="muted">Download everything in your space as a JSON file: goals, trips and shopping.</p>
-        <Button
-          variant="secondary"
-          id="pf-export"
-          pending={exporting && "Preparing…"}
-          disabledReason={online ? null : "pf-export-offline"}
-          onClick={() => void exportData()}
-        >
-          Export my data
-        </Button>
-        {!online && (
-          <p className="help" id="pf-export-offline">
-            {OFFLINE.export}
-          </p>
-        )}
-        {exportError && (
-          <p className="err" role="alert">
-            {exportError}
-          </p>
-        )}
-      </div>
-
-      <div className="pf-danger" role="group" aria-labelledby="pf-danger-h">
-        <h3 className="pf-h3 pf-danger-h" id="pf-danger-h">
-          Leave or delete
-        </h3>
-        <div className="pf-reveal">
-          <p className="muted">
-            {alone
-              ? "You're on your own here, so leaving deletes the space."
-              : "Your partner keeps the space and everything in it."}
-          </p>
+    <Section id="pf-data" title="Your data">
+      <div className="pf-list">
+        <div className="pf-item" role="group" aria-labelledby="pf-export-h">
+          <div className="pf-item-text">
+            <h3 className="pf-h3" id="pf-export-h">
+              Everything in your space
+            </h3>
+            <p className="pf-item-sub">Goals, trips and shopping, as one JSON file.</p>
+          </div>
           <Button
-            variant="danger"
-            id="pf-leave"
-            disabledReason={online ? null : "pf-leave-offline"}
-            onClick={() => open("leave")}
+            variant="secondary"
+            size="sm"
+            className="pf-item-act"
+            id="pf-export"
+            pending={exporting && "Preparing…"}
+            disabledReason={online ? null : "pf-export-offline"}
+            onClick={() => void exportData()}
           >
-            Leave space
+            Export<span className="vh"> my data</span>
           </Button>
           {!online && (
-            <p className="help" id="pf-leave-offline">
-              {OFFLINE.leave}
+            <p className="help" id="pf-export-offline">
+              {OFFLINE.export}
+            </p>
+          )}
+          {exportError && (
+            <p className="err" role="alert">
+              {exportError}
             </p>
           )}
         </div>
-        <div className="pf-reveal">
-          <p className="muted">Deletes your account and signs you out. This can&apos;t be undone.</p>
-          <Button
-            variant="danger"
-            id="pf-delete"
-            disabledReason={online ? null : "pf-delete-offline"}
-            onClick={() => open("delete")}
-          >
-            Delete my account
-          </Button>
-          {!online && (
-            <p className="help" id="pf-delete-offline">
-              {OFFLINE.delete}
-            </p>
-          )}
+      </div>
+
+      <div className="pf-danger" role="group" aria-labelledby="pf-danger-h">
+        <h3 className="pf-danger-h" id="pf-danger-h">
+          Leave or delete
+        </h3>
+        <div className="pf-list pf-list-danger">
+          <div className="pf-item">
+            <div className="pf-item-text">
+              <h4 className="pf-h3">
+                Leave <bdi>{spaceName}</bdi>
+              </h4>
+              <p className="pf-item-sub">
+                {alone
+                  ? "You're on your own here, so leaving deletes the space."
+                  : `${partner ? partner.displayName : "Your partner"} keeps the space and everything in it.`}
+              </p>
+            </div>
+            <Button
+              variant="danger"
+              size="sm"
+              className="pf-item-act"
+              id="pf-leave"
+              disabledReason={online ? null : "pf-leave-offline"}
+              onClick={() => open("leave")}
+            >
+              Leave<span className="vh"> space</span>
+            </Button>
+            {!online && (
+              <p className="help" id="pf-leave-offline">
+                {OFFLINE.leave}
+              </p>
+            )}
+          </div>
+          <div className="pf-item">
+            <div className="pf-item-text">
+              <h4 className="pf-h3">Delete your account</h4>
+              <p className="pf-item-sub">Signs you out everywhere. This can&apos;t be undone.</p>
+            </div>
+            <Button
+              variant="danger"
+              size="sm"
+              className="pf-item-act"
+              id="pf-delete"
+              disabledReason={online ? null : "pf-delete-offline"}
+              onClick={() => open("delete")}
+            >
+              Delete<span className="vh"> my account</span>
+            </Button>
+            {!online && (
+              <p className="help" id="pf-delete-offline">
+                {OFFLINE.delete}
+              </p>
+            )}
+          </div>
         </div>
       </div>
 
@@ -303,6 +325,6 @@ export function DataCard({ me, space }: { me: MeResponse; space: MySpace | undef
         onConfirm={() => void (mode === "delete" ? deleteAccount() : leave())}
         onCancel={cancel}
       />
-    </section>
+    </Section>
   );
 }

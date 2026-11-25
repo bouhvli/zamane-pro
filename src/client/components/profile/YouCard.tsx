@@ -7,14 +7,15 @@ import { meKey } from "../../lib/session.ts";
 import { useAuthForm } from "../../lib/use-auth-form.ts";
 import { Field } from "../Field.tsx";
 import { Loader } from "../Loader.tsx";
-import { FormAlert, Notice } from "../Notice.tsx";
+import { FormAlert } from "../Notice.tsx";
+import { EmailRow } from "./EmailRow.tsx";
 import { spaceKey } from "./space.ts";
-import { CardHead } from "./Zellige.tsx";
+import { Section } from "./Zellige.tsx";
 
 type Status = "idle" | "saving" | "saved";
 
 /** The first name saves by itself when the field loses focus, if it changed and is valid. */
-export function NameCard({ displayName }: { displayName: string }) {
+function NameRow({ displayName }: { displayName: string }) {
   const qc = useQueryClient();
   const [status, setStatus] = useState<Status>("idle");
   const saved = useRef(displayName); // the last value the server has
@@ -70,11 +71,7 @@ export function NameCard({ displayName }: { displayName: string }) {
   }, [f.online]);
 
   return (
-    <section className="pf-card" aria-labelledby="pf-you-h">
-      <CardHead id="pf-you-h">You</CardHead>
-      <Notice id="pf-name-offline" icon="wifi-off" hidden={f.online}>
-        Saving your name needs a connection.
-      </Notice>
+    <div className="pf-item">
       <form
         id="pf-name"
         className="auth-form pf-form"
@@ -111,6 +108,29 @@ export function NameCard({ displayName }: { displayName: string }) {
           {status === "saving" ? <Loader label="Saving" /> : status === "saved" ? "Saved." : null}
         </p>
       </form>
-    </section>
+      <p className="help" id="pf-name-offline-msg" hidden={f.online}>
+        Saving your name needs a connection.
+      </p>
+    </div>
+  );
+}
+
+/** Who you are to the app: the first name your partner sees and the email you sign in with. */
+export function YouCard({
+  displayName,
+  email,
+  emailChanged,
+}: {
+  displayName: string;
+  email: string;
+  emailChanged: "updated" | "failed" | null;
+}) {
+  return (
+    <Section id="pf-you" title="You">
+      <div className="pf-list">
+        <NameRow displayName={displayName} />
+        <EmailRow email={email} changed={emailChanged} />
+      </div>
+    </Section>
   );
 }

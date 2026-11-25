@@ -5,6 +5,8 @@ import { formatAmount, minorUnits } from "../../../../../shared/money.ts";
 import { ConfirmDialog } from "../../../../components/ConfirmDialog.tsx";
 import { PartnerAvatarSm } from "../../../../components/goals/Avatar.tsx";
 import { EntrySheet, PhotoViewer } from "../../../../components/goals/detail/Dialogs.tsx";
+import { AnimatedNumber } from "../../../../components/motion/AnimatedNumber.tsx";
+import { Celebrate } from "../../../../components/motion/Celebrate.tsx";
 import { History, Journal, SkRows, Tabs, type People } from "../../../../components/goals/detail/Feeds.tsx";
 import { Bar, Doorway } from "../../../../components/goals/Doorway.tsx";
 import { NoteComposer } from "../../../../components/goals/NoteComposer.tsx";
@@ -30,6 +32,7 @@ import {
 } from "../../../../lib/goals.ts";
 import { addEntryKey, homeKey, removeEntryKey, type AddEntryVars, type RemoveEntryVars } from "../../../../lib/home.ts";
 import { focusHeading, useArrival, useNoFab } from "../../../../lib/nav.ts";
+import { haptic } from "../../../../lib/motion.ts";
 import { useOnline } from "../../../../lib/online.ts";
 import { unknownName, unknownSlot } from "../../../../lib/people.ts";
 import { photoUrl } from "../../../../lib/uploads.ts";
@@ -132,6 +135,7 @@ function GoalDetail() {
   } | null>(null);
   const [closing, setClosing] = useState(false);
   const [turning, setTurning] = useState(false);
+  const [burst, setBurst] = useState(0);
   const [retrying, setRetrying] = useState(false);
   const toast = useRef<ToastHandle>(null);
   const root = useRef<HTMLDivElement>(null);
@@ -168,9 +172,12 @@ function GoalDetail() {
     focusPrimary,
     onCompleted: () => {
       setClosing(true);
+      haptic(18);
       if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
         setTurning(true);
         setTimeout(() => setTurning(false), 400);
+        // Stars burst from the end of the bar once its fill has arrived (--dur-fill), with the surround closing.
+        setTimeout(() => setBurst((n) => n + 1), 400);
       }
     },
   });
@@ -551,10 +558,14 @@ function GoalDetail() {
 
   // Progress
   let second: ReactNode = null;
-  let figure: string;
+  // The big figure counts to its new value when a contribution lands (not on arrival).
+  const figure = money ? (
+    <AnimatedNumber value={progress} format={mad} step={10 ** minorUnits(currency)} />
+  ) : (
+    <AnimatedNumber value={progress} format={(n) => `${n}%`} />
+  );
   if (money) {
     const target = g.target ?? 0;
-    figure = mad(progress);
     second =
       progress > target
         ? `of ${mad(target)} · ${mad(progress - target)} over`
@@ -562,7 +573,6 @@ function GoalDetail() {
           ? `of ${mad(target)}`
           : `of ${mad(target)} · ${mad(target - progress)} to go`;
   } else {
-    figure = `${progress}%`;
     if (last)
       second = (
         <>
@@ -773,11 +783,16 @@ function GoalDetail() {
               </p>
               {second && <p className="gd-second">{second}</p>}
               <div className="gd-barline">
-                <Bar
-                  goal={g}
-                  label={g.title}
-                  valueText={money ? `${mad(progress)} of ${mad(g.target ?? 0)}` : `${progress}%`}
-                />
+                <div className="zm-bar gd-barwrap">
+                  <Bar
+                    goal={g}
+                    label={g.title}
+                    valueText={money ? `${mad(progress)} of ${mad(g.target ?? 0)}` : `${progress}%`}
+                  />
+                  <span className="zm-burst-at" style={{ insetInlineStart: "100%" }}>
+                    <Celebrate fire={burst} size="lg" />
+                  </span>
+                </div>
                 {money && !done && (
                   <span className="gd-pct num" aria-hidden="true">
                     {pc}%

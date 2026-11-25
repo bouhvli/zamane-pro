@@ -6,9 +6,10 @@ import { AboutCard } from "../../components/profile/AboutCard.tsx";
 import { AppearanceCard } from "../../components/profile/AppearanceCard.tsx";
 import { CoupleCard } from "../../components/profile/CoupleCard.tsx";
 import { DataCard } from "../../components/profile/DataCard.tsx";
-import { NameCard } from "../../components/profile/NameCard.tsx";
 import { SecurityCard } from "../../components/profile/SecurityCard.tsx";
+import { SettingsIndex } from "../../components/profile/SettingsIndex.tsx";
 import { spaceKey } from "../../components/profile/space.ts";
+import { YouCard } from "../../components/profile/YouCard.tsx";
 import { ZelligeDefs } from "../../components/profile/Zellige.tsx";
 import { api } from "../../lib/api.ts";
 import { say, setTitle } from "../../lib/announce.ts";
@@ -25,9 +26,10 @@ export const Route = createFileRoute("/_app/profile")({
 });
 
 /**
- * Profile and Settings (.ux-forge/profile, direction B "Set tiles"): the couple card first (who is in the space,
- * its name, and the invite code while the partner hasn't joined), then You, Appearance, Security, Your data, About
- * and sign out. 2x2 card grid from 48rem.
+ * Profile and Settings. The couple card first (.ux-forge/profile, direction B "Set tiles": who is in the space, its
+ * name, and the invite code while the partner hasn't joined), then the settings (.ux-forge/settings, "Index + rows"):
+ * You, Appearance, Security, Your data, About, each a section of rows, and Sign out last. From 48rem a sticky index
+ * sits beside the sections.
  */
 function Profile() {
   useArrival((first) => {
@@ -61,12 +63,15 @@ function Profile() {
       <ZelligeDefs />
       <h1 className="title-lg">Profile</h1>
       <CoupleCard space={space} />
-      <div className="pf-grid">
-        <NameCard displayName={me.user.displayName} />
-        <AppearanceCard />
-        <SecurityCard email={me.user.email} emailChanged={emailChanged} />
-        <DataCard me={me} space={space.data?.space} />
-        <AboutCard />
+      <div className="pf-settings">
+        <SettingsIndex />
+        <div className="pf-sections">
+          <YouCard displayName={me.user.displayName} email={me.user.email} emailChanged={emailChanged} />
+          <AppearanceCard />
+          <SecurityCard />
+          <DataCard me={me} space={space.data?.space} />
+          <AboutCard />
+        </div>
       </div>
     </div>
   );

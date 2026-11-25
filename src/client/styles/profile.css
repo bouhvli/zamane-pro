@@ -1,5 +1,6 @@
-/* Profile and Settings (.ux-forge/profile, direction B "Set tiles"). Every rule is scoped to html[data-route="profile"]
-   (set by AppShell), so the other pages are untouched. Tokens only; the --zl-* variables are the motif's own.
+/* Profile and Settings. The couple card is .ux-forge/profile direction B "Set tiles"; the settings below it are
+   .ux-forge/settings "Index + rows". Every rule is scoped to html[data-route="profile"] (set by AppShell), so the other
+   pages are untouched. Tokens only; the --zl-* and --m-* variables are the motif's own.
    Zellige green is not used here (it means "done" elsewhere). */
 :root {
   --zl-star-fill: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cpath d='M48 24L40.97 31.03 40.97 40.97 31.03 40.97 24 48 16.97 40.97 7.03 40.97 7.03 31.03 0 24 7.03 16.97 7.03 7.03 16.97 7.03 24 0 31.03 7.03 40.97 7.03 40.97 16.97Z'/%3E%3C/svg%3E");
@@ -64,22 +65,13 @@ html[data-route="profile"] .pf {
 html[data-route="profile"] .pf > .title-lg {
   margin-block-end: calc(var(--space-2) * -1);
 }
-html[data-route="profile"] .pf-grid {
-  display: grid;
-  gap: var(--space-5);
-  grid-template-columns: minmax(0, 1fr);
-}
 @media (min-width: 48rem) {
   html[data-route="profile"] .pf {
-    max-width: 64rem;
-  }
-  html[data-route="profile"] .pf-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    align-items: stretch;
+    max-width: 56rem;
   }
 }
 
-/* ===== Cards: plain, hairline, radius 12, a serif heading ===== */
+/* ===== The couple card's shell: plain, hairline, radius 12 ===== */
 html[data-route="profile"] .pf-card {
   min-width: 0;
   display: grid;
@@ -95,15 +87,9 @@ html[data-route="profile"] .pf-card {
     padding: var(--space-5);
   }
 }
-html[data-route="profile"] .pf-h2 {
-  margin: 0;
-  font-family: var(--font-serif);
-  font-weight: 400;
-  font-size: 22px;
-  line-height: 28px;
-  text-wrap: balance;
-}
-html[data-route="profile"] .pf-card .page-notice {
+
+/* ===== Forms (the space name in the couple card, and the forms that open inside a settings row) ===== */
+html[data-route="profile"] .page-notice {
   margin: 0;
 }
 html[data-route="profile"] .pf-form {
@@ -131,15 +117,7 @@ html[data-route="profile"] .pf-status {
 html[data-route="profile"] .pf-status:empty {
   display: none;
 }
-html[data-route="profile"] .pf-reveal {
-  display: grid;
-  justify-items: start;
-  gap: var(--space-3);
-}
-html[data-route="profile"] .pf-reveal p {
-  margin: 0;
-}
-html[data-route="profile"] .pf-row {
+html[data-route="profile"] .pf-btns {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-2);
@@ -306,20 +284,248 @@ html[data-route="profile"] .pf-code > .err {
   }
 }
 
-/* ===== Appearance: theme tiles ===== */
-html[data-route="profile"] .pf-theme {
+/* ===== Your space: name, and the read-only currency and time zone ===== */
+html[data-route="profile"] .pf-space-set {
+  display: grid;
+  gap: var(--space-3);
+}
+html[data-route="profile"] .pf-code + .pf-space-set {
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--line);
+}
+html[data-route="profile"] .pf-facts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-3);
+  margin: 0;
+}
+html[data-route="profile"] .pf-facts > div {
+  min-width: 0;
+}
+html[data-route="profile"] .pf-facts dt {
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+html[data-route="profile"] .pf-facts dd {
+  margin: 2px 0 0;
+  overflow-wrap: anywhere;
+}
+html[data-route="profile"] .pf-facts-help {
+  margin: 0;
+}
+
+/* ===== Settings: a sticky index beside the sections from 48rem; on phones the sections simply follow ===== */
+html[data-route="profile"] .pf-settings {
+  display: grid;
+  gap: var(--space-6);
+  margin-top: var(--space-3);
+}
+html[data-route="profile"] .pf-sections {
+  display: grid;
+  gap: var(--space-6);
+  min-width: 0;
+}
+html[data-route="profile"] .pf-index {
+  display: none;
+}
+@media (min-width: 48rem) {
+  html[data-route="profile"] .pf-settings {
+    grid-template-columns: 10.5rem minmax(0, 1fr);
+    column-gap: var(--space-6);
+    align-items: start;
+  }
+  html[data-route="profile"] .pf-sections {
+    gap: var(--space-7);
+  }
+  html[data-route="profile"] .pf-index {
+    display: block;
+    position: sticky;
+    top: calc(var(--top-bar-h) + var(--space-5));
+  }
+}
+html[data-route="profile"] .pf-index-h {
+  margin: 0 0 var(--space-2);
+  padding-inline: var(--space-3);
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+html[data-route="profile"] .pf-index ul {
+  display: grid;
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+html[data-route="profile"] .pf-index a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 40px;
+  padding-inline: var(--space-3);
+  border-radius: var(--radius-sm);
+  color: var(--ink-muted);
+  font-size: 15px;
+  line-height: 20px;
+  text-decoration: none;
+}
+html[data-route="profile"] .pf-index a .pf-star {
+  font-size: 11px;
+  color: var(--line-strong);
+  opacity: 0.45;
+}
+html[data-route="profile"] .pf-index a:hover {
+  color: var(--ink);
+  background: var(--surface-sunken);
+}
+/* The section you're in: a set plate (raised, hairline) with the star glazed in majorelle. */
+html[data-route="profile"] .pf-index a[aria-current="true"] {
+  color: var(--ink);
+  font-weight: 600;
+  background: var(--surface-raised);
+  box-shadow: inset 0 0 0 1px var(--line);
+}
+html[data-route="profile"] .pf-index a[aria-current="true"] .pf-star {
+  color: var(--majorelle);
+  opacity: 1;
+}
+html[data-route="profile"] .pf-index a:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+/* A section: the serif heading led by one star, then its grouped list(s). */
+html[data-route="profile"] .pf-section {
+  display: grid;
+  gap: var(--space-3);
+  min-width: 0;
+}
+html[data-route="profile"] .pf-section-h {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 28px;
+  text-wrap: balance;
+}
+html[data-route="profile"] .pf-section-h .pf-star {
+  font-size: 14px;
+  color: var(--majorelle);
+}
+html[data-route="profile"] .pf-section-h:focus {
+  outline: none; /* only ever focused by the index, to carry the reading position; never operable */
+}
+
+/* A grouped list: one raised piece, rows set in it with a grout hairline between. */
+html[data-route="profile"] .pf-list {
+  display: grid;
+  min-width: 0;
+  background: var(--surface-raised);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+}
+html[data-route="profile"] .pf-item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3) var(--space-4);
+  min-width: 0;
+  padding: var(--space-4);
+}
+@media (min-width: 48rem) {
+  html[data-route="profile"] .pf-item {
+    padding: 18px var(--space-5);
+  }
+}
+html[data-route="profile"] .pf-item + .pf-item {
+  border-top: 1px solid var(--line);
+}
+/* Anything that isn't the title block or the action (notices, forms, messages) takes the full row. */
+html[data-route="profile"] .pf-item > * {
+  flex: 1 1 100%;
+  min-width: 0;
+  margin: 0;
+}
+html[data-route="profile"] .pf-item > .pf-item-text {
+  flex: 1 1 11rem;
+  display: grid;
+  gap: 2px;
+}
+html[data-route="profile"] .pf-item > .pf-item-act {
+  flex: none;
+}
+html[data-route="profile"] .pf-h3 {
+  margin: 0;
+  font-size: 15px;
+  line-height: 20px;
+  font-weight: 600;
+}
+html[data-route="profile"] .pf-item-sub {
+  margin: 0;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--ink-muted);
+}
+html[data-route="profile"] .pf-item-val {
+  margin: 0;
+  font-size: 15px;
+  line-height: 20px;
+  overflow-wrap: anywhere;
+}
+/* Forms opened in a row: fields keep a readable width; the first name's label is the row's title. */
+html[data-route="profile"] .pf-item .pf-form {
+  gap: var(--space-3);
+}
+html[data-route="profile"] .pf-item .pf-form > .fgroup {
+  max-width: 28rem;
+}
+html[data-route="profile"] #pf-name .field-label {
+  font-size: 15px;
+  line-height: 20px;
+}
+html[data-route="profile"] .pf-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--majorelle);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+html[data-route="profile"] .pf-item > .pf-link {
+  flex: none;
+  margin-block: calc(var(--space-2) * -1);
+}
+
+/* ===== Appearance: theme and logo as set tiles ===== */
+html[data-route="profile"] .pf-choice {
   margin: 0;
   padding: 0;
   border: 0;
   min-width: 0;
 }
-html[data-route="profile"] .pf-theme .help {
-  margin-top: var(--space-4);
+html[data-route="profile"] .pf-choice > legend {
+  padding: 0;
+  margin-block-end: var(--space-3);
+}
+html[data-route="profile"] .pf-choice .help {
+  margin-top: var(--space-3);
 }
 html[data-route="profile"] .pf-swatches {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: var(--space-3);
+  max-width: 30rem;
 }
 html[data-route="profile"] .pf-sw {
   position: relative;
@@ -348,26 +554,70 @@ html[data-route="profile"] .pf-sw-tile {
   border-radius: var(--radius-sm);
   box-shadow: 0 0 0 1px var(--line-strong);
 }
-html[data-route="profile"] .pf-sw-pane {
+/* Each theme tile is a small screen in that theme's own colours (from tokens.css), whichever theme is on now:
+   a zellige band, and a card with a line of text and a muted one. Automatic shows both, split diagonally. */
+html[data-route="profile"] .pf-mini {
   position: absolute;
   inset: 0;
-  --zl-u: 24px;
+  display: block;
+  background: var(--m-surface);
 }
-/* The two themes' own colours, so each tile shows its theme whichever one is on now (values from tokens.css). */
-html[data-route="profile"] .pf-sw-light-pane {
-  --zl-gap: #dfe8f5;
-  --zl-glaze: #1d4e89;
-  --zl-grout: #fffdf8;
+html[data-route="profile"] .pf-mini-light {
+  --m-surface: #f8f3ea;
+  --m-raised: #fffdf8;
+  --m-line: #e3d8c5;
+  --m-ink: #1d2230;
+  --m-muted: #5a5f6d;
+  --m-glaze: #1d4e89;
+  --m-soft: #dfe8f5;
 }
-html[data-route="profile"] .pf-sw-dark-pane {
-  --zl-gap: #1b2b44;
-  --zl-glaze: #8fb4ea;
-  --zl-grout: #1b2029;
+html[data-route="profile"] .pf-mini-dark {
+  --m-surface: #12161d;
+  --m-raised: #1b2029;
+  --m-line: #2b323e;
+  --m-ink: #f1ebdf;
+  --m-muted: #a8adb9;
+  --m-glaze: #8fb4ea;
+  --m-soft: #1b2b44;
 }
-html[data-route="profile"] .pf-sw-system .pf-sw-light-pane {
+html[data-route="profile"] .pf-mini-band {
+  --zl-u: 18px;
+  --zl-gap: var(--m-soft);
+  --zl-glaze: var(--m-glaze);
+  --zl-grout: var(--m-surface);
+  position: absolute;
+  inset: 0 0 auto;
+  height: 46%;
+}
+html[data-route="profile"] .pf-mini-card {
+  position: absolute;
+  inset: 32% 14% 14%;
+  display: grid;
+  align-content: center;
+  gap: 6px;
+  padding-inline: 12%;
+  background: var(--m-raised);
+  border: 1px solid var(--m-line);
+  border-radius: 5px;
+}
+html[data-route="profile"] .pf-mini-l1,
+html[data-route="profile"] .pf-mini-l2 {
+  display: block;
+  height: 6px;
+  border-radius: 3px;
+}
+html[data-route="profile"] .pf-mini-l1 {
+  width: 72%;
+  background: var(--m-ink);
+}
+html[data-route="profile"] .pf-mini-l2 {
+  width: 46%;
+  background: var(--m-muted);
+}
+html[data-route="profile"] .pf-sw-system .pf-mini-light {
   clip-path: polygon(0 0, 100% 0, 0 100%);
 }
-html[data-route="profile"] .pf-sw-system .pf-sw-dark-pane {
+html[data-route="profile"] .pf-sw-system .pf-mini-dark {
   clip-path: polygon(100% 0, 100% 100%, 0 100%);
 }
 html[data-route="profile"] .pf-sw-check {
@@ -412,22 +662,11 @@ html[data-route="profile"] .pf-sw-label {
 html[data-route="profile"] .pf-sw-in:checked ~ .pf-sw-label {
   color: var(--majorelle-ink);
 }
-
-/* ===== Appearance: Theme, then Logo, a small heading each and a hairline between them ===== */
-html[data-route="profile"] .pf-theme > legend {
-  padding: 0;
-  margin-block-end: var(--space-3);
-}
-/* The hairline sits on a wrapper: on the fieldset itself, the legend would be drawn into the border. */
-html[data-route="profile"] .pf-look-set {
-  padding-top: var(--space-4);
-  border-top: 1px solid var(--line);
-}
+/* The logo: each tile shows that logo's app icon as it sits on a home screen. Two columns at 2:1 keep the theme
+   tiles' height (three columns at 4:3) at every width. */
 html[data-route="profile"] .pf-logos {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
-/* Each tile shows that logo's app icon as it sits on a home screen. Two columns at 2:1 keep the theme tiles'
-   height (three columns at 4:3) at every width. */
 html[data-route="profile"] .pf-logo-tile {
   aspect-ratio: 2 / 1;
   background: var(--surface-sunken);
@@ -446,113 +685,27 @@ html[data-route="profile"] .pf-logo-icon {
   box-shadow: 0 0 0 1px var(--line);
 }
 
-/* ===== Sections inside a card (Security): a small heading and a hairline between them ===== */
-html[data-route="profile"] .pf-set {
-  display: grid;
-  gap: var(--space-3);
-  min-width: 0;
-}
-html[data-route="profile"] .pf-set + .pf-set,
+/* ===== Your data: the danger list stands apart, under its own small heading and a danger edge ===== */
 html[data-route="profile"] .pf-danger {
-  padding-top: var(--space-4);
-  border-top: 1px solid var(--line);
-}
-html[data-route="profile"] .pf-h3 {
-  margin: 0;
-  font-size: 15px;
-  line-height: 20px;
-  font-weight: 600;
-}
-html[data-route="profile"] .pf-current {
-  margin: 0;
-  overflow-wrap: anywhere;
-}
-html[data-route="profile"] .pf-set .pf-form {
-  gap: var(--space-3);
-}
-
-/* ===== Your space: name, and the read-only currency and time zone ===== */
-html[data-route="profile"] .pf-space-set {
   display: grid;
-  gap: var(--space-3);
+  gap: var(--space-2);
+  margin-top: var(--space-3);
 }
-html[data-route="profile"] .pf-code + .pf-space-set {
-  padding-top: var(--space-4);
-  border-top: 1px solid var(--line);
-}
-html[data-route="profile"] .pf-facts {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--space-3);
+html[data-route="profile"] .pf-danger-h {
   margin: 0;
-}
-html[data-route="profile"] .pf-facts > div {
-  min-width: 0;
-}
-html[data-route="profile"] .pf-facts dt {
   font-size: 12px;
   line-height: 16px;
   font-weight: 600;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--ink-muted);
-}
-html[data-route="profile"] .pf-facts dd {
-  margin: 2px 0 0;
-  overflow-wrap: anywhere;
-}
-html[data-route="profile"] .pf-facts-help {
-  margin: 0;
-}
-
-/* ===== Your data: export, then the danger actions set apart under their own rule ===== */
-html[data-route="profile"] .pf-danger {
-  display: grid;
-  gap: var(--space-4);
-}
-html[data-route="profile"] .pf-danger-h {
   color: var(--danger-ink);
 }
-html[data-route="profile"] .pf-reveal .err {
-  margin: 0;
-}
-html[data-route="profile"] .pf-reveal .page-notice {
-  width: 100%;
+html[data-route="profile"] .pf-list-danger,
+html[data-route="profile"] .pf-list-danger .pf-item + .pf-item {
+  border-color: color-mix(in srgb, var(--danger) 40%, var(--line));
 }
 
-/* ===== About and sign out ===== */
-html[data-route="profile"] .pf-about {
-  display: grid;
-  gap: var(--space-1);
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-html[data-route="profile"] .pf-about li {
-  margin: 0;
-  display: flex;
-  align-items: center;
-  min-height: 44px;
-}
-html[data-route="profile"] .pf-link {
-  display: inline-flex;
-  align-items: center;
-  min-height: 44px;
-  color: var(--majorelle);
-  font-weight: 600;
-  text-decoration: underline;
-  text-underline-offset: 2px;
-}
-/* The update button: a small zellige tile beside a solid label (no text on the pattern). Ready = filled majorelle. */
-html[data-route="profile"] .pf-upd {
-  display: grid;
-  justify-items: start;
-  gap: var(--space-2);
-  padding-block: var(--space-3);
-}
-html[data-route="profile"] .pf-upd p {
-  margin: 0;
-}
+/* ===== About: the update button, a small zellige tile beside a solid label (no text on the pattern) ===== */
 html[data-route="profile"] .pf-zl-btn {
   display: inline-flex;
   align-items: stretch;
@@ -564,6 +717,8 @@ html[data-route="profile"] .pf-zl-btn {
   background: var(--surface-raised);
   color: var(--ink);
   font: inherit;
+  font-size: 13px;
+  line-height: 18px;
   font-weight: 600;
   cursor: pointer;
 }
@@ -602,23 +757,36 @@ html[data-route="profile"] .pf-zl-btn[aria-disabled="true"] {
   opacity: 0.6;
   cursor: default;
 }
+
+/* Sign out: on its own at the very end. Full width on phones (the thumb's reach), its own size from 48rem. */
 html[data-route="profile"] .pf-out {
   display: grid;
-  justify-items: start;
-  gap: var(--space-3);
-  padding-top: var(--space-4);
-  border-top: 1px solid var(--line);
+  gap: var(--space-2);
+  margin-top: var(--space-3);
 }
-html[data-route="profile"] .pf-out p {
+html[data-route="profile"] .pf-out .help {
   margin: 0;
+  text-align: center;
+}
+@media (min-width: 48rem) {
+  html[data-route="profile"] .pf-out {
+    justify-items: start;
+  }
+  html[data-route="profile"] .pf-out .help {
+    text-align: start;
+  }
 }
 
 /* ===== Forced colours: the pattern is gone above; edges become real borders ===== */
 @media (forced-colors: active) {
   html[data-route="profile"] .pf-card,
+  html[data-route="profile"] .pf-list,
   html[data-route="profile"] .pf-plate,
   html[data-route="profile"] .pf-slip {
     border-color: CanvasText;
+  }
+  html[data-route="profile"] .pf-index a[aria-current="true"] {
+    outline: 2px solid Highlight;
   }
   html[data-route="profile"] .pf-sw-tile {
     border: 1px solid CanvasText;

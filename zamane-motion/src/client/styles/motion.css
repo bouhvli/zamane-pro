@@ -1,0 +1,168 @@
+/* Zamane motion — tokens, keyframes and the animated states of the design-system components.
+ *
+ * Load after tokens.css and the components' stylesheet (bundle.css or its port).
+ * Rules from the brand book this file follows:
+ *   - Pressed: scale to 0.98 for 120 ms.
+ *   - A completed goal fills to zellige and shows "Done".
+ *   - Ticking a shopping item strikes the name and moves it to Bought after a short delay.
+ *   - prefers-reduced-motion: no scaling, instant moves.
+ *   - Nothing blinks or flashes.
+ */
+
+/* ---------------------------------------------------------------- tokens */
+:root {
+  --dur-instant: 80ms;
+  --dur-fast: 120ms;   /* presses, small state changes */
+  --dur-base: 200ms;   /* colour changes, fades */
+  --dur-slow: 320ms;   /* list moves, collapses */
+  --dur-slower: 480ms; /* entrances, sheets */
+  --dur-count: 700ms;  /* numbers and progress bars */
+
+  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);      /* arrivals */
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);           /* exits */
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);   /* things that move from A to B */
+  --ease-back: cubic-bezier(0.34, 1.56, 0.64, 1);  /* small pops: badges, check boxes */
+  --ease-spring: var(--ease-back);                 /* sheets; replaced by a real spring below */
+}
+@supports (animation-timing-function: linear(0, 1)) {
+  :root {
+    --ease-spring: linear(0, 0.06, 0.202, 0.38, 0.561, 0.723, 0.856, 0.955, 1.023, 1.062, 1.081, 1.083, 1.075, 1.062, 1.047, 1.032, 1.019, 1.009, 1.002, 0.997, 0.994, 0.993, 0.993, 0.994, 0.995, 0.996, 0.998, 0.999, 0.999, 1, 1, 1.001, 1);
+  }
+}
+
+.zm-sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+
+/* ------------------------------------------------------------- pressables */
+/* Anything tappable: buttons, cards that open a detail, list rows. */
+.zm-pressable { transition: transform var(--dur-fast) var(--ease-out), box-shadow var(--dur-base) var(--ease-out), background-color var(--dur-base) var(--ease-out), border-color var(--dur-base) var(--ease-out), color var(--dur-base) var(--ease-out); -webkit-tap-highlight-color: transparent; }
+.zm-pressable:active:not(:disabled) { transform: scale(0.98); }
+@media (hover: hover) {
+  .zm-card-link { cursor: pointer; }
+  .zm-card-link:hover { transform: translateY(-2px); box-shadow: var(--shadow-pop); }
+  .zm-card-link:active:not(:disabled) { transform: translateY(0) scale(0.99); }
+}
+
+/* A whole card as one tap target: the title's button stretches over the card. */
+.zm-goal { position: relative; }
+.zm-goal-open { background: none; border: 0; padding: 0; margin: 0; font: inherit; color: inherit; text-align: inherit; cursor: pointer; }
+.zm-goal-open::after { content: ""; position: absolute; inset: 0; border-radius: var(--radius-lg); z-index: 1; }
+.zm-goal-open:focus-visible { outline: none; }
+.zm-goal-open:focus-visible::after { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
+
+/* ---------------------------------------------------------------- button */
+.zm-btn { position: relative; isolation: isolate; }
+.zm-btn-label { display: inline-flex; align-items: center; gap: var(--space-2); transition: opacity var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out); }
+.zm-btn-spinner, .zm-btn-done { position: absolute; inset: 0; display: grid; place-items: center; opacity: 0; pointer-events: none; transition: opacity var(--dur-base) var(--ease-out); }
+.zm-btn-spinner svg { width: 18px; height: 18px; fill: currentColor; animation: zm-spin 1.1s linear infinite; }
+.zm-btn-done svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 24; stroke-dashoffset: 24; }
+
+.zm-btn[data-status="loading"] .zm-btn-label,
+.zm-btn[data-status="success"] .zm-btn-label { opacity: 0; transform: scale(0.94); }
+.zm-btn[data-status="loading"] .zm-btn-spinner { opacity: 1; }
+.zm-btn[data-status="success"] .zm-btn-done { opacity: 1; }
+.zm-btn[data-status="success"] .zm-btn-done svg { animation: zm-draw 280ms var(--ease-out) 60ms forwards; }
+.zm-btn[data-status="loading"]:disabled { opacity: 1; cursor: progress; }
+.zm-btn-primary[data-status="success"] { background: var(--zellige); border-color: var(--zellige); color: var(--on-zellige); }
+
+@keyframes zm-spin { to { transform: rotate(360deg); } }
+@keyframes zm-draw { to { stroke-dashoffset: 0; } }
+
+/* -------------------------------------------------------------- progress */
+.zm-prog-bar { position: relative; }
+.zm-prog-fill { transition: width var(--dur-count) var(--ease-out), background-color var(--dur-slow) var(--ease-out); }
+.zm-prog-track { transition: background-color var(--dur-slow) var(--ease-out); }
+.zm-prog-burst { position: absolute; top: 50%; width: 0; height: 0; }
+
+/* ---------------------------------------------------------- the star burst */
+/* Eight small zellige stars fly out once, when a goal is reached. */
+.zm-burst { position: absolute; left: 0; top: 0; width: 0; height: 0; pointer-events: none; z-index: 2; }
+.zm-burst-star { position: absolute; left: -7px; top: -7px; width: 14px; height: 14px; opacity: 0; animation: zm-burst 900ms var(--ease-out) forwards; }
+.zm-burst[data-size="lg"] .zm-burst-star { left: -10px; top: -10px; width: 20px; height: 20px; }
+@keyframes zm-burst {
+  0% { opacity: 0; transform: translate(0, 0) scale(0.2) rotate(0deg); }
+  15% { opacity: 1; }
+  70% { opacity: 1; }
+  100% { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(1) rotate(var(--rot)); }
+}
+
+/* ------------------------------------------------------------- done badge */
+.zm-badge-done.zm-pop { animation: zm-pop 420ms var(--ease-back); }
+@keyframes zm-pop { 0% { transform: scale(0.6); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+
+/* ----------------------------------------------------------- shopping row */
+.zm-check { transition: background-color var(--dur-base) var(--ease-out), border-color var(--dur-base) var(--ease-out); }
+.zm-check-mark { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 24; stroke-dashoffset: 24; }
+.zm-check[aria-checked="true"] .zm-check-mark { stroke-dashoffset: 0; }
+.zm-item[data-animate] .zm-check-mark { transition: stroke-dashoffset 260ms var(--ease-out) 60ms; }
+.zm-item[data-animate] .zm-check[aria-checked="true"] { animation: zm-tick 320ms var(--ease-back); }
+@keyframes zm-tick { 0% { transform: scale(0.82); } 100% { transform: scale(1); } }
+
+/* The strike-through draws across the name instead of appearing at once. */
+.zm-item-bought .zm-item-name { text-decoration: none; }
+.zm-item-text { background: linear-gradient(currentColor, currentColor) no-repeat 0 58% / 0% 2px; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+.zm-item-bought .zm-item-text { background-size: 100% 2px; }
+.zm-item[data-animate] .zm-item-text { transition: background-size 300ms var(--ease-out) 90ms; }
+.zm-item-name, .zm-item-price { transition: color var(--dur-base) var(--ease-out); }
+
+/* ------------------------------------------------------------ list motion */
+/* An item the partner just added (realtime) glows saffron as it slides in. */
+.zm-arrived { position: relative; }
+.zm-arrived::after { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; background: color-mix(in srgb, var(--saffron) 24%, transparent); animation: zm-arrive 1600ms var(--ease-out) forwards; }
+@keyframes zm-arrive { 0% { opacity: 0; } 15% { opacity: 1; } 100% { opacity: 0; } }
+
+/* --------------------------------------------------------------- skeleton */
+.zm-skeleton { display: block; background: var(--surface-sunken); position: relative; overflow: hidden; }
+.zm-skeleton::after { content: ""; position: absolute; inset: 0; transform: translateX(-100%); background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--surface-raised) 70%, transparent), transparent); animation: zm-shimmer 1.6s var(--ease-in-out) infinite; }
+@keyframes zm-shimmer { to { transform: translateX(100%); } }
+
+/* ----------------------------------------------------------- bottom sheet */
+.zm-sheet-layer { position: fixed; inset: 0; z-index: 50; display: flex; align-items: flex-end; justify-content: center; }
+.zm-sheet-backdrop { position: absolute; inset: 0; background: color-mix(in srgb, var(--ink) 40%, transparent); animation: zm-fade-in var(--dur-slow) var(--ease-out) both; }
+.zm-sheet { position: relative; width: 100%; max-width: 560px; max-height: 88vh; overflow: auto; box-sizing: border-box; background: var(--surface-raised); color: var(--ink); border-radius: var(--radius-lg) var(--radius-lg) 0 0; box-shadow: var(--shadow-pop); padding: 0 var(--space-4) calc(var(--space-5) + env(safe-area-inset-bottom, 0px)); animation: zm-sheet-in var(--dur-slower) var(--ease-spring) both; outline: none; }
+.zm-sheet-handle { display: flex; justify-content: center; padding: var(--space-3) 0 var(--space-2); cursor: grab; touch-action: none; }
+.zm-sheet-handle span { width: 40px; height: 5px; border-radius: var(--radius-pill); background: var(--line-strong); opacity: 0.6; }
+.zm-sheet-title { margin: 0 0 var(--space-4); font-size: 18px; line-height: 24px; font-weight: 600; }
+.zm-sheet-layer[data-state="closing"] .zm-sheet-backdrop { animation: zm-fade-out 220ms var(--ease-in) both; }
+.zm-sheet-layer[data-state="closing"] .zm-sheet { animation: zm-sheet-out 240ms var(--ease-in) forwards; }
+@keyframes zm-sheet-in { from { transform: translateY(100%); } to { transform: translateY(0); } }
+@keyframes zm-sheet-out { to { transform: translateY(100%); } }
+@keyframes zm-fade-in { from { opacity: 0; } }
+@keyframes zm-fade-out { to { opacity: 0; } }
+
+/* ------------------------------------------------------------------ toasts */
+.zm-toasts { position: fixed; left: 0; right: 0; bottom: calc(var(--space-5) + env(safe-area-inset-bottom, 0px)); z-index: 60; display: flex; flex-direction: column; align-items: center; gap: var(--space-2); pointer-events: none; padding: 0 var(--space-4); }
+.zm-toast { display: inline-flex; align-items: center; gap: var(--space-2); max-width: 100%; box-sizing: border-box; padding: var(--space-2) var(--space-4) var(--space-2) var(--space-2); border-radius: var(--radius-pill); background: var(--ink); color: var(--surface); font-size: 14px; line-height: 20px; font-weight: 500; box-shadow: var(--shadow-pop); pointer-events: auto; animation: zm-toast-in var(--dur-slower) var(--ease-spring) both; }
+.zm-toast:not(:has(.zm-av)) { padding-left: var(--space-4); }
+.zm-toast[data-state="closing"] { animation: zm-toast-out 220ms var(--ease-in) forwards; }
+.zm-toast .zm-av { border-color: var(--ink); }
+@keyframes zm-toast-in { from { opacity: 0; transform: translateY(24px) scale(0.96); } }
+@keyframes zm-toast-out { to { opacity: 0; transform: translateY(12px); } }
+
+/* ----------------------------------------------------------------- tab bar */
+.zm-tabs { position: relative; display: flex; justify-content: space-around; gap: var(--space-1); padding: var(--space-2); background: var(--surface-raised); border-top: 1px solid var(--line); }
+.zm-tab { position: relative; z-index: 1; flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px; min-height: 48px; justify-content: center; border: 0; background: none; font: inherit; font-size: 12px; font-weight: 600; color: var(--ink-muted); border-radius: var(--radius-md); cursor: pointer; transition: color var(--dur-base) var(--ease-out); }
+.zm-tab[aria-current="page"] { color: var(--majorelle-ink); }
+.zm-tab:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
+.zm-tabs-ind { position: absolute; z-index: 0; left: 0; top: var(--space-2); bottom: var(--space-2); border-radius: var(--radius-md); background: var(--majorelle-soft); }
+.zm-tabs[data-ready] .zm-tabs-ind { transition: transform var(--dur-slow) var(--ease-spring), width var(--dur-slow) var(--ease-out); }
+
+/* ------------------------------------------------------ page transitions */
+/* With the View Transitions API (TanStack Router: defaultViewTransition: true). */
+::view-transition-old(root) { animation: zm-vt-out var(--dur-base) var(--ease-in) both; }
+::view-transition-new(root) { animation: zm-vt-in var(--dur-slow) var(--ease-out) both; }
+::view-transition-group(*) { animation-duration: var(--dur-slower); animation-timing-function: var(--ease-in-out); }
+@keyframes zm-vt-out { to { opacity: 0; transform: translateY(-6px); } }
+@keyframes zm-vt-in { from { opacity: 0; transform: translateY(10px); } }
+
+/* ---------------------------------------------------------- reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after, ::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) {
+    animation-duration: 1ms !important;
+    animation-delay: 0ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+    transition-delay: 0ms !important;
+  }
+  .zm-pressable:active:not(:disabled), .zm-card-link:hover { transform: none; }
+  .zm-burst, .zm-skeleton::after { display: none; }
+}

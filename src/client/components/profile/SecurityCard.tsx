@@ -8,8 +8,7 @@ import { useAuthForm } from "../../lib/use-auth-form.ts";
 import { Button } from "../Button.tsx";
 import { Field } from "../Field.tsx";
 import { FormAlert, Notice } from "../Notice.tsx";
-import { EmailRow } from "./EmailRow.tsx";
-import { CardHead } from "./Zellige.tsx";
+import { Section } from "./Zellige.tsx";
 
 function PasswordRow() {
   const [done, setDone] = useState(false);
@@ -68,19 +67,37 @@ function PasswordRow() {
     }
   });
   return (
-    <div className="pf-set" role="group" aria-labelledby="pf-pw-h">
-      <h3 className="pf-h3" id="pf-pw-h">
-        Password
-      </h3>
-      <Notice id="pf-pw-offline" icon="wifi-off" hidden={f.online}>
+    <div className="pf-item" role="group" aria-labelledby="pf-pw-h">
+      <div className="pf-item-text">
+        <h3 className="pf-h3" id="pf-pw-h">
+          Password
+        </h3>
+        {!open && <p className="pf-item-sub">Changing it signs you out on your other devices.</p>}
+      </div>
+      {!open && (
+        <Button
+          ref={toggle}
+          variant="secondary"
+          size="sm"
+          className="pf-item-act"
+          id="pf-pw-open"
+          aria-expanded="false"
+          aria-controls="pf-pw"
+          disabledReason={f.online ? null : "pf-pw-offline-msg"}
+          onClick={show}
+        >
+          Change<span className="vh"> password</span>
+        </Button>
+      )}
+      <p className="help" id="pf-pw-offline-msg" hidden={f.online}>
         Changing your password needs a connection.
-      </Notice>
+      </p>
       {done && (
         <Notice id="pf-pw-done" icon="check">
           Password changed. You&apos;ve been signed out on your other devices.
         </Notice>
       )}
-      {open ? (
+      {open && (
         <form id="pf-pw" className="auth-form pf-form" noValidate onSubmit={onSubmit}>
           <FormAlert formId="pf-pw" message={f.alert} />
           <Field
@@ -108,7 +125,7 @@ function PasswordRow() {
               </p>
             }
           />
-          <div className="pf-row">
+          <div className="pf-btns">
             <Button type="submit" variant="primary" pending={f.pending} disabledReason={f.disabledReason}>
               Change password
             </Button>
@@ -124,21 +141,6 @@ function PasswordRow() {
             </Button>
           </div>
         </form>
-      ) : (
-        <div className="pf-reveal">
-          <p className="muted">This signs you out on your other devices.</p>
-          <Button
-            ref={toggle}
-            variant="secondary"
-            id="pf-pw-open"
-            aria-expanded="false"
-            aria-controls="pf-pw"
-            disabledReason={f.online ? null : "pf-pw-offline-msg"}
-            onClick={show}
-          >
-            Change password
-          </Button>
-        </div>
       )}
     </div>
   );
@@ -157,55 +159,58 @@ function DevicesRow() {
   });
   const failed = revoke.isError && !(isApiError(revoke.error) && revoke.error.status === 429);
   return (
-    <div className="pf-set" role="group" aria-labelledby="pf-dev-h">
-      <h3 className="pf-h3" id="pf-dev-h">
-        Other devices
-      </h3>
-      <div className="pf-reveal">
-        <p className="muted">Ends every other session on your account. This device stays signed in.</p>
-        <Button
-          variant="secondary"
-          id="pf-dev-out"
-          pending={revoke.isPending && "Signing out…"}
-          disabledReason={online ? null : "pf-dev-offline-msg"}
-          onClick={() => {
-            setDone(false);
-            if (!online) {
-              say("Signing out your other devices needs a connection.");
-              return;
-            }
-            revoke.mutate();
-          }}
-        >
-          Sign out other devices
-        </Button>
-        <Notice id="pf-dev-offline" icon="wifi-off" hidden={online}>
-          Signing out your other devices needs a connection.
-        </Notice>
-        {done && (
-          <p className="pf-status" data-state="saved" id="pf-dev-done">
-            Signed out on your other devices.
-          </p>
-        )}
-        {revoke.isError && (
-          <p className="err" role="alert">
-            {failed
-              ? "Couldn't sign out your other devices. Try again."
-              : "Too many tries. Wait a minute, then try again."}
-          </p>
-        )}
+    <div className="pf-item" role="group" aria-labelledby="pf-dev-h">
+      <div className="pf-item-text">
+        <h3 className="pf-h3" id="pf-dev-h">
+          Other devices
+        </h3>
+        <p className="pf-item-sub">Ends every other session on your account. This device stays signed in.</p>
       </div>
+      <Button
+        variant="secondary"
+        size="sm"
+        className="pf-item-act"
+        id="pf-dev-out"
+        pending={revoke.isPending && "Signing out…"}
+        disabledReason={online ? null : "pf-dev-offline-msg"}
+        onClick={() => {
+          setDone(false);
+          if (!online) {
+            say("Signing out your other devices needs a connection.");
+            return;
+          }
+          revoke.mutate();
+        }}
+      >
+        Sign out<span className="vh"> other devices</span>
+      </Button>
+      <p className="help" id="pf-dev-offline-msg" hidden={online}>
+        Signing out your other devices needs a connection.
+      </p>
+      {done && (
+        <p className="pf-status" data-state="saved" id="pf-dev-done">
+          Signed out on your other devices.
+        </p>
+      )}
+      {revoke.isError && (
+        <p className="err" role="alert">
+          {failed
+            ? "Couldn't sign out your other devices. Try again."
+            : "Too many tries. Wait a minute, then try again."}
+        </p>
+      )}
     </div>
   );
 }
 
-export function SecurityCard({ email, emailChanged }: { email: string; emailChanged: "updated" | "failed" | null }) {
+/** Security: the password and the other sessions. (The email lives under You, with the name.) */
+export function SecurityCard() {
   return (
-    <section className="pf-card" aria-labelledby="pf-sec-h">
-      <CardHead id="pf-sec-h">Security</CardHead>
-      <PasswordRow />
-      <EmailRow email={email} changed={emailChanged} />
-      <DevicesRow />
-    </section>
+    <Section id="pf-security" title="Security">
+      <div className="pf-list">
+        <PasswordRow />
+        <DevicesRow />
+      </div>
+    </Section>
   );
 }
